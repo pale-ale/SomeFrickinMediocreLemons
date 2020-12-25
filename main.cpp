@@ -7,17 +7,16 @@
 using namespace std;
 
 
-void DoesNothingButPrint(){
-    cout << "Test" << endl;
+void OnSpace(sf::Event event){
+    cout << "I've been called! Key: " << event.key.code << " Pressed: " << (event.type == event.KeyPressed) << endl;
 }
  
 int main()
 {
     auto delegateHandler = KeyboardDelegateManager();
-    auto delegate = Delegate();
-    delegate.Bind(new function<void()>(DoesNothingButPrint));
-    delegateHandler.SetupDelegateKeyBinding(delegate, sf::Keyboard::Space);
-
+    auto spaceDelegate = Delegate();
+    spaceDelegate.Bind(new function<void(sf::Event)>(OnSpace));
+    delegateHandler.SetupDelegateKeyBinding(spaceDelegate, sf::Keyboard::Space);
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
     sf::CircleShape shape(100.f);
     auto font = sf::Font();
@@ -27,18 +26,20 @@ int main()
     sometext.setFont(font);
  
     shape.setFillColor(sf::Color::Green);
+    vector<sf::Event> events;
+    window.setKeyRepeatEnabled(false);
 
     while (window.isOpen())
     {
-        delegateHandler.Tick();
-
         sf::Event event;
-        
         while (window.pollEvent(event))
         {
+            events.push_back(event);
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+        delegateHandler.Tick(events);
+        events.clear();
 
         window.clear();
         window.draw(shape);

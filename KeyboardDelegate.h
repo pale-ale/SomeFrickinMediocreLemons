@@ -8,23 +8,23 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+
 using namespace std;
 
 class Delegate{
     public:
-    void ExecuteIfBound();
-    void Bind(function<void()> * function);
-    bool operator==(Delegate o);
+    void ExecuteIfBound(sf::Event);
+    void Bind(function<void(sf::Event)> * function);
     private:
-    function<void()> * boundFunction;
+    function<void(sf::Event)> * boundFunction;
 };
 
 class KeyboardDelegateManager{
     private:
     map<sf::Keyboard::Key, vector<Delegate>> bindings;
-    vector<sf::Keyboard::Key> activeKeys;
+    vector<sf::Event> keyEvents;
     public:
     void SetupDelegateKeyBinding(Delegate delegate, sf::Keyboard::Key key);
     void RemoveBinding();
-    void Tick();
+    void Tick(vector<sf::Event> events);
 };
