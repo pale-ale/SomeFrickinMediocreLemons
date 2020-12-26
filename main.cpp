@@ -3,6 +3,7 @@
 #include <iostream>
 #include "KeyboardDelegate.h"
 #include <vector>
+#include "Player.h"
 
 using namespace std;
 
@@ -28,6 +29,24 @@ int main()
     shape.setFillColor(sf::Color::Green);
     vector<sf::Event> events;
     window.setKeyRepeatEnabled(false);
+
+    auto player = Player();
+    auto mageCard = card("Human", "Battle Mage");
+    auto SSG08er = card("Human", "Nico der Scharfschütze");
+    player.addCardToDeck(mageCard);
+    player.addCardToDeck(SSG08er);
+    player.printDeck();
+    player.drawCards(2);
+    player.printDeck();
+    player.printHand();
+    const auto playerHand = player.getHand();
+    cout << playerHand->size() << endl;
+    player.playCard(*playerHand->begin());
+    player.playCard(*playerHand->begin());
+    player.printHand();
+    cout << "Success" << endl;
+    
+    exit(0);
 
     while (window.isOpen())
     {
