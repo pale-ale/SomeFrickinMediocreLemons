@@ -13,7 +13,7 @@ void Player::drawCards(int count){
 void Player::playCard(card* cardToPlay){
     for (int i=0; i<hand.size(); i++){
         list<card*>::iterator playedCard = find(hand.begin(), hand.end(), cardToPlay);
-        cout << "Player " << " played card " << cardToPlay->getname() << endl;
+        cout << "Player " << " played card " << cardToPlay->getName() << endl;
         hand.erase(playedCard);
     }
 }
@@ -31,7 +31,7 @@ void Player::printDeck(){
     auto end = deck.end();
     cout << "Cards in deck:" << endl;
     while (start != end){
-        cout << "\t" + (*start)->getname() << endl;
+        cout << "\t" + (*start)->getName() << endl;
         start++;
     }
 }
@@ -41,7 +41,7 @@ void Player::printHand(){
     auto end = hand.end();
     cout << "Cards in hand:" << endl;
     while (start != end){
-        cout << "\t" + (*start)->getname() << endl;
+        cout << "\t" + (*start)->getName() << endl;
         start++;
     }
 }
