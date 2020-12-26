@@ -5,15 +5,14 @@ void card::movegraveyard () {
 bool card::checkgraveyard () {
 	return graveyard;
 }
-std::string card::gettype () {
+string card::gettype () {
 	return type;
 }
-std::string card::getname () {
+string card::getname () {
 	return name;
 }
-card::card (std::string Type, std::string Name){
+card::card (std::string Type, string Name){
 	card::type=Type;
 	card::name=Name;
 	card::graveyard=false;
 }
-	
