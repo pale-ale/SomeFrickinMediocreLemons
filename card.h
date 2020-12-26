@@ -4,11 +4,11 @@ using namespace std;
 class card{
 	public:
 	card(string Type, string Name);
-	string returntype();
-	string gettype();
-	void movegraveyard();
-	bool checkgraveyard();
-	string getname();
+	string returnType();
+	string getType();
+	void moveGraveyard();
+	bool checkGraveyard();
+	string getName();
 	private:
 	bool graveyard;
 	string type;

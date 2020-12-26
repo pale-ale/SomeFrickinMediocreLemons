@@ -1,18 +1,18 @@
 #include "card.h"
-void card::movegraveyard () {
+void card::moveGraveyard(){
 	graveyard=true;
 }
-bool card::checkgraveyard () {
+bool card::checkGraveyard(){
 	return graveyard;
 }
-string card::gettype () {
+string card::getType(){
 	return type;
 }
-string card::getname () {
+string card::getName(){
 	return name;
 }
 card::card (std::string Type, string Name){
-	card::type=Type;
-	card::name=Name;
-	card::graveyard=false;
+	this->type=Type;
+	this->name=Name;
+	this->graveyard=false;
 }
