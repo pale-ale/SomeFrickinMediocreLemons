@@ -13,7 +13,6 @@ class Game : public sf::Drawable{
 
     Player* currentTurnPlayer;
     Player* getNextTurnPlayer();
-    void tick();
 
     private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
