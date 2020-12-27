@@ -2,7 +2,7 @@
 
 Game::Game(): 
 sf::Drawable(){
-    string filename = "/home/alba/projects/Sprites/Tabletop.png";
+    string filename = "/usr/share/test/resources/Tabletop.png";
     if (texture.loadFromFile(filename)){
         mainTexture.setTexture(texture);
         
