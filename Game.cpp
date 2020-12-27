@@ -17,3 +17,6 @@ sf::Drawable(){
 void Game::tick(){
 }
 
+void Game::addPlayer(Player* player){
+    players.push_back(player);
+}

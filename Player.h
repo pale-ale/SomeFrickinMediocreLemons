@@ -4,10 +4,11 @@
 #include "card.h"
 #include <algorithm>
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
 using namespace std;
 
-class Player{
+class Player: public sf::Drawable{
     private:
     list<card*> deck = {};
     list<card*> hand = {};
@@ -20,4 +21,14 @@ class Player{
     void addCardToDeck(card &card);
     void printDeck();
     void printHand();
+
+    private:
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
+    {
+        auto cardIterator = hand.begin();
+        while (cardIterator != hand.end()){
+            target.draw(**cardIterator);
+            cardIterator++;
+        }
+    }
 };

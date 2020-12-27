@@ -20,6 +20,14 @@ int main()
     auto spaceDelegate = Delegate();
     spaceDelegate.Bind(new function<void(sf::Event)>(OnSpace));
     delegateHandler.SetupDelegateKeyBinding(spaceDelegate, sf::Keyboard::Space);
+
+    auto myCard = card("tets", "testname", sf::Vector2<float>(100,0));
+    auto myPlayer = Player();
+    mainGame.addPlayer(&myPlayer);
+
+    myPlayer.addCardToDeck(myCard);
+    myPlayer.drawCards(1);
+
     sf::RenderWindow window(sf::VideoMode(400, 240), "SFML works!");
     window.setKeyRepeatEnabled(false);
    
