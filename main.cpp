@@ -22,11 +22,13 @@ int main()
     delegateHandler.SetupDelegateKeyBinding(spaceDelegate, sf::Keyboard::Space);
 
     auto myCard = card("tets", "testname", sf::Vector2<float>(100,0));
+    auto myCard2 = card("Nico der Profi", "Shit", sf::Vector2<float>(200,0));
     auto myPlayer = Player();
     mainGame.addPlayer(&myPlayer);
 
     myPlayer.addCardToDeck(myCard);
-    myPlayer.drawCards(1);
+	myPlayer.addCardToDeck(myCard2);
+    myPlayer.drawCards(2);
 
     sf::RenderWindow window(sf::VideoMode(400, 240), "SFML works!");
     window.setKeyRepeatEnabled(false);
