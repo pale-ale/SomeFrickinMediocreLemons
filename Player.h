@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "ManaType.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ class Player: public sf::Drawable{
     list<card*> deck = {};
     list<card*> hand = {};
     list<card*> graveyard = {};
-	int mana;
+	FMana mana;
 	string name;
 
     public:
@@ -25,8 +26,8 @@ class Player: public sf::Drawable{
     void addCardToDeck(card &card);
     void printDeck();
     void printHand();
-	void addMana(int);
-	void removeMana(int);
+	void addMana(int amount, EManaType color);
+    const FMana getMana(){return mana;}
 	void clearMana();
 
     private:

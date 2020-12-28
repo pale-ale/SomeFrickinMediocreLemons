@@ -45,35 +45,16 @@ void Player::printHand(){
         start++;
     }
 }
-void Player::addMana(int Mana){
-	if(Mana<=0){
-	cout<< "Can't be null or negative"; throw;
-	}
-	if(Mana+this->mana>=200){
-		this->mana=200;
-	}	
-	else{
-		this->mana=this->mana+Mana;
-	}
+
+void Player::addMana(int Amount, EManaType color){
+	mana.add(color, Amount);
 }
-void Player::removeMana(int Mana){
-	if(Mana<=0){
-	cout<< "Can't be null or negative"; throw;
-	}
-	if(Mana+this->mana<=0){
-		this->mana=0;
-	}
-	else{
-		this->mana=this->mana-Mana;
-	}
-}
+
 void Player::clearMana(){
-	this->mana=0;
+	this->mana = FMana();
 }
 	
 Player::Player(std::string Name){
-	this->mana=200;
+	this->mana=FMana();
 	this->name=Name;
-}
-Player::Player(){
 }
