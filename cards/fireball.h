@@ -4,9 +4,7 @@
 
 using namespace std;
 
-class fireball : public card::card{
+class Fireball : public card{
 	public:
-	virtual bool starteffect(card *card) override;
-	private:
-	sf::Texture descriptiveImage;
+	Fireball();
 };

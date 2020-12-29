@@ -1,8 +1,6 @@
 #include "fireball.h"
-
-bool starteffect(card *card){
-	if(card->getType()==cardType::MagicCard){
-		card->moveGraveyard();
-	}
-	return true;
+Fireball::Fireball():
+card::card(){
+    pathToImage = "/usr/share/test/resources/fireball.png";
+    updateCardImage();
 }

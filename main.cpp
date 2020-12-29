@@ -22,19 +22,19 @@ int main()
     spaceDelegate.Bind(new function<void(sf::Event)>(OnSpace));
     delegateHandler.SetupDelegateKeyBinding(spaceDelegate, sf::Keyboard::Space);
 
-    card myCard = card(cardType::MonsterCard, "testname", sf::Vector2<float>(0,0));
-    card myCard2 = fireball(cardType::MagicCard, "Shit", sf::Vector2<float>(200,0));
+    //card myCard = card(cardType::MonsterCard, "testname", sf::Vector2<float>(0,0));
+    card myCard2 = Fireball();
+    //card myCard2 = card();
     auto myPlayer = Player();
     mainGame.addPlayer(&myPlayer);
 
-    myPlayer.addCardToDeck(&myCard);
 	myPlayer.addCardToDeck(&myCard2);
+    //myPlayer.addCardToDeck(&myCard);
     myPlayer.drawCards(1);
-	myCard2.starteffect(&card);
 
     sf::RenderWindow window(sf::VideoMode(400, 240), "SFML works!");
     window.setKeyRepeatEnabled(false);
-   
+
     vector<sf::Event> events;
     while (window.isOpen())
     {
