@@ -1,3 +1,7 @@
+#include <iostream>
+
+using namespace std;
+
 enum EManaType{
     Black,
     Blue,
@@ -9,9 +13,8 @@ enum EManaType{
 struct FMana{
     public:
     int Black, Blue, Green, Red, White;
-    FMana& operator +(const FMana& a){
-        FMana m={Black+a.Black, Blue+a.Blue, Green+a.Green, Red+a.Red, White+a.White};
-        return m;
+    FMana operator +(const FMana& a){
+        return FMana{Black+a.Black, Blue+a.Blue, Green+a.Green, Red+a.Red, White+a.White};
     }
     void add(EManaType color, int amount){
         get(color) = max(get(color) + amount, 0);
@@ -31,6 +34,9 @@ struct FMana{
             return Red;
         case EManaType::White:
             return White;
+        default:
+            cout << "Bad mana type!\n";
+            throw;
         }
     }
 };

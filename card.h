@@ -10,17 +10,22 @@ class card : public sf::Drawable{
 	string getType();
 	void moveGraveyard();
 	bool checkGraveyard();
+	void setPosition(sf::Vector2f newPosition);
 	string getName();
+	void setFlipState(bool frontFaceUp);
+	bool getFlipped();
 
 	private:
+	bool frontFaceUp;
 	bool graveyard;
 	string type;
 	string name;
 	sf::Vector2<float> position;
-	sf::Texture cardTexture;
+	sf::Texture cardBackTexture;
+	sf::Texture cardFrontTexture;
 	sf::Sprite cardSprite;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
-    {
+    {	
         target.draw(cardSprite, states);
     }
 };

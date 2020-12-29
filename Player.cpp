@@ -4,6 +4,12 @@ void Player::drawCards(int count){
     if (deck.size() < count) { cout << "Not enough cards to draw!\n"; throw ;}
     list<card*>::iterator it = deck.end();
     advance(it, -count);
+    while (it != deck.end()){
+        hand.push_back(*it);
+        (*it)->setFlipState(true);
+        (*it)->setPosition(handPosition);
+        it++;
+    }
     hand.insert(hand.begin(), it, deck.end());
     it = deck.end();
     advance(it, -count);
@@ -18,8 +24,10 @@ void Player::playCard(card* cardToPlay){
     }
 }
 
-void Player::addCardToDeck(card &card){
-    deck.push_back(&card);
+void Player::addCardToDeck(card *card){
+    card->setPosition(deckPosition);
+    card->setFlipState(false);
+    deck.push_back(card);
 }
 
 const list<card*>* Player::getHand(){

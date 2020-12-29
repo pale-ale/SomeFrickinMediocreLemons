@@ -16,7 +16,20 @@ card::card (std::string Type, string Name, sf::Vector2<float> Position){
 	this->name=Name;
 	this->graveyard=false;
 	this->position=Position;
-	this->cardTexture.loadFromFile("/usr/share/test/resources/CardBack.png");
-	this->cardSprite.setTexture(this->cardTexture);
+	this->cardBackTexture.loadFromFile("/usr/share/test/resources/CardBack.png");
+	this->cardFrontTexture.loadFromFile("/usr/share/test/resources/CardFront.png");
+	this->cardSprite.setTexture(this->cardBackTexture);
+	this->cardSprite.setPosition(this->position);
+}
+
+void card::setFlipState(bool frontFaceUp){
+	if (frontFaceUp != this->frontFaceUp){
+		this->cardSprite.setTexture(frontFaceUp ? cardFrontTexture : cardBackTexture);
+		this->frontFaceUp = frontFaceUp;
+	}
+}
+
+void card::setPosition(sf::Vector2f newPosition){
+	this->position = newPosition;
 	this->cardSprite.setPosition(this->position);
 }
