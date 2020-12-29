@@ -5,7 +5,7 @@ using namespace std;
 
 class card : public sf::Drawable{
 	public:
-	card(string Type, string Name, sf::Vector2<float> Position);
+	card(string Type, string Name, sf::Vector2f Position);
 	string returnType();
 	string getType();
 	void moveGraveyard();
@@ -20,7 +20,7 @@ class card : public sf::Drawable{
 	bool graveyard;
 	string type;
 	string name;
-	sf::Vector2<float> position;
+	sf::Vector2f position;
 	sf::Texture cardBackTexture;
 	sf::Texture cardFrontTexture;
 	sf::Sprite cardSprite;

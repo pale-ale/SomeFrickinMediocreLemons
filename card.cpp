@@ -11,7 +11,7 @@ string card::getType(){
 string card::getName(){
 	return name;
 }
-card::card (std::string Type, string Name, sf::Vector2<float> Position){
+card::card (std::string Type, string Name, sf::Vector2f Position){
 	this->type=Type;
 	this->name=Name;
 	this->graveyard=false;
