@@ -6,7 +6,7 @@ bool card::checkGraveyard(){
 	return graveyard;
 }
 int card::getType(){
-	return 1;
+	return this->type;
 }
 string card::getName(){
 	return name;
@@ -33,6 +33,6 @@ void card::setPosition(sf::Vector2f newPosition){
 	this->position = newPosition;
 	this->cardSprite.setPosition(this->position);
 }
-bool card::starteffect(){
+bool card::starteffect(card* card){
 	return true;
 }

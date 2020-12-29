@@ -14,7 +14,7 @@ class card : public sf::Drawable{
 	string getName();
 	void setFlipState(bool frontFaceUp);
 	bool getFlipped();
-	virtual bool starteffect();
+	virtual bool starteffect(card* card);
 
 	private:
 	bool frontFaceUp;
