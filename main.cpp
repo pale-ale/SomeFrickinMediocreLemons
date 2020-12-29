@@ -5,6 +5,7 @@
 #include <vector>
 #include "Player.h"
 #include "Game.h"
+#include "cards/fireball.h"
 
 using namespace std;
 
@@ -22,13 +23,14 @@ int main()
     delegateHandler.SetupDelegateKeyBinding(spaceDelegate, sf::Keyboard::Space);
 
     card myCard = card(cardType::MonsterCard, "testname", sf::Vector2<float>(0,0));
-    card myCard2 = card(cardType::MagicCard, "Shit", sf::Vector2<float>(200,0));
+    card myCard2 = fireball(cardType::MagicCard, "Shit", sf::Vector2<float>(200,0));
     auto myPlayer = Player();
     mainGame.addPlayer(&myPlayer);
 
     myPlayer.addCardToDeck(&myCard);
 	myPlayer.addCardToDeck(&myCard2);
     myPlayer.drawCards(1);
+	myCard2.starteffect(&card);
 
     sf::RenderWindow window(sf::VideoMode(400, 240), "SFML works!");
     window.setKeyRepeatEnabled(false);

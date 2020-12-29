@@ -6,7 +6,7 @@ using namespace std;
 
 class fireball : public card::card{
 	public:
-	virtual bool starteffect(card* card) override;
+	virtual bool starteffect(card *card) override;
 	private:
 	sf::Texture descriptiveImage;
 };
