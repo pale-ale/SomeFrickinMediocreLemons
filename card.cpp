@@ -5,13 +5,13 @@ void card::moveGraveyard(){
 bool card::checkGraveyard(){
 	return graveyard;
 }
-string card::getType(){
-	return type;
+int card::getType(){
+	return 1;
 }
 string card::getName(){
 	return name;
 }
-card::card (std::string Type, string Name, sf::Vector2f Position){
+card::card (cardType Type, string Name, sf::Vector2f Position){
 	this->type=Type;
 	this->name=Name;
 	this->graveyard=false;
@@ -32,4 +32,7 @@ void card::setFlipState(bool frontFaceUp){
 void card::setPosition(sf::Vector2f newPosition){
 	this->position = newPosition;
 	this->cardSprite.setPosition(this->position);
+}
+bool card::starteffect(){
+	return true;
 }

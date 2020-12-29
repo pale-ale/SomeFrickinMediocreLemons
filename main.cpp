@@ -21,8 +21,8 @@ int main()
     spaceDelegate.Bind(new function<void(sf::Event)>(OnSpace));
     delegateHandler.SetupDelegateKeyBinding(spaceDelegate, sf::Keyboard::Space);
 
-    auto myCard = card("tets", "testname", sf::Vector2<float>(0,0));
-    auto myCard2 = card("Nico der Profi", "Shit", sf::Vector2<float>(200,0));
+    card myCard = card(cardType::MonsterCard, "testname", sf::Vector2<float>(0,0));
+    card myCard2 = card(cardType::MagicCard, "Shit", sf::Vector2<float>(200,0));
     auto myPlayer = Player();
     mainGame.addPlayer(&myPlayer);
 
