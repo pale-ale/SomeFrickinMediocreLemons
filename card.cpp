@@ -23,7 +23,7 @@ void card::setFlipState(bool frontFaceUp){
 void card::setPosition(sf::Vector2f newPosition){
 	position = newPosition;
 	cardSprite.setPosition(position);
-	imageSprite.setPosition(position + sf::Vector2f(15, 5));
+	imageSprite.setPosition(position + sf::Vector2f(5, 4));
 }
 
 card::card(){

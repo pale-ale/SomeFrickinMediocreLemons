@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "Game.h"
 #include "cards/fireball.h"
+#include "UI/UISystem.h"
+#include "UI/Button.h"
 
 using namespace std;
 
@@ -34,6 +36,9 @@ int main()
 
     sf::RenderWindow window(sf::VideoMode(400, 240), "SFML works!");
     window.setKeyRepeatEnabled(false);
+    auto ui = UISystem(&window);
+    auto myButton = Button();
+    ui.addChild(&myButton);
 
     vector<sf::Event> events;
     while (window.isOpen())
@@ -46,10 +51,12 @@ int main()
                 window.close();
         }
         delegateHandler.Tick(events);
+        ui.processEvents(events);
         events.clear();
         window.clear();
       
         window.draw(mainGame);
+        window.draw(ui);
         window.display();
     }
     return 0;

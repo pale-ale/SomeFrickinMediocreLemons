@@ -1,23 +1,24 @@
 #include "UISystem.h"
 
-bool UISystem::isCoordInBounds(sf::Vector2f coords, const UIElement& element) const{
+
+bool UISystem::isCoordInBounds(sf::Vector2i coords, const UIElement& element) const{
     auto tl = element.position;
     auto br = element.getBottomRight();
     return tl.x <= coords.x && tl.y <= coords.y &&
         br.x >= coords.x && br.y >= coords.y;
 }
 
-void UISystem::processUIEvents(vector<sf::Event> events){
+void UISystem::processEvents(vector<sf::Event> events){
     auto event_it = events.begin();
     while (event_it != events.end()){
         auto event = *event_it;
         if (event.type == sf::Event::MouseButtonPressed){
-            auto child_it = children->begin();
-            while (child_it != children->end()){
+            auto child_it = children.begin();
+            while (child_it != children.end()){
                 auto child = *child_it;
-                auto mouseCoords = sf::Vector2f(event.mouseMove.x, event.mouseMove.y);
+                auto mouseCoords = sf::Mouse::getPosition(*window);
                 if (isCoordInBounds(mouseCoords, *child)){
-                    child->OnMouseButtonDown();
+                    child->OnMouseButtonDown(event);
                 }
                 child_it++;
             }
@@ -25,3 +26,17 @@ void UISystem::processUIEvents(vector<sf::Event> events){
         event_it++;
     }
 }
+
+void UISystem::addChild(UIElement* newChild){
+    children.push_back(newChild);
+}
+
+void UISystem::draw(sf::RenderTarget& target, sf::RenderStates state) const{
+    auto child_it = children.begin();
+    while (child_it != children.end()){
+        target.draw(**child_it);
+        child_it++;
+    }
+}
+
+void UIElement::draw(sf::RenderTarget& target, sf::RenderStates state) const{};
