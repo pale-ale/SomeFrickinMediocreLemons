@@ -26,12 +26,17 @@ class UISystem : public sf::Drawable{
 
 class UIElement : public sf::Drawable{
     public:
-    virtual void OnMouseButtonDown(sf::Event){};
-    virtual void OnMouseButtonUp(sf::Event){};
+    virtual void OnMouseButtonDown(sf::Event){}
+    virtual void OnMouseButtonUp(sf::Event){}
+    virtual void SetPosition(sf::Vector2f);
+    const sf::Vector2f GetPosition() const{return position;}
+    bool isDragable;
+    
+    protected:
     sf::Vector2f position;
     sf::Vector2f size;
 
-    protected:
+    
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
 
     public:

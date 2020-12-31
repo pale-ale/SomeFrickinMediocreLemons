@@ -4,11 +4,14 @@
 #include <memory>
 #include <iostream>
 #include "cardTypes.h"
+#include "UI/Button.h"
+
 using namespace std;
 
 class card : public sf::Drawable{
 	public:
 	card();
+	Button cardButton;
 	int getType();
 	void moveGraveyard();
 	bool checkGraveyard();

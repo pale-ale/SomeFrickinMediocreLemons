@@ -35,3 +35,6 @@
 # VSCode
 *.code-workspace
 **.vscode
+
+# CMake
+**Build

@@ -2,7 +2,7 @@
 
 
 bool UISystem::isCoordInBounds(sf::Vector2i coords, const UIElement& element) const{
-    auto tl = element.position;
+    auto tl = element.GetPosition();
     auto br = element.getBottomRight();
     return tl.x <= coords.x && tl.y <= coords.y &&
         br.x >= coords.x && br.y >= coords.y;
@@ -37,6 +37,10 @@ void UISystem::draw(sf::RenderTarget& target, sf::RenderStates state) const{
         target.draw(**child_it);
         child_it++;
     }
+}
+
+void UIElement::SetPosition(sf::Vector2f newPosition){
+    position = newPosition;
 }
 
 void UIElement::draw(sf::RenderTarget& target, sf::RenderStates state) const{};

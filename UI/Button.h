@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include "UISystem.h"
 #include <SFML/Graphics.hpp>
@@ -6,6 +8,7 @@ class Button : public UIElement{
     public:
     Button(sf::Rect<float> rect = {0,0,50,50});
     virtual void OnMouseButtonDown(sf::Event)override{cout << "I was clicked!\n";}
+    virtual void SetPosition(sf::Vector2f newPosition)override;
     
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{

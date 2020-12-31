@@ -24,6 +24,7 @@ void card::setPosition(sf::Vector2f newPosition){
 	position = newPosition;
 	cardSprite.setPosition(position);
 	imageSprite.setPosition(position + sf::Vector2f(5, 4));
+	cardButton.SetPosition(position);
 }
 
 card::card(){
@@ -31,6 +32,7 @@ card::card(){
 	cardFrontTexture.loadFromFile("/usr/share/test/resources/CardFront.png");
 	cardSprite.setTexture(cardBackTexture);
 	cardSprite.setPosition(position);
+	cardButton = Button({position.x, position.y,50,75});
 }
 
 void card::updateCardImage(){

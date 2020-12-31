@@ -34,11 +34,10 @@ int main()
     //myPlayer.addCardToDeck(&myCard);
     myPlayer.drawCards(1);
 
-    sf::RenderWindow window(sf::VideoMode(400, 240), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(400, 240), "SFML!");
     window.setKeyRepeatEnabled(false);
     auto ui = UISystem(&window);
-    auto myButton = Button();
-    ui.addChild(&myButton);
+    ui.addChild(&(myCard2.cardButton));
 
     vector<sf::Event> events;
     while (window.isOpen())
