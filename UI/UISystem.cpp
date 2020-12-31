@@ -18,7 +18,7 @@ void UISystem::processEvents(vector<sf::Event> events){
                 auto child = *child_it;
                 auto mouseCoords = sf::Mouse::getPosition(*window);
                 if (isCoordInBounds(mouseCoords, *child)){
-                    child->OnMouseButtonDown(event);
+                    child->OnMouseButtonDown();
                 }
                 child_it++;
             }

@@ -1,11 +1,19 @@
 #include "KeyboardDelegate.h"
 
 void Delegate::Bind(function<void(sf::Event)>* function){
+    boundEventFunction = function;
+}
+
+void Delegate::Bind(function<void()>* function){
     boundFunction = function;
 }
 
 void Delegate::ExecuteIfBound(sf::Event event){
-    (*boundFunction)(event);
+    (*boundEventFunction)(event);
+}
+
+void Delegate::ExecuteIfBound(){
+    (*boundFunction)();
 }
 
 void KeyboardDelegateManager::SetupDelegateKeyBinding(Delegate delegate, sf::Keyboard::Key key){

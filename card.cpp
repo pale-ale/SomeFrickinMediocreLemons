@@ -1,5 +1,6 @@
 #include <memory>
 #include "card.h"
+
 void card::moveGraveyard(){
 	graveyard=true;
 }
@@ -39,4 +40,8 @@ void card::updateCardImage(){
 	cardImageTexture = std::make_shared<sf::Texture>();
 	cardImageTexture->loadFromFile(pathToImage);
 	imageSprite.setTexture(*cardImageTexture);
+}
+
+void card::Play(){
+	cout << "Like a fiddle!\n";
 }

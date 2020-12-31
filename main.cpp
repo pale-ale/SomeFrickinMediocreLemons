@@ -8,24 +8,18 @@
 #include "cards/fireball.h"
 #include "UI/UISystem.h"
 #include "UI/Button.h"
+#include "Events/EventCallback.h"
 
 using namespace std;
-
-
-void OnSpace(sf::Event event){
-    cout << "I've been called! Key: " << event.key.code << " Pressed: " << (event.type == event.KeyPressed) << endl;
-}
 
 int main()
 {
     auto delegateHandler = KeyboardDelegateManager();
     auto mainGame = Game();
     auto spaceDelegate = Delegate();
-    spaceDelegate.Bind(new function<void(sf::Event)>(OnSpace));
-    delegateHandler.SetupDelegateKeyBinding(spaceDelegate, sf::Keyboard::Space);
 
     //card myCard = card(cardType::MonsterCard, "testname", sf::Vector2<float>(0,0));
-    card myCard2 = Fireball();
+    auto myCard2 = Fireball();
     //card myCard2 = card();
     auto myPlayer = Player();
     mainGame.addPlayer(&myPlayer);

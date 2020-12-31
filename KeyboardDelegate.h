@@ -14,9 +14,12 @@ using namespace std;
 class Delegate{
     public:
     void ExecuteIfBound(sf::Event);
-    void Bind(function<void(sf::Event)> * function);
+    void ExecuteIfBound();
+    void Bind(function<void(sf::Event)>* function);
+    void Bind(function<void()>* function);
     private:
-    function<void(sf::Event)> * boundFunction;
+    function<void(sf::Event)> * boundEventFunction;
+    function<void()> * boundFunction;
 };
 
 class KeyboardDelegateManager{

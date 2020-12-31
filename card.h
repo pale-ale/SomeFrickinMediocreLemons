@@ -5,6 +5,8 @@
 #include <iostream>
 #include "cardTypes.h"
 #include "UI/Button.h"
+#include "Events/EventCallback.h"
+
 
 using namespace std;
 
@@ -19,6 +21,8 @@ class card : public sf::Drawable{
 	string getName();
 	void setFlipState(bool frontFaceUp);
 	bool getFlipped();
+	virtual void SetupButtonBinding() = 0;
+	virtual void Play();
 
 	protected:
 	cardType type;

@@ -26,8 +26,8 @@ class UISystem : public sf::Drawable{
 
 class UIElement : public sf::Drawable{
     public:
-    virtual void OnMouseButtonDown(sf::Event){}
-    virtual void OnMouseButtonUp(sf::Event){}
+    virtual void OnMouseButtonDown(){}
+    virtual void OnMouseButtonUp(){}
     virtual void SetPosition(sf::Vector2f);
     const sf::Vector2f GetPosition() const{return position;}
     bool isDragable;
