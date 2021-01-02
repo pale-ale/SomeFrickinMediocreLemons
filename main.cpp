@@ -9,6 +9,7 @@
 #include "UI/UISystem.h"
 #include "UI/Button.h"
 #include "Events/EventCallback.h"
+#include "Battlefield.h"
 
 using namespace std;
 
@@ -17,9 +18,13 @@ int main()
     auto delegateHandler = KeyboardDelegateManager();
     auto mainGame = Game();
     auto spaceDelegate = Delegate();
+    auto b = Battlefield();
 
-    //card myCard = card(cardType::MonsterCard, "testname", sf::Vector2<float>(0,0));
+
+    //auto myCard = Fireball();
     auto myCard2 = Fireball();
+    b.AddCard(myCard2, false);
+    b.RemoveCard(0, false);
     //card myCard2 = card();
     auto myPlayer = Player();
     mainGame.addPlayer(&myPlayer);
@@ -28,7 +33,7 @@ int main()
     //myPlayer.addCardToDeck(&myCard);
     myPlayer.drawCards(1);
 
-    sf::RenderWindow window(sf::VideoMode(400, 240), "SFML!");
+    sf::RenderWindow window(sf::VideoMode(400, 240), "Nothing works!!");
     window.setKeyRepeatEnabled(false);
     auto ui = UISystem(&window);
     ui.addChild(&(myCard2.cardButton));

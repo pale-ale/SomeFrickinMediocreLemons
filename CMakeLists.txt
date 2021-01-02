@@ -10,9 +10,9 @@ include_directories(UI PRIVATE {$YOUR_DIRECTORY})
 
 # Create executable programs
 
-# headers for Card, Player, Game, CardType, ManaType
-set(HEADER_FILES card.h UI/Button.h cardTypes.h Game.h ManaType.h Player.h)
-add_library(Base card.cpp UI/Button.cpp Game.cpp Player.cpp ${HEADER_FILES})
+# headers for Card, Player, Game, CardType, ManaType, Battlefield
+set(HEADER_FILES card.h Player.h UI/Button.h Game.h cardTypes.h ManaType.h Battlefield.h)
+add_library(Base card.cpp UI/Button.cpp Game.cpp Player.cpp Battlefield.cpp ${HEADER_FILES})
 
 # headers for UI
 set(HEADER_FILES UI/UISystem.h UI/Button.h)
