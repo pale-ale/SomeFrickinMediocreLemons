@@ -11,7 +11,7 @@ class UIElement;
 
 class UISystem : public sf::Drawable{
     public:
-    UISystem(sf::Window* inWindow){window=inWindow;};
+    UISystem(sf::RenderWindow* inWindow){window=inWindow;};
     void processEvents(vector<sf::Event> events);
     void addChild(UIElement* newChild);
     void removeChild(UIElement* child);
@@ -20,8 +20,8 @@ class UISystem : public sf::Drawable{
 
     private:
     list<UIElement*> children = {};
-    sf::Window* window;
-    bool isCoordInBounds(sf::Vector2i coords, const UIElement& element) const;
+    sf::RenderWindow* window;
+    bool isCoordInBounds(sf::Vector2f coords, const UIElement& element) const;
 };
 
 class UIElement : public sf::Drawable{

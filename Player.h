@@ -7,6 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include "ManaType.h"
 
+
 using namespace std;
 
 class Player: public sf::Drawable{

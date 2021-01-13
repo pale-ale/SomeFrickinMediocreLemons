@@ -10,8 +10,10 @@
 #include "UI/Button.h"
 #include "Events/EventCallback.h"
 #include "Battlefield.h"
+#include "Settings.h"
 
 using namespace std;
+
 
 int main()
 {
@@ -19,6 +21,7 @@ int main()
     auto mainGame = Game();
     auto spaceDelegate = Delegate();
     auto b = Battlefield();
+    float scale = 2;
 
 
     //auto myCard = Fireball();
@@ -33,11 +36,17 @@ int main()
     //myPlayer.addCardToDeck(&myCard);
     myPlayer.drawCards(1);
 
-    sf::RenderWindow window(sf::VideoMode(400, 240), "Nothing works!!");
+    sf::RenderWindow window(sf::VideoMode(
+        Settings::defaultWidth, 
+        Settings::defaultHeight), 
+        "Nothing works!!",
+        sf::Style::Default
+        );
     window.setKeyRepeatEnabled(false);
     auto ui = UISystem(&window);
     ui.addChild(&(myCard2.cardButton));
-
+    window.setSize({(uint)(Settings::defaultWidth*scale), (uint)(Settings::defaultHeight*scale)});
+    window.setVerticalSyncEnabled(true);
     vector<sf::Event> events;
     while (window.isOpen())
     {
@@ -54,6 +63,7 @@ int main()
         window.clear();
       
         window.draw(mainGame);
+        
         window.draw(ui);
         window.display();
     }

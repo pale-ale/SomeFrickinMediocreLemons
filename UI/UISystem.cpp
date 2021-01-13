@@ -1,7 +1,7 @@
 #include "UISystem.h"
 
 
-bool UISystem::isCoordInBounds(sf::Vector2i coords, const UIElement& element) const{
+bool UISystem::isCoordInBounds(sf::Vector2f coords, const UIElement& element) const{
     auto tl = element.GetPosition();
     auto br = element.getBottomRight();
     return tl.x <= coords.x && tl.y <= coords.y &&
@@ -16,7 +16,7 @@ void UISystem::processEvents(vector<sf::Event> events){
             auto child_it = children.begin();
             while (child_it != children.end()){
                 auto child = *child_it;
-                auto mouseCoords = sf::Mouse::getPosition(*window);
+                auto mouseCoords = window->mapPixelToCoords(sf::Mouse::getPosition( *window));
                 if (isCoordInBounds(mouseCoords, *child)){
                     child->OnMouseButtonDown();
                 }
