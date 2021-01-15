@@ -11,9 +11,9 @@ class Button : public UIElement{
     Button(sf::Rect<float> rect = {0,0,50,50});
     IEventCallback* callback; 
 
-
     virtual void OnMouseButtonDown()override {cout << "Calling delegate!\n"; (*callback)();}
     virtual void SetPosition(sf::Vector2f newPosition)override;
+    virtual void SetRotation(float newRotation)override;
     
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{

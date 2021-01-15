@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class Player: public sf::Drawable{
+class Player: public UIElement{
     private:
     list<card*> deck = {};
     list<card*> hand = {};
@@ -33,24 +33,4 @@ class Player: public sf::Drawable{
 	void addMana(int amount, EManaType color);
     const FMana getMana(){return mana;}
 	void clearMana();
-
-    private:
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
-    {
-        auto cardIterator = deck.begin();
-        while (cardIterator != deck.end()){
-            target.draw(**cardIterator);
-            cardIterator++;
-        }
-        cardIterator = hand.begin();
-        while (cardIterator != hand.end()){
-            target.draw(**cardIterator);
-            cardIterator++;
-        }
-        cardIterator = graveyard.begin();
-        while (cardIterator != graveyard.end()){
-            target.draw(**cardIterator);
-            cardIterator++;
-        }
-    }
 };

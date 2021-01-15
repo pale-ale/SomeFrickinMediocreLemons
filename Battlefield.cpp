@@ -18,7 +18,7 @@ void Battlefield::AddCard(card& newCard, bool support, int slot){
         cout << "Invalid slot index." << endl; throw;
     }
     row->push_back({slot, &newCard});
-    newCard.setPosition(support ? supportPositions[slot] : battlePositions[slot]);
+    newCard.SetPosition(support ? supportPositions[slot] : battlePositions[slot]);
 }
 
 void Battlefield::RemoveCard(int slot, bool support){

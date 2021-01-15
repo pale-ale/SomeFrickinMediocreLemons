@@ -21,11 +21,18 @@ void card::setFlipState(bool frontFaceUp){
 	}
 }
 
-void card::setPosition(sf::Vector2f newPosition){
+void card::SetPosition(sf::Vector2f newPosition){
 	position = newPosition;
 	cardSprite.setPosition(position);
 	imageSprite.setPosition(position + sf::Vector2f(5, 4));
 	cardButton.SetPosition(position);
+}
+
+void card::SetRotation(float newRotation){
+	rotation = newRotation;
+	cardSprite.setRotation(rotation);
+	imageSprite.setRotation(rotation);
+	cardButton.SetRotation(rotation);
 }
 
 card::card(){

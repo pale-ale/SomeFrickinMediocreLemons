@@ -3,7 +3,7 @@
 
 bool UISystem::isCoordInBounds(sf::Vector2f coords, const UIElement& element) const{
     auto tl = element.GetPosition();
-    auto br = element.getBottomRight();
+    auto br = element.GetBottomRight();
     return tl.x <= coords.x && tl.y <= coords.y &&
         br.x >= coords.x && br.y >= coords.y;
 }
@@ -27,20 +27,44 @@ void UISystem::processEvents(vector<sf::Event> events){
     }
 }
 
-void UISystem::addChild(UIElement* newChild){
+void UIElement::addChild(UIElement* newChild){
+    for (UIElement* child : children){
+        if (child == newChild){
+            cout << "child already added!\n";
+            throw;
+        }
+    }
     children.push_back(newChild);
 }
 
-void UISystem::draw(sf::RenderTarget& target, sf::RenderStates state) const{
+void UIElement::SetPosition(sf::Vector2f newPosition){
+    auto child_it = children.begin();
+    while (child_it != children.end()){
+        auto posDelta = GetPosition() - (**child_it).GetPosition();
+        (**child_it).SetPosition(newPosition + posDelta);
+        child_it++;
+    }
+    position = newPosition;
+}
+
+void UIElement::draw(sf::RenderTarget& target, sf::RenderStates state) const{
     auto child_it = children.begin();
     while (child_it != children.end()){
         target.draw(**child_it);
         child_it++;
     }
-}
+};
 
-void UIElement::SetPosition(sf::Vector2f newPosition){
-    position = newPosition;
+void UIElement::SetRotation(float rotation){
+    float rotationDelta = rotation - this->rotation;
+    this->rotation = rotation;
+    auto t = sf::Transform(1,0,0,0,1,0,0,0,1).rotate(rotationDelta);
+    auto child_it = children.begin();
+    while (child_it != children.end()){
+        auto childpos = (**child_it).GetPosition();
+        auto pos = t.transformPoint(childpos);
+        (**child_it).SetPosition(pos);
+        (**child_it).SetRotation((**child_it).GetRotation()+rotationDelta);
+        child_it++;
+    }
 }
-
-void UIElement::draw(sf::RenderTarget& target, sf::RenderStates state) const{};

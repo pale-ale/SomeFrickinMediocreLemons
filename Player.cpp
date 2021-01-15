@@ -7,7 +7,7 @@ void Player::drawCards(int count){
     while (it != deck.end()){
         hand.push_back(*it);
         (*it)->setFlipState(true);
-        (*it)->setPosition(handPosition);
+        (*it)->SetPosition(handPosition);
         it++;
     }
     hand.insert(hand.begin(), it, deck.end());
@@ -25,9 +25,10 @@ void Player::playCard(card* cardToPlay){
 }
 
 void Player::addCardToDeck(card *card){
-    card->setPosition(deckPosition);
+    card->SetPosition(deckPosition);
     card->setFlipState(false);
     deck.push_back(card);
+    addChild(card);
 }
 
 const list<card*>* Player::getHand(){

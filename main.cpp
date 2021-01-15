@@ -35,6 +35,9 @@ int main()
 	myPlayer.addCardToDeck(&myCard2);
     //myPlayer.addCardToDeck(&myCard);
     myPlayer.drawCards(1);
+    myPlayer.SetRotation(0);
+    myCard2.SetRotation(180);
+    //cout << myPlayer.GetRotation() << endl;
 
     sf::RenderWindow window(sf::VideoMode(
         Settings::defaultWidth, 

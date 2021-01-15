@@ -10,18 +10,19 @@
 
 using namespace std;
 
-class card : public sf::Drawable{
+class card : public UIElement{
 	public:
 	card();
 	Button cardButton;
 	int getType();
 	void moveGraveyard();
 	bool checkGraveyard();
-	void setPosition(sf::Vector2f newPosition);
 	string getName();
 	void setFlipState(bool frontFaceUp);
 	bool getFlipped();
 	virtual void SetupButtonBinding() = 0;
+	virtual void SetPosition(sf::Vector2f newPosition) override;
+	virtual void SetRotation(float newRotation) override;
 	virtual void Play();
 
 	protected:
@@ -31,14 +32,11 @@ class card : public sf::Drawable{
 	int power;
 	int health;
 	string pathToImage = "/usr/share/test/resources/fireball.png";
-	
 	bool frontFaceUp;
 	bool graveyard;
 
 	void updateCardImage();
 	
-	sf::Vector2f position;
-
 	sf::Texture cardBackTexture;
 	sf::Texture cardFrontTexture;
 	std::shared_ptr<sf::Texture> cardImageTexture;

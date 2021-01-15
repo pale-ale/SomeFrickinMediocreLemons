@@ -14,3 +14,7 @@ void Button::SetPosition(sf::Vector2f newPosition){
     position = newPosition;
     buttonShape.setPosition(position);
 }
+
+void Button::SetRotation(float newRotation){
+    buttonShape.setRotation(newRotation);
+}

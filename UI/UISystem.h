@@ -7,38 +7,38 @@
 
 using namespace std;
 
-class UIElement;
-
-class UISystem : public sf::Drawable{
+class UIElement : public sf::Drawable{
     public:
-    UISystem(sf::RenderWindow* inWindow){window=inWindow;};
-    void processEvents(vector<sf::Event> events);
     void addChild(UIElement* newChild);
     void removeChild(UIElement* child);
     const list<UIElement*>& getChildren(){return children;}
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
-
-    private:
-    list<UIElement*> children = {};
-    sf::RenderWindow* window;
-    bool isCoordInBounds(sf::Vector2f coords, const UIElement& element) const;
-};
-
-class UIElement : public sf::Drawable{
-    public:
     virtual void OnMouseButtonDown(){}
     virtual void OnMouseButtonUp(){}
     virtual void SetPosition(sf::Vector2f);
-    const sf::Vector2f GetPosition() const{return position;}
+    virtual void SetRotation(float rotation);
     bool isDragable;
     
     protected:
-    sf::Vector2f position;
-    sf::Vector2f size;
+    sf::Vector2f position = {0,0};
+    sf::Vector2f size = {0,0};
+    float rotation = 0;
+    list<UIElement*> children = {};
 
-    
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
 
     public:
-    const sf::Vector2f getBottomRight() const{return position+size;}
+    const float GetRotation() const{return rotation;}
+    const sf::Vector2f GetPosition() const{return position;}
+    const sf::Vector2f GetBottomRight() const{return position+size;}
+    const sf::Vector2f Center() const{return position+sf::Vector2f({size.x/2, size.y/2});}
+};
+
+class UISystem : public UIElement{
+    public:
+    UISystem(sf::RenderWindow* inWindow){window=inWindow;};
+    void processEvents(vector<sf::Event> events);
+   
+    private:
+    sf::RenderWindow* window;
+    bool isCoordInBounds(sf::Vector2f coords, const UIElement& element) const;
 };
