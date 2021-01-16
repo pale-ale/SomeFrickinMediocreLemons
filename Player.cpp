@@ -2,8 +2,7 @@
 
 void Player::drawCards(int count){
     if (deck.size() < count) { cout << "Not enough cards to draw!\n"; throw ;}
-    list<card*>::iterator it = deck.end();
-    advance(it, -count);
+    list<card*>::iterator it = deck.end(); advance(it, -count);
     while (it != deck.end()){
         hand.push_back(*it);
         (*it)->setFlipState(true);
@@ -11,9 +10,9 @@ void Player::drawCards(int count){
         it++;
     }
     hand.insert(hand.begin(), it, deck.end());
-    it = deck.end();
-    advance(it, -count);
+    it = deck.end(); advance(it, -count);
     deck.erase(it, deck.end());
+	printHand();
 }
 
 void Player::playCard(card* cardToPlay){
@@ -48,11 +47,27 @@ void Player::printDeck(){
 void Player::printHand(){
     auto start = hand.begin();
     auto end = hand.end();
-    cout << "Cards in hand:" << endl;
+	//calculated for space per card
+	float cardspace = ((circleEnd-circleBegin)/(float)hand.size());
+	int cardspaceiteration = circleBegin + cardspace;
+	while(start != end) {
+		rotation=((cardspaceiteration/(float)(circleEnd-circleBegin)*180));
+		//complete trash at this point
+		cout << rotation << endl;
+		height=(float)(((circleEnd-circleBegin)/2)+cardspaceiteration)-300;
+		cout << height << endl;
+		(*start)->SetPosition(sf::Vector2f(cardspaceiteration,height));
+		(*start)->SetRotation(rotation);
+		cardspaceiteration=cardspaceiteration+cardspace;
+		start++;
+	}
+	
+    /*cout << "Cards in hand:" << endl;
     while (start != end){
         cout << "\t" + (*start)->getName() << endl;
         start++;
     }
+*/
 }
 
 void Player::addMana(int Amount, EManaType color){

@@ -26,6 +26,8 @@ int main()
 
     //auto myCard = Fireball();
     auto myCard2 = Fireball();
+	auto myCard3 = Fireball();
+	auto myCard4 = Fireball();
     b.AddCard(myCard2, false);
     b.RemoveCard(0, false);
     //card myCard2 = card();
@@ -33,10 +35,12 @@ int main()
     mainGame.addPlayer(&myPlayer);
 
 	myPlayer.addCardToDeck(&myCard2);
+	myPlayer.addCardToDeck(&myCard3);
+	myPlayer.addCardToDeck(&myCard4);
     //myPlayer.addCardToDeck(&myCard);
-    myPlayer.drawCards(1);
-    myPlayer.SetRotation(0);
-    myCard2.SetRotation(180);
+    myPlayer.drawCards(3);
+    //myPlayer.SetRotation(0);
+    //myCard2.SetRotation(180);
     //cout << myPlayer.GetRotation() << endl;
 
     sf::RenderWindow window(sf::VideoMode(

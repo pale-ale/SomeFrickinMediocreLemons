@@ -1,11 +1,13 @@
 #pragma once
 
+#include "Settings.h"
 #include <list>
 #include "card.h"
 #include <algorithm>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "ManaType.h"
+#include <cmath>
 
 
 using namespace std;
@@ -20,6 +22,11 @@ class Player: public UIElement{
     sf::Vector2f graveyardPosition = {300,12};
 	FMana mana;
 	string name;
+	const int circleBegin = 75; 
+	const int circleEnd = Settings::defaultWidth - 75;
+	float cardspace;
+	float rotation;
+	float height;
 
     public:
 	Player(string name);

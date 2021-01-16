@@ -1,3 +1,6 @@
+#pragma once
+#include <iostream>
+
 class Settings{
     public:
     static const uint defaultWidth = 400;
