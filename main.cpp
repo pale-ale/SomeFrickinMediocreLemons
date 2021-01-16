@@ -28,6 +28,7 @@ int main()
     auto myCard2 = Fireball();
 	auto myCard3 = Fireball();
 	auto myCard4 = Fireball();
+	auto myCard5 = Fireball();
     b.AddCard(myCard2, false);
     b.RemoveCard(0, false);
     //card myCard2 = card();
@@ -37,8 +38,10 @@ int main()
 	myPlayer.addCardToDeck(&myCard2);
 	myPlayer.addCardToDeck(&myCard3);
 	myPlayer.addCardToDeck(&myCard4);
+	myPlayer.addCardToDeck(&myCard5);
     //myPlayer.addCardToDeck(&myCard);
     myPlayer.drawCards(3);
+    myPlayer.printHand();
     //myPlayer.SetRotation(0);
     //myCard2.SetRotation(180);
     //cout << myPlayer.GetRotation() << endl;

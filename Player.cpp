@@ -6,13 +6,12 @@ void Player::drawCards(int count){
     while (it != deck.end()){
         hand.push_back(*it);
         (*it)->setFlipState(true);
-        (*it)->SetPosition(handPosition);
+        (*it)->SetPosition(this->position + handOffset);
         it++;
     }
     hand.insert(hand.begin(), it, deck.end());
     it = deck.end(); advance(it, -count);
     deck.erase(it, deck.end());
-	printHand();
 }
 
 void Player::playCard(card* cardToPlay){
@@ -24,7 +23,7 @@ void Player::playCard(card* cardToPlay){
 }
 
 void Player::addCardToDeck(card *card){
-    card->SetPosition(deckPosition);
+    card->SetPosition(this->position + deckOffset);
     card->setFlipState(false);
     deck.push_back(card);
     addChild(card);
@@ -48,18 +47,20 @@ void Player::printHand(){
     auto start = hand.begin();
     auto end = hand.end();
 	//calculated for space per card
-	float cardspace = ((circleEnd-circleBegin)/(float)hand.size());
-	int cardspaceiteration = circleBegin + cardspace;
+    int handwidth = 200;
+	float slotWidth = (handwidth/(float)hand.size());
+	int currentSlotNumber = 0;
+    int leftHandBoundary = position.x + handOffset.x - handwidth/2;
+    int leftmostRotation = -30;
+    float rotationStep = abs(leftmostRotation)/float(hand.size());
 	while(start != end) {
-		rotation=((cardspaceiteration/(float)(circleEnd-circleBegin)*180));
-		//complete trash at this point
-		cout << rotation << endl;
-		height=(float)(((circleEnd-circleBegin)/2)+cardspaceiteration)-300;
-		cout << height << endl;
-		(*start)->SetPosition(sf::Vector2f(cardspaceiteration,height));
+        auto x = slotWidth*currentSlotNumber - slotWidth*(hand.size()/2);
+        auto y = -0.003*pow((x),2)+20;
+		rotation=(rotationStep * (currentSlotNumber - (int)hand.size()/2));
+		(*start)->SetPosition(sf::Vector2f(position.x + handOffset.x + x - 25, position.y + handOffset.y - y));
 		(*start)->SetRotation(rotation);
-		cardspaceiteration=cardspaceiteration+cardspace;
 		start++;
+        currentSlotNumber++;
 	}
 	
     /*cout << "Cards in hand:" << endl;

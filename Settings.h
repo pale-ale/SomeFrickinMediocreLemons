@@ -1,8 +1,7 @@
 #pragma once
-#include <iostream>
 
 class Settings{
     public:
-    static const uint defaultWidth = 400;
-    static const uint defaultHeight = 240;
+    static const unsigned int defaultWidth = 400;
+    static const unsigned int defaultHeight = 240;
 };
