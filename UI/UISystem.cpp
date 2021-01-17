@@ -58,7 +58,7 @@ void UIElement::draw(sf::RenderTarget& target, sf::RenderStates state) const{
 void UIElement::SetRotation(float rotation){
     float rotationDelta = rotation - this->rotation;
     this->rotation = rotation;
-    auto t = sf::Transform(1,0,0,0,1,0,0,0,1).rotate(rotationDelta);
+    auto t = sf::Transform().rotate(rotationDelta);
     auto child_it = children.begin();
     while (child_it != children.end()){
         auto childpos = (**child_it).GetPosition();

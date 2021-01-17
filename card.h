@@ -19,7 +19,9 @@ class card : public UIElement{
 	bool checkGraveyard();
 	string getName();
 	void setFlipState(bool frontFaceUp);
-	bool getFlipped();
+	const sf::Vector2f cardDimensions = {50, 75};
+	const sf::Vector2f imageDimensions = {40, 40};
+	const sf::Vector2f imageOffset = {0, 13};
 	virtual void SetupButtonBinding() = 0;
 	virtual void SetPosition(sf::Vector2f newPosition) override;
 	virtual void SetRotation(float newRotation) override;
@@ -47,6 +49,7 @@ class card : public UIElement{
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
     {	
         target.draw(cardSprite, states);
-		target.draw(imageSprite, states);
+		if (frontFaceUp)
+			target.draw(imageSprite, states);
     }
 };

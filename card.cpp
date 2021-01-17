@@ -24,14 +24,18 @@ void card::setFlipState(bool frontFaceUp){
 void card::SetPosition(sf::Vector2f newPosition){
 	position = newPosition;
 	cardSprite.setPosition(position);
-	imageSprite.setPosition(position + sf::Vector2f(5, 4));
+	imageSprite.setPosition(position + imageOffset);
 	cardButton.SetPosition(position);
 }
 
 void card::SetRotation(float newRotation){
+	float rotDelta = rotation - newRotation;
 	rotation = newRotation;
+	auto t = sf::Transform().rotate(rotation);
+	auto newOffset = t.transformPoint(imageOffset);
 	cardSprite.setRotation(rotation);
 	imageSprite.setRotation(rotation);
+	imageSprite.setPosition({position.x - newOffset.x, position.y - newOffset.y});
 	cardButton.SetRotation(rotation);
 }
 
@@ -40,6 +44,8 @@ card::card(){
 	cardFrontTexture.loadFromFile("/usr/share/test/resources/CardFront.png");
 	cardSprite.setTexture(cardBackTexture);
 	cardSprite.setPosition(position);
+	cardSprite.setOrigin(cardDimensions / 2.0f);
+	imageSprite.setOrigin(imageDimensions / 2.0f);
 	cardButton = Button({position.x, position.y,50,75});
 }
 

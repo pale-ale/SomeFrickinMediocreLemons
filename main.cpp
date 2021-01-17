@@ -24,24 +24,33 @@ int main()
     float scale = 2;
 
 
-    //auto myCard = Fireball();
+    auto myCard1 = Fireball();
     auto myCard2 = Fireball();
 	auto myCard3 = Fireball();
 	auto myCard4 = Fireball();
 	auto myCard5 = Fireball();
-    b.AddCard(myCard2, false);
-    b.RemoveCard(0, false);
-    //card myCard2 = card();
+	auto myCard6 = Fireball();
+	auto myCard7 = Fireball();
+	auto myCard8 = Fireball();
+  
     auto myPlayer = Player();
     mainGame.addPlayer(&myPlayer);
 
+	myPlayer.addCardToDeck(&myCard1);
 	myPlayer.addCardToDeck(&myCard2);
 	myPlayer.addCardToDeck(&myCard3);
 	myPlayer.addCardToDeck(&myCard4);
 	myPlayer.addCardToDeck(&myCard5);
-    //myPlayer.addCardToDeck(&myCard);
-    myPlayer.drawCards(3);
+	myPlayer.addCardToDeck(&myCard6);
+	myPlayer.addCardToDeck(&myCard7);
+	myPlayer.addCardToDeck(&myCard8);
+
+    myPlayer.drawCards(7);
     myPlayer.printHand();
+
+    myCard1.SetPosition(sf::Vector2f(50,50));
+    myCard1.SetRotation(90);
+
     //myPlayer.SetRotation(0);
     //myCard2.SetRotation(180);
     //cout << myPlayer.GetRotation() << endl;
@@ -54,12 +63,18 @@ int main()
         );
     window.setKeyRepeatEnabled(false);
     auto ui = UISystem(&window);
-    ui.addChild(&(myCard2.cardButton));
+    ui.addChild(&(myCard3.cardButton));
     window.setSize({(uint)(Settings::defaultWidth*scale), (uint)(Settings::defaultHeight*scale)});
     window.setVerticalSyncEnabled(true);
     vector<sf::Event> events;
+    sf::Clock clock;
     while (window.isOpen())
     {
+        sf::Time tickDelay = clock.getElapsedTime();
+        clock.restart();
+        if (&myCard4){
+            myCard4.SetRotation((int)(myCard4.GetRotation() + 0.2 * tickDelay.asMilliseconds()) % 360);
+        }
         sf::Event event;
         while (window.pollEvent(event))
         {

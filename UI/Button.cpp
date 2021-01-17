@@ -2,12 +2,13 @@
 
 Button::Button(sf::Rect<float> rect){
     this->rect = rect;
-    this->buttonTexture = sf::Texture();
+    size = sf::Vector2f(rect.width, rect.height);
     buttonShape = sf::RectangleShape({rect.width, rect.height});
     buttonShape.setFillColor(sf::Color(255, 0, 255, 100));
-    this->position = sf::Vector2f(rect.left, rect.top);
-    this->size = sf::Vector2f(rect.width, rect.height);
+    buttonShape.setOrigin(size/2.0f);
+    position = sf::Vector2f(rect.left, rect.top);
     callback = new EventCallback<Button>(this, &Button::OnMouseButtonDown);
+    buttonTexture = sf::Texture();
 }
 
 void Button::SetPosition(sf::Vector2f newPosition){
