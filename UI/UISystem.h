@@ -29,7 +29,8 @@ class UIElement : public sf::Drawable{
     public:
     const float GetRotation() const{return rotation;}
     const sf::Vector2f GetPosition() const{return position;}
-    const sf::Vector2f GetBottomRight() const{return position+size;}
+    const sf::Vector2f GetSize() const{return size;}
+    const sf::Vector2f GetBottomRight() const{return position+size/2.0f;}
     const sf::Vector2f Center() const{return position+sf::Vector2f({size.x/2, size.y/2});}
 };
 

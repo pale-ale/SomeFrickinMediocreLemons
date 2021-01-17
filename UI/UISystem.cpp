@@ -2,7 +2,7 @@
 
 
 bool UISystem::isCoordInBounds(sf::Vector2f coords, const UIElement& element) const{
-    auto tl = element.GetPosition();
+    auto tl = element.GetPosition() - element.GetSize()/2.0f;
     auto br = element.GetBottomRight();
     return tl.x <= coords.x && tl.y <= coords.y &&
         br.x >= coords.x && br.y >= coords.y;
