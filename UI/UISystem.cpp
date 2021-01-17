@@ -8,19 +8,29 @@ bool UISystem::isCoordInBounds(sf::Vector2f coords, const UIElement& element) co
         br.x >= coords.x && br.y >= coords.y;
 }
 
+void UISystem::addListener(UIElement* newListener){
+    for (UIElement* listener : eventListeners){
+        if (listener == newListener){
+            cout << "listener already added!\n";
+            throw;
+        }
+    }
+    eventListeners.push_back(newListener);
+}
+
 void UISystem::processEvents(vector<sf::Event> events){
     auto event_it = events.begin();
     while (event_it != events.end()){
         auto event = *event_it;
         if (event.type == sf::Event::MouseButtonPressed){
-            auto child_it = children.begin();
-            while (child_it != children.end()){
-                auto child = *child_it;
+            auto eventListener_it = eventListeners.begin();
+            while (eventListener_it != eventListeners.end()){
+                auto listener = *eventListener_it;
                 auto mouseCoords = window->mapPixelToCoords(sf::Mouse::getPosition( *window));
-                if (isCoordInBounds(mouseCoords, *child)){
-                    child->OnMouseButtonDown();
+                if (isCoordInBounds(mouseCoords, *listener)){
+                    listener->OnMouseButtonDown();
                 }
-                child_it++;
+                eventListener_it++;
             }
         }
         event_it++;

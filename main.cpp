@@ -23,33 +23,15 @@ int main()
     auto b = Battlefield();
     float scale = 2;
 
-
-    auto myCard1 = Fireball();
-    auto myCard2 = Fireball();
-	auto myCard3 = Fireball();
-	auto myCard4 = Fireball();
-	auto myCard5 = Fireball();
-	auto myCard6 = Fireball();
-	auto myCard7 = Fireball();
-	auto myCard8 = Fireball();
+    vector<card*> cards;
+    for (int i=0; i<8; i++){
+        cards.push_back(new Fireball());
+    }
   
     auto myPlayer = Player();
     mainGame.addPlayer(&myPlayer);
 
-	myPlayer.addCardToDeck(&myCard1);
-	myPlayer.addCardToDeck(&myCard2);
-	myPlayer.addCardToDeck(&myCard3);
-	myPlayer.addCardToDeck(&myCard4);
-	myPlayer.addCardToDeck(&myCard5);
-	myPlayer.addCardToDeck(&myCard6);
-	myPlayer.addCardToDeck(&myCard7);
-	myPlayer.addCardToDeck(&myCard8);
-
-    myPlayer.drawCards(7);
-    myPlayer.printHand();
-
-    myCard1.SetPosition(sf::Vector2f(50,50));
-    myCard1.SetRotation(90);
+   
 
     //myPlayer.SetRotation(0);
     //myCard2.SetRotation(180);
@@ -63,17 +45,25 @@ int main()
         );
     window.setKeyRepeatEnabled(false);
     auto ui = UISystem(&window);
-    ui.addChild(&(myCard3.cardButton));
     window.setSize({(uint)(Settings::defaultWidth*scale), (uint)(Settings::defaultHeight*scale)});
     window.setVerticalSyncEnabled(true);
+
+    for (int i=0; i<cards.size(); i++){
+	    myPlayer.addCardToDeck(cards[i]);
+        ui.addListener(&(cards[i]->cardButton));
+    }
+	
+    myPlayer.drawCards(7);
+    myPlayer.printHand();
+
     vector<sf::Event> events;
     sf::Clock clock;
     while (window.isOpen())
     {
         sf::Time tickDelay = clock.getElapsedTime();
         clock.restart();
-        if (&myCard4){
-            myCard4.SetRotation((int)(myCard4.GetRotation() + 0.2 * tickDelay.asMilliseconds()) % 360);
+        if (&cards[3]){
+            cards[3]->SetRotation((int)(cards[3]->GetRotation() + 0.2 * tickDelay.asMilliseconds()) % 360);
         }
         sf::Event event;
         while (window.pollEvent(event))

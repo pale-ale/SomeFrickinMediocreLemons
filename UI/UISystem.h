@@ -38,6 +38,8 @@ class UISystem : public UIElement{
     public:
     UISystem(sf::RenderWindow* inWindow){window=inWindow;};
     void processEvents(vector<sf::Event> events);
+    list<UIElement*> eventListeners = {};
+    void addListener(UIElement* newListener);
    
     private:
     sf::RenderWindow* window;
