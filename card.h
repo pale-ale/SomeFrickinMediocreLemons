@@ -25,7 +25,7 @@ class card : public UIElement{
 	virtual void SetupButtonBinding() = 0;
 	virtual void SetPosition(sf::Vector2f newPosition) override;
 	virtual void SetRotation(float newRotation) override;
-	virtual void OnMouseButtonDown() override {cout << "test\n";};
+	virtual bool OnMouseButtonDown() override {cout << "test\n"; return true;};
 	virtual void Play();
 
 	protected:
@@ -49,9 +49,11 @@ class card : public UIElement{
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
     {	
-        target.draw(cardSprite, states);
-		if (frontFaceUp)
-			target.draw(imageSprite, states);
-			target.draw(cardButton, states);
+		if (isVisible){
+			target.draw(cardSprite, states);
+			if (frontFaceUp)
+				target.draw(imageSprite, states);
+				target.draw(cardButton, states);
+		}
     }
 };

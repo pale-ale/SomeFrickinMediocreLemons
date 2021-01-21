@@ -9,9 +9,10 @@
 class Button : public UIElement{
     public:
     Button(sf::Rect<float> rect = {0,0,50,50});
-    IEventCallback* callback; 
+    IEventCallback* callback = nullptr;
+    bool handleEvent = true;
 
-    virtual void OnMouseButtonDown()override {cout << "Calling delegate!\n"; (*callback)();}
+    virtual bool OnMouseButtonDown() override;
     virtual void SetPosition(sf::Vector2f newPosition)override;
     virtual void SetRotation(float newRotation)override;
     

@@ -7,7 +7,6 @@ Button::Button(sf::Rect<float> rect){
     buttonShape.setFillColor(sf::Color(255, 0, 255, 100));
     buttonShape.setOrigin(size/2.0f);
     position = sf::Vector2f(rect.left, rect.top);
-    callback = new EventCallback<Button>(this, &Button::OnMouseButtonDown);
     buttonTexture = sf::Texture();
 }
 
@@ -18,4 +17,16 @@ void Button::SetPosition(sf::Vector2f newPosition){
 
 void Button::SetRotation(float newRotation){
     buttonShape.setRotation(newRotation);
+}
+
+bool Button::OnMouseButtonDown(){
+    cout << "Calling delegate!\n";
+    //we wouldnt want our click-callback to change the handlevent param before returning
+    auto returnValue = handleEvent;
+    if (callback){
+        (*callback)();
+    }else{
+        cout << "Calling callback that isn't configured yet!";
+    }
+    return returnValue;
 }

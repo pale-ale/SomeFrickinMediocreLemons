@@ -28,7 +28,9 @@ void UISystem::processEvents(vector<sf::Event> events){
                 auto listener = *eventListener_it;
                 auto mouseCoords = window->mapPixelToCoords(sf::Mouse::getPosition( *window));
                 if (isCoordInBounds(mouseCoords, *listener)){
-                    listener->OnMouseButtonDown();
+                    if (listener->isVisible && listener->OnMouseButtonDown()){
+                        break; //i.e. the mouse event was handled, so no other object should be called again
+                    };
                 }
                 eventListener_it++;
             }
@@ -58,8 +60,8 @@ void UIElement::SetPosition(sf::Vector2f newPosition){
 }
 
 void UIElement::draw(sf::RenderTarget& target, sf::RenderStates state) const{
-    auto child_it = children.begin();
-    while (child_it != children.end()){
+    auto child_it = children.rbegin();
+    while (child_it != children.rend()){
         target.draw(**child_it);
         child_it++;
     }

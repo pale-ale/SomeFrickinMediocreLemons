@@ -12,11 +12,12 @@ class UIElement : public sf::Drawable{
     void addChild(UIElement* newChild);
     void removeChild(UIElement* child);
     const list<UIElement*>& getChildren(){return children;}
-    virtual void OnMouseButtonDown(){}
+    virtual bool OnMouseButtonDown(){return false;}
     virtual void OnMouseButtonUp(){}
     virtual void SetPosition(sf::Vector2f);
     virtual void SetRotation(float rotation);
     bool isDragable;
+    bool isVisible = true;
     
     protected:
     sf::Vector2f position = {0,0};
