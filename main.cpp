@@ -29,7 +29,8 @@ int main()
     }
   
     auto myPlayer = Player();
-    mainGame.addPlayer(&myPlayer);
+    Player* Playerpointer = &myPlayer;
+    mainGame.addPlayer(Playerpointer);
 
    
 

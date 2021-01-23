@@ -1,25 +1,27 @@
 #include "Player.h"
+#include "Hand.h"
 
 void Player::drawCards(int count){
     if (deck.size() < count) { cout << "Not enough cards to draw!\n"; throw ;}
     list<card*>::iterator it = deck.end(); advance(it, -count);
     while (it != deck.end()){
-        hand.push_back(*it);
+        Playerhand.addHand(*it);
         (*it)->setFlipState(true);
-        (*it)->SetPosition(this->position + handOffset);
         it++;
     }
-    hand.insert(hand.begin(), it, deck.end());
+    //hand.insert(hand.begin(), it, deck.end());
+    //Playerhand.addHand((*it));
     it = deck.end(); advance(it, -count);
     deck.erase(it, deck.end());
+    Playerhand.drawHand(this->position);
 }
 
 void Player::playCard(card* cardToPlay){
-    for (int i=0; i<hand.size(); i++){
-        list<card*>::iterator playedCard = find(hand.begin(), hand.end(), cardToPlay);
+    for (int i=0; i<(*Playerhand.getHand()).size(); i++){
+        Playerhand.removeCard(cardToPlay);
         cout << "Player " << " played card " << cardToPlay->getName() << endl;
-        hand.erase(playedCard);
     }
+    Playerhand.drawHand(this->position);
 }
 
 void Player::addCardToDeck(card *card){
@@ -30,7 +32,7 @@ void Player::addCardToDeck(card *card){
 }
 
 const list<card*>* Player::getHand(){
-    return &hand;
+    return Playerhand.getHand();
 }
 
 void Player::printDeck(){
@@ -44,31 +46,14 @@ void Player::printDeck(){
 }
 
 void Player::printHand(){
-    auto start = hand.begin();
-    auto end = hand.end();
-	//calculated for space per card
-    int handwidth = 200;
-	float slotWidth = (handwidth/(float)hand.size());
-	int currentSlotNumber = 0;
-    int leftHandBoundary = position.x + handOffset.x - handwidth/2;
-    int leftmostRotation = -30;
-    float rotationStep = abs(leftmostRotation)/float(hand.size());
-	while(start != end) {
-        auto x = slotWidth*currentSlotNumber - slotWidth*(hand.size()/2);
-        auto y = -0.003*pow((x),2)+20;
-		rotation=(rotationStep * (currentSlotNumber - (int)hand.size()/2));
-		(*start)->SetPosition(sf::Vector2f(position.x + handOffset.x + x, position.y + handOffset.y - y));
-		(*start)->SetRotation(rotation);
-		start++;
-        currentSlotNumber++;
-	}
-	
-    /*cout << "Cards in hand:" << endl;
+    auto start = (*Playerhand.getHand()).begin();
+    auto end = (*Playerhand.getHand()).end();
+    cout << "Cards in hand:" << endl;
     while (start != end){
         cout << "\t" + (*start)->getName() << endl;
         start++;
     }
-*/
+
 }
 
 void Player::addMana(int Amount, EManaType color){

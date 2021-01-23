@@ -23,8 +23,8 @@ void UISystem::processEvents(vector<sf::Event> events){
     while (event_it != events.end()){
         auto event = *event_it;
         if (event.type == sf::Event::MouseButtonPressed){
-            auto eventListener_it = eventListeners.begin();
-            while (eventListener_it != eventListeners.end()){
+            auto eventListener_it = eventListeners.rbegin();
+            while (eventListener_it != eventListeners.rend()){
                 auto listener = *eventListener_it;
                 auto mouseCoords = window->mapPixelToCoords(sf::Mouse::getPosition( *window));
                 if (isCoordInBounds(mouseCoords, *listener)){
