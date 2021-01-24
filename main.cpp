@@ -25,7 +25,9 @@ int main()
 
     vector<card*> cards;
     for (int i=0; i<8; i++){
-        cards.push_back(new Fireball());
+        auto fb = new Fireball();
+        fb->setName("Card" + std::to_string(i));
+        cards.push_back(fb);
     }
   
     auto myPlayer = Player();
@@ -59,12 +61,16 @@ int main()
 
     vector<sf::Event> events;
     sf::Clock clock;
+
+    cards[3]->addChild(cards[2]);
+    cards[2]->SetPosition(cards[3]->GetPosition() + sf::Vector2f(0,60));
     while (window.isOpen())
     {
         sf::Time tickDelay = clock.getElapsedTime();
         clock.restart();
         if (&cards[3]){
             cards[3]->SetRotation((int)(cards[3]->GetRotation() + 0.2 * tickDelay.asMilliseconds()) % 360);
+            cards[3]->SetPosition(cards[3]->GetPosition() + sf::Vector2f(0.02, 0) * (float)tickDelay.asMilliseconds() ) ;
         }
         sf::Event event;
         while (window.pollEvent(event))

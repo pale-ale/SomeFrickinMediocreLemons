@@ -18,6 +18,7 @@ class card : public UIElement{
 	void moveGraveyard();
 	bool checkGraveyard();
 	string getName();
+	void setName(const string newName){name=newName;}
 	void setFlipState(bool frontFaceUp);
 	const sf::Vector2f cardDimensions = {50, 75};
 	const sf::Vector2f imageDimensions = {40, 40};

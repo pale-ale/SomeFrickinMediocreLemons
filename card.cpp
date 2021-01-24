@@ -21,7 +21,9 @@ void card::setFlipState(bool frontFaceUp){
 	}
 }
 
-void card::SetPosition(sf::Vector2f newPosition){
+void card::SetPosition(sf::Vector2f newPosition)
+{
+	Placeable::SetPosition(newPosition);
 	position = newPosition;
 	cardSprite.setPosition(position);
 	imageSprite.setPosition(position + imageOffset);

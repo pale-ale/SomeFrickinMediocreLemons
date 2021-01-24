@@ -39,44 +39,10 @@ void UISystem::processEvents(vector<sf::Event> events){
     }
 }
 
-void UIElement::addChild(UIElement* newChild){
-    for (UIElement* child : children){
-        if (child == newChild){
-            cout << "child already added!\n";
-            throw;
-        }
-    }
-    children.push_back(newChild);
-}
-
-void UIElement::SetPosition(sf::Vector2f newPosition){
+void UIElement::draw(sf::RenderTarget& target, sf::RenderStates state) const{
     auto child_it = children.begin();
     while (child_it != children.end()){
-        auto posDelta = GetPosition() - (**child_it).GetPosition();
-        (**child_it).SetPosition(newPosition + posDelta);
-        child_it++;
-    }
-    position = newPosition;
-}
-
-void UIElement::draw(sf::RenderTarget& target, sf::RenderStates state) const{
-    auto child_it = children.rbegin();
-    while (child_it != children.rend()){
         target.draw(**child_it);
         child_it++;
     }
 };
-
-void UIElement::SetRotation(float rotation){
-    float rotationDelta = rotation - this->rotation;
-    this->rotation = rotation;
-    auto t = sf::Transform().rotate(rotationDelta);
-    auto child_it = children.begin();
-    while (child_it != children.end()){
-        auto childpos = (**child_it).GetPosition();
-        auto pos = t.transformPoint(childpos);
-        (**child_it).SetPosition(pos);
-        (**child_it).SetRotation((**child_it).GetRotation()+rotationDelta);
-        child_it++;
-    }
-}

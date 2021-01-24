@@ -5,7 +5,6 @@ void Hand::drawHand(sf::Vector2f position){
     auto start = hand.begin();
     auto end = hand.end();
 	//calculated for space per card
-    int handwidth = 200;
 	float slotWidth = (handwidth/(float)hand.size());
 	int currentSlotNumber = 0;
     int leftHandBoundary = position.x + handOffset.x - handwidth/2;
