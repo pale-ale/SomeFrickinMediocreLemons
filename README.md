@@ -1,5 +1,5 @@
 # SomeFrickinMediocreLemons
-My personal favorite elongation for SFML.
+My personal favorite explication for SFML.
 
 This project is about a yet-unnamed card game.
 It is, as the name implies, built using only the SFML and standard c++ library.
