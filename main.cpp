@@ -31,14 +31,7 @@ int main()
     }
   
     auto myPlayer = Player();
-    Player* Playerpointer = &myPlayer;
-    mainGame.addPlayer(Playerpointer);
-
-   
-
-    //myPlayer.SetRotation(0);
-    //myCard2.SetRotation(180);
-    //cout << myPlayer.GetRotation() << endl;
+    mainGame.addPlayer(&myPlayer);
 
     sf::RenderWindow window(sf::VideoMode(
         Settings::defaultWidth, 
@@ -62,16 +55,13 @@ int main()
     vector<sf::Event> events;
     sf::Clock clock;
 
-    cards[3]->addChild(cards[2]);
-    cards[2]->SetPosition(cards[3]->GetPosition() + sf::Vector2f(0,60));
     while (window.isOpen())
     {
         sf::Time tickDelay = clock.getElapsedTime();
         clock.restart();
-        if (&cards[3]){
-            cards[3]->SetRotation((int)(cards[3]->GetRotation() + 0.2 * tickDelay.asMilliseconds()) % 360);
-            cards[3]->SetPosition(cards[3]->GetPosition() + sf::Vector2f(0.02, 0) * (float)tickDelay.asMilliseconds() ) ;
-        }
+        
+        myPlayer.setRotation(myPlayer.getRotation() + 0.1 * tickDelay.asMilliseconds());
+        
         sf::Event event;
         while (window.pollEvent(event))
         {

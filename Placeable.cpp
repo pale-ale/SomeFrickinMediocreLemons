@@ -10,15 +10,17 @@ void Placeable::addChild(Placeable* newChild){
     children.push_back(newChild);
 }
 
-void Placeable::SetPosition(sf::Vector2f newPosition){
-    //transform.setPosition(newPosition);
-    auto child_it = children.begin();
-    while (child_it != children.end()){
-        auto posDelta = GetPosition() - (**child_it).GetPosition();
-        (**child_it).SetPosition(newPosition + posDelta);
-        child_it++;
+void Placeable::attachTo(Placeable* newParent){
+    if (parent){
+        parent->removeChild(this);
     }
-    position = newPosition;
+    parent = newParent;
+    parent->addChild(this);
+}
+
+void Placeable::removeChild(Placeable* child){
+    //children.remove(child);
+    cout << children.size() << endl;
 }
 
 void Placeable::draw(sf::RenderTarget& target, sf::RenderStates state) const{
@@ -29,16 +31,27 @@ void Placeable::draw(sf::RenderTarget& target, sf::RenderStates state) const{
     }
 };
 
-void Placeable::SetRotation(float rotation){
-    float rotationDelta = rotation - this->rotation;
-    this->rotation = rotation;
-    auto t = sf::Transform().rotate(rotationDelta);
+void Placeable::setPosition(sf::Vector2f newPosition){
+    auto delta = newPosition - transform.getPosition();
+    transform.setPosition(newPosition);
     auto child_it = children.begin();
     while (child_it != children.end()){
-        auto childpos = (**child_it).GetPosition();
-        auto pos = t.transformPoint(childpos);
-        (**child_it).SetPosition(pos);
-        (**child_it).SetRotation((**child_it).GetRotation()+rotationDelta);
+        auto childPos = (**child_it).getPosition();
+        (**child_it).setPosition(childPos + delta);
+        child_it++;
+    }
+}
+
+void Placeable::setRotation(float newRotation){
+    auto delta = newRotation - transform.getRotation();
+    transform.setRotation(newRotation);
+    auto deltaTransform = sf::Transform().rotate(delta);
+    auto child_it = children.begin();
+    while (child_it != children.end()){
+        auto childDelta = (*child_it)->getPosition() - getPosition();
+        auto transformedChildDelta = deltaTransform.transformPoint(childDelta);
+        (*child_it)->setPosition(getPosition() + transformedChildDelta);
+        (*child_it)->setRotation(newRotation);
         child_it++;
     }
 }

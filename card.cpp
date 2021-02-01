@@ -21,34 +21,31 @@ void card::setFlipState(bool frontFaceUp){
 	}
 }
 
-void card::SetPosition(sf::Vector2f newPosition)
+void card::setPosition(sf::Vector2f newPosition)
 {
-	Placeable::SetPosition(newPosition);
-	position = newPosition;
-	cardSprite.setPosition(position);
-	imageSprite.setPosition(position + imageOffset);
-	cardButton.SetPosition(position);
+	Placeable::setPosition(newPosition);
+	cardSprite.setPosition(newPosition);
+	imageSprite.setPosition(newPosition + imageOffset);
+	cardButton.setPosition(newPosition);
 }
 
-void card::SetRotation(float newRotation){
-	float rotDelta = rotation - newRotation;
-	rotation = newRotation;
-	auto t = sf::Transform().rotate(rotation);
-	auto newOffset = t.transformPoint(imageOffset);
-	cardSprite.setRotation(rotation);
-	imageSprite.setRotation(rotation);
-	imageSprite.setPosition({position.x - newOffset.x, position.y - newOffset.y});
-	cardButton.SetRotation(rotation);
+void card::setRotation(float newRotation){
+	Placeable::setRotation(newRotation);
+	auto o = sf::Transform().rotate(newRotation).transformPoint(imageOffset);
+	cardSprite.setRotation(newRotation);
+	imageSprite.setRotation(newRotation);
+	imageSprite.setPosition(getPosition() + o);
+	cardButton.setRotation(newRotation);
 }
 
 card::card(){
 	cardBackTexture.loadFromFile("/usr/share/test/resources/CardBack.png");
 	cardFrontTexture.loadFromFile("/usr/share/test/resources/CardFront.png");
 	cardSprite.setTexture(cardBackTexture);
-	cardSprite.setPosition(position);
+	cardSprite.setPosition(getPosition());
 	cardSprite.setOrigin(cardDimensions / 2.0f);
 	imageSprite.setOrigin(imageDimensions / 2.0f);
-	cardButton = Button({position.x, position.y,50,75});
+	cardButton = Button({getPosition().x, getPosition().y,50,75});
 }
 
 void card::updateCardImage(){

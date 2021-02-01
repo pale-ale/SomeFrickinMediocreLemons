@@ -13,8 +13,8 @@ class Button : public UIElement{
     bool handleEvent = true;
 
     virtual bool OnMouseButtonDown() override;
-    virtual void SetPosition(sf::Vector2f newPosition)override;
-    virtual void SetRotation(float newRotation)override;
+    virtual void setPosition(sf::Vector2f newPosition)override;
+    virtual void setRotation(float newRotation)override;
     
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{

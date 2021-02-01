@@ -13,7 +13,7 @@ void Player::drawCards(int count){
     //Playerhand.addHand((*it));
     it = deck.end(); advance(it, -count);
     deck.erase(it, deck.end());
-    Playerhand.drawHand(this->position);
+    Playerhand.drawHand(this->getPosition());
 }
 
 void Player::playCard(card* cardToPlay){
@@ -21,11 +21,11 @@ void Player::playCard(card* cardToPlay){
         Playerhand.removeCard(cardToPlay);
         cout << "Player " << " played card " << cardToPlay->getName() << endl;
     }
-    Playerhand.drawHand(this->position);
+    Playerhand.drawHand(this->getPosition());
 }
 
 void Player::addCardToDeck(card *card){
-    card->SetPosition(this->position + deckOffset);
+    card->setPosition(this->getPosition() + deckOffset);
     card->setFlipState(false);
     deck.push_back(card);
     addChild(card);
@@ -53,7 +53,6 @@ void Player::printHand(){
         cout << "\t" + (*start)->getName() << endl;
         start++;
     }
-
 }
 
 void Player::addMana(int Amount, EManaType color){

@@ -14,6 +14,6 @@ sf::Drawable(){
 }
 
 void Game::addPlayer(Player* player){
-    player->SetPosition({Settings::defaultWidth/2, Settings::defaultHeight});
+    player->setPosition({Settings::defaultWidth/2, Settings::defaultHeight});
     players.push_back(player);
 }

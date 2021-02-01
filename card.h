@@ -22,10 +22,10 @@ class card : public UIElement{
 	void setFlipState(bool frontFaceUp);
 	const sf::Vector2f cardDimensions = {50, 75};
 	const sf::Vector2f imageDimensions = {40, 40};
-	const sf::Vector2f imageOffset = {0, 13};
+	const sf::Vector2f imageOffset = {0, -13};
 	virtual void SetupButtonBinding() = 0;
-	virtual void SetPosition(sf::Vector2f newPosition) override;
-	virtual void SetRotation(float newRotation) override;
+	virtual void setPosition(sf::Vector2f newPosition) override;
+	virtual void setRotation(float newRotation) override;
 	virtual bool OnMouseButtonDown() override {cout << "test\n"; return true;};
 	virtual void Play();
 

@@ -14,8 +14,8 @@ void Hand::drawHand(sf::Vector2f position){
         auto x = slotWidth*currentSlotNumber - slotWidth*(hand.size()/2);
         auto y = -0.003*pow((x),2)+20;
 		rotation=(rotationStep * (currentSlotNumber - (int)hand.size()/2));
-		(*start)->SetPosition(sf::Vector2f(position.x + handOffset.x + x, position.y + handOffset.y - y));
-		(*start)->SetRotation(rotation);
+		(*start)->setPosition(sf::Vector2f(position.x + handOffset.x + x, position.y + handOffset.y - y));
+		(*start)->setRotation(rotation);
 		start++;
         currentSlotNumber++;
 	}

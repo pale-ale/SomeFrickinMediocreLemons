@@ -6,16 +6,16 @@ Button::Button(sf::Rect<float> rect){
     buttonShape = sf::RectangleShape({rect.width, rect.height});
     buttonShape.setFillColor(sf::Color(255, 0, 255, 100));
     buttonShape.setOrigin(size/2.0f);
-    position = sf::Vector2f(rect.left, rect.top);
+    transform.setPosition(sf::Vector2f(rect.left, rect.top));
     buttonTexture = sf::Texture();
 }
 
-void Button::SetPosition(sf::Vector2f newPosition){
-    position = newPosition;
-    buttonShape.setPosition(position);
+void Button::setPosition(sf::Vector2f newPosition){
+    transform.setPosition(newPosition);
+    buttonShape.setPosition(newPosition);
 }
 
-void Button::SetRotation(float newRotation){
+void Button::setRotation(float newRotation){
     buttonShape.setRotation(newRotation);
 }
 
