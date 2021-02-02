@@ -49,7 +49,7 @@ int main()
         ui.addListener(&(cards[i]->cardButton));
     }
 	
-    myPlayer.drawCards(7);
+    myPlayer.drawCards(5);
     myPlayer.printHand();
 
     vector<sf::Event> events;
@@ -60,7 +60,7 @@ int main()
         sf::Time tickDelay = clock.getElapsedTime();
         clock.restart();
         
-        myPlayer.setRotation(myPlayer.getRotation() + 0.1 * tickDelay.asMilliseconds());
+        //myPlayer.setRotation(myPlayer.getRotation() + 0.1 * tickDelay.asMilliseconds());
         
         sf::Event event;
         while (window.pollEvent(event))

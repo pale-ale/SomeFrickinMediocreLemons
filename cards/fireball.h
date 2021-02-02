@@ -8,10 +8,8 @@ class Fireball : public card{
 	public:
 	Fireball();
 	virtual void Play() override {
+		card::Play();
 		cout << "My name is \'" << name << "\'\n";
-		isVisible = false;
-		cardButton.isVisible = false;
-		cardButton.handleEvent = false;
 	}
 	virtual bool OnMouseButtonDown() override {
 		cout << "test\n";

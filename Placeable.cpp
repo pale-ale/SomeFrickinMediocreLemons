@@ -19,8 +19,7 @@ void Placeable::attachTo(Placeable* newParent){
 }
 
 void Placeable::removeChild(Placeable* child){
-    //children.remove(child);
-    cout << children.size() << endl;
+    children.remove(child);
 }
 
 void Placeable::draw(sf::RenderTarget& target, sf::RenderStates state) const{

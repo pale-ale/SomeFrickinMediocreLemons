@@ -1,38 +1,44 @@
 #include "Hand.h"
 #include <cmath>
 
-void Hand::drawHand(sf::Vector2f position){
+void Hand::updateHandPositions()
+{
     auto start = hand.begin();
     auto end = hand.end();
-	//calculated for space per card
-	float slotWidth = (handwidth/(float)hand.size());
-	int currentSlotNumber = 0;
-    int leftHandBoundary = position.x + handOffset.x - handwidth/2;
-    int leftmostRotation = -30;
-    float rotationStep = abs(leftmostRotation)/float(hand.size());
-	while(start != end) {
-        auto x = slotWidth*currentSlotNumber - slotWidth*(hand.size()/2);
-        auto y = -0.003*pow((x),2)+20;
-		rotation=(rotationStep * (currentSlotNumber - (int)hand.size()/2));
-		(*start)->setPosition(sf::Vector2f(position.x + handOffset.x + x, position.y + handOffset.y - y));
-		(*start)->setRotation(rotation);
-		start++;
+    //calculated for space per card
+    float slotWidth = handwidth / hand.size();
+    int currentSlotNumber = 0;
+    int xPos = transform.getPosition().x;
+    int yPos = transform.getPosition().y;
+    int leftHandBoundary = xPos + handOffset.x - handwidth / 2;
+    float rotationStep = abs(leftmostRotation) / hand.size();
+    while (start != end)
+    {
+        float x = slotWidth*currentSlotNumber + 0.5*slotWidth - slotWidth*(hand.size() / 2.0f);
+        float y = -0.003 * pow((x), 2) + 20;
+        (*start)->setPosition(sf::Vector2f(xPos + handOffset.x + x, yPos + handOffset.y - y));
+        (*start)->setRotation(rotationStep * (currentSlotNumber - (float)hand.size() / 2) + rotationStep/2);
+        start++;
         currentSlotNumber++;
-	}
+    }
 }
-const list <card*>* Hand::getHand(){
+const list<card *> *Hand::getHand() const
+{
     return &hand;
 }
-bool Hand::addHand(card* cardtoadd){
-    if(hand.size()<maxHandsize){
+
+bool Hand::addCardToHand(card *cardtoadd)
+{
+    if (hand.size() < maxHandsize)
+    {
         hand.push_back(cardtoadd);
         return true;
     }
-    else{
-        return false;
-    }
+    return false;
 }
-bool Hand::removeCard(card* cardtoremove){
-    list<card*>::iterator playedCard = find(hand.begin(), hand.end(), cardtoremove);
+
+bool Hand::removeCard(card *cardtoremove)
+{
+    list<card *>::iterator playedCard = find(hand.begin(), hand.end(), cardtoremove);
     hand.erase(playedCard);
 }

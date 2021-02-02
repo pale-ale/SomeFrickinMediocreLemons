@@ -7,6 +7,7 @@
 #include "UI/Button.h"
 #include "Events/EventCallback.h"
 
+class Player;
 
 using namespace std;
 
@@ -18,6 +19,7 @@ class card : public UIElement{
 	void moveGraveyard();
 	bool checkGraveyard();
 	string getName();
+	Player* owner = nullptr;
 	void setName(const string newName){name=newName;}
 	void setFlipState(bool frontFaceUp);
 	const sf::Vector2f cardDimensions = {50, 75};
@@ -52,9 +54,10 @@ class card : public UIElement{
     {	
 		if (isVisible){
 			target.draw(cardSprite, states);
-			if (frontFaceUp)
+			if (frontFaceUp){
 				target.draw(imageSprite, states);
 				target.draw(cardButton, states);
+			}
 		}
     }
 };

@@ -2,7 +2,6 @@
 
 #include "Settings.h"
 #include <list>
-#include "card.h"
 #include <algorithm>
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -10,6 +9,7 @@
 #include <cmath>
 #include "Hand.h"
 
+class card;
 
 using namespace std;
 
@@ -18,23 +18,23 @@ class Player: public UIElement{
     list<card*> deck = {};
     list<card*> graveyard = {};
     const sf::Vector2f deckOffset = {-163,-50};
-    const sf::Vector2f handOffset = {0,-50};
-    const sf::Vector2f graveyardOffset = {300,12};
+    const sf::Vector2f handOffset = {0,0};
+    const sf::Vector2f graveyardOffset = {163,-50};
 	FMana mana;
-	string name;
-	
+	string name;	
 
     public:
 	Player(string name);
-	Player() {}
+	Player();
     void drawCards(const int count);
     void playCard(card* card);
-    const list<card*>* getHand();
     void addCardToDeck(card *card);
-    void printDeck();
-    void printHand();
+    void addCardToGraveyard(card* card);
+    const list<card*>* getHand() const;
+    void printDeck() const;
+    void printHand() const;
 	void addMana(int amount, EManaType color);
-    const FMana getMana(){return mana;}
+    const FMana getMana() const {return mana;}
 	void clearMana();
-    Hand Playerhand;
+    Hand playerhand;
 };

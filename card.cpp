@@ -1,5 +1,6 @@
-#include <memory>
 #include "card.h"
+#include <memory>
+#include "Player.h"
 
 void card::moveGraveyard(){
 	graveyard=true;
@@ -55,5 +56,10 @@ void card::updateCardImage(){
 }
 
 void card::Play(){
-	cout << "Like a fiddle!\n";
+	if (owner){
+		owner->playCard(this);
+	}
+	else{
+		cout << "A card was played without an owner.\n";
+	}
 }
