@@ -15,6 +15,7 @@ class Placeable : public sf::Drawable{
     virtual void setRotation(float rotation);
     void attachTo(Placeable* newParent);
     void detach();
+    void setChildren(list<Placeable*> newChildren){children = newChildren;};
     
     protected:
     sf::Transformable transform;

@@ -32,6 +32,7 @@ bool Hand::addCardToHand(card *cardtoadd)
     if (hand.size() < maxHandsize)
     {
         hand.push_back(cardtoadd);
+        cardtoadd->attachTo(this);
         return true;
     }
     return false;
@@ -40,5 +41,11 @@ bool Hand::addCardToHand(card *cardtoadd)
 bool Hand::removeCard(card *cardtoremove)
 {
     list<card *>::iterator playedCard = find(hand.begin(), hand.end(), cardtoremove);
-    hand.erase(playedCard);
+    if (*playedCard){
+        hand.erase(playedCard);
+        removeChild(*playedCard);
+    }
+    else{
+        cout << "trying to remove a card that doesnt exist\n";
+    }
 }

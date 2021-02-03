@@ -1,7 +1,10 @@
+#pragma once
+
 #include <iostream>
 #include "card.h"
+#include "Placeable.h"
 
-class Battlefield{
+class Battlefield : public Placeable{
     public:
     Battlefield();
     void AddCard(card& newCard, bool support=true, int slot=-1);
@@ -9,8 +12,8 @@ class Battlefield{
 
     private:
     typedef struct {int index; card* _card;} cardIndex;
-    const vector<sf::Vector2f> battlePositions = {{100,100}, {200,100}};
-    const vector<sf::Vector2f> supportPositions = {{ 75,200}, {125,200}, {175,200}, {225,200}}; 
+    const vector<sf::Vector2f> battlePositionsOffset  = {{-50,-50}, { 50,-50}};
+    const vector<sf::Vector2f> supportPositionsOffset = {{-75, 50}, {-25, 50}, {25,50}, {75,50}}; 
     vector<cardIndex> supportCards;
     vector<cardIndex> battleCards;
     const int MAX_SUPPORT_CARDS = 4;

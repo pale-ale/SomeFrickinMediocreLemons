@@ -1,13 +1,14 @@
 #pragma once
 
-#include "Settings.h"
-#include <list>
 #include <algorithm>
-#include <iostream>
-#include <SFML/Graphics.hpp>
-#include "ManaType.h"
 #include <cmath>
+#include <iostream>
+#include <list>
+#include <SFML/Graphics.hpp>
+#include "Battlefield.h"
 #include "Hand.h"
+#include "ManaType.h"
+#include "Settings.h"
 
 class card;
 
@@ -18,8 +19,9 @@ class Player: public UIElement{
     list<card*> deck = {};
     list<card*> graveyard = {};
     const sf::Vector2f deckOffset = {-163,-50};
-    const sf::Vector2f handOffset = {0,0};
+    const sf::Vector2f handOffset = {0,50};
     const sf::Vector2f graveyardOffset = {163,-50};
+    const sf::Vector2f battlefieldOffset = {0,-125};
 	FMana mana;
 	string name;	
 
@@ -37,4 +39,5 @@ class Player: public UIElement{
     const FMana getMana() const {return mana;}
 	void clearMana();
     Hand playerhand;
+    Battlefield battlefield;
 };

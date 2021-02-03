@@ -20,7 +20,6 @@ int main()
     auto delegateHandler = KeyboardDelegateManager();
     auto mainGame = Game();
     auto spaceDelegate = Delegate();
-    auto b = Battlefield();
     float scale = 2;
 
     vector<card*> cards;
@@ -60,7 +59,7 @@ int main()
         sf::Time tickDelay = clock.getElapsedTime();
         clock.restart();
         
-        //myPlayer.setRotation(myPlayer.getRotation() + 0.1 * tickDelay.asMilliseconds());
+        // myPlayer.setRotation(myPlayer.getRotation() + 0.1 * tickDelay.asMilliseconds());
         
         sf::Event event;
         while (window.pollEvent(event))

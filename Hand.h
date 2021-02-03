@@ -9,7 +9,7 @@ class Hand : public UIElement{
     const int maxHandsize = 10;
     list<card*> hand = {};
     const sf::Vector2f handOffset = {0,-50};
-
+    
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
     {
         for (card* card : hand){

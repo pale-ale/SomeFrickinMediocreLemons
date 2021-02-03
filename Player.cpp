@@ -18,7 +18,7 @@ void Player::drawCards(int count){
 
 void Player::playCard(card* cardToPlay){
     playerhand.removeCard(cardToPlay);
-    addCardToGraveyard(cardToPlay);
+    battlefield.AddCard(*cardToPlay);
     cout << "Player " << " played card " << cardToPlay->getName() << endl;
     playerhand.updateHandPositions();
 }
@@ -78,6 +78,8 @@ Player::Player(std::string Name){
 }
 
 Player::Player(){
+    battlefield.setPosition(getPosition() + battlefieldOffset);
+    battlefield.attachTo(this);
     playerhand.setPosition(getPosition() + handOffset);
     playerhand.attachTo(this);
 }
