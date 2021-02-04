@@ -1,6 +1,6 @@
-#include "Player.h"
-#include "Hand.h"
 #include "card.h"
+#include "Hand.h"
+#include "Player.h"
 
 void Player::drawCards(int count){
     if (deck.size() < count) { cout << "Not enough cards to draw!\n"; throw ;}
@@ -15,6 +15,9 @@ void Player::drawCards(int count){
     it = deck.end(); advance(it, -count);
     deck.erase(it, deck.end());
     playerhand.updateHandPositions();
+    playerHud.setDeckCount(deck.size());
+    playerHud.setHandCount(playerhand.getHand()->size());
+
 }
 
 void Player::playCard(card* cardToPlay){
@@ -22,6 +25,7 @@ void Player::playCard(card* cardToPlay){
     battlefield.AddCard(*cardToPlay);
     cout << "Player " << " played card " << cardToPlay->getName() << endl;
     playerhand.updateHandPositions();
+    playerHud.setHandCount(playerhand.getHand()->size());
 }
 
 void Player::addCardToDeck(card *card){
@@ -30,6 +34,7 @@ void Player::addCardToDeck(card *card){
     card->owner = this;
     card->cardLocation = ECardLocation::deck;
     deck.push_back(card);
+    playerHud.setDeckCount(deck.size());
     addChild(card);
 }
 
@@ -84,4 +89,6 @@ Player::Player(){
     battlefield.attachTo(this);
     playerhand.setPosition(getPosition() + handOffset);
     playerhand.attachTo(this);
+    playerHud.setPosition(getPosition());
+    playerHud.attachTo(this);
 }

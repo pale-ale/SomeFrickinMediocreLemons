@@ -8,6 +8,7 @@
 #include "Battlefield.h"
 #include "Hand.h"
 #include "ManaType.h"
+#include "UI/PlayerHUD.h"
 #include "Settings.h"
 
 class card;
@@ -40,4 +41,11 @@ class Player: public UIElement{
 	void clearMana();
     Hand playerhand;
     Battlefield battlefield;
+    PlayerHUD playerHud;
+
+    protected:
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{
+        UIElement::draw(target, state);
+        target.draw(playerHud); //this is drawn twice. not an issue right now though.
+    }
 };
