@@ -1,4 +1,5 @@
 #include "card.h"
+#include "Game.h"
 #include "Hand.h"
 #include "Player.h"
 
@@ -26,10 +27,16 @@ void Player::playCard(card* cardToPlay){
     cout << "Player " << " played card " << cardToPlay->getName() << endl;
     playerhand.updateHandPositions();
     playerHud.setHandCount(playerhand.getHand()->size());
+    if (game){
+        game->startTurnOfNextPlayer();
+    }else{
+        cout << "I need a gameInstance!\n";
+    }
 }
 
 void Player::addCardToDeck(card *card){
-    card->setPosition(this->getPosition() + deckOffset);
+    card->setPosition(transform.getTransform().transformPoint(deckOffset));
+    card->setRotation(this->getRotation());
     card->setFlipState(false);
     card->owner = this;
     card->cardLocation = ECardLocation::deck;
@@ -78,8 +85,7 @@ void Player::clearMana(){
 	this->mana = FMana();
 }
 	
-Player::Player(std::string Name){
-    Player();
+Player::Player(std::string Name): Player(){
 	this->mana=FMana();
 	this->name=Name;
 }

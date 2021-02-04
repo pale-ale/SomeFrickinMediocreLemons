@@ -1,7 +1,8 @@
-#include <list>
-#include <SFML/Graphics.hpp>
-#include "Player.h"
 #include <iostream>
+#include <list>
+#include "Player.h"
+#include <random>
+#include <SFML/Graphics.hpp>
 
 class Game : public sf::Drawable{
     public:
@@ -11,8 +12,10 @@ class Game : public sf::Drawable{
     sf::Sprite mainTexture = {};
     sf::Texture texture = {};
 
-    Player* currentTurnPlayer;
+    Player* currentTurnPlayer = nullptr;
     Player* getNextTurnPlayer();
+    void startTurnOfPlayer(Player* player);
+    void startTurnOfNextPlayer();
 
     private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override

@@ -16,8 +16,10 @@ void Hand::updateHandPositions()
     {
         float x = slotWidth*currentSlotNumber + 0.5*slotWidth - slotWidth*(hand.size() / 2.0f);
         float y = -0.003 * pow((x), 2) + 20;
-        (*start)->setPosition(sf::Vector2f(xPos + handOffset.x + x, yPos + handOffset.y - y));
-        (*start)->setRotation(rotationStep * (currentSlotNumber - (float)hand.size() / 2) + rotationStep/2);
+        auto standardPos = sf::Vector2f(handOffset.x + x, handOffset.y - y);
+        (*start)->setPosition(transform.getTransform().transformPoint(standardPos));
+        (*start)->setRotation(rotationStep * (currentSlotNumber - (float)hand.size() / 2) + rotationStep/2 + 
+                              transform.getRotation());
         start++;
         currentSlotNumber++;
     }

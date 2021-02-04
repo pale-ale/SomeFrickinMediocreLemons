@@ -27,7 +27,9 @@ void Battlefield::AddCard(card &newCard, bool support, int slot)
     row->push_back({slot, &newCard});
     newCard.attachTo(this);
     newCard.cardLocation = ECardLocation::battlefield;
-    newCard.setPosition(getPosition() + (support ? supportPositionsOffset[slot] : battlePositionsOffset[slot]));
+    newCard.setPosition(transform.getTransform().transformPoint(
+                       (support ? supportPositionsOffset[slot] : battlePositionsOffset[slot])
+                       ));
     newCard.setRotation(0);
 }
 

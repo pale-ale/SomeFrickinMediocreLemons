@@ -1,58 +1,72 @@
-#include <SFML/Graphics.hpp>
-#include <string.h>
+#include "Battlefield.h"
+#include "cards/fireball.h"
+#include "Events/EventCallback.h"
+#include "Game.h"
 #include <iostream>
 #include "KeyboardDelegate.h"
-#include <vector>
 #include "Player.h"
-#include "Game.h"
-#include "cards/fireball.h"
-#include "UI/UISystem.h"
-#include "UI/Button.h"
-#include "Events/EventCallback.h"
-#include "Battlefield.h"
 #include "Settings.h"
+#include <SFML/Graphics.hpp>
+#include <string.h>
+#include "UI/Button.h"
+#include "UI/UISystem.h"
+#include <vector>
 
-using namespace std;
-
+using std::cout;
+using std::endl;
 
 int main()
 {
-    auto delegateHandler = KeyboardDelegateManager();
-    auto mainGame = Game();
-    auto spaceDelegate = Delegate();
-    float scale = 2;
-
-    vector<card*> cards;
-    for (int i=0; i<8; i++){
-        auto fb = new Fireball();
-        fb->setName("Card" + std::to_string(i));
-        cards.push_back(fb);
-    }
-  
-    auto myPlayer = Player();
-    mainGame.addPlayer(&myPlayer);
-
     sf::RenderWindow window(sf::VideoMode(
         Settings::defaultWidth, 
         Settings::defaultHeight), 
         "Nothing works!!",
         sf::Style::Default
         );
-    window.setKeyRepeatEnabled(false);
+    auto delegateHandler = KeyboardDelegateManager();
+    auto mainGame = Game();
+    auto spaceDelegate = Delegate();
     auto ui = UISystem(&window);
+    float scale = 2;
+    window.setKeyRepeatEnabled(false);
     window.setSize({(uint)(Settings::defaultWidth*scale), (uint)(Settings::defaultHeight*scale)});
     window.setVerticalSyncEnabled(true);
 
-    for (int i=0; i<cards.size(); i++){
-	    myPlayer.addCardToDeck(cards[i]);
-        ui.addListener(&(cards[i]->cardButton));
+    vector<card*> player0Cards;
+    for (int i=0; i<8; i++){
+        auto fb = new Fireball();
+        fb->setName("p0Card" + std::to_string(i));
+        player0Cards.push_back(fb);
+    }
+    vector<card*> player1Cards;
+    for (int i=0; i<8; i++){
+        auto fb = new Fireball();
+        fb->setName("p1Card" + std::to_string(i));
+        player1Cards.push_back(fb);
+    }
+  
+    auto player0 = Player("Player0");
+    auto player1 = Player("Player1");
+    mainGame.addPlayer(&player0);
+    mainGame.addPlayer(&player1);
+
+    for (int i=0; i<player0Cards.size(); i++){
+	    player0.addCardToDeck(player0Cards[i]);
+        ui.addListener(&(player0Cards[i]->cardButton));
+    }
+    for (int i=0; i<player1Cards.size(); i++){
+	    player1.addCardToDeck(player1Cards[i]);
+        ui.addListener(&(player1Cards[i]->cardButton));
     }
 	
-    myPlayer.drawCards(5);
-    myPlayer.printHand();
+    player0.drawCards(5);
+    player0.printHand();
+    player1.drawCards(5);
+    player1.printHand();
 
     vector<sf::Event> events;
     sf::Clock clock;
+    mainGame.startTurnOfNextPlayer();
 
     while (window.isOpen())
     {

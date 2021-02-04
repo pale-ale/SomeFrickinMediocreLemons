@@ -23,4 +23,5 @@ class Hand : public UIElement{
     bool addCardToHand(card * cardtoadd);
     bool insertHand(list<card*>::iterator it);
     bool removeCard(card* cardtoremove);
+    void setPosition(sf::Vector2f newPos) override {UIElement::setPosition(newPos); updateHandPositions();};
 };

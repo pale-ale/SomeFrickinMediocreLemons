@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../card.h"
+#include "../Player.h"
 
 using namespace std;
 
@@ -12,7 +13,7 @@ class Fireball : public card{
 	}
 	virtual void OnCardClicked() override {
 		cout << "i was clicked\n";
-		if (cardLocation == hand){
+		if (cardLocation == hand && owner->bIsMyTurn){
 			card::Play();
 			cout << "...and playerd!\n";
 		}

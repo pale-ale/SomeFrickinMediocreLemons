@@ -12,6 +12,7 @@
 #include "Settings.h"
 
 class card;
+class Game;
 
 using namespace std;
 
@@ -25,10 +26,12 @@ class Player: public UIElement{
     const sf::Vector2f battlefieldOffset = {0,-125};
 	FMana mana;
 	string name;	
+    Game* game = nullptr;
 
     public:
 	Player(string name);
 	Player();
+    void setGame(Game* newGame){game = newGame;};
     void drawCards(const int count);
     void playCard(card* card);
     void addCardToDeck(card *card);
@@ -39,6 +42,8 @@ class Player: public UIElement{
 	void addMana(int amount, EManaType color);
     const FMana getMana() const {return mana;}
 	void clearMana();
+    string getName(){return name;}
+    bool bIsMyTurn = false;
     Hand playerhand;
     Battlefield battlefield;
     PlayerHUD playerHud;
