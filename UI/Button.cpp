@@ -20,13 +20,12 @@ void Button::setRotation(float newRotation){
 }
 
 bool Button::OnMouseButtonDown(){
-    cout << "Calling delegate!\n";
     //we wouldnt want our click-callback to change the handlevent param before returning
     auto returnValue = handleEvent;
     if (callback){
         (*callback)();
     }else{
-        cout << "Calling callback that isn't configured yet!";
+        cout << "Ignoring callback that isn't configured yet!";
     }
     return returnValue;
 }

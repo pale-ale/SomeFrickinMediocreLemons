@@ -13,7 +13,6 @@ void Battlefield::AddCard(card &newCard, bool support, int slot)
     if (slot == -1)
     {
         slot = getNextFreeSlot(*row, max);
-        cout << "slot: " << slot << endl;
     }
     if (slot == -1)
     {
@@ -27,6 +26,7 @@ void Battlefield::AddCard(card &newCard, bool support, int slot)
     }
     row->push_back({slot, &newCard});
     newCard.attachTo(this);
+    newCard.cardLocation = ECardLocation::battlefield;
     newCard.setPosition(getPosition() + (support ? supportPositionsOffset[slot] : battlePositionsOffset[slot]));
     newCard.setRotation(0);
 }

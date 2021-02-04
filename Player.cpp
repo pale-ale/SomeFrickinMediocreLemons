@@ -7,6 +7,7 @@ void Player::drawCards(int count){
     list<card*>::iterator it = deck.end(); advance(it, -count);
     while (it != deck.end()){
         playerhand.addCardToHand(*it);
+        (*it)->cardLocation = ECardLocation::hand;
         removeChild(*it);
         (*it)->setFlipState(true);
         it++;
@@ -27,6 +28,7 @@ void Player::addCardToDeck(card *card){
     card->setPosition(this->getPosition() + deckOffset);
     card->setFlipState(false);
     card->owner = this;
+    card->cardLocation = ECardLocation::deck;
     deck.push_back(card);
     addChild(card);
 }

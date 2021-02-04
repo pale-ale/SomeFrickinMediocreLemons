@@ -11,6 +11,14 @@ class Player;
 
 using namespace std;
 
+enum ECardLocation{
+	undefined,
+	deck,
+	hand,
+	battlefield,
+	graveyard
+};
+
 class card : public UIElement{
 	public:
 	card();
@@ -18,6 +26,7 @@ class card : public UIElement{
 	int getType();
 	void moveGraveyard();
 	bool checkGraveyard();
+	ECardLocation cardLocation = undefined;
 	string getName();
 	Player* owner = nullptr;
 	void setName(const string newName){name=newName;}
@@ -28,7 +37,7 @@ class card : public UIElement{
 	virtual void SetupButtonBinding() = 0;
 	virtual void setPosition(sf::Vector2f newPosition) override;
 	virtual void setRotation(float newRotation) override;
-	virtual bool OnMouseButtonDown() override {cout << "test\n"; return true;};
+	virtual void OnCardClicked() {cout << "card clicked\n";};
 	virtual void Play();
 
 	protected:
