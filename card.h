@@ -54,7 +54,8 @@ class card : public UIElement{
 	
 	sf::Texture cardBackTexture;
 	sf::Texture cardFrontTexture;
-	std::shared_ptr<sf::Texture> cardImageTexture;
+	sf::Text cardDescription;
+	std::unique_ptr<sf::Texture> cardImageTexture;
 
 	sf::Sprite cardSprite;
 	sf::Sprite imageSprite;

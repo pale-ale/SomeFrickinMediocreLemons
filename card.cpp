@@ -50,7 +50,7 @@ card::card(){
 }
 
 void card::updateCardImage(){
-	cardImageTexture = std::make_shared<sf::Texture>();
+	cardImageTexture = std::make_unique<sf::Texture>();
 	cardImageTexture->loadFromFile(pathToImage);
 	imageSprite.setTexture(*cardImageTexture);
 }
