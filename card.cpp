@@ -28,15 +28,19 @@ void card::setPosition(sf::Vector2f newPosition)
 	cardSprite.setPosition(newPosition);
 	imageSprite.setPosition(newPosition + imageOffset);
 	cardButton.setPosition(newPosition);
+	cardDescription.setPosition(newPosition + descOffset);
 }
 
 void card::setRotation(float newRotation){
 	Placeable::setRotation(newRotation);
 	auto o = sf::Transform().rotate(newRotation).transformPoint(imageOffset);
+	auto ot = sf::Transform().rotate(newRotation).transformPoint(descOffset);
 	cardSprite.setRotation(newRotation);
 	imageSprite.setRotation(newRotation);
 	imageSprite.setPosition(getPosition() + o);
 	cardButton.setRotation(newRotation);
+	cardDescription.setRotation(newRotation);
+	cardDescription.setPosition(getPosition() + ot);
 }
 
 card::card(){
@@ -58,6 +62,7 @@ void card::updateCardImage(){
 		cardDescription.setString(description);
         cardDescription.setFont(*font);
 	    cardDescription.setPosition(getPosition().x,getPosition().y+20);
+		cardDescription.setScale(0.17,0.17);
     }else{
         cout << "Error loading font \'" << Settings::defaultFontPath << "\'\n";
     };

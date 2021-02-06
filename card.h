@@ -34,6 +34,7 @@ class card : public UIElement{
 	const sf::Vector2f cardDimensions = {50, 75};
 	const sf::Vector2f imageDimensions = {40, 40};
 	const sf::Vector2f imageOffset = {0, -13};
+	const sf::Vector2f descOffset = {-20, 12};
 	virtual void SetupButtonBinding() = 0;
 	virtual void setPosition(sf::Vector2f newPosition) override;
 	virtual void setRotation(float newRotation) override;
@@ -43,7 +44,7 @@ class card : public UIElement{
 	protected:
 	cardType type;
 	string name;
-	string description;
+	string description = "test";
 	int power;
 	int health;
 	string pathToImage = "/usr/share/test/resources/fireball.png";
@@ -69,6 +70,7 @@ class card : public UIElement{
 			if (frontFaceUp){
 				target.draw(imageSprite, states);
 				target.draw(cardButton, states);
+				target.draw(cardDescription, states);
 			}
 		}
     }

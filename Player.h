@@ -47,6 +47,7 @@ class Player: public UIElement{
     Hand playerhand;
     Battlefield battlefield;
     PlayerHUD playerHud;
+    int LifePoints=4000;
 
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{
