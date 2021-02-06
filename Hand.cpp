@@ -46,8 +46,10 @@ bool Hand::removeCard(card *cardtoremove)
     if (*playedCard){
         hand.erase(playedCard);
         removeChild(*playedCard);
+        return true;
     }
     else{
         cout << "trying to remove a card that doesnt exist\n";
+        return false;
     }
 }

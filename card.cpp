@@ -8,7 +8,7 @@ void card::moveGraveyard(){
 bool card::checkGraveyard(){
 	return graveyard;
 }
-int card::getType(){
+cardType card::getType(){
 	return type;
 }
 string card::getName(){
@@ -53,8 +53,15 @@ void card::updateCardImage(){
 	cardImageTexture = std::make_unique<sf::Texture>();
 	cardImageTexture->loadFromFile(pathToImage);
 	imageSprite.setTexture(*cardImageTexture);
+	//does not show font currently neeed to investigate
+	if (font->loadFromFile(Settings::defaultFontPath)){
+		cardDescription.setString(description);
+        cardDescription.setFont(*font);
+	    cardDescription.setPosition(getPosition().x,getPosition().y+20);
+    }else{
+        cout << "Error loading font \'" << Settings::defaultFontPath << "\'\n";
+    };
 }
-
 void card::Play(){
 	if (owner){
 		owner->playCard(this);

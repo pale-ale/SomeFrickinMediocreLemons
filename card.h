@@ -23,7 +23,7 @@ class card : public UIElement{
 	public:
 	card();
 	Button cardButton;
-	int getType();
+	cardType getType();
 	void moveGraveyard();
 	bool checkGraveyard();
 	ECardLocation cardLocation = undefined;
@@ -49,6 +49,8 @@ class card : public UIElement{
 	string pathToImage = "/usr/share/test/resources/fireball.png";
 	bool frontFaceUp;
 	bool graveyard;
+	std::unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
+
 
 	void updateCardImage();
 	
