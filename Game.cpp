@@ -66,7 +66,7 @@ void Game::startTurnOfPlayer(Player* player){
     }
     currentTurnPlayer = player;
     currentTurnPlayer->bIsMyTurn = true;
-    currentTurnPlayer->addMana(FMana({5,5,5,5,5}));
+    currentTurnPlayer->addMana({5,5,5,5,5});
 }
 
 void Game::startTurnOfNextPlayer(){

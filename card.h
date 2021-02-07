@@ -68,7 +68,7 @@ class card : public UIElement{
 	sf::Sprite imageSprite;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
-    {	
+    {
 		if (isVisible){
 			target.draw(cardSprite, states);
 			if (frontFaceUp){

@@ -9,7 +9,7 @@ class Kalle : public card{
 	public:
 	inline static const string pathToImage = "/usr/share/test/resources/Kalle.png";
     inline static const string description = "Doppelklang!";
-	static constexpr FMana cost = FMana({0,0,20,0,0});
+	inline static constexpr FMana cost{0,0,10,0,0};
 	Kalle();
 	
 	virtual void Play() override;

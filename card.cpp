@@ -44,7 +44,7 @@ void card::setRotation(float newRotation){
 }
 
 card::card(const string imagePath, const string desc, FMana mana):
-	pathToImage{imagePath}, description{desc}, cost{cost}
+	pathToImage{imagePath}, description{desc}, cost{mana}
 {
 	cardBackTexture.loadFromFile("/usr/share/test/resources/CardBack.png");
 	cardFrontTexture.loadFromFile("/usr/share/test/resources/CardFront.png");
@@ -78,7 +78,7 @@ void card::OnCardClicked(){
 	if (cardLocation != hand){
 		return;
 	}
-	if (cost > owner->getMana()){
+	if (!owner->getMana().canAfford(cost)){
 		cout << "Not enough mana.\n";
 		return;
 	}
