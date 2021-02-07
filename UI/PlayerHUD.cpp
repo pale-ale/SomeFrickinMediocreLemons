@@ -3,15 +3,11 @@
 PlayerHUD::PlayerHUD(){
     deckCountText.setPosition(getPosition() );
     handCountText.setPosition(getPosition() + handTextOffset);
-    
-    if (font->loadFromFile(Settings::defaultFontPath)){
-        deckCountText.setFont(*font);
-        deckCountText.setString("0");
-        handCountText.setFont(*font);
-        handCountText.setString("0");
-    }else{
-        cout << "Error loading font \'" << Settings::defaultFontPath << "\'\n";
-    };
+    font->loadFromFile(Settings::validFontPath);
+    deckCountText.setFont(*font);
+    deckCountText.setString("0");
+    handCountText.setFont(*font);
+    handCountText.setString("0");
 }
 
 void PlayerHUD::setPosition(sf::Vector2f newPosition)

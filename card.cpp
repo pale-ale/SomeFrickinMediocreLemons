@@ -58,13 +58,13 @@ void card::updateCardImage(){
 	cardImageTexture->loadFromFile(pathToImage);
 	imageSprite.setTexture(*cardImageTexture);
 	//does not show font currently neeed to investigate
-	if (font->loadFromFile(Settings::defaultFontPath)){
+	if (font->loadFromFile(Settings::validFontPath)){
 		cardDescription.setString(description);
         cardDescription.setFont(*font);
 	    cardDescription.setPosition(getPosition().x,getPosition().y+20);
 		cardDescription.setScale(0.17,0.17);
     }else{
-        cout << "Error loading font \'" << Settings::defaultFontPath << "\'\n";
+        cout << "Error loading font \'" << Settings::validFontPath << "\'\n";
     };
 }
 void card::Play(){

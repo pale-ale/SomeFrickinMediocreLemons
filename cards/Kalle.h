@@ -8,9 +8,6 @@ using namespace std;
 class Kalle : public card{
 	public:
 	Kalle();
-	virtual void Play() override {
-		
-	}
 	virtual void OnCardClicked() override {
 		cout << "i was clicked\n";
 		if (cardLocation == hand && owner->bIsMyTurn){

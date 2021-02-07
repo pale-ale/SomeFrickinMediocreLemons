@@ -32,6 +32,7 @@ class Player: public UIElement{
 	Player(string name);
 	Player();
     void setGame(Game* newGame){game = newGame;};
+    Game* getGame(){return game;};
     void drawCards(const int count);
     void playCard(card* card);
     void addCardToDeck(card *card);

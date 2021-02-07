@@ -8,13 +8,11 @@ using namespace std;
 class Fireball : public card{
 	public:
 	Fireball();
-	virtual void Play() override {
-		
-	}
+	virtual void Play() override;
 	virtual void OnCardClicked() override {
 		cout << "i was clicked\n";
 		if (cardLocation == hand && owner->bIsMyTurn){
-			card::Play();
+			Play();
 			cout << "...and playerd!\n";
 		}
 	}
