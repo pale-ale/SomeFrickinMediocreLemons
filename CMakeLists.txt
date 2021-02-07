@@ -19,8 +19,8 @@ set(HEADER_FILES KeyboardDelegate.h)
 add_library(Delegate KeyboardDelegate.cpp ${HEADER_FILES})
 
 # headers for specific cards
-set(HEADER_FILES cards/fireball.h cards/Kalle.h)
-add_library(Cards cards/fireball.cpp cards/Kalle.cpp ${HEADER_FILES})
+set(HEADER_FILES cards/Fireball.h cards/Kalle.h)
+add_library(Cards cards/Fireball.cpp cards/Kalle.cpp ${HEADER_FILES})
 
 # headers for Card, Player, Game, CardType, ManaType, Battlefield, HUD
 set(HEADER_FILES card.h Player.h UI/Button.h Game.h cardTypes.h ManaType.h Battlefield.h Hand.h Placeable.h UI/PlayerHUD)

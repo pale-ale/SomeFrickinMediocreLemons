@@ -81,6 +81,10 @@ void Player::addMana(int Amount, EManaType color){
 	mana.add(color, Amount);
 }
 
+void Player::addMana(const FMana& m){
+	mana = mana + m;
+}
+
 void Player::clearMana(){
 	this->mana = FMana();
 }

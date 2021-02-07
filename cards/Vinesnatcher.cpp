@@ -1,15 +1,12 @@
-#include "fireball.h"
+#include "Vinesnatcher.h"
 #include "../Game.h"
 
-Fireball::Fireball() : card::card()
+Vinesnatcher::Vinesnatcher() : card::card(pathToImage, description, cost)
 {
-    pathToImage = "/usr/share/test/resources/Fireball.png";
-    description="A fireball that\nattacks enemies";
-    updateCardImage();
     SetupButtonBinding();
 }
 
-void Fireball::Play(){
+void Vinesnatcher::Play(){
     card::Play();
     auto g = owner->getGame();
     for (auto* p : g->players){

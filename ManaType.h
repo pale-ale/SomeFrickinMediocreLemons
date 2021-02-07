@@ -1,6 +1,5 @@
+#pragma once
 #include <iostream>
-
-using namespace std;
 
 enum EManaType{
     Black,
@@ -9,12 +8,15 @@ enum EManaType{
     Red,
     White    
 };
-
+// Black, Blue, Green, Red, White
 struct FMana{
     public:
     int Black, Blue, Green, Red, White;
     FMana operator +(const FMana& a){
         return FMana{Black+a.Black, Blue+a.Blue, Green+a.Green, Red+a.Red, White+a.White};
+    }
+    bool operator >(const FMana& a){
+        return Black>a.Black || Blue>a.Blue || Green>a.Green || Red>a.Red || White>a.White;
     }
     void add(EManaType color, int amount){
         get(color) = max(get(color) + amount, 0);

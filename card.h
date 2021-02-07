@@ -6,6 +6,7 @@
 #include "cardTypes.h"
 #include "UI/Button.h"
 #include "Events/EventCallback.h"
+#include "ManaType.h"
 
 class Player;
 
@@ -21,7 +22,9 @@ enum ECardLocation{
 
 class card : public UIElement{
 	public:
-	card();
+	card(const string imagePath = "/usr/share/test/resources/Unknown.png", 
+		 const string desc = "test",
+		 const FMana cost = FMana());
 	Button cardButton;
 	cardType getType();
 	void moveGraveyard();
@@ -38,20 +41,21 @@ class card : public UIElement{
 	virtual void SetupButtonBinding() = 0;
 	virtual void setPosition(sf::Vector2f newPosition) override;
 	virtual void setRotation(float newRotation) override;
-	virtual void OnCardClicked() {cout << "card clicked\n";};
+	virtual void OnCardClicked();
 	virtual void Play();
 
 	protected:
 	cardType type;
 	string name;
-	string description = "test";
+	string description;
 	int power;
 	int health;
-	string pathToImage = "/usr/share/test/resources/fireball.png";
+	string pathToImage;
 	bool frontFaceUp;
 	bool graveyard;
+	bool tapped;
+	FMana cost;
 	std::unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
-
 
 	void updateCardImage();
 	

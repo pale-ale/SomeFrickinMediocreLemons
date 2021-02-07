@@ -41,6 +41,7 @@ class Player: public UIElement{
     void printDeck() const;
     void printHand() const;
 	void addMana(int amount, EManaType color);
+	void addMana(const FMana& m);
     const FMana getMana() const {return mana;}
 	void clearMana();
     string getName(){return name;}

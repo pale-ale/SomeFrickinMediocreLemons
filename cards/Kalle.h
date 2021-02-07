@@ -3,22 +3,17 @@
 #include "../card.h"
 #include "../Player.h"
 
-using namespace std;
+using std::cout;
 
 class Kalle : public card{
 	public:
+	inline static const string pathToImage = "/usr/share/test/resources/Kalle.png";
+    inline static const string description = "Doppelklang!";
+	static constexpr FMana cost = FMana({0,0,20,0,0});
 	Kalle();
-	virtual void OnCardClicked() override {
-		cout << "i was clicked\n";
-		if (cardLocation == hand && owner->bIsMyTurn){
-			card::Play();
-			cout << "...and playerd!\n";
-            cout << "Player has currently "<< owner->LifePoints<< endl;
-            owner->LifePoints += 2000;
-            cout << "Player has currently "<< owner->LifePoints<< endl;
-		}
-        
-	}
+	
+	virtual void Play() override;
+
 	virtual void SetupButtonBinding() override {
 		cardButton.callback = new EventCallback<card>(this, &card::OnCardClicked);
 	}

@@ -43,30 +43,48 @@ void card::setRotation(float newRotation){
 	cardDescription.setPosition(getPosition() + ot);
 }
 
-card::card(){
+card::card(const string imagePath, const string desc, FMana mana):
+	pathToImage{imagePath}, description{desc}, cost{cost}
+{
 	cardBackTexture.loadFromFile("/usr/share/test/resources/CardBack.png");
 	cardFrontTexture.loadFromFile("/usr/share/test/resources/CardFront.png");
 	cardSprite.setTexture(cardBackTexture);
 	cardSprite.setPosition(getPosition());
 	cardSprite.setOrigin(cardDimensions / 2.0f);
 	imageSprite.setOrigin(imageDimensions / 2.0f);
+	updateCardImage();
 	cardButton = Button({getPosition().x, getPosition().y,50,75});
+	font->loadFromFile(Settings::validFontPath);
+	cardDescription.setString(description);
+	cardDescription.setFont(*font);
+	cardDescription.setPosition(getPosition().x,getPosition().y+20);
+	cardDescription.setScale(0.17,0.17);
 }
 
 void card::updateCardImage(){
 	cardImageTexture = std::make_unique<sf::Texture>();
-	cardImageTexture->loadFromFile(pathToImage);
+	if (!cardImageTexture->loadFromFile(pathToImage)){
+		cout << "Error loading \'" << pathToImage << "'. Resetting to default.\n";
+		pathToImage = "/usr/share/test/resources/Unknown.png";
+		cardImageTexture->loadFromFile(pathToImage);
+	};
 	imageSprite.setTexture(*cardImageTexture);
-	//does not show font currently neeed to investigate
-	if (font->loadFromFile(Settings::validFontPath)){
-		cardDescription.setString(description);
-        cardDescription.setFont(*font);
-	    cardDescription.setPosition(getPosition().x,getPosition().y+20);
-		cardDescription.setScale(0.17,0.17);
-    }else{
-        cout << "Error loading font \'" << Settings::validFontPath << "\'\n";
-    };
 }
+
+void card::OnCardClicked(){
+	if (!owner->bIsMyTurn){
+		return;
+	}
+	if (cardLocation != hand){
+		return;
+	}
+	if (cost > owner->getMana()){
+		cout << "Not enough mana.\n";
+		return;
+	}
+	Play();
+}
+
 void card::Play(){
 	if (owner){
 		owner->playCard(this);

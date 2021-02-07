@@ -8,7 +8,6 @@ class PlayerHUD : public UIElement{
     void setHandCount(int handCount);
     virtual void setPosition(sf::Vector2f newPosition) override;
 
-
     private:
     sf::Text deckCountText;
     sf::Text handCountText;

@@ -7,4 +7,5 @@ class Settings{
     inline static const char* defaultFontPaths[] = {"/usr/share/fonts/truetype/ubuntu/UbuntuMono-R.ttf",
                                                     "/usr/share/fonts/noto/NotoSerif-Regular.ttf"};
     inline static const char* validFontPath = nullptr;
+    static const bool bEnableButtonTint = false;
 };
