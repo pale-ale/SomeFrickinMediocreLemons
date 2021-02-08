@@ -109,7 +109,8 @@ Player::Player(){
     playerhand.attachTo(this);
     playerHud.setPosition(getPosition());
     playerHud.attachTo(this);
-    playerBar.setLifePointbase(Settings::StartLifePoints);
+    playerBar.setMax(Settings::StartLifePoints);
     playerBar.setPosition(getPosition() + lifePointOffset);
+    playerBar.setRotation(90);
     playerBar.attachTo(this);
 }

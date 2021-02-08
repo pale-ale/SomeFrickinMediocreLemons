@@ -2,32 +2,37 @@
 #include "../Player.h"
 
 Bar::Bar(){
-    Background.setSize(sf::Vector2f(BarWidth+offset,BarHeight+offset));
+    Background.setSize(sf::Vector2f(barWidth+offset,barHeight+offset));
     Background.setFillColor(sf::Color({0,0,0,255}));
-    HealthBar.setSize(sf::Vector2f(BarWidth,BarHeight));
-    HealthBar.setFillColor(sf::Color({255,0,0,255}));
-    HealthBar.setPosition(Background.getPosition().x+(offset/2),Background.getPosition().y+(offset/2));
+    Background.setOrigin(Background.getSize()/2.0f);
+    Foreground.setSize(sf::Vector2f(barWidth,barHeight));
+    Foreground.setFillColor(sf::Color({255,0,0,255}));
+    Foreground.setOrigin(Foreground.getSize()/2.0f);
+    Foreground.setPosition(Background.getPosition().x+(offset/2),Background.getPosition().y+(offset/2));
 }
-void Bar::setLifePointbase(int lifepoints){
-    this->LifePointbase = lifepoints;
+void Bar::setMax(int newMax){
+    this->max = newMax;
 }
 void Bar::draw(sf::RenderTarget& target, sf::RenderStates state) const{
     target.draw(Background);
-    target.draw(HealthBar);
+    target.draw(Foreground);
 }
-void Bar::setCurrent(int currentlifepoints){
-   HealthBar.setSize(sf::Vector2f((float)BarWidth*std::min((float)(currentlifepoints/(float)this->LifePointbase),1.0f),BarHeight));
+void Bar::setCurrent(int newCurrent){
+    current = newCurrent;
+    float xScale = std::min((float)current/max, 1.0f);
+    Foreground.setSize(sf::Vector2f(barWidth*xScale, barHeight));
 }
 
 void Bar::setPosition(sf::Vector2f newPosition)
 {
 	Placeable::setPosition(newPosition);
     Background.setPosition(newPosition);
-    HealthBar.setPosition(Background.getPosition().x+(offset/2),Background.getPosition().y+(offset/2));
+    Foreground.setPosition(newPosition);
 }
 
 void Bar::setRotation(float newRotation){
-    Placeable::setRotation(newRotation);
-	HealthBar.setRotation(((int)newRotation % (180)));
-    Background.setRotation(((int)newRotation % (180)));
+    auto delta = transform.getRotation() - newRotation;
+    Placeable::setRotation(delta);
+	Foreground.setRotation(delta);
+    Background.setRotation(delta);
 }

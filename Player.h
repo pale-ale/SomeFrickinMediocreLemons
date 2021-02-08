@@ -25,7 +25,7 @@ class Player: public UIElement{
     list<card*> graveyard = {};
     const sf::Vector2f deckOffset = {-163,-50};
     const sf::Vector2f handOffset = {0,50};
-    const sf::Vector2f lifePointOffset = {120,-20};
+    const sf::Vector2f lifePointOffset = {125,-30};
     const sf::Vector2f graveyardOffset = {163,-50};
     const sf::Vector2f battlefieldOffset = {0,-125};
 	FMana mana;

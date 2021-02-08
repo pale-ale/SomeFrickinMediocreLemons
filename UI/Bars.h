@@ -13,8 +13,7 @@ class Player;
 class Bar : public UIElement{
     public:
     Bar();
-    //void setOwner(Player *);
-    void setLifePointbase(int);
+    void setMax(int);
     void setCurrent(int);
     virtual void setPosition(sf::Vector2f newPosition) override;
 	virtual void setRotation(float newRotation) override;
@@ -24,13 +23,13 @@ class Bar : public UIElement{
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
 
     private:
-    const int BarWidth = 40;
-    const int BarHeight = 10;
+    const int barWidth = 40;
+    const int barHeight = 10;
     const int offset = 2;
-    int LifePointbase;
-    sf::RectangleShape HealthBar;
+    int max = 0;
+    int current = 0;
+    sf::RectangleShape Foreground;
     sf::RectangleShape Background;
-    Player* owner = nullptr;
     std::unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
     list<Manabar> manabars;
 };
