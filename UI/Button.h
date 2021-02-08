@@ -9,7 +9,8 @@
 
 class Button : public UIElement{
     public:
-    Button(sf::Rect<float> rect = {0,0,50,50});
+    Button(sf::Rect<float> rect = {0,0,50,50}, 
+           sf::Color color = {255, 0, 255, Settings::bEnableButtonTint ? 100 : 0});
     IEventCallback* callback = nullptr;
     bool handleEvent = true;
 

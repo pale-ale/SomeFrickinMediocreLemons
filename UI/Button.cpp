@@ -1,10 +1,10 @@
 #include "Button.h"
 
-Button::Button(sf::Rect<float> rect){
+Button::Button(sf::Rect<float> rect, sf::Color color){
     this->rect = rect;
     size = sf::Vector2f(rect.width, rect.height);
     buttonShape = sf::RectangleShape({rect.width, rect.height});
-    buttonShape.setFillColor(sf::Color(255, 0, 255, Settings::bEnableButtonTint ? 100 : 0));
+    buttonShape.setFillColor(color);
     buttonShape.setOrigin(size/2.0f);
     transform.setPosition(sf::Vector2f(rect.left, rect.top));
     buttonTexture = sf::Texture();
