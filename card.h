@@ -55,14 +55,14 @@ class card : public UIElement{
 	bool graveyard;
 	bool tapped;
 	FMana cost;
-	std::unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
+	std::shared_ptr<sf::Font> font = std::make_unique<sf::Font>();
 
 	void updateCardImage();
 	
 	sf::Texture cardBackTexture;
 	sf::Texture cardFrontTexture;
 	sf::Text cardDescription;
-	std::unique_ptr<sf::Texture> cardImageTexture;
+	std::shared_ptr<sf::Texture> cardImageTexture;
 
 	sf::Sprite cardSprite;
 	sf::Sprite imageSprite;

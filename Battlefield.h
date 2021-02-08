@@ -9,6 +9,7 @@ class Battlefield : public Placeable{
     Battlefield();
     void AddCard(card& newCard, bool support=true, int slot=-1);
     void RemoveCard(int slot, bool support=true);
+    list<const card*> getCards() const;
 
     private:
     typedef struct {int index; card* _card;} cardIndex;

@@ -1,6 +1,7 @@
 #include "Battlefield.h"
 #include "cards/Fireball.h"
 #include "cards/Kalle.h"
+#include "cards/Vinesnatcher.h"
 #include "Events/EventCallback.h"
 #include "Game.h"
 #include <iostream>
@@ -35,24 +36,14 @@ int main()
     window.setVerticalSyncEnabled(true);
 
     vector<card*> player0Cards;
-    for (int i=0; i<4; i++){
-        auto fb = new Fireball();
-        fb->setName("p0Card" + std::to_string(i));
-        player0Cards.push_back(fb);
-    } 
-    for (int i=0; i<2; i++){
-        auto fb = new Kalle();
-        fb->setName("p0Card" + std::to_string(i));
+    for (int i=0; i<5; i++){
+        auto fb = new Vinesnatcher();
+        fb->setName("p1Card" + std::to_string(i));
         player0Cards.push_back(fb);
     }
     vector<card*> player1Cards;
-    for (int i=0; i<4; i++){
-        auto fb = new Fireball();
-        fb->setName("p1Card" + std::to_string(i));
-        player1Cards.push_back(fb);
-    }  
-    for (int i=0; i<2; i++){
-        auto fb = new Kalle();
+    for (int i=0; i<5; i++){
+        auto fb = new Vinesnatcher();
         fb->setName("p1Card" + std::to_string(i));
         player1Cards.push_back(fb);
     }

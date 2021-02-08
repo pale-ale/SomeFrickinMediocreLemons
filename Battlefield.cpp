@@ -83,3 +83,14 @@ int Battlefield::getNextFreeSlot(vector<cardIndex> &cards, int max)
     }
     return -1;
 }
+
+list<const card*> Battlefield::getCards() const{
+    list<cardIndex> cis;
+    cis.insert(cis.end(), supportCards.begin(), supportCards.end());
+    cis.insert(cis.end(), battleCards.begin(), battleCards.end());
+    list<const card*> cards;
+    for (auto ci : cis){
+        cards.push_back(ci._card);
+    }
+    return cards;
+}

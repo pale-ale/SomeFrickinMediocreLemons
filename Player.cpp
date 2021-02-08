@@ -113,4 +113,5 @@ Player::Player(){
     playerBar.setPosition(getPosition() + lifePointOffset);
     playerBar.setRotation(90);
     playerBar.attachTo(this);
+    addChild(&cardSelector);
 }

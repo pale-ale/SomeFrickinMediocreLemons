@@ -11,6 +11,7 @@
 #include "UI/PlayerHUD.h"
 #include "Settings.h"
 #include "UI/Bars.h"
+#include "UI/CardSelector.h"
 
 
 class card;
@@ -55,6 +56,7 @@ class Player: public UIElement{
     Battlefield battlefield;
     PlayerHUD playerHud;
     Bar playerBar;
+    CardSelector cardSelector;
     int getLifePoints();
     void setLifePoints(int);
     

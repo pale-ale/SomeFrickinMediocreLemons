@@ -30,6 +30,6 @@ class Bar : public UIElement{
     int current = 0;
     sf::RectangleShape Foreground;
     sf::RectangleShape Background;
-    std::unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
+    unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
     list<Manabar> manabars;
 };

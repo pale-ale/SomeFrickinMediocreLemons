@@ -6,17 +6,24 @@
 class CardSelector : public UIElement{
     public:
     CardSelector();
-    void setSelectionTarget(const list<card*> cardsToSelectFrom, bool reposition);
+    void setSelectionTarget(const list<const card*> &cardsToSelectFrom, bool reposition);
     list<card*> getSelectedCards() const;
     bool bIsCurrentlySelecting;
     
     const int gridWidth = 8;
-    const int slotPaddingX = 10;
+    const int slotPaddingX = 5;
     const int slotPaddingY = 10;
-    const int slotWidth = 40;
-    const int slotHeight = 75;
+    const float slotWidth = 50;
+    const float slotHeight = 75;
 
     private:
-    list<std::unique_ptr<Button>> buttons;
+    list<std::shared_ptr<Button>> buttons;
     list<card*> selectedCards;
+
+    protected:
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{
+        for (auto& b : buttons){
+            target.draw(*(b.get()));
+        }
+    }
 };
