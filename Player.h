@@ -10,9 +10,12 @@
 #include "ManaType.h"
 #include "UI/PlayerHUD.h"
 #include "Settings.h"
+#include "UI/Bars.h"
+
 
 class card;
 class Game;
+
 
 using namespace std;
 
@@ -22,11 +25,13 @@ class Player: public UIElement{
     list<card*> graveyard = {};
     const sf::Vector2f deckOffset = {-163,-50};
     const sf::Vector2f handOffset = {0,50};
+    const sf::Vector2f lifePointOffset = {120,-20};
     const sf::Vector2f graveyardOffset = {163,-50};
     const sf::Vector2f battlefieldOffset = {0,-125};
 	FMana mana;
 	string name;	
     Game* game = nullptr;
+    int lifePoints=Settings::StartLifePoints;
 
     public:
 	Player(string name);
@@ -49,7 +54,10 @@ class Player: public UIElement{
     Hand playerhand;
     Battlefield battlefield;
     PlayerHUD playerHud;
-    int LifePoints=4000;
+    Bar playerBar;
+    int getLifePoints();
+    void setLifePoints(int);
+    
 
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{

@@ -7,6 +7,6 @@ Kalle::Kalle() : card::card(pathToImage, description, cost)
 
 void Kalle::Play(){
     card::Play();
-    owner->LifePoints += 2000;
-    cout << owner->getName() << " has " << owner->LifePoints << " HP.\n";
+    owner->setLifePoints(owner->getLifePoints()+2000);
+    cout << owner->getName() << " has " << owner->getLifePoints() << " HP.\n";
 }

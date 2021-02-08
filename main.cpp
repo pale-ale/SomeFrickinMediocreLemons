@@ -5,6 +5,7 @@
 #include "Game.h"
 #include <iostream>
 #include "KeyboardDelegate.h"
+#include "Bars.h"
 #include "Player.h"
 #include "Settings.h"
 #include <SFML/Graphics.hpp>

@@ -11,8 +11,8 @@ void Fireball::Play(){
     auto g = owner->getGame();
     for (auto* p : g->players){
         if (p != owner){
-            p->LifePoints -= 100;
-            cout << p->getName() << " has " << p->LifePoints << " HP.\n";
+            p->setLifePoints(p->getLifePoints()-100);
+            cout << p->getName() << " has " << p->getLifePoints() << " HP.\n";
         }
     }
 }

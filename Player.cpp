@@ -3,6 +3,7 @@
 #include "Hand.h"
 #include "Player.h"
 
+
 void Player::drawCards(int count){
     if (deck.size() < count) { cout << "Not enough cards to draw!\n"; throw ;}
     list<card*>::iterator it = deck.end(); advance(it, -count);
@@ -93,6 +94,13 @@ Player::Player(std::string Name): Player(){
 	this->mana=FMana();
 	this->name=Name;
 }
+int Player::getLifePoints(){
+    return lifePoints;
+}
+void Player::setLifePoints(int lifePoints){
+    this->lifePoints = lifePoints;
+    playerBar.setCurrent(this->lifePoints);
+}
 
 Player::Player(){
     battlefield.setPosition(getPosition() + battlefieldOffset);
@@ -101,4 +109,7 @@ Player::Player(){
     playerhand.attachTo(this);
     playerHud.setPosition(getPosition());
     playerHud.attachTo(this);
+    playerBar.setLifePointbase(Settings::StartLifePoints);
+    playerBar.setPosition(getPosition() + lifePointOffset);
+    playerBar.attachTo(this);
 }
