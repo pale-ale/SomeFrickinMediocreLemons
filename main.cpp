@@ -89,7 +89,7 @@ int main()
         ui.processEvents(events);
         events.clear();
         window.clear();
-      
+        window.getPosition();
         window.draw(mainGame);
         
         window.draw(ui);

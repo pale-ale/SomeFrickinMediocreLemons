@@ -13,10 +13,19 @@ class Button : public UIElement{
            sf::Color color = {255, 0, 255, Settings::bEnableButtonTint ? 100 : 0});
     IEventCallback* callback = nullptr;
     bool handleEvent = true;
+    sf::Color defaultColor = {255,0,255,0};
+    sf::Color mouseOverColor = {255,0,255,100};
 
     virtual bool OnMouseButtonDown() override;
+    virtual void OnBeginMouseover() override{
+        buttonShape.setFillColor(mouseOverColor);
+    }
+    virtual void OnEndMouseover() override{
+        buttonShape.setFillColor(defaultColor);
+    }
     virtual void setPosition(sf::Vector2f newPosition)override;
     virtual void setRotation(float newRotation)override;
+	
     
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{
