@@ -1,16 +1,25 @@
 #include "Bars.h"
 #include "../Player.h"
 
-Bar::Bar(sf::Color BGColor, sf::Color FGColor){
-    Background.setSize(sf::Vector2f(barWidth+offset,barHeight+offset));
-    Background.setFillColor(sf::Color(BGColor));
-    Background.setOrigin(Background.getSize()/2.0f);
-    Foreground.setSize(sf::Vector2f(barWidth,barHeight));
-    Foreground.setFillColor(sf::Color(FGColor));
-    Foreground.setOrigin(Foreground.getSize()/2.0f);
-    Foreground.setPosition(Background.getPosition().x+(offset/2),Background.getPosition().y+(offset/2));
+Bar::Bar(int width, int height, sf::Color bgColor, sf::Color fgColor){
+    this->barHeight = height;
+    this->barWidth = width;
+    this->BGColor = bgColor;
+    this->FGColor = fgColor;
+}
+Bar::Bar(sf::Color bgColor, sf::Color fgColor){
+    this->BGColor = bgColor;
+    this->FGColor = fgColor;
+}
+Bar::Bar(int width, int height){
+    this->barWidth = width;
+    this->barHeight = height;
+    initializeBar();
 }
 Bar::Bar(){
+    initializeBar();
+}
+void Bar::initializeBar(){
     Background.setSize(sf::Vector2f(barWidth+offset,barHeight+offset));
     Background.setFillColor(sf::Color(this->BGColor));
     Background.setOrigin(Background.getSize()/2.0f);
@@ -21,6 +30,10 @@ Bar::Bar(){
 }
 void Bar::setMax(int newMax){
     this->max = newMax;
+}
+void Bar::setDimensions(int Width, int Height){
+    this->barWidth=Width;
+    this->barHeight=Height;
 }
 void Bar::draw(sf::RenderTarget& target, sf::RenderStates state) const{
     target.draw(Background);
@@ -45,7 +58,6 @@ void Bar::setPosition(sf::Vector2f newPosition)
     Background.setPosition(newPosition);
     Foreground.setPosition(newPosition);
 }
-
 void Bar::setRotation(float newRotation){
     auto delta = transform.getRotation() - newRotation;
     Placeable::setRotation(delta);

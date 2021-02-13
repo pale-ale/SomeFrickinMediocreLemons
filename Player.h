@@ -12,6 +12,7 @@
 #include "Settings.h"
 #include "UI/Bars.h"
 #include "UI/CardSelector.h"
+#include "UI/ManaBars.h"
 
 
 class card;
@@ -56,11 +57,11 @@ class Player: public UIElement{
     Battlefield battlefield;
     PlayerHUD playerHud;
     Bar playerBar;
+    ManaBars playerManaBars = ManaBars(20,20,20,20);
     CardSelector cardSelector;
     int getLifePoints();
     void setLifePoints(int);
     
-
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{
         UIElement::draw(target, state);

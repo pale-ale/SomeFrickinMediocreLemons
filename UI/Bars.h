@@ -12,9 +12,12 @@ class Player;
 
 class Bar : public UIElement{
     public:
-    Bar(sf::Color, sf::Color);
+    Bar(int, int, sf::Color, sf::Color);
+    Bar(sf::Color,sf::Color);
+    Bar(int, int);
     Bar();
     void setMax(int);
+    void setDimensions(int,int);
     void setCurrent(int);
     void setFGColor(sf::Color);
     void setBGColor(sf::Color);
@@ -25,10 +28,8 @@ class Bar : public UIElement{
     protected:
     typedef struct {FMana* fmana; sf::Rect<float> Shape;} Manabar;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
-
-    private:
-    const int barWidth = 40;
-    const int barHeight = 10;
+    int barWidth = 40;
+    int barHeight = 10;
     const int offset = 2;
     int max = 0;
     int current = 0;
@@ -38,4 +39,5 @@ class Bar : public UIElement{
     sf::RectangleShape Background;
     unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
     list<Manabar> manabars;
+    void initializeBar();
 };
