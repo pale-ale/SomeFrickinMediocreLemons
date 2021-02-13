@@ -6,10 +6,12 @@ Bar::Bar(int width, int height, sf::Color bgColor, sf::Color fgColor){
     this->barWidth = width;
     this->BGColor = bgColor;
     this->FGColor = fgColor;
+    initializeBar();
 }
 Bar::Bar(sf::Color bgColor, sf::Color fgColor){
     this->BGColor = bgColor;
     this->FGColor = fgColor;
+    initializeBar();
 }
 Bar::Bar(int width, int height){
     this->barWidth = width;
@@ -20,10 +22,10 @@ Bar::Bar(){
     initializeBar();
 }
 void Bar::initializeBar(){
-    Background.setSize(sf::Vector2f(barWidth+offset,barHeight+offset));
+    Background.setSize(sf::Vector2f(barWidth,barHeight));
     Background.setFillColor(sf::Color(this->BGColor));
     Background.setOrigin(Background.getSize()/2.0f);
-    Foreground.setSize(sf::Vector2f(barWidth,barHeight));
+    Foreground.setSize(sf::Vector2f(barWidth-offset,barHeight-offset));
     Foreground.setFillColor(sf::Color(this->FGColor));
     Foreground.setOrigin(Foreground.getSize()/2.0f);
     Foreground.setPosition(Background.getPosition().x+(offset/2),Background.getPosition().y+(offset/2));
@@ -34,6 +36,8 @@ void Bar::setMax(int newMax){
 void Bar::setDimensions(int Width, int Height){
     this->barWidth=Width;
     this->barHeight=Height;
+    Background.setSize(sf::Vector2f(barWidth,barHeight));
+    Foreground.setSize(sf::Vector2f(barWidth-offset,barHeight-offset));
 }
 void Bar::draw(sf::RenderTarget& target, sf::RenderStates state) const{
     target.draw(Background);
@@ -47,6 +51,9 @@ void Bar::setCurrent(int newCurrent){
 void Bar::setFGColor(sf::Color Color){
     Foreground.setFillColor(Color);
     this->FGColor=Color;
+}
+sf::Color Bar::getFGColor(){
+    return this->FGColor;
 }
 void Bar::setBGColor(sf::Color Color){
     Background.setFillColor(Color);

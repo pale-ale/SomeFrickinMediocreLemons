@@ -3,7 +3,7 @@
 #include "../ManaType.h"
 #include "../Settings.h"
 
-class ManaBar: public Bar{
+/*class ManaBar: public Bar{
     public:
     ManaBar();
     ManaBar(sf::Color,sf::Color);
@@ -13,17 +13,25 @@ class ManaBar: public Bar{
     EManaType getManaType();
     private:
     EManaType ManaType;
-};
+};*/
 
-class ManaBars{
+class ManaBars: public UIElement{
     public:
-    ManaBars(const unsigned int, const unsigned int, const unsigned int, const unsigned int);
+    ManaBars(const int, const unsigned int, const unsigned int);
+    void updateManaBars(FMana* mana);
+    virtual void setPosition(sf::Vector2f newPosition) override;
+
+    protected:
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
+    
+
     private:
-    ManaBar blackManaBar = ManaBar(Settings::BlackColor, Settings::BlackColor);
-    ManaBar blueManaBar = ManaBar(Settings::BlackColor,Settings::BlueColor);
-    ManaBar greenManaBar = ManaBar(Settings::BlackColor, Settings::GreenColor);
-    ManaBar redManaBar = ManaBar(Settings::BlackColor, Settings::RedColor);
-    ManaBar whiteManaBar = ManaBar(Settings::BlackColor, Settings::WhiteColor);
-    list<ManaBar*> ManaBarList = {&blackManaBar,&blueManaBar,&greenManaBar,&redManaBar,&whiteManaBar};
+    int offset;
+    Bar blackManaBar = Bar(Settings::BlackColor, Settings::BlackColor);
+    Bar blueManaBar = Bar(Settings::BlackColor,Settings::BlueColor);
+    Bar greenManaBar = Bar(Settings::BlackColor, Settings::GreenColor);
+    Bar redManaBar = Bar(Settings::BlackColor, Settings::RedColor);
+    Bar whiteManaBar = Bar(Settings::BlackColor, Settings::WhiteColor);
+    list<Bar*> ManaBarList = {&blackManaBar,&blueManaBar,&greenManaBar,&redManaBar,&whiteManaBar};
 
 };

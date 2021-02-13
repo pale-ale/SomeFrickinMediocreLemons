@@ -12,14 +12,15 @@ class Player;
 
 class Bar : public UIElement{
     public:
-    Bar(int, int, sf::Color, sf::Color);
-    Bar(sf::Color,sf::Color);
-    Bar(int, int);
+    Bar(int width, int height, sf::Color bgcolor, sf::Color fgColor);
+    Bar(sf::Color bgColor,sf::Color fgColor );
+    Bar(int width, int height);
     Bar();
     void setMax(int);
-    void setDimensions(int,int);
+    void setDimensions(int width,int height);
     void setCurrent(int);
     void setFGColor(sf::Color);
+    sf::Color getFGColor();
     void setBGColor(sf::Color);
     virtual void setPosition(sf::Vector2f newPosition) override;
 	virtual void setRotation(float newRotation) override;
@@ -28,6 +29,8 @@ class Bar : public UIElement{
     protected:
     typedef struct {FMana* fmana; sf::Rect<float> Shape;} Manabar;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
+    
+    private:
     int barWidth = 40;
     int barHeight = 10;
     const int offset = 2;

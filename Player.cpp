@@ -113,5 +113,8 @@ Player::Player(){
     playerBar.setPosition(getPosition() + lifePointOffset);
     playerBar.setRotation(90);
     playerBar.attachTo(this);
+    playerManaBars.setPosition(getPosition() + manaBarOffset);
+    playerManaBars.attachTo(this);
+    //playerManaBar
     //addChild(&cardSelector);
 }
