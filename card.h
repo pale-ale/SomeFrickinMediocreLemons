@@ -42,6 +42,8 @@ class card : public UIElement{
 	virtual void setPosition(sf::Vector2f newPosition) override;
 	virtual void setRotation(float newRotation) override;
 	virtual void OnCardClicked();
+	virtual void OnCardBeginMouseover();
+	virtual void OnCardEndMouseover();
 	virtual void Play();
 
 	protected:

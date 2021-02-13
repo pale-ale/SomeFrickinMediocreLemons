@@ -12,9 +12,9 @@ using namespace std;
 class UIElement : public Placeable{
     public:
     virtual bool OnMouseButtonDown(){return false;}
-    virtual void OnMouseButtonUp(){}
-    virtual void OnBeginMouseover(){cout << "Mouseover\n";}
-    virtual void OnEndMouseover(){cout << "Mouseout\n";}
+    virtual bool OnMouseButtonUp(){return false;}
+    virtual bool OnBeginMouseover(){cout << "Mouseover\n"; return false;}
+    virtual bool OnEndMouseover(){cout << "Mouseout\n"; return false;}
     bool isDragable;
     bool isMouseovering;
     bool isVisible = true;

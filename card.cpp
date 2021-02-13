@@ -85,7 +85,16 @@ void card::OnCardClicked(){
 	Play();
 }
 
+void card::OnCardBeginMouseover(){
+	cardButton.setColor({255,255,255,100});
+}
+
+void card::OnCardEndMouseover(){
+	cardButton.setColor({100,100,100,0});
+}
+
 void card::Play(){
+	OnCardEndMouseover();
 	if (owner){
 		owner->playCard(this);
 	}

@@ -16,8 +16,11 @@ class Vinesnatcher : public card{
 
 	Vinesnatcher();
 	virtual void Play() override;
-	
+	virtual void OnCardBeginMouseover() override;
+
 	virtual void SetupButtonBinding() override {
-		cardButton.callback = new EventCallback<card>(this, &card::OnCardClicked);
+		cardButton.onClickCallback = new EventCallback<card>(this, &card::OnCardClicked);
+		cardButton.onBeginMouseoverCallback = new EventCallback<Vinesnatcher>(this, &Vinesnatcher::OnCardBeginMouseover);
+		cardButton.onEndMouseoverCallback = new EventCallback<card>(this, &card::OnCardEndMouseover);
 	}
 };

@@ -16,3 +16,7 @@ void Fireball::Play(){
         }
     }
 }
+
+void Fireball::OnCardBeginMouseover(){
+    cout << "*sizzle*\n";  
+}

@@ -22,10 +22,30 @@ void Button::setRotation(float newRotation){
 bool Button::OnMouseButtonDown(){
     //we wouldnt want our click-callback to change the handlevent param before returning
     auto returnValue = handleEvent;
-    if (callback){
-        (*callback)();
+    if (onClickCallback){
+        (*onClickCallback)();
     }else{
-        cout << "Ignoring callback that isn't configured yet!";
+        cout << "Click-callback isn't configured yet!\n";
+    }
+    return returnValue;
+}
+
+bool Button::OnBeginMouseover(){
+    auto returnValue = handleEvent;
+    if (onBeginMouseoverCallback){
+        (*onBeginMouseoverCallback)();
+    }else{
+        cout << "Mouseover-callback isn't configured yet!\n";
+    }
+    return returnValue;
+}
+
+bool Button::OnEndMouseover(){
+    auto returnValue = handleEvent;
+    if (onEndMouseoverCallback){
+        (*onEndMouseoverCallback)();
+    }else{
+        cout << "Mouseout-callback isn't configured yet!\n";
     }
     return returnValue;
 }

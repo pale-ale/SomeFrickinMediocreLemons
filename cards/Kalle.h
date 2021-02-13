@@ -13,8 +13,10 @@ class Kalle : public card{
 	Kalle();
 	
 	virtual void Play() override;
-
+	virtual void OnCardBeginMouseover() override;
 	virtual void SetupButtonBinding() override {
-		cardButton.callback = new EventCallback<card>(this, &card::OnCardClicked);
+		cardButton.onClickCallback = new EventCallback<card>(this, &card::OnCardClicked);
+		cardButton.onBeginMouseoverCallback = new EventCallback<Kalle>(this, &Kalle::OnCardBeginMouseover);
+		cardButton.onEndMouseoverCallback = new EventCallback<card>(this, &card::OnCardEndMouseover);
 	}
 };

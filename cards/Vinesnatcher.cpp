@@ -20,3 +20,8 @@ void Vinesnatcher::Play(){
     }
     owner->cardSelector.setSelectionTarget(opponentCards, true);
 }
+
+void Vinesnatcher::OnCardBeginMouseover(){
+    card::OnCardBeginMouseover();
+    cout << "vineover\n";
+}

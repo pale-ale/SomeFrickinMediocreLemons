@@ -79,9 +79,9 @@ void UISystem::processEvents(vector<sf::Event> events)
             for (auto listener : currentMOElements){
                 if (!isElementIn(listener, mouseOveredListeners))
                 {
-                    //i.e. the listener is new
-                    listener->OnBeginMouseover();
+                    //if the listener is new
                     mouseOveredListeners.push_back(listener);
+                    listener->OnBeginMouseover();
                 }
             }
             break;
