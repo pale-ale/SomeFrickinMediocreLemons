@@ -6,14 +6,15 @@
 #include "Game.h"
 #include <iostream>
 #include "KeyboardDelegate.h"
-#include "Bars.h"
 #include "Player.h"
 #include "Settings.h"
 #include <SFML/Graphics.hpp>
 #include <string.h>
+#include "Bar.h"
 #include "UI/Button.h"
 #include "UI/UISystem.h"
 #include <vector>
+#include "math.h"
 
 using std::cout;
 using std::endl;
@@ -76,8 +77,6 @@ int main()
         sf::Time tickDelay = clock.getElapsedTime();
         clock.restart();
         
-        // myPlayer.setRotation(myPlayer.getRotation() + 0.1 * tickDelay.asMilliseconds());
-        
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -91,7 +90,6 @@ int main()
         window.clear();
         window.getPosition();
         window.draw(mainGame);
-        
         window.draw(ui);
         window.display();
     }

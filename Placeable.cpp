@@ -50,7 +50,7 @@ void Placeable::setRotation(float newRotation){
         auto childDelta = (*child_it)->getPosition() - getPosition();
         auto transformedChildDelta = deltaTransform.transformPoint(childDelta);
         (*child_it)->setPosition(getPosition() + transformedChildDelta);
-        (*child_it)->setRotation(newRotation);
+        (*child_it)->setRotation((*child_it)->getRotation() + delta);
         child_it++;
     }
 }

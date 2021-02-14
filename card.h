@@ -45,6 +45,7 @@ class card : public UIElement{
 	virtual void OnCardBeginMouseover();
 	virtual void OnCardEndMouseover();
 	virtual void Play();
+	FMana cost;
 
 	protected:
 	cardType type;
@@ -56,7 +57,6 @@ class card : public UIElement{
 	bool frontFaceUp;
 	bool graveyard;
 	bool tapped;
-	FMana cost;
 	std::shared_ptr<sf::Font> font = std::make_unique<sf::Font>();
 
 	void updateCardImage();

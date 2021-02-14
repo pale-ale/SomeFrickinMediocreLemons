@@ -13,17 +13,19 @@ class Player;
 class Bar : public UIElement{
     public:
     Bar(int width, int height, sf::Color bgcolor, sf::Color fgColor);
-    Bar(sf::Color bgColor,sf::Color fgColor );
+    Bar(sf::Color bgColor, sf::Color fgColor, int rotation = 0);
     Bar(int width, int height);
     Bar();
-    void setMax(int);
-    void setDimensions(int width,int height);
-    void setCurrent(int);
+    void setDimensions(sf::Vector2f);
+    //set the "fullness" of the bar (0=empty, 1=full)
+    void setFillFactor(float factor);
+    float getFillFactor() const{return amount;};
     void setFGColor(sf::Color);
     sf::Color getFGColor();
     void setBGColor(sf::Color);
     virtual void setPosition(sf::Vector2f newPosition) override;
 	virtual void setRotation(float newRotation) override;
+    const int offset = 1;
     
    
     protected:
@@ -31,16 +33,14 @@ class Bar : public UIElement{
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
     
     private:
-    int barWidth = 40;
-    int barHeight = 10;
-    const int offset = 2;
-    int max = 0;
-    int current = 0;
+    sf::Vector2f barSize = {40, 10};
+    float amount = 0;
     sf::Color FGColor = {255,0,0,255};
     sf::Color BGColor = {0,0,0,255};
     sf::RectangleShape Foreground;
     sf::RectangleShape Background;
     unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
     list<Manabar> manabars;
-    void initializeBar();
+    void updateBG();
+    void updateFG();
 };

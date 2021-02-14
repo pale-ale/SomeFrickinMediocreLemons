@@ -19,11 +19,12 @@ void Player::drawCards(int count){
     playerhand.updateHandPositions();
     playerHud.setDeckCount(deck.size());
     playerHud.setHandCount(playerhand.getHand()->size());
-
 }
 
 void Player::playCard(card* cardToPlay){
     playerhand.removeCard(cardToPlay);
+    mana-=cardToPlay->cost;
+    playerManaBars.updateManaBars(&mana);
     battlefield.AddCard(*cardToPlay);
     cout << "Player " << " played card " << cardToPlay->getName() << endl;
     playerhand.updateHandPositions();
@@ -80,14 +81,17 @@ void Player::printHand() const{
 
 void Player::addMana(int Amount, EManaType color){
 	mana.add(color, Amount);
+    playerManaBars.updateManaBars(&mana);
 }
 
 void Player::addMana(const FMana& m){
 	mana = mana + m;
+    playerManaBars.updateManaBars(&mana);
 }
 
 void Player::clearMana(){
 	this->mana = FMana();
+    playerManaBars.updateManaBars(&mana);
 }
 	
 Player::Player(std::string Name): Player(){
@@ -99,7 +103,7 @@ int Player::getLifePoints(){
 }
 void Player::setLifePoints(int lifePoints){
     this->lifePoints = lifePoints;
-    playerBar.setCurrent(this->lifePoints);
+    playerBar.setFillFactor((float)this->lifePoints / Settings::StartLifePoints);
 }
 
 Player::Player(){
@@ -109,11 +113,12 @@ Player::Player(){
     playerhand.attachTo(this);
     playerHud.setPosition(getPosition());
     playerHud.attachTo(this);
-    playerBar.setMax(Settings::StartLifePoints);
     playerBar.setPosition(getPosition() + lifePointOffset);
     playerBar.setRotation(90);
     playerBar.attachTo(this);
+    playerBar.setFillFactor((float)lifePoints / Settings::StartLifePoints);
     playerManaBars.setPosition(getPosition() + manaBarOffset);
+    playerManaBars.setRotation(-90);
     playerManaBars.attachTo(this);
     //playerManaBar
     //addChild(&cardSelector);

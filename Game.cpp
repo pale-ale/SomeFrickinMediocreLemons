@@ -58,6 +58,11 @@ void Game::addPlayer(Player* player){
     }
     player->setGame(this);
     players.push_back(player);
+    if (players.size() == 2){
+        for (auto p : players){
+            p->addMana({20,20,15,7,10});
+        }
+    }
 }
 
 void Game::startTurnOfPlayer(Player* player){
@@ -66,7 +71,6 @@ void Game::startTurnOfPlayer(Player* player){
     }
     currentTurnPlayer = player;
     currentTurnPlayer->bIsMyTurn = true;
-    currentTurnPlayer->addMana({5,5,5,5,5});
 }
 
 void Game::startTurnOfNextPlayer(){

@@ -15,6 +15,13 @@ struct FMana{
     FMana operator +(const FMana& a){
         return FMana{Black+a.Black, Blue+a.Blue, Green+a.Green, Red+a.Red, White+a.White};
     }
+    void operator -=(const FMana& a){
+        Black-=a.Black;
+        Blue-=a.Blue;
+        Green-=a.Green;
+        Red-=a.Red;
+        White-=a.White;
+    }
     bool operator >(const FMana& a){
         return Black>a.Black && Blue>a.Blue && Green>a.Green && Red>a.Red && White>a.White;
     }

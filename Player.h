@@ -10,7 +10,7 @@
 #include "ManaType.h"
 #include "UI/PlayerHUD.h"
 #include "Settings.h"
-#include "UI/Bars.h"
+#include "UI/Bar.h"
 #include "UI/CardSelector.h"
 #include "UI/ManaBars.h"
 
@@ -28,7 +28,7 @@ class Player: public UIElement{
     const sf::Vector2f deckOffset = {-163,-50};
     const sf::Vector2f handOffset = {0,50};
     const sf::Vector2f lifePointOffset = {125,-30};
-    const sf::Vector2f manaBarOffset = {200, -20};
+    const sf::Vector2f manaBarOffset = {-132, -35};
     const sf::Vector2f graveyardOffset = {163,-50};
     const sf::Vector2f battlefieldOffset = {0,-125};
 	FMana mana;
@@ -58,7 +58,7 @@ class Player: public UIElement{
     Battlefield battlefield;
     PlayerHUD playerHud;
     Bar playerBar;
-    ManaBars playerManaBars = ManaBars(5,70,7);
+    ManaBars playerManaBars = ManaBars(50,25);
     CardSelector cardSelector;
     int getLifePoints();
     void setLifePoints(int);
