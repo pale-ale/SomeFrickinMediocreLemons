@@ -18,7 +18,6 @@
 class card;
 class Game;
 
-
 using namespace std;
 
 class Player: public UIElement{
@@ -43,6 +42,8 @@ class Player: public UIElement{
     Game* getGame(){return game;};
     void drawCards(const int count);
     void playCard(card* card);
+    void previewCard(const card& cardToPreview);
+    void stopPreviewingCard();
     void addCardToDeck(card *card);
     void addCardToGraveyard(card* card);
     const list<card*>* getHand() const;

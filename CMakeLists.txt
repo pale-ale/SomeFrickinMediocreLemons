@@ -11,7 +11,7 @@ include_directories(UI PRIVATE {$YOUR_DIRECTORY})
 # Create executable programs
 
 # headers for UI
-set(HEADER_FILES UI/UISystem.h   UI/Button.h   UI/PlayerHUD.h   UI/Bar.h UI/ManaBars.h UI/CardSelector.h)
+set(HEADER_FILES UI/UISystem.h   UI/Button.h   UI/PlayerHUD.h   UI/Bar.h   UI/CardSelector.h   UI/ManaBars.h UI/CardPreview.h)
 add_library(UI   UI/UISystem.cpp UI/Button.cpp UI/PlayerHUD.cpp UI/Bar.cpp UI/CardSelector.cpp UI/ManaBars.cpp ${HEADER_FILES})
 
 # headers for Delegates

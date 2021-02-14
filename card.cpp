@@ -11,7 +11,7 @@ bool card::checkGraveyard(){
 cardType card::getType(){
 	return type;
 }
-string card::getName(){
+string card::getName() const{
 	return name;
 }
 
@@ -87,10 +87,16 @@ void card::OnCardClicked(){
 
 void card::OnCardBeginMouseover(){
 	cardButton.setColor({255,255,255,100});
+	if (owner){
+		owner->previewCard(*this);
+	}
 }
 
 void card::OnCardEndMouseover(){
 	cardButton.setColor({100,100,100,0});
+	if (owner){
+		owner->stopPreviewingCard();
+	}
 }
 
 void card::Play(){

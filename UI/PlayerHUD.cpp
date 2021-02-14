@@ -1,4 +1,5 @@
 #include "PlayerHUD.h"
+#include "../card.h"
 
 PlayerHUD::PlayerHUD(){
     deckCountText.setPosition(getPosition() );
@@ -8,6 +9,21 @@ PlayerHUD::PlayerHUD(){
     deckCountText.setString("0");
     handCountText.setFont(*font);
     handCountText.setString("0");
+}
+
+void PlayerHUD::generatePreview(const card& cardToPreview){
+    if (cardPreview){
+        removeChild(cardPreview.get());
+    }
+    cardPreview = std::make_unique<CardPreview>(cardToPreview);
+    cardPreview->setPosition(getPosition() + cardPreviewOffset);
+    addChild(cardPreview.get());
+}
+
+void PlayerHUD::removePreview(){
+    if (cardPreview){
+        removeChild(cardPreview.get());
+    }
 }
 
 void PlayerHUD::setPosition(sf::Vector2f newPosition)

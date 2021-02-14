@@ -30,7 +30,7 @@ class card : public UIElement{
 	void moveGraveyard();
 	bool checkGraveyard();
 	ECardLocation cardLocation = undefined;
-	string getName();
+	string getName() const;
 	Player* owner = nullptr;
 	void setName(const string newName){name=newName;}
 	void setFlipState(bool frontFaceUp);

@@ -123,3 +123,11 @@ Player::Player(){
     //playerManaBar
     //addChild(&cardSelector);
 }
+
+void Player::previewCard(const card& cardToPreview){
+    playerHud.generatePreview(cardToPreview);
+}
+
+void Player::stopPreviewingCard(){
+    playerHud.removePreview();
+}
