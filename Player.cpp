@@ -120,12 +120,23 @@ Player::Player(){
     playerManaBars.setPosition(getPosition() + manaBarOffset);
     playerManaBars.setRotation(-90);
     playerManaBars.attachTo(this);
-    //playerManaBar
-    //addChild(&cardSelector);
+    addChild(&cardSelector);
 }
 
+void Player::startSelection(bool battlefield, bool enemy){
+    Player* p = enemy ? game->getNextTurnPlayer() : this;
+    cardSelector.bIsCurrentlySelecting = true;
+    if (battlefield){
+        cardSelector.setSelectionTarget(p->battlefield.getCards(), false);
+    }
+}
+
+
 void Player::previewCard(const card& cardToPreview){
-    playerHud.generatePreview(cardToPreview);
+    if (!cardSelector.bIsCurrentlySelecting)
+    {
+        playerHud.generatePreview(cardToPreview);
+    }
 }
 
 void Player::stopPreviewingCard(){

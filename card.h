@@ -40,13 +40,14 @@ class card : public UIElement{
 	const sf::Vector2f imageDimensions = {40, 40};
 	const sf::Vector2f imageOffset = {0, -13};
 	const sf::Vector2f descOffset = {-20, 12};
-	virtual void SetupButtonBinding() = 0;
+	virtual void setupButtonBinding() = 0;
 	virtual void setPosition(sf::Vector2f newPosition) override;
 	virtual void setRotation(float newRotation) override;
-	virtual void OnCardClicked();
-	virtual void OnCardBeginMouseover();
-	virtual void OnCardEndMouseover();
-	virtual void Play();
+	virtual void onCardClicked();
+	virtual void onCardBeginMouseover();
+	virtual void onCardEndMouseover();
+	virtual void play();
+	virtual void tap(){}
 	FMana cost;
 
 	protected:

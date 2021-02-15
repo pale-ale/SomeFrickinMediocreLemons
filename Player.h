@@ -54,7 +54,9 @@ class Player: public UIElement{
     const FMana getMana() const {return mana;}
 	void clearMana();
     string getName(){return name;}
-    bool bIsMyTurn = false;
+    bool bIsMyTurn;
+    bool isSelectingCards;
+    void startSelection(bool battlefield=true, bool enemy=true);
     Hand playerhand;
     Battlefield battlefield;
     PlayerHUD playerHud;

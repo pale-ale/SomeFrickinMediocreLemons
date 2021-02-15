@@ -5,23 +5,14 @@
 
 Vinesnatcher::Vinesnatcher() : card::card(pathToImage, description, cost)
 {
-    SetupButtonBinding();
+    setupButtonBinding();
 }
 
-void Vinesnatcher::Play(){
-    card::Play();
-    auto g = owner->getGame();
-    list<const card*> opponentCards;
-    for (auto p : g->players){
-        if(p == owner){
-            continue;
-        }
-        opponentCards = p->battlefield.getCards();
-    }
-    owner->cardSelector.setSelectionTarget(opponentCards, true);
+void Vinesnatcher::play(){
+    card::play();
 }
 
-void Vinesnatcher::OnCardBeginMouseover(){
-    card::OnCardBeginMouseover();
+void Vinesnatcher::onCardBeginMouseover(){
+    card::onCardBeginMouseover();
     cout << "vineover\n";
 }

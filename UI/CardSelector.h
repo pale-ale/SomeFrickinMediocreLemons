@@ -6,9 +6,9 @@
 class CardSelector : public UIElement{
     public:
     CardSelector();
-    void setSelectionTarget(const list<const card*> &cardsToSelectFrom, bool reposition);
+    void setSelectionTarget(const list<const card*> &cardsToSelectFrom, bool displayAsList);
     list<card*> getSelectedCards() const;
-    bool bIsCurrentlySelecting;
+    bool bIsCurrentlySelecting = false;
     
     const int gridWidth = 8;
     const int slotPaddingX = 5;
@@ -25,5 +25,8 @@ class CardSelector : public UIElement{
         for (auto& b : buttons){
             target.draw(*(b.get()));
         }
+    }
+    void selectedCardClickCallback(){
+        cout << "callback called!\n";
     }
 };

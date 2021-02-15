@@ -2,11 +2,11 @@
 
 Kalle::Kalle() : card::card(pathToImage, description, cost)
 {
-    SetupButtonBinding();
+    setupButtonBinding();
 }
 
-void Kalle::Play(){
-    card::Play();
+void Kalle::play(){
+    card::play();
     owner->setLifePoints(owner->getLifePoints()+2000);
     cout << owner->getName() << " has " << owner->getLifePoints() << " HP.\n";
 }

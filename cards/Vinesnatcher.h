@@ -15,12 +15,18 @@ class Vinesnatcher : public card{
 	static constexpr FMana cost = FMana({0,0,1,0,0});
 
 	Vinesnatcher();
-	virtual void Play() override;
-	virtual void OnCardBeginMouseover() override;
+	virtual void play() override;
+	virtual void onCardBeginMouseover() override;
 
-	virtual void SetupButtonBinding() override {
-		cardButton.onClickCallback = new EventCallback<card>(this, &card::OnCardClicked);
-		cardButton.onBeginMouseoverCallback = new EventCallback<Vinesnatcher>(this, &Vinesnatcher::OnCardBeginMouseover);
-		cardButton.onEndMouseoverCallback = new EventCallback<card>(this, &card::OnCardEndMouseover);
+	virtual void setupButtonBinding() override {
+		cardButton.onClickCallback = new EventCallback<card>(this, &card::onCardClicked);
+		cardButton.onBeginMouseoverCallback = new EventCallback<Vinesnatcher>(this, &Vinesnatcher::onCardBeginMouseover);
+		cardButton.onEndMouseoverCallback = new EventCallback<card>(this, &card::onCardEndMouseover);
+	}
+
+	virtual void tap() override{
+		
+		cout << "vinesnatcher tapped.\n";
+		owner->startSelection();
 	}
 };

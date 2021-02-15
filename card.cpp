@@ -71,36 +71,40 @@ void card::updateCardImage(){
 	imageSprite.setTexture(*cardImageTexture);
 }
 
-void card::OnCardClicked(){
+void card::onCardClicked(){
 	if (!owner->bIsMyTurn){
 		return;
 	}
-	if (cardLocation != hand){
+	if (cardLocation == hand){
+		if (owner->getMana().canAfford(cost)){
+			play();
+		}else{
+			cout << "Not enough mana to play.\n";
+		}
 		return;
 	}
-	if (!owner->getMana().canAfford(cost)){
-		cout << "Not enough mana.\n";
+	if (cardLocation == battlefield){
+		tap();
 		return;
 	}
-	Play();
 }
 
-void card::OnCardBeginMouseover(){
+void card::onCardBeginMouseover(){
 	cardButton.setColor({255,255,255,100});
-	if (owner){
+	if (owner && !owner->isSelectingCards){
 		owner->previewCard(*this);
 	}
 }
 
-void card::OnCardEndMouseover(){
+void card::onCardEndMouseover(){
 	cardButton.setColor({100,100,100,0});
 	if (owner){
 		owner->stopPreviewingCard();
 	}
 }
 
-void card::Play(){
-	OnCardEndMouseover();
+void card::play(){
+	onCardEndMouseover();
 	if (owner){
 		owner->playCard(this);
 	}

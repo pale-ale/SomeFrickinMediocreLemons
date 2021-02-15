@@ -12,11 +12,11 @@ class Kalle : public card{
 	inline static constexpr FMana cost{0,0,10,0,0};
 	Kalle();
 	
-	virtual void Play() override;
-	virtual void OnCardBeginMouseover() override;
-	virtual void SetupButtonBinding() override {
-		cardButton.onClickCallback = new EventCallback<card>(this, &card::OnCardClicked);
-		cardButton.onBeginMouseoverCallback = new EventCallback<Kalle>(this, &Kalle::OnCardBeginMouseover);
-		cardButton.onEndMouseoverCallback = new EventCallback<card>(this, &card::OnCardEndMouseover);
+	virtual void play() override;
+	virtual void onCardBeginMouseover() override;
+	virtual void setupButtonBinding() override {
+		cardButton.onClickCallback = new EventCallback<card>(this, &card::onCardClicked);
+		cardButton.onBeginMouseoverCallback = new EventCallback<Kalle>(this, &Kalle::onCardBeginMouseover);
+		cardButton.onEndMouseoverCallback = new EventCallback<card>(this, &card::onCardEndMouseover);
 	}
 };

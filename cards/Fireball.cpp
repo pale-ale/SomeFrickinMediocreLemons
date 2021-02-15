@@ -3,11 +3,11 @@
 
 Fireball::Fireball() : card::card(pathToImage, description, cost)
 {
-    SetupButtonBinding();
+    setupButtonBinding();
 }
 
-void Fireball::Play(){
-    card::Play();
+void Fireball::play(){
+    card::play();
     auto g = owner->getGame();
     for (auto* p : g->players){
         if (p != owner){
@@ -17,6 +17,6 @@ void Fireball::Play(){
     }
 }
 
-void Fireball::OnCardBeginMouseover(){
+void Fireball::onCardBeginMouseover(){
     cout << "*sizzle*\n";  
 }
