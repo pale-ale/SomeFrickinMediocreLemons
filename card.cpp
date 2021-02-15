@@ -11,7 +11,7 @@ bool card::checkGraveyard(){
 cardType card::getType(){
 	return type;
 }
-string card::getName() const{
+const string card::getName() const{
 	return name;
 }
 

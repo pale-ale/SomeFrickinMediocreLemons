@@ -30,7 +30,9 @@ class card : public UIElement{
 	void moveGraveyard();
 	bool checkGraveyard();
 	ECardLocation cardLocation = undefined;
-	string getName() const;
+	const string getName() const;
+	const string getDescription() const {return description;} 
+	const std::shared_ptr<sf::Texture> getTexture() const {return cardImageTexture;}
 	Player* owner = nullptr;
 	void setName(const string newName){name=newName;}
 	void setFlipState(bool frontFaceUp);
