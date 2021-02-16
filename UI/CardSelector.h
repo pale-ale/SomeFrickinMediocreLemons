@@ -5,7 +5,7 @@
 
 class CardSelector : public UIElement{
     public:
-    CardSelector();
+    CardSelector(UISystem* ui);
     void setSelectionTarget(const list<const card*> &cardsToSelectFrom, bool displayAsList);
     list<card*> getSelectedCards() const;
     bool bIsCurrentlySelecting = false;

@@ -8,7 +8,8 @@
 class CardPreview : public UIElement
 {
 public:
-    CardPreview(const card &cardToPreview)
+    CardPreview(UISystem* ui, const card &cardToPreview):
+    UIElement(ui)
     {
         font.loadFromFile(Settings::validFontPath);
         cardTitle.setFont(font);

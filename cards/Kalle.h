@@ -10,7 +10,7 @@ class Kalle : public card{
 	inline static const string pathToImage = "/usr/share/test/resources/Kalle.png";
     inline static const string description = "Doppelklang!";
 	inline static constexpr FMana cost{0,0,10,0,0};
-	Kalle();
+	Kalle(UISystem* ui);
 	
 	virtual void play() override;
 	virtual void onCardBeginMouseover() override;

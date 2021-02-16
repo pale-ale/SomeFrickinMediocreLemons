@@ -9,7 +9,8 @@
 
 class Button : public UIElement{
     public:
-    Button(sf::Rect<float> rect = {0,0,50,50}, 
+    Button(UISystem* ui,
+           sf::Rect<float> rect = {0,0,50,50}, 
            sf::Color color = {255, 0, 255, Settings::bEnableButtonTint ? 100 : 0});
     IEventCallback* onClickCallback = nullptr;
     IEventCallback* onBeginMouseoverCallback = nullptr;
@@ -21,8 +22,9 @@ class Button : public UIElement{
     virtual bool OnMouseButtonDown() override;
     virtual bool OnBeginMouseover() override;
     virtual bool OnEndMouseover() override;
-    virtual void setPosition(sf::Vector2f newPosition)override;
-    virtual void setRotation(float newRotation)override;
+    virtual void setPosition(sf::Vector2f newPosition) override;
+    //void setSize(sf::Vector2f newSize);
+    virtual void setRotation(float newRotation) override;
 	void setColor(sf::Color color){
         buttonShape.setFillColor(color);
     }
@@ -33,7 +35,7 @@ class Button : public UIElement{
     }
 
     private:
-    sf::Rect<float> rect;
+    sf::FloatRect rect;
     sf::RectangleShape buttonShape;
     sf::Sprite buttonSprite;
     sf::Texture buttonTexture;

@@ -1,9 +1,10 @@
 #include "Button.h"
 
-Button::Button(sf::Rect<float> rect, sf::Color color){
+Button::Button(UISystem* ui, sf::Rect<float> rect, sf::Color color):
+UIElement(ui){
     this->rect = rect;
     size = sf::Vector2f(rect.width, rect.height);
-    buttonShape = sf::RectangleShape({rect.width, rect.height});
+    buttonShape = sf::RectangleShape(size);
     buttonShape.setFillColor(color);
     buttonShape.setOrigin(size/2.0f);
     transform.setPosition(sf::Vector2f(rect.left, rect.top));
@@ -18,6 +19,11 @@ void Button::setPosition(sf::Vector2f newPosition){
 void Button::setRotation(float newRotation){
     buttonShape.setRotation(newRotation);
 }
+
+/*void Button::setSize(sf::Vector2f newSize){
+    buttonShape.setSize(newSize);
+    size = newSize;
+}*/
 
 bool Button::OnMouseButtonDown(){
     //we wouldnt want our click-callback to change the handlevent param before returning

@@ -3,6 +3,8 @@
 #include "card.h"
 
 class Hand : public UIElement{
+    public:
+    Hand(UISystem* ui):UIElement(ui){}
     private:
     const float handwidth = 200;
     const float leftmostRotation = -30;

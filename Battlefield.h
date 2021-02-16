@@ -6,7 +6,7 @@
 
 class Battlefield : public Placeable{
     public:
-    Battlefield();
+    Battlefield(UISystem* ui);
     void AddCard(card& newCard, bool support=true, int slot=-1);
     void RemoveCard(int slot, bool support=true);
     list<const card*> getCards() const;

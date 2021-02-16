@@ -1,7 +1,8 @@
 #include "PlayerHUD.h"
 #include "../card.h"
 
-PlayerHUD::PlayerHUD(){
+PlayerHUD::PlayerHUD(UISystem* ui):
+UIElement(ui){
     deckCountText.setPosition(getPosition() );
     handCountText.setPosition(getPosition() + handTextOffset);
     font->loadFromFile(Settings::validFontPath);
@@ -15,7 +16,7 @@ void PlayerHUD::generatePreview(const card& cardToPreview){
     if (cardPreview){
         removeChild(cardPreview.get());
     }
-    cardPreview = std::make_unique<CardPreview>(cardToPreview);
+    cardPreview = std::make_unique<CardPreview>(ui, cardToPreview);
     cardPreview->setPosition(getPosition() + cardPreviewOffset);
     addChild(cardPreview.get());
 }

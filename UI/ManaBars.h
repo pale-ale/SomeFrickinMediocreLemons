@@ -5,15 +5,15 @@
 
 class ManaBars: public UIElement{
     public:
-    ManaBars(const unsigned int width, const unsigned int height);
+    ManaBars(UISystem* ui, const unsigned int width, const unsigned int height);
     void updateManaBars(FMana* mana);
    
     private:
     const int maxMana = 20;
-    Bar blackManaBar = Bar(Settings::DarkGrayColor, Settings::BlackColor);
-    Bar blueManaBar  = Bar(Settings::DarkGrayColor, Settings::BlueColor);
-    Bar greenManaBar = Bar(Settings::DarkGrayColor, Settings::GreenColor);
-    Bar redManaBar   = Bar(Settings::DarkGrayColor, Settings::RedColor);
-    Bar whiteManaBar = Bar(Settings::DarkGrayColor, Settings::WhiteColor);
+    Bar blackManaBar = Bar(ui, Settings::DarkGrayColor, Settings::BlackColor);
+    Bar blueManaBar  = Bar(ui, Settings::DarkGrayColor, Settings::BlueColor);
+    Bar greenManaBar = Bar(ui, Settings::DarkGrayColor, Settings::GreenColor);
+    Bar redManaBar   = Bar(ui, Settings::DarkGrayColor, Settings::RedColor);
+    Bar whiteManaBar = Bar(ui, Settings::DarkGrayColor, Settings::WhiteColor);
     list<Bar*> ManaBarList = {&blackManaBar,&blueManaBar,&greenManaBar,&redManaBar,&whiteManaBar};
 };

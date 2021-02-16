@@ -1,25 +1,29 @@
 #include "Bar.h"
 #include "../Player.h"
 
-Bar::Bar(int width, int height, sf::Color bgColor, sf::Color fgColor)
+Bar::Bar(UISystem* ui, int width, int height, sf::Color bgColor, sf::Color fgColor):
+Bar(ui)
 {
     barSize.x = width;
     barSize.y = height;
     this->BGColor = bgColor;
     this->FGColor = fgColor;
 }
-Bar::Bar(sf::Color bgColor, sf::Color fgColor, int rotation)
+Bar::Bar(UISystem* ui, sf::Color bgColor, sf::Color fgColor, int rotation):
+Bar(ui)
 {
     this->BGColor = bgColor;
     this->FGColor = fgColor;
     setRotation(rotation);
 }
-Bar::Bar(int width, int height)
+Bar::Bar(UISystem* ui, int width, int height):
+Bar(ui)
 {
     barSize.x = width;
     barSize.y = height;
 }
-Bar::Bar()
+Bar::Bar(UISystem* ui):
+UIElement(ui)
 {
 }
 
@@ -79,7 +83,7 @@ void Bar::setBGColor(sf::Color Color)
 
 void Bar::setPosition(sf::Vector2f newPosition)
 {
-    Placeable::setPosition(newPosition);
+    UIElement::setPosition(newPosition);
     Background.setPosition(newPosition);
     Foreground.setPosition(newPosition);
     updateBG();
@@ -88,7 +92,7 @@ void Bar::setPosition(sf::Vector2f newPosition)
 
 void Bar::setRotation(float newRotation)
 {
-    Placeable::setRotation(newRotation);
+    UIElement::setRotation(newRotation);
     Foreground.setRotation(newRotation);
     Background.setRotation(newRotation);
     updateBG();

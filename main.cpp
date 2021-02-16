@@ -38,22 +38,22 @@ int main()
 
     vector<card*> player0Cards;
     for (int i=0; i<5; i++){
-        auto fb = new Vinesnatcher();
+        auto fb = new Vinesnatcher(&ui);
         fb->setName("p1Card" + std::to_string(i));
         player0Cards.push_back(fb);
     }
     vector<card*> player1Cards;
     for (int i=0; i<5; i++){
-        auto fb = new Vinesnatcher();
+        auto fb = new Vinesnatcher(&ui);
         fb->setName("p1Card" + std::to_string(i));
         player1Cards.push_back(fb);
     }
   
-    auto player0 = Player("Player0");
-    auto player1 = Player("Player1");
+    auto player0 = Player(&ui, "Player0");
+    auto player1 = Player(&ui, "Player1");
     mainGame.addPlayer(&player0);
     mainGame.addPlayer(&player1);
-
+    
     for (int i=0; i<player0Cards.size(); i++){
 	    player0.addCardToDeck(player0Cards[i]);
         ui.addListener(&(player0Cards[i]->cardButton));

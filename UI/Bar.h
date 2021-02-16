@@ -12,10 +12,10 @@ class Player;
 
 class Bar : public UIElement{
     public:
-    Bar(int width, int height, sf::Color bgcolor, sf::Color fgColor);
-    Bar(sf::Color bgColor, sf::Color fgColor, int rotation = 0);
-    Bar(int width, int height);
-    Bar();
+    Bar(UISystem* ui, int width, int height, sf::Color bgcolor, sf::Color fgColor);
+    Bar(UISystem* ui, sf::Color bgColor, sf::Color fgColor, int rotation = 0);
+    Bar(UISystem* ui, int width, int height);
+    Bar(UISystem* ui);
     void setDimensions(sf::Vector2f);
     //set the "fullness" of the bar (0=empty, 1=full)
     void setFillFactor(float factor);

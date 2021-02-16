@@ -94,7 +94,8 @@ void Player::clearMana(){
     playerManaBars.updateManaBars(&mana);
 }
 	
-Player::Player(std::string Name): Player(){
+Player::Player(UISystem* ui, std::string Name): 
+Player(ui){
 	this->mana=FMana();
 	this->name=Name;
 }
@@ -106,7 +107,15 @@ void Player::setLifePoints(int lifePoints){
     playerBar.setFillFactor((float)this->lifePoints / Settings::StartLifePoints);
 }
 
-Player::Player(){
+Player::Player(UISystem* ui):
+UIElement(ui), 
+playerhand{Hand(ui)},
+battlefield{Battlefield(ui)},
+playerBar{Bar(ui)},
+cardSelector{CardSelector(ui)},
+playerManaBars{ManaBars(ui,50,25)},
+playerHud{PlayerHUD(ui)}
+{
     battlefield.setPosition(getPosition() + battlefieldOffset);
     battlefield.attachTo(this);
     playerhand.setPosition(getPosition() + handOffset);

@@ -7,7 +7,7 @@ class card;
 class PlayerHUD : public UIElement
 {
 public:
-    PlayerHUD();
+    PlayerHUD(UISystem* parent);
     void setDeckCount(int deckCount);
     void setHandCount(int handCount);
     virtual void setPosition(sf::Vector2f newPosition) override;

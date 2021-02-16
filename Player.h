@@ -36,8 +36,8 @@ class Player: public UIElement{
     int lifePoints=Settings::StartLifePoints;
 
     public:
-	Player(string name);
-	Player();
+	Player(UISystem* ui, string name);
+	Player(UISystem* ui);
     void setGame(Game* newGame){game = newGame;};
     Game* getGame(){return game;};
     void drawCards(const int count);
@@ -61,7 +61,7 @@ class Player: public UIElement{
     Battlefield battlefield;
     PlayerHUD playerHud;
     Bar playerBar;
-    ManaBars playerManaBars = ManaBars(50,25);
+    ManaBars playerManaBars;
     CardSelector cardSelector;
     int getLifePoints();
     void setLifePoints(int);

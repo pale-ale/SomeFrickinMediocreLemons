@@ -1,6 +1,8 @@
 #include "CardSelector.h"
 
-CardSelector::CardSelector() {}
+CardSelector::CardSelector(UISystem* ui):
+UIElement(ui)
+{}
 
 void CardSelector::setSelectionTarget(const list<const card *> &cardsToSelectFrom, bool reposition)
 {
@@ -18,9 +20,9 @@ void CardSelector::setSelectionTarget(const list<const card *> &cardsToSelectFro
             //WIP
             posX = slotNumberX * slotWidth + slotNumberX * slotPaddingX + slotPaddingX + slotWidth / 2;
             posY = slotNumberY * slotHeight + slotNumberY * slotPaddingY + slotPaddingY + slotHeight / 2;
-            b = std::make_unique<Button>(sf::FloatRect{posX, posY, slotWidth, slotHeight},
+            b = std::make_unique<Button>(ui, sf::FloatRect{posX, posY, slotWidth, slotHeight},
                                          sf::Color{255,255,255,255});
-                                          slotNumberX += 1;
+            slotNumberX += 1;
             if (slotNumberX >= gridWidth)
             {
                 slotNumberX = 0;
@@ -29,7 +31,7 @@ void CardSelector::setSelectionTarget(const list<const card *> &cardsToSelectFro
         }
         else
         {
-            b = std::make_unique<Button>(sf::FloatRect{posX, posY, slotWidth, slotHeight},
+            b = std::make_unique<Button>(ui, sf::FloatRect{posX, posY, slotWidth, slotHeight},
                                          sf::Color{255,255,255,150});
             b->setRotation(c->getRotation());
             b->setPosition(c->getPosition());

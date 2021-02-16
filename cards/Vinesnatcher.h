@@ -14,7 +14,7 @@ class Vinesnatcher : public card{
     inline static const string description = "Select a card to oof it.";
 	static constexpr FMana cost = FMana({0,0,1,0,0});
 
-	Vinesnatcher();
+	Vinesnatcher(UISystem* ui);
 	virtual void play() override;
 	virtual void onCardBeginMouseover() override;
 

@@ -3,7 +3,7 @@
 #include "CardSelector.h"
 #include "../Battlefield.h"
 
-Vinesnatcher::Vinesnatcher() : card::card(pathToImage, description, cost)
+Vinesnatcher::Vinesnatcher(UISystem* ui) : card::card(ui, pathToImage, description, cost)
 {
     setupButtonBinding();
 }

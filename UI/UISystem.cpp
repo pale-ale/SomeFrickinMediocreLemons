@@ -93,6 +93,17 @@ void UISystem::processEvents(vector<sf::Event> events)
     }
 }
 
+template<class T>
+UIElement* UISystem::spawnNew()
+{
+    if (ui)
+    {
+        return ui->spawnNew<T>();
+    }
+    cout << "Dead end of parent chain?\n";
+    return nullptr;
+};
+
 void UIElement::draw(sf::RenderTarget &target, sf::RenderStates state) const
 {
     auto child_it = children.begin();

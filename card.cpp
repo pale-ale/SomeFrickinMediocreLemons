@@ -24,7 +24,7 @@ void card::setFlipState(bool frontFaceUp){
 
 void card::setPosition(sf::Vector2f newPosition)
 {
-	Placeable::setPosition(newPosition);
+	UIElement::setPosition(newPosition);
 	cardSprite.setPosition(newPosition);
 	imageSprite.setPosition(newPosition + imageOffset);
 	cardButton.setPosition(newPosition);
@@ -32,7 +32,7 @@ void card::setPosition(sf::Vector2f newPosition)
 }
 
 void card::setRotation(float newRotation){
-	Placeable::setRotation(newRotation);
+	UIElement::setRotation(newRotation);
 	auto o = sf::Transform().rotate(newRotation).transformPoint(imageOffset);
 	auto ot = sf::Transform().rotate(newRotation).transformPoint(descOffset);
 	cardSprite.setRotation(newRotation);
@@ -43,8 +43,8 @@ void card::setRotation(float newRotation){
 	cardDescription.setPosition(getPosition() + ot);
 }
 
-card::card(const string imagePath, const string desc, FMana mana):
-	pathToImage{imagePath}, description{desc}, cost{mana}
+card::card(UISystem* ui, const string imagePath, const string desc, FMana mana):
+	UIElement(ui), pathToImage{imagePath}, description{desc}, cost{mana}, cardButton{Button(ui, {0,0,50,75})}
 {
 	cardBackTexture.loadFromFile("/usr/share/test/resources/CardBack.png");
 	cardFrontTexture.loadFromFile("/usr/share/test/resources/CardFront.png");
@@ -53,7 +53,8 @@ card::card(const string imagePath, const string desc, FMana mana):
 	cardSprite.setOrigin(cardDimensions / 2.0f);
 	imageSprite.setOrigin(imageDimensions / 2.0f);
 	updateCardImage();
-	cardButton = Button({getPosition().x, getPosition().y,50,75});
+	cardButton.setPosition(getPosition());
+	//cardButton.setSize({50,75});
 	font->loadFromFile(Settings::validFontPath);
 	cardDescription.setString(description);
 	cardDescription.setFont(*font);

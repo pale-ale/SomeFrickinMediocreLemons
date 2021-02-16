@@ -22,7 +22,8 @@ enum ECardLocation{
 
 class card : public UIElement{
 	public:
-	card(const string imagePath = "/usr/share/test/resources/Unknown.png", 
+	card(UISystem* ui,
+		 const string imagePath = "/usr/share/test/resources/Unknown.png", 
 		 const string desc = "test",
 		 const FMana cost = FMana());
 	Button cardButton;

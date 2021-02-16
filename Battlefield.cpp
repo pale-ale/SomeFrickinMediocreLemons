@@ -1,6 +1,6 @@
 #include "Battlefield.h"
 
-Battlefield::Battlefield()
+Battlefield::Battlefield(UISystem* ui)
 {
     supportCards = vector<cardIndex>();
     battleCards = vector<cardIndex>();

@@ -1,6 +1,7 @@
 #include "ManaBars.h"
 
-ManaBars::ManaBars(const unsigned int width, const unsigned int height)
+ManaBars::ManaBars(UISystem* ui, const unsigned int width, const unsigned int height):
+UIElement(ui)
 {
     int o = 0;
     float offset = (float)height/5;

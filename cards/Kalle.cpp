@@ -1,6 +1,6 @@
 #include "Kalle.h"
 
-Kalle::Kalle() : card::card(pathToImage, description, cost)
+Kalle::Kalle(UISystem* ui) : card::card(ui, pathToImage, description, cost)
 {
     setupButtonBinding();
 }
