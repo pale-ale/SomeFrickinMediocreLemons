@@ -19,14 +19,25 @@ class Vinesnatcher : public card{
 	virtual void onCardBeginMouseover() override;
 
 	virtual void setupButtonBinding() override {
-		cardButton.onClickCallback = new EventCallback<card>(this, &card::onCardClicked);
+		cardButton.onMouseDownCallback = new EventCallback<card>(this, &card::onCardClicked);
 		cardButton.onBeginMouseoverCallback = new EventCallback<Vinesnatcher>(this, &Vinesnatcher::onCardBeginMouseover);
 		cardButton.onEndMouseoverCallback = new EventCallback<card>(this, &card::onCardEndMouseover);
 	}
 
 	virtual void tap() override{
-		
+		auto ownerSelection = owner->cardSelector.getSelectedCards();
+		owner->cardSelector.resetSelection();
 		cout << "vinesnatcher tapped.\n";
-		owner->startSelection();
+		if (ownerSelection.size() == 0){
+			owner->startSelection();
+			owner->awaitingSelection = this;
+			return;
+		}
+		if (ownerSelection.size() == 1){
+			auto card = *(ownerSelection.begin());
+			cout << card->getName() << " gon get whipped.\n";
+			card->owner->battlefield.removeCard(card);
+			ownerSelection.clear();
+		}
 	}
 };

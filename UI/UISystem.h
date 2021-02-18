@@ -49,6 +49,7 @@ public:
     list<UIElement *> eventListeners = {};
     list<UIElement *> mouseOveredListeners = {};
     void addListener(UIElement *newListener);
+    void removeListener(UIElement *removeListener);
     bool isElementIn(const UIElement *e, const list<UIElement *> &l)
     {
         return std::find(l.begin(), l.end(), e) != l.end();

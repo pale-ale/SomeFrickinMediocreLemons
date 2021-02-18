@@ -20,7 +20,7 @@ enum ECardLocation{
 	graveyard
 };
 
-class card : public UIElement{
+class card : public UIElement, public std::enable_shared_from_this<card>{
 	public:
 	card(UISystem* ui,
 		 const string imagePath = "/usr/share/test/resources/Unknown.png", 

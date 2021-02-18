@@ -8,6 +8,7 @@ void Placeable::addChild(Placeable* newChild){
         }
     }
     children.push_back(newChild);
+    newChild->parent = this;
 }
 
 void Placeable::attachTo(Placeable* newParent){

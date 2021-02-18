@@ -12,14 +12,18 @@ class Button : public UIElement{
     Button(UISystem* ui,
            sf::Rect<float> rect = {0,0,50,50}, 
            sf::Color color = {255, 0, 255, Settings::bEnableButtonTint ? 100 : 0});
-    IEventCallback* onClickCallback = nullptr;
+   
+    IEventCallback* onMouseDownCallback = nullptr;
+    IEventCallback* onMouseUpCallback = nullptr;
     IEventCallback* onBeginMouseoverCallback = nullptr;
     IEventCallback* onEndMouseoverCallback = nullptr;
     bool handleEvent = true;
+    bool isPressed = false;
     sf::Color defaultColor = {255,0,255,0};
     sf::Color mouseOverColor = {255,0,255,100};
 
     virtual bool OnMouseButtonDown() override;
+    virtual bool OnMouseButtonUp() override;
     virtual bool OnBeginMouseover() override;
     virtual bool OnEndMouseover() override;
     virtual void setPosition(sf::Vector2f newPosition) override;

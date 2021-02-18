@@ -9,21 +9,21 @@ class Hand : public UIElement{
     const float handwidth = 200;
     const float leftmostRotation = -30;
     const int maxHandsize = 10;
-    list<card*> hand = {};
+    list<shared_ptr<card>> hand = {};
     const sf::Vector2f handOffset = {0,-50};
     
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
     {
-        for (card* card : hand){
+        for (auto card : hand){
             target.draw(*card);
         }
     }
 
     public:
     void updateHandPositions();
-    const list<card*>* getHand() const;
-    bool addCardToHand(card * cardtoadd);
+    const list<shared_ptr<card>> getHand() const;
+    bool addCardToHand(shared_ptr<card>& cardtoadd);
     bool insertHand(list<card*>::iterator it);
-    bool removeCard(card* cardtoremove);
+    bool removeCard(shared_ptr<card>& cardtoremove);
     void setPosition(sf::Vector2f newPos) override {UIElement::setPosition(newPos); updateHandPositions();};
 };

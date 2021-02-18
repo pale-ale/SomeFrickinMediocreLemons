@@ -6,8 +6,9 @@
 class CardSelector : public UIElement{
     public:
     CardSelector(UISystem* ui);
-    void setSelectionTarget(const list<const card*> &cardsToSelectFrom, bool displayAsList);
-    list<card*> getSelectedCards() const;
+    void setSelectionTarget(const list<shared_ptr<const card>> &cardsToSelectFrom, bool displayAsList);
+    list<shared_ptr<const card>> getSelectedCards() const;
+    void resetSelection(){selectedCards.clear();}
     bool bIsCurrentlySelecting = false;
     
     const int gridWidth = 8;
@@ -17,8 +18,9 @@ class CardSelector : public UIElement{
     const float slotHeight = 75;
 
     private:
-    list<std::shared_ptr<Button>> buttons;
-    list<card*> selectedCards;
+    list<shared_ptr<Button>> buttons;
+    list<shared_ptr<const card>> selectedCards;
+    list<shared_ptr<const card>> cards;
 
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{
@@ -26,7 +28,5 @@ class CardSelector : public UIElement{
             target.draw(*(b.get()));
         }
     }
-    void selectedCardClickCallback(){
-        cout << "callback called!\n";
-    }
+    void selectedCardClickCallback();
 };

@@ -18,12 +18,13 @@
 class card;
 class Game;
 
+using std::shared_ptr;
 using namespace std;
 
 class Player: public UIElement{
     private:
-    list<card*> deck = {};
-    list<card*> graveyard = {};
+    list<shared_ptr<card>> deck = {};
+    list<shared_ptr<card>> graveyard = {};
     const sf::Vector2f deckOffset = {-163,-50};
     const sf::Vector2f handOffset = {0,50};
     const sf::Vector2f lifePointOffset = {125,-30};
@@ -41,12 +42,19 @@ class Player: public UIElement{
     void setGame(Game* newGame){game = newGame;};
     Game* getGame(){return game;};
     void drawCards(const int count);
-    void playCard(card* card);
+    void playCard(shared_ptr<card> card);
     void previewCard(const card& cardToPreview);
     void stopPreviewingCard();
-    void addCardToDeck(card *card);
-    void addCardToGraveyard(card* card);
-    const list<card*>* getHand() const;
+    void cardSelectionUpdated(){
+        if (awaitingSelection){
+            cout << "test3\n";
+            awaitingSelection->tap();
+        }
+    };
+    card* awaitingSelection = nullptr;
+    void addCardToDeck(shared_ptr<card> card);
+    void addCardToGraveyard(shared_ptr<card> card);
+    const list<shared_ptr<card>> getHand() const;
     void printDeck() const;
     void printHand() const;
 	void addMana(int amount, EManaType color);

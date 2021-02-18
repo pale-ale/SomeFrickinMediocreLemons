@@ -38,6 +38,13 @@ void UISystem::addListener(UIElement *newListener)
     eventListeners.push_back(newListener);
 }
 
+void UISystem::removeListener(UIElement *removeListener)
+{
+    eventListeners.remove(removeListener);
+    mouseOveredListeners.remove(removeListener);
+}
+
+
 void UISystem::processEvents(vector<sf::Event> events)
 {
     auto event_it = events.begin();
@@ -52,6 +59,18 @@ void UISystem::processEvents(vector<sf::Event> events)
             for (auto l : getListenersUnderCoords(mouseCoords))
             {
                 if (l->isVisible && l->OnMouseButtonDown())
+                {
+                    break;
+                }
+            }
+            break;
+        }
+        case sf::Event::MouseButtonReleased:
+        {
+            auto mouseCoords = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+            for (auto l : getListenersUnderCoords(mouseCoords))
+            {
+                if (l->isVisible && l->OnMouseButtonUp())
                 {
                     break;
                 }

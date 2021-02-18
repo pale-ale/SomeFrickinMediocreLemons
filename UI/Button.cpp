@@ -9,6 +9,13 @@ UIElement(ui){
     buttonShape.setOrigin(size/2.0f);
     transform.setPosition(sf::Vector2f(rect.left, rect.top));
     buttonTexture = sf::Texture();
+    if (ui)
+	{
+		ui->addListener(this);
+		cout << "added button as listener.\n";
+	}else{
+		cout << "a UI object shouldn't be created without a valid UI reference";
+	}
 }
 
 void Button::setPosition(sf::Vector2f newPosition){
@@ -26,16 +33,29 @@ void Button::setRotation(float newRotation){
 }*/
 
 bool Button::OnMouseButtonDown(){
-    //we wouldnt want our click-callback to change the handlevent param before returning
+    //we wouldnt want our mdown-callback to change the handlevent param before returning
     auto returnValue = handleEvent;
-    if (onClickCallback){
-        (*onClickCallback)();
+    isPressed = true;
+    if (onMouseDownCallback){
+        (*onMouseDownCallback)();
     }else{
-        cout << "Click-callback isn't configured yet!\n";
+        cout << "MouseDown-callback isn't configured yet!\n";
     }
     return returnValue;
 }
 
+bool Button::OnMouseButtonUp(){
+    //we wouldnt want our mup-callback to change the handlevent param before returning
+    auto returnValue = handleEvent;
+    isPressed = false;
+    if (onMouseUpCallback){
+        (*onMouseUpCallback)();
+    }else{
+        cout << "MouseUp-callback isn't configured yet!\n";
+    }
+    return returnValue;
+}
+    
 bool Button::OnBeginMouseover(){
     auto returnValue = handleEvent;
     if (onBeginMouseoverCallback){
@@ -48,6 +68,7 @@ bool Button::OnBeginMouseover(){
 
 bool Button::OnEndMouseover(){
     auto returnValue = handleEvent;
+    isPressed = false;
     if (onEndMouseoverCallback){
         (*onEndMouseoverCallback)();
     }else{

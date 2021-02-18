@@ -2,21 +2,27 @@
 #include <memory>
 #include "Player.h"
 
-void card::moveGraveyard(){
-	graveyard=true;
+void card::moveGraveyard()
+{
+	graveyard = true;
 }
-bool card::checkGraveyard(){
+bool card::checkGraveyard()
+{
 	return graveyard;
 }
-cardType card::getType(){
+cardType card::getType()
+{
 	return type;
 }
-const string card::getName() const{
+const string card::getName() const
+{
 	return name;
 }
 
-void card::setFlipState(bool frontFaceUp){
-	if (frontFaceUp != this->frontFaceUp){
+void card::setFlipState(bool frontFaceUp)
+{
+	if (frontFaceUp != this->frontFaceUp)
+	{
 		cardSprite.setTexture(frontFaceUp ? cardFrontTexture : cardBackTexture);
 		this->frontFaceUp = frontFaceUp;
 	}
@@ -31,7 +37,8 @@ void card::setPosition(sf::Vector2f newPosition)
 	cardDescription.setPosition(newPosition + descOffset);
 }
 
-void card::setRotation(float newRotation){
+void card::setRotation(float newRotation)
+{
 	UIElement::setRotation(newRotation);
 	auto o = sf::Transform().rotate(newRotation).transformPoint(imageOffset);
 	auto ot = sf::Transform().rotate(newRotation).transformPoint(descOffset);
@@ -43,8 +50,8 @@ void card::setRotation(float newRotation){
 	cardDescription.setPosition(getPosition() + ot);
 }
 
-card::card(UISystem* ui, const string imagePath, const string desc, FMana mana):
-	UIElement(ui), pathToImage{imagePath}, description{desc}, cost{mana}, cardButton{Button(ui, {0,0,50,75})}
+card::card(UISystem *ui, const string imagePath, const string desc, FMana mana) : 
+UIElement(ui), pathToImage{imagePath}, description{desc}, cost{mana}, cardButton{Button(ui, {0, 0, 50, 75})}
 {
 	cardBackTexture.loadFromFile("/usr/share/test/resources/CardBack.png");
 	cardFrontTexture.loadFromFile("/usr/share/test/resources/CardFront.png");
@@ -58,58 +65,74 @@ card::card(UISystem* ui, const string imagePath, const string desc, FMana mana):
 	font->loadFromFile(Settings::validFontPath);
 	cardDescription.setString(description);
 	cardDescription.setFont(*font);
-	cardDescription.setPosition(getPosition().x,getPosition().y+20);
-	cardDescription.setScale(0.17,0.17);
+	cardDescription.setPosition(getPosition().x, getPosition().y + 20);
+	cardDescription.setScale(0.17, 0.17);
 }
 
-void card::updateCardImage(){
+void card::updateCardImage()
+{
 	cardImageTexture = std::make_unique<sf::Texture>();
-	if (!cardImageTexture->loadFromFile(pathToImage)){
-		cout << "Error loading \'" << pathToImage << "'. Resetting to default.\n";
+	if (!cardImageTexture->loadFromFile(pathToImage))
+	{
+		//cout << "Error loading \'" << pathToImage << "'. Resetting to default.\n";
 		pathToImage = "/usr/share/test/resources/Unknown.png";
 		cardImageTexture->loadFromFile(pathToImage);
 	};
 	imageSprite.setTexture(*cardImageTexture);
 }
 
-void card::onCardClicked(){
-	if (!owner->bIsMyTurn){
+void card::onCardClicked()
+{
+	if (!owner->bIsMyTurn)
+	{
 		return;
 	}
-	if (cardLocation == hand){
-		if (owner->getMana().canAfford(cost)){
+	if (cardLocation == hand)
+	{
+		if (owner->getMana().canAfford(cost))
+		{
 			play();
-		}else{
+		}
+		else
+		{
 			cout << "Not enough mana to play.\n";
 		}
 		return;
 	}
-	if (cardLocation == battlefield){
+	if (cardLocation == battlefield)
+	{
 		tap();
 		return;
 	}
 }
 
-void card::onCardBeginMouseover(){
-	cardButton.setColor({255,255,255,100});
-	if (owner && !owner->isSelectingCards){
+void card::onCardBeginMouseover()
+{
+	cardButton.setColor({255, 255, 255, 100});
+	if (owner && !owner->isSelectingCards)
+	{
 		owner->previewCard(*this);
 	}
 }
 
-void card::onCardEndMouseover(){
-	cardButton.setColor({100,100,100,0});
-	if (owner){
+void card::onCardEndMouseover()
+{
+	cardButton.setColor({100, 100, 100, 0});
+	if (owner)
+	{
 		owner->stopPreviewingCard();
 	}
 }
 
-void card::play(){
+void card::play()
+{
 	onCardEndMouseover();
-	if (owner){
-		owner->playCard(this);
+	if (owner)
+	{
+		owner->playCard(shared_from_this());
 	}
-	else{
+	else
+	{
 		cout << "A card was played without an owner.\n";
 	}
 }

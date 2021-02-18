@@ -36,36 +36,26 @@ int main()
     window.setSize({(uint)(Settings::defaultWidth*scale), (uint)(Settings::defaultHeight*scale)});
     window.setVerticalSyncEnabled(true);
 
-    vector<card*> player0Cards;
-    for (int i=0; i<5; i++){
-        auto fb = new Vinesnatcher(&ui);
-        fb->setName("p1Card" + std::to_string(i));
-        player0Cards.push_back(fb);
-    }
-    vector<card*> player1Cards;
-    for (int i=0; i<5; i++){
-        auto fb = new Vinesnatcher(&ui);
-        fb->setName("p1Card" + std::to_string(i));
-        player1Cards.push_back(fb);
-    }
-  
     auto player0 = Player(&ui, "Player0");
     auto player1 = Player(&ui, "Player1");
+    
+    for (int i=0; i<5; i++){
+        auto fb = std::make_shared<Vinesnatcher>(&ui);
+        fb->setName("p0Card" + std::to_string(i));
+        player0.addCardToDeck(fb);
+    }
+    for (int i=0; i<5; i++){
+        auto fb = std::make_shared<Vinesnatcher>(&ui);
+        fb->setName("p1Card" + std::to_string(i));
+        player1.addCardToDeck(fb);
+    }
+    
     mainGame.addPlayer(&player0);
     mainGame.addPlayer(&player1);
     
-    for (int i=0; i<player0Cards.size(); i++){
-	    player0.addCardToDeck(player0Cards[i]);
-        ui.addListener(&(player0Cards[i]->cardButton));
-    }
-    for (int i=0; i<player1Cards.size(); i++){
-	    player1.addCardToDeck(player1Cards[i]);
-        ui.addListener(&(player1Cards[i]->cardButton));
-    }
-	
-    player0.drawCards(5);
+    player0.drawCards(3);
     player0.printHand();
-    player1.drawCards(5);
+    player1.drawCards(3);
     player1.printHand();
 
     vector<sf::Event> events;

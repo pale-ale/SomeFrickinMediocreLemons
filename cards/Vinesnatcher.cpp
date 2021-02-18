@@ -14,5 +14,4 @@ void Vinesnatcher::play(){
 
 void Vinesnatcher::onCardBeginMouseover(){
     card::onCardBeginMouseover();
-    cout << "vineover\n";
 }

@@ -14,7 +14,7 @@ class Fireball : public card{
 	virtual void play() override;
 	virtual void onCardBeginMouseover() override;
 	virtual void setupButtonBinding() override {
-		cardButton.onClickCallback = new EventCallback<card>(this, &card::onCardClicked);
+		cardButton.onMouseDownCallback = new EventCallback<card>(this, &card::onCardClicked);
 		cardButton.onBeginMouseoverCallback = new EventCallback<Fireball>(this, &Fireball::onCardBeginMouseover);
 		cardButton.onEndMouseoverCallback = new EventCallback<card>(this, &card::onCardEndMouseover);
 	}
