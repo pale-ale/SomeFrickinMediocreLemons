@@ -129,7 +129,7 @@ void card::play()
 	onCardEndMouseover();
 	if (owner)
 	{
-		owner->playCard(shared_from_this());
+		owner->playCard(this);
 	}
 	else
 	{

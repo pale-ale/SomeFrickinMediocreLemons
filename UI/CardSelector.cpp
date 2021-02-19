@@ -14,7 +14,7 @@ void CardSelector::setSelectionTarget(const list<shared_ptr<const card>> &cardsT
     float posY = 0;
     buttons.erase(buttons.begin(), buttons.end());
 
-    for (shared_ptr<const card> c : cardsToSelectFrom)
+    for (const shared_ptr<const card>& c : cardsToSelectFrom)
     {
         shared_ptr<Button> b;
         if (reposition)
@@ -38,7 +38,7 @@ void CardSelector::setSelectionTarget(const list<shared_ptr<const card>> &cardsT
             b->setRotation(c->getRotation());
             b->setPosition(c->getPosition());
         }
-        b.get()->onMouseDownCallback = new EventCallback<CardSelector>(this, &CardSelector::selectedCardClickCallback);
+        b->onMouseDownCallback = new EventCallback<CardSelector>(this, &CardSelector::selectedCardClickCallback);
         buttons.push_back(b);
     }
 }
@@ -50,23 +50,20 @@ list<shared_ptr<const card>> CardSelector::getSelectedCards() const
 
 void CardSelector::selectedCardClickCallback()
 {
-    auto start = buttons.begin();
-    auto end = buttons.end();
     auto cardStart = cards.begin();
-    while (start != end)
-    {
-        if ((*start)->isPressed)
-        {
+   
+    for (auto& b : buttons){
+        if (b->isPressed){
+            cout << "selector use count: " << (*cardStart).use_count() << endl;
             selectedCards.push_back(*cardStart);
-            buttons.remove(*start);
-            ui->removeListener((*start).get());
+            buttons.remove(b);
+            ui->removeListener(b.get());
             Player* p = dynamic_cast<Player*>(parent);
             if (p){
                 p->cardSelectionUpdated();
-                return;
             }
+            return;
         }
-        start++;
         cardStart++;
     }
 }

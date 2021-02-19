@@ -34,10 +34,10 @@ class Vinesnatcher : public card{
 			return;
 		}
 		if (ownerSelection.size() == 1){
-			auto card = *(ownerSelection.begin());
+			owner->awaitingSelection = nullptr;
+			auto& card = *(ownerSelection.begin());
 			cout << card->getName() << " gon get whipped.\n";
 			card->owner->battlefield.removeCard(card);
-			ownerSelection.clear();
 		}
 	}
 };

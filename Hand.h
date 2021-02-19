@@ -14,7 +14,7 @@ class Hand : public UIElement{
     
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
     {
-        for (auto card : hand){
+        for (auto& card : hand){
             target.draw(*card);
         }
     }
@@ -23,7 +23,6 @@ class Hand : public UIElement{
     void updateHandPositions();
     const list<shared_ptr<card>> getHand() const;
     bool addCardToHand(shared_ptr<card>& cardtoadd);
-    bool insertHand(list<card*>::iterator it);
-    bool removeCard(shared_ptr<card>& cardtoremove);
+    shared_ptr<card> removeCard(card* cardtoremove);
     void setPosition(sf::Vector2f newPos) override {UIElement::setPosition(newPos); updateHandPositions();};
 };

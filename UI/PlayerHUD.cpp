@@ -15,6 +15,7 @@ UIElement(ui){
 void PlayerHUD::generatePreview(const card& cardToPreview){
     if (cardPreview){
         removeChild(cardPreview.get());
+        cardPreview = nullptr;
     }
     cardPreview = std::make_unique<CardPreview>(ui, cardToPreview);
     cardPreview->setPosition(getPosition() + cardPreviewOffset);
@@ -24,6 +25,7 @@ void PlayerHUD::generatePreview(const card& cardToPreview){
 void PlayerHUD::removePreview(){
     if (cardPreview){
         removeChild(cardPreview.get());
+        cardPreview = nullptr;
     }
 }
 

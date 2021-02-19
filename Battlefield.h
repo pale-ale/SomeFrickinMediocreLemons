@@ -9,7 +9,7 @@ class Battlefield : public Placeable{
     Battlefield(UISystem* ui);
     void addCard(shared_ptr<card>& newCard, bool support=true, int slot=-1);
     void removeCard(int slot, bool support=true);
-    void removeCard(shared_ptr<const card> card);
+    void removeCard(shared_ptr<const card>& card);
     list<shared_ptr<const card>> getCards() const;
 
     private:

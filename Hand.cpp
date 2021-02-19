@@ -41,16 +41,18 @@ bool Hand::addCardToHand(shared_ptr<card>& cardtoadd)
     return false;
 }
 
-bool Hand::removeCard(shared_ptr<card>& cardtoremove)
+shared_ptr<card> Hand::removeCard(card* cardToRemove)
 {
-    auto card = find(hand.begin(), hand.end(), cardtoremove);
-    if (*card){
+    auto card = find_if(hand.begin(), hand.end(), 
+        [cardToRemove] (const auto& s) { 
+            return s.get() == cardToRemove; 
+        } );
+
+    if (card != hand.end()){
         hand.erase(card);
         removeChild(card->get());
-        return true;
+        return *card;
     }
-    else{
-        cout << "trying to remove a card that doesnt exist\n";
-        return false;
-    }
+    cout << "trying to remove a card that doesnt exist\n";
+    return nullptr;
 }

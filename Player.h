@@ -42,14 +42,14 @@ class Player: public UIElement{
     void setGame(Game* newGame){game = newGame;};
     Game* getGame(){return game;};
     void drawCards(const int count);
-    void playCard(shared_ptr<card> card);
+    void playCard(card* card);
     void previewCard(const card& cardToPreview);
     void stopPreviewingCard();
     void cardSelectionUpdated(){
         if (awaitingSelection){
-            cout << "test3\n";
             awaitingSelection->tap();
         }
+        cardSelector.resetSelection();
     };
     card* awaitingSelection = nullptr;
     void addCardToDeck(shared_ptr<card> card);
