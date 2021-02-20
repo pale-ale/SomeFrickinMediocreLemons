@@ -27,10 +27,8 @@ class Bar : public UIElement{
     virtual void setPosition(sf::Vector2f newPosition) override;
 	virtual void setRotation(float newRotation) override;
     const int offset = 1;
-    virtual void onBarBeginMouseover();
-	virtual void onBarEndMouseover();
-    IEventCallback* onBeginMouseoverCallback = nullptr;
-    IEventCallback* onEndMouseoverCallback = nullptr;
+    virtual bool OnBeginMouseover () override;
+    virtual bool OnEndMouseover () override;
    
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override;

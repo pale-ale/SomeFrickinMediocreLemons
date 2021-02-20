@@ -69,6 +69,7 @@ bool Button::OnBeginMouseover(){
 bool Button::OnEndMouseover(){
     bool returnValue = handleEvent;
     isPressed = false;
+    //what the fuck is this can't execute this function without callback wtf
     if (onEndMouseoverCallback){
         (*onEndMouseoverCallback)();
     }else{

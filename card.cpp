@@ -61,7 +61,6 @@ UIElement(ui), pathToImage{imagePath}, description{desc}, cost{mana}, cardButton
 	imageSprite.setOrigin(imageDimensions / 2.0f);
 	updateCardImage();
 	cardButton.setPosition(getPosition());
-	//cardButton.setSize({50,75});
 	font->loadFromFile(Settings::validFontPath);
 	cardDescription.setString(description);
 	cardDescription.setFont(*font);

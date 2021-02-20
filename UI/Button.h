@@ -27,6 +27,7 @@ class Button : public UIElement{
     virtual bool OnBeginMouseover() override;
     virtual bool OnEndMouseover() override;
     virtual void setPosition(sf::Vector2f newPosition) override;
+    
     //void setSize(sf::Vector2f newSize);
     virtual void setRotation(float newRotation) override;
 	void setColor(sf::Color color){
