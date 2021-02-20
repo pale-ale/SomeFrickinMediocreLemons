@@ -34,7 +34,7 @@ void Button::setRotation(float newRotation){
 
 bool Button::OnMouseButtonDown(){
     //we wouldnt want our mdown-callback to change the handlevent param before returning
-    auto returnValue = handleEvent;
+    bool returnValue = handleEvent;
     isPressed = true;
     if (onMouseDownCallback){
         (*onMouseDownCallback)();
@@ -46,7 +46,7 @@ bool Button::OnMouseButtonDown(){
 
 bool Button::OnMouseButtonUp(){
     //we wouldnt want our mup-callback to change the handlevent param before returning
-    auto returnValue = handleEvent;
+    bool returnValue = handleEvent;
     isPressed = false;
     if (onMouseUpCallback){
         (*onMouseUpCallback)();
@@ -57,7 +57,7 @@ bool Button::OnMouseButtonUp(){
 }
     
 bool Button::OnBeginMouseover(){
-    auto returnValue = handleEvent;
+    bool returnValue = handleEvent;
     if (onBeginMouseoverCallback){
         (*onBeginMouseoverCallback)();
     }else{
@@ -67,7 +67,7 @@ bool Button::OnBeginMouseover(){
 }
 
 bool Button::OnEndMouseover(){
-    auto returnValue = handleEvent;
+    bool returnValue = handleEvent;
     isPressed = false;
     if (onEndMouseoverCallback){
         (*onEndMouseoverCallback)();

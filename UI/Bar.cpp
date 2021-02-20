@@ -25,6 +25,9 @@ Bar(ui)
 Bar::Bar(UISystem* ui):
 UIElement(ui)
 {
+    ui->addListener(this);
+    onBeginMouseoverCallback = new EventCallback<Bar>(this, &Bar::onBarBeginMouseover);
+    onEndMouseoverCallback = new EventCallback<Bar>(this, &Bar::onBarEndMouseover);
 }
 
 void Bar::updateBG(){
@@ -97,4 +100,12 @@ void Bar::setRotation(float newRotation)
     Background.setRotation(newRotation);
     updateBG();
     updateFG();
+}
+
+void Bar::onBarBeginMouseover(){
+    cout<<"nice bar isn't it"<<endl;
+}
+
+void Bar::onBarEndMouseover(){
+    cout<<"nice bar isn't it"<<endl;
 }

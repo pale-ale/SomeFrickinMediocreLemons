@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "../Settings.h"
 #include "../ManaType.h"
+#include "../Events/EventCallback.h"
 using std::cout;
 using std::endl;
 
@@ -26,21 +27,23 @@ class Bar : public UIElement{
     virtual void setPosition(sf::Vector2f newPosition) override;
 	virtual void setRotation(float newRotation) override;
     const int offset = 1;
-    
+    virtual void onBarBeginMouseover();
+	virtual void onBarEndMouseover();
+    IEventCallback* onBeginMouseoverCallback = nullptr;
+    IEventCallback* onEndMouseoverCallback = nullptr;
    
     protected:
-    typedef struct {FMana* fmana; sf::Rect<float> Shape;} Manabar;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override;
     
     private:
     sf::Vector2f barSize = {40, 10};
     float amount = 0;
+    //some defaults for default constructor
     sf::Color FGColor = {255,0,0,255};
     sf::Color BGColor = {0,0,0,255};
     sf::RectangleShape Foreground;
     sf::RectangleShape Background;
     unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
-    list<Manabar> manabars;
     void updateBG();
     void updateFG();
 };
