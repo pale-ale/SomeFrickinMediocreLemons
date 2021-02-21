@@ -4,6 +4,15 @@ bool UISystem::isCoordInBounds(const sf::Vector2f &coords, const UIElement &elem
 {
     auto tl = element.getPosition() - element.getSize() / 2.0f;
     auto br = element.getBottomRight();
+    //should do something, but does not work, bug in placable with rotated objects
+    /*if (element.getRotation()!=0){
+        auto tempelement = element;
+        tempelement.setRotation(0);
+        auto diff = element.getBottomRight() - tempelement.getBottomRight();
+        tl+=diff;
+        br+=diff;
+        cout<<diff.x<<endl;
+    }*/
     return tl.x <= coords.x && tl.y <= coords.y &&
            br.x >= coords.x && br.y >= coords.y;
 }
