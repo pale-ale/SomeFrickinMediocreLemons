@@ -27,6 +27,10 @@ UIElement(ui)
 {
     ui->addListener(this);
     size=barSize;
+    font->loadFromFile(Settings::validFontPath);
+    BarInfo.setFont(*font);
+    BarInfo.setCharacterSize(this->fontsize);
+    
 }
 
 void Bar::updateBG(){
@@ -34,6 +38,8 @@ void Bar::updateBG(){
     Background.setOrigin(barSize / 2.0f);
     Background.setPosition(getPosition());
     Background.setFillColor(BGColor);
+    BarInfo.setPosition(getPosition());
+    size=barSize;
 }
 
 void Bar::updateFG(){
@@ -45,6 +51,7 @@ void Bar::updateFG(){
     Foreground.setOrigin({fgOrigX, fgOrigY});
     Foreground.setPosition(getPosition());
     Foreground.setFillColor(FGColor);
+    size=barSize;
 }
 
 void Bar::setDimensions(sf::Vector2f dimensions)
@@ -58,11 +65,13 @@ void Bar::draw(sf::RenderTarget &target, sf::RenderStates state) const
 {
     target.draw(Background);
     target.draw(Foreground);
+    target.draw(BarInfo);
 }
 
-void Bar::setFillFactor(float factor)
+void Bar::setFillFactor(float newfactor)
 {
-    amount = std::min(std::max(0.0f, factor), 1.0f);
+    this->factor = newfactor;
+    amount = std::min(std::max(0.0f, newfactor), 1.0f);
     updateFG();
 }
 
@@ -102,11 +111,11 @@ void Bar::setRotation(float newRotation)
 }
 
 bool Bar::OnBeginMouseover(){
-    cout<<this->amount <<endl;
+    BarInfo.setString(to_string(lround((this->factor*Settings::StartLifePoints)))+"/"+to_string(lround(Settings::StartLifePoints)));
     return false;
 }
 
 bool Bar::OnEndMouseover(){
-    cout<<"nice bar isn't it"<<endl;
+    BarInfo.setString("");
     return false;
 }

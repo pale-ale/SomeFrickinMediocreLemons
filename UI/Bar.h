@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "UISystem.h"
+#include <cmath>
 #include <SFML/Graphics.hpp>
 #include "../Settings.h"
 #include "../ManaType.h"
@@ -36,12 +37,17 @@ class Bar : public UIElement{
     private:
     sf::Vector2f barSize = {40, 10};
     float amount = 0;
+    float factor = 0;
     //some defaults for default constructor
     sf::Color FGColor = {255,0,0,255};
     sf::Color BGColor = {0,0,0,255};
     sf::RectangleShape Foreground;
     sf::RectangleShape Background;
+    //BarInfo
+    sf::Text BarInfo;
     unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
+    unsigned const int fontsize = 14;
+    //update when changing dimensions
     void updateBG();
     void updateFG();
 };
