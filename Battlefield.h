@@ -12,6 +12,13 @@ class Battlefield : public Placeable{
     void removeCard(shared_ptr<const card>& card);
     list<shared_ptr<const card>> getCards() const;
 
+    void showUseCounts(){
+        cout << "Use counts:" << endl;
+        for (auto& c : supportCards){
+            cout << c._card.use_count() << endl;
+        }
+    }
+
     private:
     typedef struct {int index; shared_ptr<card> _card;} cardIndex;
     const vector<sf::Vector2f> battlePositionsOffset  = {{-50,-50}, { 50,-50}};

@@ -135,3 +135,9 @@ void card::play()
 		cout << "A card was played without an owner.\n";
 	}
 }
+
+card::~card(){
+	cout << "Destroying card " << name << "!\n";
+	ui->removeListener(&cardButton);
+	owner->stopPreviewingCard();
+}

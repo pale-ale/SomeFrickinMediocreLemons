@@ -26,6 +26,7 @@ class card : public UIElement, public std::enable_shared_from_this<card>{
 		 const string imagePath = "/usr/share/test/resources/Unknown.png", 
 		 const string desc = "test",
 		 const FMana cost = FMana());
+	~card();
 	Button cardButton;
 	cardType getType();
 	void moveGraveyard();

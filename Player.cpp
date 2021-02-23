@@ -32,30 +32,25 @@ void Player::drawCards(int count)
 
 void Player::playCard(card *cardToPlay)
 {
-    for (auto &c : playerhand.getHand())
+    auto cardPtr = playerhand.removeCard(cardToPlay);
+    cout << "ptr count: " << cardPtr.use_count() << endl;
+    mana -= cardPtr->cost;
+    playerManaBars.updateManaBars(&mana);
+    battlefield.addCard(cardPtr);
+    cout << "Player "
+            << " played card " << cardPtr->getName() << endl;
+    playerhand.updateHandPositions();
+    playerHud.setHandCount(playerhand.getHand().size());
+    if (game)
     {
-        if (c.get() == cardToPlay)
-        {
-            auto cardPtr = playerhand.removeCard(c.get());
-            cout << "ptr count: " << cardPtr.use_count() << endl;
-            mana -= cardPtr->cost;
-            playerManaBars.updateManaBars(&mana);
-            battlefield.addCard(cardPtr);
-            cout << "Player "
-                 << " played card " << cardPtr->getName() << endl;
-            playerhand.updateHandPositions();
-            playerHud.setHandCount(playerhand.getHand().size());
-            if (game)
-            {
-                game->startTurnOfNextPlayer();
-            }
-            else
-            {
-                cout << "I need a gameInstance!\n";
-            }
-            cout << "ptr count: " << cardPtr.use_count() << endl;
-        }
+        game->startTurnOfNextPlayer();
     }
+    else
+    {
+        cout << "I need a gameInstance!\n";
+    }
+    cardPtr.reset(); //at this point we do not have any sharedptr to the card except in battlefield
+    battlefield.showUseCounts();
 }
 
 void Player::addCardToDeck(shared_ptr<card> card)

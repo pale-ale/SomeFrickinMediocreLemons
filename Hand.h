@@ -21,7 +21,7 @@ class Hand : public UIElement{
 
     public:
     void updateHandPositions();
-    const list<shared_ptr<card>> getHand() const;
+    const list<shared_ptr<card>>& getHand() const;
     bool addCardToHand(shared_ptr<card>& cardtoadd);
     shared_ptr<card> removeCard(card* cardtoremove);
     void setPosition(sf::Vector2f newPos) override {UIElement::setPosition(newPos); updateHandPositions();};

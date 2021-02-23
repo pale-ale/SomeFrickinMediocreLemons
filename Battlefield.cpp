@@ -24,7 +24,6 @@ void Battlefield::addCard(shared_ptr<card> &newCard, bool support, int slot)
         cout << "Invalid slot index." << endl;
         throw;
     }
-
     row->push_back({slot, newCard});
     newCard->attachTo(this);
     newCard->cardLocation = ECardLocation::battlefield;
@@ -74,6 +73,7 @@ void Battlefield::removeCard(shared_ptr<const card> &cardToRemove)
         if (card == cardToRemove)
         {
             cout << "Removing support card\n";
+            cout << "Remaining shared_ptrs to this card: " << card.use_count() << endl;
             supportCards.erase(start);
             removeChild(card.get());
             cout << "Remaining shared_ptrs to this card: " << card.use_count() << endl;

@@ -45,6 +45,9 @@ void CardSelector::setSelectionTarget(const list<shared_ptr<const card>> &cardsT
 
 list<shared_ptr<const card>> CardSelector::getSelectedCards() const
 {
+    for (auto& c  : selectedCards){
+        cout << "getselectedcards use count: " << c.use_count() << endl;
+    }
     return selectedCards;
 }
 
@@ -62,6 +65,7 @@ void CardSelector::selectedCardClickCallback()
             if (p){
                 p->cardSelectionUpdated();
             }
+            cardStart->reset();
             return;
         }
         cardStart++;

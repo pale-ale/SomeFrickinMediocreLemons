@@ -25,7 +25,7 @@ void Hand::updateHandPositions()
         currentSlotNumber++;
     }
 }
-const list<shared_ptr<card>> Hand::getHand() const
+const list<shared_ptr<card>>& Hand::getHand() const
 {
     return hand;
 }
@@ -43,15 +43,16 @@ bool Hand::addCardToHand(shared_ptr<card>& cardtoadd)
 
 shared_ptr<card> Hand::removeCard(card* cardToRemove)
 {
-    auto card = find_if(hand.begin(), hand.end(), 
+    auto card_it = find_if(hand.begin(), hand.end(), 
         [cardToRemove] (const auto& s) { 
             return s.get() == cardToRemove; 
         } );
 
-    if (card != hand.end()){
-        hand.erase(card);
-        removeChild(card->get());
-        return *card;
+    if (card_it != hand.end()){
+        auto card = *card_it;
+        hand.erase(card_it);
+        removeChild(card.get());
+        return card;
     }
     cout << "trying to remove a card that doesnt exist\n";
     return nullptr;
