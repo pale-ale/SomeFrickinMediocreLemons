@@ -35,19 +35,27 @@ void card::setPosition(sf::Vector2f newPosition)
 	imageSprite.setPosition(newPosition + imageOffset);
 	cardButton.setPosition(newPosition);
 	cardDescription.setPosition(newPosition + descOffset);
+	hpStatDisplay.setPosition(newPosition + powerStatOffset);
+	powerStatDisplay.setPosition(newPosition + hpStatOffset);
 }
 
 void card::setRotation(float newRotation)
 {
 	UIElement::setRotation(newRotation);
-	auto o = sf::Transform().rotate(newRotation).transformPoint(imageOffset);
-	auto ot = sf::Transform().rotate(newRotation).transformPoint(descOffset);
+	auto t = sf::Transform().rotate(newRotation).transformPoint(imageOffset);
 	cardSprite.setRotation(newRotation);
 	imageSprite.setRotation(newRotation);
-	imageSprite.setPosition(getPosition() + o);
+	imageSprite.setPosition(getPosition() + t);
 	cardButton.setRotation(newRotation);
 	cardDescription.setRotation(newRotation);
-	cardDescription.setPosition(getPosition() + ot);
+	t = sf::Transform().rotate(newRotation).transformPoint(descOffset);
+	cardDescription.setPosition(getPosition() + t);
+	t = sf::Transform().rotate(newRotation).transformPoint(hpStatOffset);
+	hpStatDisplay.setRotation(newRotation);
+	hpStatDisplay.setPosition(getPosition() + t);
+	t = sf::Transform().rotate(newRotation).transformPoint(powerStatOffset);
+	powerStatDisplay.setRotation(newRotation);
+	powerStatDisplay.setPosition(getPosition() + t);
 }
 
 card::card(UISystem *ui, const string imagePath, const string desc, FMana mana) : 
@@ -64,8 +72,17 @@ UIElement(ui), pathToImage{imagePath}, description{desc}, cost{mana}, cardButton
 	font->loadFromFile(Settings::validFontPath);
 	cardDescription.setString(description);
 	cardDescription.setFont(*font);
-	cardDescription.setPosition(getPosition().x, getPosition().y + 20);
+	cardDescription.setPosition(getPosition() + descOffset);
 	cardDescription.setScale(0.17, 0.17);
+	hpStatDisplay.setFont(*font);
+	hpStatDisplay.setFillColor(Settings::RedColor);
+	hpStatDisplay.setPosition(getPosition() + hpStatOffset);
+	hpStatDisplay.setScale(0.5, 0.5);
+	powerStatDisplay.setFont(*font);
+	powerStatDisplay.setFillColor(Settings::BlackColor);
+	powerStatDisplay.setPosition(getPosition() + powerStatOffset);
+	powerStatDisplay.setScale(0.5, 0.5);
+	updateCardStatDisplay();
 }
 
 void card::updateCardImage()
@@ -134,6 +151,11 @@ void card::play()
 	{
 		cout << "A card was played without an owner.\n";
 	}
+}
+
+void card::updateCardStatDisplay(){
+	hpStatDisplay.setString(to_string(health));
+	powerStatDisplay.setString(to_string(power));
 }
 
 card::~card(){

@@ -24,21 +24,5 @@ class Vinesnatcher : public card{
 		cardButton.onEndMouseoverCallback = new EventCallback<card>(this, &card::onCardEndMouseover);
 	}
 
-	virtual void tap() override{
-		auto ownerSelection = owner->cardSelector.getSelectedCards();
-		
-		if (ownerSelection.size() == 0){
-			owner->startSelection();
-			owner->awaitingSelection = this;
-			return;
-		}
-		if (ownerSelection.size() == 1){
-			owner->cardSelector.resetSelection();
-			cout << "vinesnatcher tapped.\n";
-			owner->awaitingSelection = nullptr;
-			auto& card = *(ownerSelection.begin());
-			cout << card->getName() << " gon get whipped.\n";
-			card->owner->battlefield.removeCard(card);
-		}
-	}
+	virtual void tap() override;
 };
