@@ -22,7 +22,6 @@ void Player::drawCards(int count)
         card->setFlipState(true);
         removeChild(card.get());
         deck.pop_back();
-        cout << "uses after transfer from deck to hand: " << card.use_count() << endl;
     }
 
     playerhand.updateHandPositions();
@@ -33,7 +32,6 @@ void Player::drawCards(int count)
 void Player::playCard(card *cardToPlay)
 {
     auto cardPtr = playerhand.removeCard(cardToPlay);
-    cout << "ptr count: " << cardPtr.use_count() << endl;
     mana -= cardPtr->cost;
     playerManaBars.updateManaBars(&mana);
     battlefield.addCard(cardPtr);
@@ -50,7 +48,6 @@ void Player::playCard(card *cardToPlay)
         cout << "I need a gameInstance!\n";
     }
     cardPtr.reset(); //at this point we do not have any sharedptr to the card except in battlefield
-    battlefield.showUseCounts();
 }
 
 void Player::addCardToDeck(shared_ptr<card> card)

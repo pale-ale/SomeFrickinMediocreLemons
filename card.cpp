@@ -140,6 +140,15 @@ void card::onCardEndMouseover()
 	}
 }
 
+void card::takeDamage(const int& amount){
+	health -= amount;
+	updateCardStatDisplay();
+	if (health <= 0){
+		onCardDeath();
+		owner->battlefield.removeCard(this);
+	}
+}
+
 void card::play()
 {
 	onCardEndMouseover();

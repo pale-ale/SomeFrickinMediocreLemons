@@ -49,14 +49,14 @@ void Battlefield::removeCard(int slot, bool support)
     }
 }
 
-void Battlefield::removeCard(shared_ptr<const card> &cardToRemove)
+void Battlefield::removeCard(card *cardToRemove)
 {
     auto start = battleCards.begin();
     auto end = battleCards.end();
     while (start != end)
     {
-        auto& card = (*start)._card;
-        if (card == cardToRemove)
+        auto &card = (*start)._card;
+        if (card.get() == cardToRemove)
         {
             cout << "Removing battle card\n";
             battleCards.erase(start);
@@ -69,14 +69,12 @@ void Battlefield::removeCard(shared_ptr<const card> &cardToRemove)
     end = supportCards.end();
     while (start != end)
     {
-        auto& card = (*start)._card;
-        if (card == cardToRemove)
+        auto &card = (*start)._card;
+        if (card.get() == cardToRemove)
         {
             cout << "Removing support card\n";
-            cout << "Remaining shared_ptrs to this card: " << card.use_count() << endl;
             supportCards.erase(start);
             removeChild(card.get());
-            cout << "Remaining shared_ptrs to this card: " << card.use_count() << endl;
             return;
         }
         start++;
@@ -117,12 +115,12 @@ int Battlefield::getNextFreeSlot(vector<cardIndex> &cards, int max)
     return -1;
 }
 
-list<shared_ptr<const card>> Battlefield::getCards() const
+list<shared_ptr<card>> Battlefield::getCards() const
 {
     list<cardIndex> cis;
     cis.insert(cis.end(), supportCards.begin(), supportCards.end());
     cis.insert(cis.end(), battleCards.begin(), battleCards.end());
-    list<shared_ptr<const card>> cards;
+    list<shared_ptr<card>> cards;
     for (auto ci : cis)
     {
         cards.push_back(ci._card);

@@ -52,6 +52,8 @@ class card : public UIElement, public std::enable_shared_from_this<card>{
 	virtual void onCardEndMouseover();
 	virtual void play();
 	virtual void tap(){}
+	virtual void takeDamage(const int& amount);
+	virtual void onCardDeath(){cout << name << " received lethal damage.\n";}
 	FMana cost;
 
 	protected:

@@ -24,12 +24,13 @@ void Vinesnatcher::tap(){
         owner->awaitingSelection = this;
         return;
     }
+    
     if (ownerSelection.size() == 1 && owner->awaitingSelection == this){
         owner->cardSelector.resetSelection();
         cout << "vinesnatcher tapped.\n";
         owner->awaitingSelection = nullptr;
         auto& card = *(ownerSelection.begin());
         cout << card->getName() << " gon get whipped.\n";
-        card->owner->battlefield.removeCard(card);
+        card->takeDamage(2);
     }
 }

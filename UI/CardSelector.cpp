@@ -5,7 +5,7 @@ CardSelector::CardSelector(UISystem *ui) : UIElement(ui)
 {
 }
 
-void CardSelector::setSelectionTarget(const list<shared_ptr<const card>> &cardsToSelectFrom, bool reposition)
+void CardSelector::setSelectionTarget(const list<shared_ptr<card>> &cardsToSelectFrom, bool reposition)
 {
     cards = cardsToSelectFrom;
     int slotNumberX = 0;
@@ -43,7 +43,7 @@ void CardSelector::setSelectionTarget(const list<shared_ptr<const card>> &cardsT
     }
 }
 
-list<shared_ptr<const card>> CardSelector::getSelectedCards() const
+list<shared_ptr<card>> CardSelector::getSelectedCards() const
 {
     for (auto& c  : selectedCards){
         cout << "getselectedcards use count: " << c.use_count() << endl;
