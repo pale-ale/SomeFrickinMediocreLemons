@@ -58,9 +58,10 @@ public:
     template<class T>
     UIElement *spawnNew();
 
-
 private:
     sf::RenderWindow *window;
     bool isCoordInBounds(const sf::Vector2f &coords, const UIElement &element) const;
+    sf::Vector2f getClosestPoint(const sf::Vector2f &point, const vector<sf::Vector2f> &points, int &index) const;
+    float getDistance(const sf::Vector2f p1, const sf::Vector2f p2) const;
     list<UIElement *> getListenersUnderCoords(const sf::Vector2f &coords) const;
 };

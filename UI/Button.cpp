@@ -2,8 +2,9 @@
 
 Button::Button(UISystem* ui, sf::Rect<float> rect, sf::Color color):
 UIElement(ui){
-    this->rect = rect;
     size = sf::Vector2f(rect.width, rect.height);
+    Placeable::setSize(size);
+    this->rect = rect;
     buttonShape = sf::RectangleShape(size);
     buttonShape.setFillColor(color);
     buttonShape.setOrigin(size/2.0f);

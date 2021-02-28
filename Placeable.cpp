@@ -1,4 +1,5 @@
 #include "Placeable.h"
+#include "../Settings.h"
 
 void Placeable::addChild(Placeable* newChild){
     for (Placeable* child : children){
@@ -19,26 +20,42 @@ void Placeable::attachTo(Placeable* newParent){
     parent->addChild(this);
 }
 
+void Placeable::setSize(const sf::Vector2f& newSize){
+    auto s = newSize * 0.5f;
+    hitbox.erase(hitbox.begin(), hitbox.end());
+    hitbox.push_back(-s);
+    hitbox.push_back({-s.x, s.y});
+    hitbox.push_back(s);
+    hitbox.push_back({s.x, -s.y});
+}
+
 void Placeable::removeChild(Placeable* child){
     children.remove(child);
 }
 
 void Placeable::draw(sf::RenderTarget& target, sf::RenderStates state) const{
-    auto child_it = children.begin();
-    while (child_it != children.end()){
-        target.draw(**child_it);
-        child_it++;
+    for (auto& child : children){
+        target.draw(*child);
+    }
+    if (Settings::bDrawDebugHitbox){
+        sf::ConvexShape shape;
+        shape.setPointCount(hitbox.size());
+        shape.setFillColor({0, 100, 100, 100});
+        auto& hb = getHitboxPolygonGlobal();
+        for (int i = 0; i < hitbox.size(); i++)
+        {
+            shape.setPoint(i, hb[i]);
+        }
+        target.draw(shape);
     }
 };
 
 void Placeable::setPosition(sf::Vector2f newPosition){
     auto delta = newPosition - transform.getPosition();
     transform.setPosition(newPosition);
-    auto child_it = children.begin();
-    while (child_it != children.end()){
-        auto childPos = (**child_it).getPosition();
-        (**child_it).setPosition(childPos + delta);
-        child_it++;
+    for (auto& child : children){
+        auto childPos = child->getPosition();
+        child->setPosition(childPos + delta);
     }
 }
 
@@ -46,12 +63,18 @@ void Placeable::setRotation(float newRotation){
     auto delta = newRotation - transform.getRotation();
     transform.setRotation(newRotation);
     auto deltaTransform = sf::Transform().rotate(delta);
-    auto child_it = children.begin();
-    while (child_it != children.end()){
-        auto childDelta = (*child_it)->getPosition() - getPosition();
+    for (auto& child : children){
+        auto childDelta = child->getPosition() - getPosition();
         auto transformedChildDelta = deltaTransform.transformPoint(childDelta);
-        (*child_it)->setPosition(getPosition() + transformedChildDelta);
-        (*child_it)->setRotation((*child_it)->getRotation() + delta);
-        child_it++;
+        child->setPosition(getPosition() + transformedChildDelta);
+        child->setRotation(child->getRotation() + delta);
     }
+}
+
+const vector<sf::Vector2f> Placeable::getHitboxPolygonGlobal() const{
+    vector<sf::Vector2f> hb;
+    for (auto reverse_p = hitbox.rbegin(); reverse_p != hitbox.rend(); ++reverse_p){
+        hb.push_back(transform.getTransform().transformPoint(*reverse_p));
+    }
+    return hb;
 }

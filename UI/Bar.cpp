@@ -27,10 +27,10 @@ UIElement(ui)
 {
     ui->addListener(this);
     size=barSize;
+    Placeable::setSize(barSize - sf::Vector2f(offset, offset)*2.0f);
     font->loadFromFile(Settings::validFontPath);
     BarInfo.setFont(*font);
     BarInfo.setCharacterSize(this->fontsize);
-    
 }
 
 void Bar::updateBG(){
@@ -63,6 +63,7 @@ void Bar::setDimensions(sf::Vector2f dimensions)
 
 void Bar::draw(sf::RenderTarget &target, sf::RenderStates state) const
 {
+    UIElement::draw(target, state);
     target.draw(Background);
     target.draw(Foreground);
     target.draw(BarInfo);

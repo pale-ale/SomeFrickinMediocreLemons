@@ -35,7 +35,7 @@ int main()
     window.setKeyRepeatEnabled(false);
     window.setSize({(uint)(Settings::defaultWidth*scale), (uint)(Settings::defaultHeight*scale)});
     window.setVerticalSyncEnabled(true);
-
+    
     auto player0 = Player(&ui, "Player0");
     auto player1 = Player(&ui, "Player1");
     
@@ -57,7 +57,7 @@ int main()
     player0.printHand();
     player1.drawCards(3);
     player1.printHand();
-
+    
     vector<sf::Event> events;
     sf::Clock clock;
     mainGame.startTurnOfNextPlayer();
@@ -78,7 +78,6 @@ int main()
         ui.processEvents(events);
         events.clear();
         window.clear();
-        window.getPosition();
         window.draw(mainGame);
         window.draw(ui);
         window.display();

@@ -1,20 +1,48 @@
 #include "UISystem.h"
+#include "math.h"
 
 bool UISystem::isCoordInBounds(const sf::Vector2f &coords, const UIElement &element) const
 {
+    auto& hb = element.getHitboxPolygonGlobal();
+    if (hb.size() < 3){
+        return false;
+    }
+    int index;
+    auto pos = getClosestPoint(coords, hb, index);
+    sf::Vector2f a = hb[(index+1)%hb.size()] - pos;
+    sf::Vector2f b = hb[(index-1)%hb.size()] - pos;
+    sf::Vector2f n = coords - pos;
+    int axn = a.x * n.y - a.y * n.x;
+    int nxb = n.x * b.y - n.y * b.x;
+
+    return axn > 0 && nxb > 0;
+
     auto tl = element.getPosition() - element.getSize() / 2.0f;
     auto br = element.getBottomRight();
-    //should do something, but does not work, bug in placable with rotated objects
-    /*if (element.getRotation()!=0){
-        auto tempelement = element;
-        tempelement.setRotation(0);
-        auto diff = element.getBottomRight() - tempelement.getBottomRight();
-        tl+=diff;
-        br+=diff;
-        cout<<diff.x<<endl;
-    }*/
     return tl.x <= coords.x && tl.y <= coords.y &&
            br.x >= coords.x && br.y >= coords.y;
+}
+
+sf::Vector2f UISystem::getClosestPoint(const sf::Vector2f &point, const vector<sf::Vector2f> &points, int &index) const
+{
+    if (points.size() < 3){
+        cout << "UISystem: less than 3 points aint no polygon!\n";
+        throw;
+    }
+    float minDist = getDistance(point, points[0]);
+    index = 0;
+    for (int i=0; i<points.size(); i++){
+        float d = getDistance(point, points[i]);
+        if (d < minDist){
+            minDist = d;
+            index = i;
+        }
+    }
+    return points[index];
+}
+
+float UISystem::getDistance(const sf::Vector2f p1, const sf::Vector2f p2) const{
+    return sqrt(pow(p1.x-p2.x, 2) + pow(p1.y - p2.y, 2));
 }
 
 list<UIElement *> UISystem::getListenersUnderCoords(const sf::Vector2f &coords) const
@@ -134,10 +162,5 @@ UIElement* UISystem::spawnNew()
 
 void UIElement::draw(sf::RenderTarget &target, sf::RenderStates state) const
 {
-    auto child_it = children.begin();
-    while (child_it != children.end())
-    {
-        target.draw(**child_it);
-        child_it++;
-    }
+    Placeable::draw(target, state);
 };
