@@ -11,7 +11,7 @@ class Settings{
     inline static const char* validFontPath = nullptr;
     inline static const int StartLifePoints = 4000;
     static const bool bEnableButtonTint = false;
-    static const bool bDrawDebugHitbox = false;
+    static const bool bDrawDebugHitbox = true;
     inline static const sf::Color DarkGrayColor = {50,50,50,255};
     inline static const sf::Color BlackColor = {0,0,0,255};
     inline static const sf::Color BlueColor = {32,192,255,255};

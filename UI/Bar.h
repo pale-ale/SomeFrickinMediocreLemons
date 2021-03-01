@@ -36,6 +36,8 @@ class Bar : public UIElement{
     
     private:
     sf::Vector2f barSize = {40, 10};
+    const sf::Vector2f textOffset = {0, -5}; 
+    const float textRotation = 0;
     float amount = 0;
     float factor = 0;
     //some defaults for default constructor
@@ -46,7 +48,7 @@ class Bar : public UIElement{
     //BarInfo
     sf::Text BarInfo;
     unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
-    unsigned const int fontsize = 14;
+    unsigned const int fontsize = 10;
     //update when changing dimensions
     void updateBG();
     void updateFG();

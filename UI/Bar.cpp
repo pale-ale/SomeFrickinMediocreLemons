@@ -31,6 +31,7 @@ UIElement(ui)
     font->loadFromFile(Settings::validFontPath);
     BarInfo.setFont(*font);
     BarInfo.setCharacterSize(this->fontsize);
+    BarInfo.setRotation(textRotation);
 }
 
 void Bar::updateBG(){
@@ -38,7 +39,6 @@ void Bar::updateBG(){
     Background.setOrigin(barSize / 2.0f);
     Background.setPosition(getPosition());
     Background.setFillColor(BGColor);
-    BarInfo.setPosition(getPosition());
     size=barSize;
 }
 
@@ -57,16 +57,17 @@ void Bar::updateFG(){
 void Bar::setDimensions(sf::Vector2f dimensions)
 {
     barSize = dimensions;
+    Placeable::setSize(dimensions);
     updateBG();
     updateFG();
 }
 
 void Bar::draw(sf::RenderTarget &target, sf::RenderStates state) const
 {
-    UIElement::draw(target, state);
     target.draw(Background);
     target.draw(Foreground);
     target.draw(BarInfo);
+    UIElement::draw(target, state);
 }
 
 void Bar::setFillFactor(float newfactor)
@@ -98,7 +99,8 @@ void Bar::setPosition(sf::Vector2f newPosition)
     UIElement::setPosition(newPosition);
     Background.setPosition(newPosition);
     Foreground.setPosition(newPosition);
-    updateBG();
+    auto t = sf::Transform().rotate(getRotation()).transformPoint(sf::Vector2f{barSize.x/2, 0} + textOffset);
+    BarInfo.setPosition(getPosition() + t);    updateBG();
     updateFG();
 }
 
@@ -107,12 +109,15 @@ void Bar::setRotation(float newRotation)
     UIElement::setRotation(newRotation);
     Foreground.setRotation(newRotation);
     Background.setRotation(newRotation);
+    auto t = sf::Transform().rotate(newRotation).transformPoint(sf::Vector2f{barSize.x/2, 0} + textOffset);
+    BarInfo.setPosition(getPosition() + t);
+    BarInfo.setRotation(newRotation);
     updateBG();
     updateFG();
 }
 
 bool Bar::OnBeginMouseover(){
-    BarInfo.setString(to_string(lround((this->factor*Settings::StartLifePoints)))+"/"+to_string(lround(Settings::StartLifePoints)));
+    BarInfo.setString(to_string(lround(this->factor*Settings::StartLifePoints)) + "/" + to_string(Settings::StartLifePoints));
     return false;
 }
 

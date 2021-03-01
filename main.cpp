@@ -60,7 +60,7 @@ int main()
     
     vector<sf::Event> events;
     sf::Clock clock;
-    mainGame.startTurnOfNextPlayer();
+    //mainGame.startTurnOfNextPlayer();
 
     while (window.isOpen())
     {

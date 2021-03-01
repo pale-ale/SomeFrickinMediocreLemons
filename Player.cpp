@@ -146,7 +146,7 @@ Player::Player(UISystem *ui) : UIElement(ui),
     playerHud.setPosition(getPosition());
     playerHud.attachTo(this);
     playerBar.setPosition(getPosition() + lifePointOffset);
-    playerBar.setRotation(90);
+    playerBar.setRotation(-90);
     playerBar.attachTo(this);
     playerBar.setFillFactor((float)lifePoints / Settings::StartLifePoints);
     playerManaBars.setPosition(getPosition() + manaBarOffset);

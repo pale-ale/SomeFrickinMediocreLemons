@@ -12,7 +12,7 @@ class UISystem;
 class Placeable : public sf::Drawable
 {
 public:
-    Placeable():hitbox{{-50,-50}, {-50, 50}, {50, 50}, {50, -50}} {}
+    Placeable(){}
     void addChild(Placeable *newChild);
     void removeChild(Placeable *child);
     const list<Placeable *> &getChildren() { return children; }
