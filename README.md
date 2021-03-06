@@ -16,4 +16,4 @@ cmake ..
 make  
 
 This will create an executable called main, which can simply be run using "./main.cpp" in the Build directory.
-Behaviour withour any assets is mostly untestet though.
+Behaviour without any assets is mostly untestet though.
