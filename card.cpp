@@ -101,6 +101,7 @@ void card::onCardClicked()
 {
 	if (!owner->bIsMyTurn)
 	{
+		cout << "Not my turn yet.\n";
 		return;
 	}
 	if (cardLocation == hand)

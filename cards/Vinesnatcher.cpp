@@ -30,7 +30,7 @@ void Vinesnatcher::tap(){
         cout << "vinesnatcher tapped.\n";
         owner->awaitingSelection = nullptr;
         auto& card = *(ownerSelection.begin());
-        cout << card->getName() << " gon get whipped.\n";
+        cout << card->getName() << "Vinesnatcher deals 2 damage to " << card->getName() << ".";
         card->takeDamage(2);
     }
 }
