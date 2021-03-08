@@ -1,4 +1,7 @@
-//Currently a placeholder.
+#pragma once
+
+#include "SFML/Graphics.hpp"
+#include "SceneManager.h"
 
 /*
 Scenes are going to be the containers of... well... the scene?
@@ -13,3 +16,19 @@ It also facilitates the "switching" of such environments, since we dont have to 
 but can rather make them be owned by our scene and destroy it or make it invisible.
 This'll bring the added benefit of preloading some scenes or assets or easy loading screens.
 */
+class SceneManager;
+class SceneBase : public sf::Drawable{
+    protected:
+
+    SceneManager* sceneManager;
+    public:
+    SceneBase(SceneManager *sceneManager):sceneManager{sceneManager}{}
+    SceneBase() = delete;
+    ~SceneBase(){}
+    virtual void setup(){}
+    virtual void tick(float deltaTime){}
+    virtual void cleanup(){}
+
+    protected:
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override {};
+};

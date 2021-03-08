@@ -28,10 +28,12 @@ void Button::setRotation(float newRotation){
     buttonShape.setRotation(newRotation);
 }
 
-/*void Button::setSize(sf::Vector2f newSize){
+void Button::setSize(const sf::Vector2f &newSize){
+    Placeable::setSize(newSize);
     buttonShape.setSize(newSize);
-    size = newSize;
-}*/
+    buttonShape.setOrigin(size/2.0f);
+    buttonShape.setPosition(getPosition());
+}
 
 bool Button::OnMouseButtonDown(){
     //we wouldnt want our mdown-callback to change the handlevent param before returning

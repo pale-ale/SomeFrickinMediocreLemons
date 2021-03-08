@@ -18,7 +18,7 @@ public:
     const list<Placeable *> &getChildren() { return children; }
     virtual void setPosition(sf::Vector2f);
     virtual void setRotation(float rotation);
-    void setSize(const sf::Vector2f& newSize);
+    virtual void setSize(const sf::Vector2f& newSize);
     void attachTo(Placeable *newParent);
     void detach();
     void setChildren(list<Placeable *> newChildren) { children = newChildren; };

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../card.h"
@@ -11,7 +13,7 @@ class Battlefield;
 class Vinesnatcher : public card{
 	public:
 	inline static const string pathToImage = "/usr/share/test/resources/Vinesnatcher.png";
-    inline static const string description = "Select a card to oof it.";
+    inline static const string description = "Select a card to deal 2 damage to it.";
 	static constexpr FMana cost = FMana({0,0,1,0,0});
 
 	Vinesnatcher(UISystem* ui);

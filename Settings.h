@@ -10,6 +10,7 @@ class Settings{
                                                     "/usr/share/fonts/noto/NotoSerif-Regular.ttf"};
     inline static const char* validFontPath = nullptr;
     inline static const int StartLifePoints = 4000;
+    static const int fontSize = 10;
     static const bool bEnableButtonTint = false;
     static const bool bDrawDebugHitbox = false;
     inline static const sf::Color DarkGrayColor = {50,50,50,255};

@@ -27,6 +27,7 @@ void Placeable::setSize(const sf::Vector2f& newSize){
     hitbox.push_back({-s.x, s.y});
     hitbox.push_back(s);
     hitbox.push_back({s.x, -s.y});
+    size = newSize;
 }
 
 void Placeable::removeChild(Placeable* child){

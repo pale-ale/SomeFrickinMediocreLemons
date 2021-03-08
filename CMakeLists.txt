@@ -22,9 +22,10 @@ add_library(Delegate KeyboardDelegate.cpp ${HEADER_FILES})
 set(HEADER_FILES  card.h   cards/Fireball.h   cards/Kalle.h   cards/Vinesnatcher.h)
 add_library(Cards card.cpp cards/Fireball.cpp cards/Kalle.cpp cards/Vinesnatcher.cpp ${HEADER_FILES})
 
-# headers for Card, Player, Game, CardType, ManaType, Battlefield, HUD
-set(HEADER_FILES card.h   Player.h   UI/Button.h   Game.h    Battlefield.h   Hand.h   Placeable.h   UI/Bar.h   UI/ManaBars.h   UI/CardSelector.h   UI/PlayerHUD.h   cardTypes.h ManaType.h  )
-add_library(Base card.cpp Player.cpp UI/Button.cpp Game.cpp  Battlefield.cpp Hand.cpp Placeable.cpp UI/Bar.cpp UI/ManaBars.cpp UI/CardSelector.cpp UI/PlayerHUD.cpp ${HEADER_FILES})
+# headers for Player, Game, CardType, ManaType, Battlefield, Scenes
+set(HEADER_FILES Player.h   Game.h    Battlefield.h   Hand.h   Placeable.h   SceneManager.h   MainMenuScene.h cardTypes.h ManaType.h Scene.h)
+add_library(Base Player.cpp Game.cpp  Battlefield.cpp Hand.cpp Placeable.cpp SceneManager.cpp MainMenuScene.cpp ${HEADER_FILES})
+target_link_libraries(Base UI Cards)
 
 add_executable(main main.cpp)
 target_link_libraries(main UI Delegate Base Cards sfml-graphics sfml-window sfml-system)
