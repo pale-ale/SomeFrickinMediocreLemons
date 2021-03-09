@@ -19,8 +19,6 @@ class Button : public UIElement{
     IEventCallback* onEndMouseoverCallback = nullptr;
     bool handleEvent = true;
     bool isPressed = false;
-    sf::Color defaultColor = {255,0,255,0};
-    sf::Color mouseOverColor = {255,0,255,100};
 
     virtual bool OnMouseButtonDown() override;
     virtual bool OnMouseButtonUp() override;
@@ -30,8 +28,13 @@ class Button : public UIElement{
     virtual void setSize(const sf::Vector2f &newSize) override;
 
     virtual void setRotation(float newRotation) override;
-	void setColor(sf::Color color){
-        buttonShape.setFillColor(color);
+	
+    void setDefaultColor(sf::Color color){
+        defaultColor = color;
+        buttonShape.setFillColor(defaultColor);
+    }
+	void setMouseoverColor(sf::Color color){
+        mouseOverColor = color;
     }
     
     protected:
@@ -44,4 +47,6 @@ class Button : public UIElement{
     sf::RectangleShape buttonShape;
     sf::Sprite buttonSprite;
     sf::Texture buttonTexture;
+    sf::Color defaultColor = {255,0,255,0};
+    sf::Color mouseOverColor = {255,0,255,100};
 };

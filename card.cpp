@@ -125,7 +125,6 @@ void card::onCardClicked()
 
 void card::onCardBeginMouseover()
 {
-	cardButton.setColor({255, 255, 255, 100});
 	if (owner && !owner->isSelectingCards)
 	{
 		owner->previewCard(*this);
@@ -134,7 +133,6 @@ void card::onCardBeginMouseover()
 
 void card::onCardEndMouseover()
 {
-	cardButton.setColor({100, 100, 100, 0});
 	if (owner)
 	{
 		owner->stopPreviewingCard();
@@ -156,6 +154,7 @@ void card::play()
 	if (owner)
 	{
 		owner->playCard(this);
+		cardButton.OnEndMouseover();
 	}
 	else
 	{

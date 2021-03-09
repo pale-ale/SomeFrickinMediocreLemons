@@ -61,6 +61,7 @@ bool Button::OnMouseButtonUp(){
     
 bool Button::OnBeginMouseover(){
     bool returnValue = handleEvent;
+    buttonShape.setFillColor(mouseOverColor);
     if (onBeginMouseoverCallback){
         (*onBeginMouseoverCallback)();
     }else{
@@ -71,8 +72,10 @@ bool Button::OnBeginMouseover(){
 
 bool Button::OnEndMouseover(){
     bool returnValue = handleEvent;
+    buttonShape.setFillColor(defaultColor);
     isPressed = false;
-    //what the fuck is this can't execute this function without callback wtf
+    //what the duck is this can't execute this function without callback wtd
+    // yes, you can. after all, this is what generates a warning when clicking a button that doesnt have a callback bound to it. 
     if (onEndMouseoverCallback){
         (*onEndMouseoverCallback)();
     }else{
