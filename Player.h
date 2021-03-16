@@ -77,6 +77,5 @@ class Player: public UIElement{
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{
         UIElement::draw(target, state);
-        target.draw(playerHud); //this is drawn twice. not an issue right now though.
     }
 };

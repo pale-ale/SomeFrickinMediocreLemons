@@ -144,7 +144,8 @@ Player::Player(UISystem *ui) : UIElement(ui),
     playerhand.setPosition(getPosition() + handOffset);
     playerhand.attachTo(this);
     playerHud.setPosition(getPosition());
-    playerHud.attachTo(this);
+    ui->addToHUD(&playerHud);
+    //playerHud.attachTo(this);
     playerBar.setPosition(getPosition() + lifePointOffset);
     playerBar.setRotation(-90);
     playerBar.attachTo(this);

@@ -17,7 +17,6 @@ class GameScene : public SceneBase{
     Player player0;
     Player player1;
     void setup() override {
-        cout << "weeee";
         for (int i=0; i<5; i++){
             auto fb = std::make_shared<Vinesnatcher>(ui);
             fb->setName("p0Card" + std::to_string(i));

@@ -81,6 +81,9 @@ void UISystem::removeListener(UIElement *removeListener)
     mouseOveredListeners.remove(removeListener);
 }
 
+void UISystem::addToHUD(UIElement* hudElement){
+    hudElements.push_back(hudElement);
+}
 
 void UISystem::processEvents(vector<sf::Event> events)
 {
