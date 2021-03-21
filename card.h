@@ -50,6 +50,7 @@ class card : public UIElement, public std::enable_shared_from_this<card>{
 	virtual void onCardClicked();
 	virtual void onCardBeginMouseover();
 	virtual void onCardEndMouseover();
+	virtual void onReceiveSelection(list<shared_ptr<card>> cards){};
 	virtual void play();
 	virtual void tap(){}
 	virtual void takeDamage(const int& amount);

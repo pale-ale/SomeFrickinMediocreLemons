@@ -2,14 +2,16 @@
 
 #include "UISystem.h"
 #include "../card.h"
+#include "../CardSelectionInfo.h"
 
 class CardSelector : public UIElement{
     public:
     CardSelector(UISystem* ui);
-    void setSelectionTarget(const list<shared_ptr<card>> &cardsToSelectFrom, bool displayAsList);
+    void setSelectionTarget(const list<shared_ptr<card>> &cardsToSelectFrom, bool displayAsList, CardSelectionInfo csi);
     list<shared_ptr<card>> getSelectedCards() const;
     void resetSelection(){selectedCards.clear();}
     bool bIsCurrentlySelecting = false;
+    CardSelectionInfo cardSelectionInfo;
     
     const int gridWidth = 8;
     const int slotPaddingX = 5;

@@ -17,20 +17,14 @@ void Vinesnatcher::onCardBeginMouseover(){
 }
 
 void Vinesnatcher::tap(){
-    auto ownerSelection = owner->cardSelector.getSelectedCards();
-    
-    if (ownerSelection.size() == 0){
-        owner->startSelection();
-        owner->awaitingSelection = this;
-        return;
-    }
-    
-    if (ownerSelection.size() == 1 && owner->awaitingSelection == this){
-        owner->cardSelector.resetSelection();
-        cout << "vinesnatcher tapped.\n";
-        owner->awaitingSelection = nullptr;
-        auto& card = *(ownerSelection.begin());
-        cout << card->getName() << "Vinesnatcher deals 2 damage to " << card->getName() << ".";
-        card->takeDamage(2);
-    }
+    owner->awaitingSelection = this;
+    CardSelectionInfo csi;
+    owner->startSelection(csi);
+}
+
+void Vinesnatcher::onReceiveSelection(list<shared_ptr<card>> cards){
+    cout << "vinesnatcher tapped.\n";
+    auto card = *cards.begin();
+    cout << "Vinesnatcher deals 2 damage to " << card->getName() << ".";
+    card->takeDamage(2);
 }

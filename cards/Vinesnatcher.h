@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../card.h"
+#include "../CardSelectionInfo.h"
 #include "../Player.h"
 
 using std::cout;
@@ -19,6 +20,7 @@ class Vinesnatcher : public card{
 	Vinesnatcher(UISystem* ui);
 	virtual void play() override;
 	virtual void onCardBeginMouseover() override;
+	virtual void onReceiveSelection(list<shared_ptr<card>> cards);
 
 	virtual void setupButtonBinding() override {
 		cardButton.onMouseDownCallback = new EventCallback<card>(this, &card::onCardClicked);

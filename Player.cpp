@@ -156,14 +156,29 @@ Player::Player(UISystem *ui) : UIElement(ui),
     addChild(&cardSelector);
 }
 
-void Player::startSelection(bool battlefield, bool enemy)
+void Player::startSelection(CardSelectionInfo cardSelectionInfo)
 {
-    Player *p = enemy ? game->getNextTurnPlayer() : this;
-    cardSelector.bIsCurrentlySelecting = true;
-    if (battlefield)
-    {
-        cardSelector.setSelectionTarget(p->battlefield.getCards(), false);
+    Player *enemy = game->getNextTurnPlayer();
+    list<shared_ptr<card>> eligibleCards;
+    if (cardSelectionInfo.enemyBattlefield){
+        auto c = enemy->battlefield.getCards();
+        cout << "test\n";
+        eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
     }
+    if (cardSelectionInfo.selfBattlefield){
+        auto c = this->battlefield.getCards();
+        eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
+    }
+    if (cardSelectionInfo.enemyHand){
+        auto c = enemy->getHand();
+        eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
+    }
+    if (cardSelectionInfo.selfHand){
+        auto c = this->getHand();
+        eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
+    }
+    cardSelector.bIsCurrentlySelecting = true;
+    cardSelector.setSelectionTarget(eligibleCards, false, cardSelectionInfo);
 }
 
 void Player::previewCard(const card &cardToPreview)

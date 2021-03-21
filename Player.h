@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include "CardSelectionInfo.h"
 #include <iostream>
 #include <list>
 #include <SFML/Graphics.hpp>
@@ -47,9 +48,10 @@ class Player: public UIElement{
     void stopPreviewingCard();
     void cardSelectionUpdated(){
         if (awaitingSelection){
-            awaitingSelection->tap();
+            awaitingSelection->onReceiveSelection(cardSelector.getSelectedCards());
+            cardSelector.resetSelection();
+            awaitingSelection = nullptr;
         }
-        cardSelector.resetSelection();
     };
     card* awaitingSelection = nullptr;
     void addCardToDeck(shared_ptr<card> card);
@@ -64,7 +66,7 @@ class Player: public UIElement{
     string getName(){return name;}
     bool bIsMyTurn;
     bool isSelectingCards;
-    void startSelection(bool battlefield=true, bool enemy=true);
+    void startSelection(CardSelectionInfo cardSelectionInfo);
     Hand playerhand;
     Battlefield battlefield;
     PlayerHUD playerHud;

@@ -5,9 +5,10 @@ CardSelector::CardSelector(UISystem *ui) : UIElement(ui)
 {
 }
 
-void CardSelector::setSelectionTarget(const list<shared_ptr<card>> &cardsToSelectFrom, bool reposition)
+void CardSelector::setSelectionTarget(const list<shared_ptr<card>> &cardsToSelectFrom, bool reposition, CardSelectionInfo csi)
 {
     cards = cardsToSelectFrom;
+    cardSelectionInfo = csi;
     int slotNumberX = 0;
     int slotNumberY = 0;
     float posX = 0;
@@ -57,16 +58,20 @@ void CardSelector::selectedCardClickCallback()
    
     for (auto& b : buttons){
         if (b->isPressed){
-            cout << "selector use count: " << (*cardStart).use_count() << endl;
+            //code is run when an eligible card is clicked
             selectedCards.push_back(*cardStart);
             buttons.remove(b);
             ui->removeListener(b.get());
-            Player* p = dynamic_cast<Player*>(parent);
-            if (p){
-                p->cardSelectionUpdated();
+            cout << "h\n";
+            if (selectedCards.size() == cardSelectionInfo.maxCompleteSelectionCount){
+                cout << "d\n";
+                Player* p = dynamic_cast<Player*>(parent);
+                if (p){
+                    p->cardSelectionUpdated();
+                }
+                cardStart->reset();
+                return;
             }
-            cardStart->reset();
-            return;
         }
         cardStart++;
     }
