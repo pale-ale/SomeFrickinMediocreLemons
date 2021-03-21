@@ -20,7 +20,7 @@ class CardSelector : public UIElement{
     const float slotHeight = 75;
 
     private:
-    list<shared_ptr<Button>> buttons;
+    list<unique_ptr<Button>> buttons;
     list<shared_ptr<card>> selectedCards;
     list<shared_ptr<card>> cards;
 

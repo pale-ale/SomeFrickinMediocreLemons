@@ -12,7 +12,9 @@ class Button : public UIElement{
     Button(UISystem* ui,
            sf::Rect<float> rect = {0,0,50,50}, 
            sf::Color color = {255, 0, 255, Settings::bEnableButtonTint ? 100 : 0});
-   
+    ~Button(){
+        ui->removeListener(this);
+    }
     IEventCallback* onMouseDownCallback = nullptr;
     IEventCallback* onMouseUpCallback = nullptr;
     IEventCallback* onBeginMouseoverCallback = nullptr;

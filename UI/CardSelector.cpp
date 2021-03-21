@@ -17,7 +17,7 @@ void CardSelector::setSelectionTarget(const list<shared_ptr<card>> &cardsToSelec
 
     for (const shared_ptr<const card>& c : cardsToSelectFrom)
     {
-        shared_ptr<Button> b;
+        unique_ptr<Button> b;
         if (reposition)
         {
             //WIP
@@ -40,7 +40,7 @@ void CardSelector::setSelectionTarget(const list<shared_ptr<card>> &cardsToSelec
             b->setPosition(c->getPosition());
         }
         b->onMouseDownCallback = new EventCallback<CardSelector>(this, &CardSelector::selectedCardClickCallback);
-        buttons.push_back(b);
+        buttons.push_back(std::move(b));
     }
 }
 
