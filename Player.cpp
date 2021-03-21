@@ -162,7 +162,6 @@ void Player::startSelection(CardSelectionInfo cardSelectionInfo)
     list<shared_ptr<card>> eligibleCards;
     if (cardSelectionInfo.enemyBattlefield){
         auto c = enemy->battlefield.getCards();
-        cout << "test\n";
         eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
     }
     if (cardSelectionInfo.selfBattlefield){

@@ -62,9 +62,7 @@ void CardSelector::selectedCardClickCallback()
             selectedCards.push_back(*cardStart);
             buttons.remove(b);
             ui->removeListener(b.get());
-            cout << "h\n";
             if (selectedCards.size() == cardSelectionInfo.maxCompleteSelectionCount){
-                cout << "d\n";
                 Player* p = dynamic_cast<Player*>(parent);
                 if (p){
                     p->cardSelectionUpdated();
