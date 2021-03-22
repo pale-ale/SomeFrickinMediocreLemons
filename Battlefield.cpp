@@ -4,6 +4,7 @@ Battlefield::Battlefield(UISystem *ui)
 {
     supportCards = vector<cardIndex>();
     battleCards = vector<cardIndex>();
+    name = "Battlefield";
 }
 
 void Battlefield::addCard(shared_ptr<card> &newCard, bool support, int slot)
@@ -25,7 +26,8 @@ void Battlefield::addCard(shared_ptr<card> &newCard, bool support, int slot)
         throw;
     }
     row->push_back({slot, newCard});
-    newCard->attachTo(this);
+    newCard->reparent(shared_from_this());
+    addChild(newCard);
     newCard->cardLocation = ECardLocation::battlefield;
     newCard->setPosition(transform.getTransform().transformPoint(
         (support ? supportPositionsOffset[slot] : battlePositionsOffset[slot])));
@@ -39,7 +41,7 @@ void Battlefield::removeCard(int slot, bool support)
     auto card = getCardAt(slot, rowIndex, support);
     if (card)
     {
-        removeChild(card.get());
+        removeChild(card);
         row.erase(row.begin() + rowIndex);
     }
     else
@@ -69,19 +71,21 @@ void Battlefield::removeCard(card *cardToRemove)
     end = supportCards.end();
     while (start != end)
     {
-        auto &card = (*start)._card;
-        if (card.get() == cardToRemove)
+        auto c = start->_card.get();
+        if (c == cardToRemove)
         {
             cout << "Removing support card\n";
             supportCards.erase(start);
-            removeChild(card.get());
+            removeChild(c);
+            shared_ptr<card> cardToRemovePtr;
+            cardToRemovePtr.reset(cardToRemove);
             return;
         }
         start++;
     }
 }
 
-shared_ptr<card> Battlefield::getCardAt(int slot, int &inIndex, bool support)
+card* Battlefield::getCardAt(int slot, int &inIndex, bool support)
 {
     auto row = support ? supportCards : battleCards;
     for (int i = 0; i < row.size(); i++)
@@ -89,7 +93,7 @@ shared_ptr<card> Battlefield::getCardAt(int slot, int &inIndex, bool support)
         if (row[i].index == slot)
         {
             inIndex = i;
-            return row[i]._card;
+            return row[i]._card.get();
         }
     }
     return nullptr;
@@ -115,15 +119,15 @@ int Battlefield::getNextFreeSlot(vector<cardIndex> &cards, int max)
     return -1;
 }
 
-list<shared_ptr<card>> Battlefield::getCards() const
+list<card*> Battlefield::getCards() const
 {
     list<cardIndex> cis;
     cis.insert(cis.end(), supportCards.begin(), supportCards.end());
     cis.insert(cis.end(), battleCards.begin(), battleCards.end());
-    list<shared_ptr<card>> cards;
+    list<card*> cards;
     for (auto ci : cis)
     {
-        cards.push_back(ci._card);
+        cards.push_back(ci._card.get());
     }
     return cards;
 }

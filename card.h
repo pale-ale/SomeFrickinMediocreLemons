@@ -20,13 +20,13 @@ enum ECardLocation{
 	graveyard
 };
 
-class card : public UIElement, public std::enable_shared_from_this<card>{
+class card : public UIElement{
 	public:
 	card(UISystem* ui,
 		 const string imagePath = "/usr/share/test/resources/Unknown.png", 
 		 const string desc = "test",
 		 const FMana cost = FMana());
-	~card();
+	virtual ~card();
 	Button cardButton;
 	cardType getType();
 	void moveGraveyard();
@@ -50,7 +50,7 @@ class card : public UIElement, public std::enable_shared_from_this<card>{
 	virtual void onCardClicked();
 	virtual void onCardBeginMouseover();
 	virtual void onCardEndMouseover();
-	virtual void onReceiveSelection(list<shared_ptr<card>> cards){};
+	virtual void onReceiveSelection(list<card*> cards){};
 	virtual void play();
 	virtual void tap(){}
 	virtual void takeDamage(const int& amount);

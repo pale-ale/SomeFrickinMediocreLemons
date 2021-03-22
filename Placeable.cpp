@@ -1,23 +1,22 @@
 #include "Placeable.h"
 #include "../Settings.h"
 
-void Placeable::addChild(Placeable* newChild){
-    for (Placeable* child : children){
+void Placeable::addChild(std::shared_ptr<Placeable> newChild){
+    for (auto child : children){
         if (child == newChild){
             cout << "child already added!\n";
             throw;
         }
     }
     children.push_back(newChild);
-    newChild->parent = this;
+    newChild->parent = shared_from_this();
 }
 
-void Placeable::attachTo(Placeable* newParent){
+void Placeable::reparent(std::shared_ptr<Placeable> newParent){
     if (parent){
         parent->removeChild(this);
     }
     parent = newParent;
-    parent->addChild(this);
 }
 
 void Placeable::setSize(const sf::Vector2f& newSize){
@@ -30,12 +29,19 @@ void Placeable::setSize(const sf::Vector2f& newSize){
     size = newSize;
 }
 
-void Placeable::removeChild(Placeable* child){
-    children.remove(child);
+void Placeable::removeChild(Placeable *child){
+    for (auto c : children){
+        if (c.get() == child)
+            child->parent = nullptr;
+            children.remove(c);
+            return;
+    }
+    cout << "Trying to remove child which is not a child or does not exist!\n";
+    throw;
 }
 
 void Placeable::draw(sf::RenderTarget& target, sf::RenderStates state) const{
-    for (auto& child : children){
+    for (auto child : children){
         target.draw(*child);
     }
     if (Settings::bDrawDebugHitbox){

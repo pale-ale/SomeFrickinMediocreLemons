@@ -51,7 +51,7 @@ public:
     list<UIElement *> hudElements = {};
     void addListener(UIElement *newListener);
     void addToHUD(UIElement* hudElement);
-    void removeListener(UIElement *removeListener);
+    void removeListener(UIElement *listener);
     bool isElementIn(const UIElement *e, const list<UIElement *> &l)
     {
         return std::find(l.begin(), l.end(), e) != l.end();

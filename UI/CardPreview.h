@@ -8,14 +8,14 @@
 class CardPreview : public UIElement
 {
 public:
-    CardPreview(UISystem* ui, const card &cardToPreview):
+    CardPreview(UISystem* ui, std::shared_ptr<const card> &cardToPreview):
     UIElement(ui)
     {
         font.loadFromFile(Settings::validFontPath);
         cardTitle.setFont(font);
         description.setFont(font);
-        cardTitle.setString(cardToPreview.getName());
-        description.setString(cardToPreview.getDescription());
+        cardTitle.setString(cardToPreview->getName());
+        description.setString(cardToPreview->getDescription());
         //description.setCharacterSize(10);
         description.setScale(.2,.2);
         cardTitle.setOrigin({cardTitle.getLocalBounds().width/2, cardTitle.getLocalBounds().height/2});
@@ -23,10 +23,10 @@ public:
         background.setFillColor({50,50,50,100});
         background.setSize(size);
         background.setOrigin(size/2.0f);
-        cardImage.setTexture(*(cardToPreview.getTexture().get()), true);
+        cardImage.setTexture(*(cardToPreview->getTexture().get()), true);
         cardImage.setScale(2.5,2.5);
         cardImage.setOrigin({cardImage.getLocalBounds().width/2, cardImage.getLocalBounds().height/2});
-        FMana cardCost = cardToPreview.cost;
+        FMana cardCost = cardToPreview->cost;
         costDisplayRed.setFillColor(Settings::RedColor);
         costDisplayRed.setString(to_string(cardCost.Red));
         costDisplayRed.setFont(font);

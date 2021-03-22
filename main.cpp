@@ -31,14 +31,26 @@ int main()
     window.setKeyRepeatEnabled(false);
     window.setSize({(uint)(Settings::defaultWidth*scale), (uint)(Settings::defaultHeight*scale)});
     window.setVerticalSyncEnabled(true);
+
+    auto testFont = sf::Font();
+    for (const char* testPath : Settings::defaultFontPaths){
+        if(testFont.loadFromFile(testPath)){
+            Settings::validFontPath = testPath;
+            break;
+        }
+    }
+    if (!Settings::validFontPath){
+        cout << "No valid fontpath found.\n";
+        throw;
+    }
     
     vector<sf::Event> events;
     sf::Clock clock;
 
-    GameScene gs = GameScene(&ui, sceneManager);
-    MainMenuScene ms = MainMenuScene(&ui, sceneManager);
-    ms.setGameScene(&gs);
-    sceneManager.loadScene(&ms);
+    MainMenuScene *ms = new MainMenuScene(&ui, sceneManager);
+    auto gs = new GameScene(&ui, sceneManager);
+    ms->setGameScene(gs);
+    sceneManager.loadScene(ms);
 
     while (window.isOpen())
     {

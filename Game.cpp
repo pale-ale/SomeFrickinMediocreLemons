@@ -11,17 +11,7 @@ sf::Drawable(){
         cout << "Couldn't load texture at \'" << filename << "\'.\n";
         throw;
     }
-    auto testFont = sf::Font();
-    for (const char* testPath : Settings::defaultFontPaths){
-        if(testFont.loadFromFile(testPath)){
-            Settings::validFontPath = testPath;
-            break;
-        }
-    }
-    if (!Settings::validFontPath){
-        cout << "No valid fontpath found.\n";
-        throw;
-    }
+   
 }
 
 Player* Game::getNextTurnPlayer(){

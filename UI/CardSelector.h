@@ -7,9 +7,13 @@
 class CardSelector : public UIElement{
     public:
     CardSelector(UISystem* ui);
-    void setSelectionTarget(const list<shared_ptr<card>> &cardsToSelectFrom, bool displayAsList, CardSelectionInfo csi);
-    list<shared_ptr<card>> getSelectedCards() const;
-    void resetSelection(){selectedCards.clear();}
+    void setSelectionTarget(const list<card*> &cardsToSelectFrom, bool displayAsList, CardSelectionInfo csi);
+    list<card*> getSelectedCards() const;
+    void resetSelection(){
+        cards.clear();
+        selectedCards.clear();
+        cout << "Cardselector cleared seleciton.\n";
+    }
     bool bIsCurrentlySelecting = false;
     CardSelectionInfo cardSelectionInfo;
     
@@ -21,8 +25,8 @@ class CardSelector : public UIElement{
 
     private:
     list<unique_ptr<Button>> buttons;
-    list<shared_ptr<card>> selectedCards;
-    list<shared_ptr<card>> cards;
+    list<card*> selectedCards;
+    list<card*> cards;
 
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{

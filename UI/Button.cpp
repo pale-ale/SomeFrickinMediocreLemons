@@ -13,7 +13,6 @@ UIElement(ui){
     if (ui)
 	{
 		ui->addListener(this);
-		cout << "added button as listener.\n";
 	}else{
 		cout << "a UI object shouldn't be created without a valid UI reference";
 	}

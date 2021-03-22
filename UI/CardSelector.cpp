@@ -5,7 +5,7 @@ CardSelector::CardSelector(UISystem *ui) : UIElement(ui)
 {
 }
 
-void CardSelector::setSelectionTarget(const list<shared_ptr<card>> &cardsToSelectFrom, bool reposition, CardSelectionInfo csi)
+void CardSelector::setSelectionTarget(const list<card*> &cardsToSelectFrom, bool reposition, CardSelectionInfo csi)
 {
     cards = cardsToSelectFrom;
     cardSelectionInfo = csi;
@@ -15,15 +15,15 @@ void CardSelector::setSelectionTarget(const list<shared_ptr<card>> &cardsToSelec
     float posY = 0;
     buttons.erase(buttons.begin(), buttons.end());
 
-    for (const shared_ptr<const card>& c : cardsToSelectFrom)
+    for (auto &c : cards)
     {
-        unique_ptr<Button> b;
+        unique_ptr<Button> button;
         if (reposition)
         {
             //WIP
             posX = slotNumberX * slotWidth + slotNumberX * slotPaddingX + slotPaddingX + slotWidth / 2;
             posY = slotNumberY * slotHeight + slotNumberY * slotPaddingY + slotPaddingY + slotHeight / 2;
-            b = std::make_unique<Button>(ui, sf::FloatRect{posX, posY, slotWidth, slotHeight},
+            button = std::make_unique<Button>(ui, sf::FloatRect{posX, posY, slotWidth, slotHeight},
                                          sf::Color{255, 255, 255, 255});
             slotNumberX += 1;
             if (slotNumberX >= gridWidth)
@@ -34,40 +34,39 @@ void CardSelector::setSelectionTarget(const list<shared_ptr<card>> &cardsToSelec
         }
         else
         {
-            b = std::make_unique<Button>(ui, sf::FloatRect{posX, posY, slotWidth, slotHeight},
+            button = std::make_unique<Button>(ui, sf::FloatRect{posX, posY, slotWidth, slotHeight},
                                          sf::Color{0, 255, 255, 150});
-            b->setRotation(c->getRotation());
-            b->setPosition(c->getPosition());
+            cout << "added button as listener.\n";
+            button->setRotation(c->getRotation());
+            button->setPosition(c->getPosition());
         }
-        b->onMouseDownCallback = new EventCallback<CardSelector>(this, &CardSelector::selectedCardClickCallback);
-        buttons.push_back(std::move(b));
+        button->onMouseDownCallback = new EventCallback<CardSelector>(this, &CardSelector::selectedCardClickCallback);
+        buttons.push_back(std::move(button));
     }
 }
 
-list<shared_ptr<card>> CardSelector::getSelectedCards() const
+list<card*> CardSelector::getSelectedCards() const
 {
-    for (auto& c  : selectedCards){
-        cout << "getselectedcards use count: " << c.use_count() << endl;
-    }
     return selectedCards;
 }
 
 void CardSelector::selectedCardClickCallback()
 {
     auto cardStart = cards.begin();
-   
+
     for (auto& b : buttons){
         if (b->isPressed){
             //code is run when an eligible card is clicked
-            selectedCards.push_back(*cardStart);
             buttons.remove(b);
-            ui->removeListener(b.get());
+            selectedCards.push_back(*cardStart);
             if (selectedCards.size() == cardSelectionInfo.maxCompleteSelectionCount){
-                Player* p = dynamic_cast<Player*>(parent);
+                Player* p = dynamic_cast<Player*>(parent.get());
                 if (p){
                     p->cardSelectionUpdated();
+                }else{
+                    cout << "A cardselector must have a player as a parent. Use pl.addChild(cs)\n";
+                    throw;
                 }
-                cardStart->reset();
                 return;
             }
         }

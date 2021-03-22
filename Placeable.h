@@ -3,33 +3,39 @@
 #include <list>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <memory>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::vector;
+using std::string;
+using std::list;
 
 class UIElement;
 class UISystem;
 
-class Placeable : public sf::Drawable
+class Placeable : public sf::Drawable, public std::enable_shared_from_this<Placeable>
 {
 public:
     Placeable(){}
-    void addChild(Placeable *newChild);
-    void removeChild(Placeable *child);
-    const list<Placeable *> &getChildren() { return children; }
+    void addChild(std::shared_ptr<Placeable> newChild);
+    void reparent(std::shared_ptr<Placeable> newParent);
+    virtual void removeChild(Placeable *child);
+    list<std::shared_ptr<Placeable>> getChildren() const { return children; }
     virtual void setPosition(sf::Vector2f);
     virtual void setRotation(float rotation);
     virtual void setSize(const sf::Vector2f& newSize);
-    void attachTo(Placeable *newParent);
-    void detach();
-    void setChildren(list<Placeable *> newChildren) { children = newChildren; };
+    virtual void initializeSubComponents(){};
+    void setChildren(list<std::shared_ptr<Placeable>> newChildren) { children = newChildren; };
 
 protected:
     sf::Transformable transform;
-    Placeable *parent = nullptr;
+    std::shared_ptr<Placeable> parent = nullptr;
     UISystem *ui = nullptr;
     vector<sf::Vector2f> hitbox;
+    string name = "Placeable";
     sf::Vector2f size = {0, 0};
-    list<Placeable *> children = list<Placeable *>();
+    list<std::shared_ptr<Placeable>> children;
     void updateHitbox();
     virtual void draw(sf::RenderTarget &target, sf::RenderStates state) const override;
 

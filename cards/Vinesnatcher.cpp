@@ -19,12 +19,13 @@ void Vinesnatcher::onCardBeginMouseover(){
 void Vinesnatcher::tap(){
     owner->awaitingSelection = this;
     CardSelectionInfo csi;
+    cout << name << " requesting selection.\n";
     owner->startSelection(csi);
+    cout << name << " tapped.\n";
 }
 
 void Vinesnatcher::onReceiveSelection(list<shared_ptr<card>> cards){
-    cout << "vinesnatcher tapped.\n";
     auto card = *cards.begin();
-    cout << "Vinesnatcher deals 2 damage to " << card->getName() << ".";
+    cout << "Vinesnatcher deals 2 damage to " << card->getName() << ".\n";
     card->takeDamage(2);
 }

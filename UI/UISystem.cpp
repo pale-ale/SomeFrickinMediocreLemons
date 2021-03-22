@@ -75,10 +75,10 @@ void UISystem::addListener(UIElement *newListener)
     eventListeners.push_back(newListener);
 }
 
-void UISystem::removeListener(UIElement *removeListener)
+void UISystem::removeListener(UIElement *listener)
 {
-    eventListeners.remove(removeListener);
-    mouseOveredListeners.remove(removeListener);
+    eventListeners.remove(listener);
+    mouseOveredListeners.remove(listener);
 }
 
 void UISystem::addToHUD(UIElement* hudElement){

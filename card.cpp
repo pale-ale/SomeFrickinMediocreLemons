@@ -82,6 +82,7 @@ UIElement(ui), pathToImage{imagePath}, description{desc}, cost{mana}, cardButton
 	powerStatDisplay.setFillColor(Settings::BlackColor);
 	powerStatDisplay.setPosition(getPosition() + powerStatOffset);
 	powerStatDisplay.setScale(0.5, 0.5);
+	Placeable::name = "card";
 	updateCardStatDisplay();
 }
 
@@ -125,9 +126,9 @@ void card::onCardClicked()
 
 void card::onCardBeginMouseover()
 {
-	if (owner && !owner->isSelectingCards)
+	if (owner && owner->bIsMyTurn && !owner->cardSelector->bIsCurrentlySelecting)
 	{
-		owner->previewCard(*this);
+		owner->previewCard(std::static_pointer_cast<card>(shared_from_this()));
 	}
 }
 
@@ -144,7 +145,7 @@ void card::takeDamage(const int& amount){
 	updateCardStatDisplay();
 	if (health <= 0){
 		onCardDeath();
-		owner->battlefield.removeCard(this);
+		owner->battlefield->removeCard(this);
 	}
 }
 
@@ -168,7 +169,9 @@ void card::updateCardStatDisplay(){
 }
 
 card::~card(){
-	cout << "Destroying card " << name << "!\n";
+	cout << "Destroying card " << name << "...\n";
 	ui->removeListener(&cardButton);
+	cout << "removed listener\n";
 	owner->stopPreviewingCard();
+	cout << "stopped preview\n";
 }

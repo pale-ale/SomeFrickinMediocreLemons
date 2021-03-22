@@ -5,7 +5,6 @@
 
 void Player::drawCards(int count)
 {
-
     if (deck.size() < count)
     {
         cout << "Not enough cards to draw!\n";
@@ -17,28 +16,28 @@ void Player::drawCards(int count)
     for (int i = 0; i < count; i++)
     {
         auto &card = *it;
-        playerhand.addCardToHand(card);
+        deck.pop_back();
+        playerhand->addCardToHand(card);
         card->cardLocation = ECardLocation::hand;
         card->setFlipState(true);
-        removeChild(card.get());
-        deck.pop_back();
     }
 
-    playerhand.updateHandPositions();
-    playerHud.setDeckCount(deck.size());
-    playerHud.setHandCount(playerhand.getHand().size());
+    playerhand->updateHandPositions();
+    playerHud->setDeckCount(deck.size());
+    playerHud->setHandCount(playerhand->getHand().size());
 }
 
 void Player::playCard(card *cardToPlay)
 {
-    auto cardPtr = playerhand.removeCard(cardToPlay);
-    mana -= cardPtr->cost;
-    playerManaBars.updateManaBars(&mana);
-    battlefield.addCard(cardPtr);
+    auto sharedCardPtr = playerhand->removeCard(cardToPlay);
+    mana -= cardToPlay->cost;
+    playerManaBars->updateManaBars(&mana);
+    battlefield->addCard(sharedCardPtr);
+    cout << "Ref count after playing card (should be 3): " << sharedCardPtr.use_count() << endl;
     cout << "Player "
-            << " played card " << cardPtr->getName() << endl;
-    playerhand.updateHandPositions();
-    playerHud.setHandCount(playerhand.getHand().size());
+            << " played card " << cardToPlay->getName() << endl;
+    playerhand->updateHandPositions();
+    playerHud->setHandCount(playerhand->getHand().size());
     if (game)
     {
         game->startTurnOfNextPlayer();
@@ -47,7 +46,6 @@ void Player::playCard(card *cardToPlay)
     {
         cout << "I need a gameInstance!\n";
     }
-    cardPtr.reset(); //at this point we do not have any sharedptr to the card except in battlefield
 }
 
 void Player::addCardToDeck(shared_ptr<card> card)
@@ -58,8 +56,8 @@ void Player::addCardToDeck(shared_ptr<card> card)
     card->owner = this;
     card->cardLocation = ECardLocation::deck;
     deck.push_back(card);
-    playerHud.setDeckCount(deck.size());
-    addChild(card.get());
+    playerHud->setDeckCount(deck.size());
+    addChild(card);
 }
 
 void Player::addCardToGraveyard(shared_ptr<card> card)
@@ -68,12 +66,12 @@ void Player::addCardToGraveyard(shared_ptr<card> card)
     card->setFlipState(false);
     card->owner = this;
     graveyard.push_back(card);
-    addChild(card.get());
+    addChild(card);
 }
 
-const list<shared_ptr<card>> Player::getHand() const
+const list<card*> Player::getHand() const
 {
-    return playerhand.getHand();
+    return playerhand->getHand();
 }
 
 void Player::printDeck() const
@@ -87,7 +85,7 @@ void Player::printDeck() const
 
 void Player::printHand() const
 {
-    auto hand = playerhand.getHand();
+    auto hand = playerhand->getHand();
     auto start = hand.begin();
     auto end = hand.end();
     cout << "Cards in hand: " << hand.size() << endl;
@@ -101,19 +99,19 @@ void Player::printHand() const
 void Player::addMana(int Amount, EManaType color)
 {
     mana.add(color, Amount);
-    playerManaBars.updateManaBars(&mana);
+    playerManaBars->updateManaBars(&mana);
 }
 
 void Player::addMana(const FMana &m)
 {
     mana = mana + m;
-    playerManaBars.updateManaBars(&mana);
+    playerManaBars->updateManaBars(&mana);
 }
 
 void Player::clearMana()
 {
     this->mana = FMana();
-    playerManaBars.updateManaBars(&mana);
+    playerManaBars->updateManaBars(&mana);
 }
 
 Player::Player(UISystem *ui, std::string Name) : Player(ui)
@@ -128,44 +126,51 @@ int Player::getLifePoints()
 void Player::setLifePoints(int lifePoints)
 {
     this->lifePoints = lifePoints;
-    playerBar.setFillFactor((float)this->lifePoints / Settings::StartLifePoints);
+    playerBar->setFillFactor((float)this->lifePoints / Settings::StartLifePoints);
 }
 
+void Player::initializeSubComponents(){
+    battlefield->setPosition(getPosition() + battlefieldOffset);
+    battlefield->reparent(shared_from_this());
+    addChild(battlefield);
+    playerhand->setPosition(getPosition() + handOffset);
+    playerhand->reparent(shared_from_this());
+    addChild(playerhand);
+    playerHud->setPosition(getPosition());
+    addChild(cardSelector);
+    ui->addToHUD(playerHud.get());
+    ui->addToHUD(cardSelector.get());
+    playerBar->setPosition(getPosition() + lifePointOffset);
+    playerBar->setRotation(-90);
+    addChild(playerBar);
+    playerBar->setFillFactor((float)lifePoints / Settings::StartLifePoints);
+    playerManaBars->setPosition(getPosition() + manaBarOffset);
+    playerManaBars->setRotation(-90);
+    addChild(playerManaBars);
+}
+
+
 Player::Player(UISystem *ui) : UIElement(ui),
-                               playerhand{Hand(ui)},
-                               battlefield{Battlefield(ui)},
-                               playerBar{Bar(ui)},
-                               cardSelector{CardSelector(ui)},
-                               playerManaBars{ManaBars(ui, 50, 25)},
-                               playerHud{PlayerHUD(ui)}
+                               playerhand{std::make_shared<Hand>(ui)},
+                               battlefield{std::make_shared<Battlefield>(ui)},
+                               playerBar{std::make_shared<Bar>(ui)},
+                               cardSelector{std::make_shared<CardSelector>(ui)},
+                               playerManaBars{std::make_shared<ManaBars>(ui, 50, 25)},
+                               playerHud{std::make_shared<PlayerHUD>(ui)}
 {
-    battlefield.setPosition(getPosition() + battlefieldOffset);
-    battlefield.attachTo(this);
-    playerhand.setPosition(getPosition() + handOffset);
-    playerhand.attachTo(this);
-    playerHud.setPosition(getPosition());
-    ui->addToHUD(&playerHud);
-    //playerHud.attachTo(this);
-    playerBar.setPosition(getPosition() + lifePointOffset);
-    playerBar.setRotation(-90);
-    playerBar.attachTo(this);
-    playerBar.setFillFactor((float)lifePoints / Settings::StartLifePoints);
-    playerManaBars.setPosition(getPosition() + manaBarOffset);
-    playerManaBars.setRotation(-90);
-    playerManaBars.attachTo(this);
-    addChild(&cardSelector);
+    name = "Player";
 }
 
 void Player::startSelection(CardSelectionInfo cardSelectionInfo)
 {
     Player *enemy = game->getNextTurnPlayer();
-    list<shared_ptr<card>> eligibleCards;
+    list<card*> eligibleCards;
     if (cardSelectionInfo.enemyBattlefield){
-        auto c = enemy->battlefield.getCards();
+        auto c = enemy->battlefield->getCards();
         eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
     }
     if (cardSelectionInfo.selfBattlefield){
-        auto c = this->battlefield.getCards();
+        auto c = this->battlefield->getCards();
         eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
     }
     if (cardSelectionInfo.enemyHand){
@@ -176,19 +181,19 @@ void Player::startSelection(CardSelectionInfo cardSelectionInfo)
         auto c = this->getHand();
         eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
     }
-    cardSelector.bIsCurrentlySelecting = true;
-    cardSelector.setSelectionTarget(eligibleCards, false, cardSelectionInfo);
+    cardSelector->bIsCurrentlySelecting = true;
+    cardSelector->setSelectionTarget(eligibleCards, false, cardSelectionInfo);
 }
 
-void Player::previewCard(const card &cardToPreview)
+void Player::previewCard(std::shared_ptr<const card> cardToPreview)
 {
-    if (!cardSelector.bIsCurrentlySelecting)
+    if (!cardSelector->bIsCurrentlySelecting)
     {
-        playerHud.generatePreview(cardToPreview);
+        playerHud->generatePreview(cardToPreview);
     }
 }
 
 void Player::stopPreviewingCard()
 {
-    playerHud.removePreview();
+    playerHud->removePreview();
 }

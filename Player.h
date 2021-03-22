@@ -43,20 +43,20 @@ class Player: public UIElement{
     void setGame(Game* newGame){game = newGame;};
     Game* getGame(){return game;};
     void drawCards(const int count);
-    void playCard(card* card);
-    void previewCard(const card& cardToPreview);
+    void playCard(card *card);
+    void previewCard(std::shared_ptr<const card> cardToPreview);
     void stopPreviewingCard();
     void cardSelectionUpdated(){
         if (awaitingSelection){
-            awaitingSelection->onReceiveSelection(cardSelector.getSelectedCards());
-            cardSelector.resetSelection();
+            awaitingSelection->onReceiveSelection(cardSelector->getSelectedCards());
+            cardSelector->resetSelection();
             awaitingSelection = nullptr;
         }
     };
     card* awaitingSelection = nullptr;
     void addCardToDeck(shared_ptr<card> card);
     void addCardToGraveyard(shared_ptr<card> card);
-    const list<shared_ptr<card>> getHand() const;
+    const list<card*> getHand() const;
     void printDeck() const;
     void printHand() const;
 	void addMana(int amount, EManaType color);
@@ -65,16 +65,16 @@ class Player: public UIElement{
 	void clearMana();
     string getName(){return name;}
     bool bIsMyTurn;
-    bool isSelectingCards;
     void startSelection(CardSelectionInfo cardSelectionInfo);
-    Hand playerhand;
-    Battlefield battlefield;
-    PlayerHUD playerHud;
-    Bar playerBar;
-    ManaBars playerManaBars;
-    CardSelector cardSelector;
+    std::shared_ptr<Hand> playerhand;
+    std::shared_ptr<Battlefield> battlefield;
+    std::shared_ptr<PlayerHUD> playerHud;
+    std::shared_ptr<Bar> playerBar;
+    std::shared_ptr<ManaBars> playerManaBars;
+    std::shared_ptr<CardSelector> cardSelector;
     int getLifePoints();
     void setLifePoints(int);
+    virtual void initializeSubComponents() override;
     
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{

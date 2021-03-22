@@ -12,14 +12,14 @@ UIElement(ui){
     handCountText.setString("0");
 }
 
-void PlayerHUD::generatePreview(const card& cardToPreview){
+void PlayerHUD::generatePreview(std::shared_ptr<const card> &cardToPreview){
     if (cardPreview){
         removeChild(cardPreview.get());
         cardPreview = nullptr;
     }
     cardPreview = std::make_unique<CardPreview>(ui, cardToPreview);
     cardPreview->setPosition(getPosition() + cardPreviewOffset);
-    addChild(cardPreview.get());
+    addChild(cardPreview);
 }
 
 void PlayerHUD::removePreview(){

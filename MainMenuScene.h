@@ -30,11 +30,10 @@ class MainMenuScene: public SceneBase{
     };
 
     virtual void cleanup() override{
-        cout << "cleaning up...\n";
+        cout << "Cleaning up MainMenuScene (currently does nothing)\n";
     }
 
     void loadPlaySceneButtonCallback(){
-        cout << "test\n";
         if (gameScene){
             sceneManager->loadScene(gameScene);
         }

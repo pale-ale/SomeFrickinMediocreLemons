@@ -2,6 +2,7 @@
 #include "Bar.h"
 #include "../ManaType.h"
 #include "../Settings.h"
+#include <memory>
 
 class ManaBars: public UIElement{
     public:
@@ -10,10 +11,16 @@ class ManaBars: public UIElement{
    
     private:
     const int maxMana = 20;
-    Bar blackManaBar = Bar(ui, Settings::DarkGrayColor, Settings::BlackColor);
-    Bar blueManaBar  = Bar(ui, Settings::DarkGrayColor, Settings::BlueColor);
-    Bar greenManaBar = Bar(ui, Settings::DarkGrayColor, Settings::GreenColor);
-    Bar redManaBar   = Bar(ui, Settings::DarkGrayColor, Settings::RedColor);
-    Bar whiteManaBar = Bar(ui, Settings::DarkGrayColor, Settings::WhiteColor);
-    list<Bar*> ManaBarList = {&blackManaBar,&blueManaBar,&greenManaBar,&redManaBar,&whiteManaBar};
+    shared_ptr<Bar> blackManaBar = std::make_shared<Bar>(ui, Settings::DarkGrayColor, Settings::BlackColor);
+    shared_ptr<Bar> blueManaBar  = std::make_shared<Bar>(ui, Settings::DarkGrayColor, Settings::BlueColor);
+    shared_ptr<Bar> greenManaBar = std::make_shared<Bar>(ui, Settings::DarkGrayColor, Settings::GreenColor);
+    shared_ptr<Bar> redManaBar   = std::make_shared<Bar>(ui, Settings::DarkGrayColor, Settings::RedColor);
+    shared_ptr<Bar> whiteManaBar = std::make_shared<Bar>(ui, Settings::DarkGrayColor, Settings::WhiteColor);
+    list<shared_ptr<Bar>> ManaBarList = {
+        blackManaBar,
+        blueManaBar,
+        greenManaBar,
+        redManaBar,
+        whiteManaBar
+        };
 };

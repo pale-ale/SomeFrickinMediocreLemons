@@ -6,6 +6,7 @@
 using std::cout;
 
 void MainMenuScene::setup(){
+    cout << "setting up mainmenu...\n";
     playPos = {Settings::defaultWidth/2, Settings::defaultWidth/2 - 100};
     settingsPos = {Settings::defaultWidth/2, Settings::defaultWidth/2};
     sf::FloatRect s;

@@ -11,7 +11,7 @@ public:
     void setDeckCount(int deckCount);
     void setHandCount(int handCount);
     virtual void setPosition(sf::Vector2f newPosition) override;
-    void generatePreview(const card &cardToPreview);
+    void generatePreview(std::shared_ptr<const card> &cardToPreview);
     void removePreview();
 
 private:
@@ -21,7 +21,7 @@ private:
     sf::Vector2f handTextOffset = {-10, -35};
     sf::Vector2f cardPreviewOffset = {0, -100};
     std::unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
-    std::unique_ptr<CardPreview> cardPreview;
+    std::shared_ptr<CardPreview> cardPreview;
 
 protected:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates state) const override
