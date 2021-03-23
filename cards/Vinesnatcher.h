@@ -20,12 +20,13 @@ class Vinesnatcher : public card{
 	Vinesnatcher(UISystem* ui);
 	virtual void play() override;
 	virtual void onCardBeginMouseover() override;
-	virtual void onReceiveSelection(list<shared_ptr<card>> cards);
+	virtual void onReceiveSelection(list<card*> cards) override;
+	virtual void onCardDeath() override;
 
 	virtual void setupButtonBinding() override {
-		cardButton.onMouseDownCallback = new EventCallback<card>(this, &card::onCardClicked);
-		cardButton.onBeginMouseoverCallback = new EventCallback<Vinesnatcher>(this, &Vinesnatcher::onCardBeginMouseover);
-		cardButton.onEndMouseoverCallback = new EventCallback<card>(this, &card::onCardEndMouseover);
+		cardButton.onMouseDownCallback = std::make_shared<EventCallback<card>>(this, &card::onCardClicked);
+		cardButton.onBeginMouseoverCallback = std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::onCardBeginMouseover);
+		cardButton.onEndMouseoverCallback = std::make_shared<EventCallback<card>>(this, &card::onCardEndMouseover);
 	}
 
 	virtual void tap() override;

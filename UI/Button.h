@@ -15,10 +15,10 @@ class Button : public UIElement{
     ~Button(){
         ui->removeListener(this);
     }
-    IEventCallback* onMouseDownCallback = nullptr;
-    IEventCallback* onMouseUpCallback = nullptr;
-    IEventCallback* onBeginMouseoverCallback = nullptr;
-    IEventCallback* onEndMouseoverCallback = nullptr;
+    shared_ptr<IEventCallback> onMouseDownCallback = nullptr;
+    shared_ptr<IEventCallback> onMouseUpCallback = nullptr;
+    shared_ptr<IEventCallback> onBeginMouseoverCallback = nullptr;
+    shared_ptr<IEventCallback> onEndMouseoverCallback = nullptr;
     bool handleEvent = true;
     bool isPressed = false;
 

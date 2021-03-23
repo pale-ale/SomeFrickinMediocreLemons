@@ -91,7 +91,7 @@ void card::updateCardImage()
 	cardImageTexture = std::make_unique<sf::Texture>();
 	if (!cardImageTexture->loadFromFile(pathToImage))
 	{
-		//cout << "Error loading \'" << pathToImage << "'. Resetting to default.\n";
+		cout << "Card: Error loading image at \'" << pathToImage << "'. Resetting to default.\n";
 		pathToImage = "/usr/share/test/resources/Unknown.png";
 		cardImageTexture->loadFromFile(pathToImage);
 	};
@@ -102,7 +102,7 @@ void card::onCardClicked()
 {
 	if (!owner->bIsMyTurn)
 	{
-		cout << "Not my turn yet.\n";
+		cout << "Card: Not my turn yet.\n";
 		return;
 	}
 	if (cardLocation == hand)
@@ -113,7 +113,7 @@ void card::onCardClicked()
 		}
 		else
 		{
-			cout << "Not enough mana to play.\n";
+			cout << "Card: Not enough mana to play.\n";
 		}
 		return;
 	}
@@ -128,7 +128,7 @@ void card::onCardBeginMouseover()
 {
 	if (owner && owner->bIsMyTurn && !owner->cardSelector->bIsCurrentlySelecting)
 	{
-		owner->previewCard(std::static_pointer_cast<card>(shared_from_this()));
+		owner->previewCard(this);
 	}
 }
 
@@ -145,7 +145,6 @@ void card::takeDamage(const int& amount){
 	updateCardStatDisplay();
 	if (health <= 0){
 		onCardDeath();
-		owner->battlefield->removeCard(this);
 	}
 }
 
@@ -159,7 +158,7 @@ void card::play()
 	}
 	else
 	{
-		cout << "A card was played without an owner.\n";
+		cout << "Card: I was played without an owner.\n";
 	}
 }
 
@@ -169,9 +168,13 @@ void card::updateCardStatDisplay(){
 }
 
 card::~card(){
-	cout << "Destroying card " << name << "...\n";
-	ui->removeListener(&cardButton);
-	cout << "removed listener\n";
-	owner->stopPreviewingCard();
-	cout << "stopped preview\n";
+	cout << "Card: Destroying card " << name << "...\n";
+	if (ui){
+		ui->removeListener(&cardButton);
+		cout << "Card: Removed self from UIListeners\n";
+	}
+	if (owner){
+		owner->stopPreviewingCard();
+		cout << "Card: Stopped preview\n";
+	}
 }

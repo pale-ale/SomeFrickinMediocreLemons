@@ -44,10 +44,12 @@ class Player: public UIElement{
     Game* getGame(){return game;};
     void drawCards(const int count);
     void playCard(card *card);
-    void previewCard(std::shared_ptr<const card> cardToPreview);
+    void previewCard(const card* cardToPreview);
     void stopPreviewingCard();
     void cardSelectionUpdated(){
+        cout << "carsel\n";
         if (awaitingSelection){
+            cout << "carsel\n";
             awaitingSelection->onReceiveSelection(cardSelector->getSelectedCards());
             cardSelector->resetSelection();
             awaitingSelection = nullptr;
@@ -55,6 +57,8 @@ class Player: public UIElement{
     };
     card* awaitingSelection = nullptr;
     void addCardToDeck(shared_ptr<card> card);
+    shared_ptr<card> removeCardFromDeck(card* card);
+    shared_ptr<card> removeCardFromDeckTop();
     void addCardToGraveyard(shared_ptr<card> card);
     const list<card*> getHand() const;
     void printDeck() const;

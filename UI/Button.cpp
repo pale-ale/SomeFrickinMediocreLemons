@@ -14,7 +14,7 @@ UIElement(ui){
 	{
 		ui->addListener(this);
 	}else{
-		cout << "a UI object shouldn't be created without a valid UI reference";
+		cout << "Button: A UI object shouldn't be created without a valid UI reference";
 	}
 }
 
@@ -41,7 +41,7 @@ bool Button::OnMouseButtonDown(){
     if (onMouseDownCallback){
         (*onMouseDownCallback)();
     }else{
-        cout << "MouseDown-callback isn't configured yet!\n";
+        cout << "Button: MouseDown-callback isn't configured yet!\n";
     }
     return returnValue;
 }
@@ -53,7 +53,7 @@ bool Button::OnMouseButtonUp(){
     if (onMouseUpCallback){
         (*onMouseUpCallback)();
     }else{
-        cout << "MouseUp-callback isn't configured yet!\n";
+        cout << "Button: MouseUp-callback isn't configured yet!\n";
     }
     return returnValue;
 }
@@ -64,7 +64,7 @@ bool Button::OnBeginMouseover(){
     if (onBeginMouseoverCallback){
         (*onBeginMouseoverCallback)();
     }else{
-        cout << "Mouseover-callback isn't configured yet!\n";
+        cout << "Button: Mouseover-callback isn't configured yet!\n";
     }
     return returnValue;
 }
@@ -73,12 +73,10 @@ bool Button::OnEndMouseover(){
     bool returnValue = handleEvent;
     buttonShape.setFillColor(defaultColor);
     isPressed = false;
-    //what the duck is this can't execute this function without callback wtd
-    // yes, you can. after all, this is what generates a warning when clicking a button that doesnt have a callback bound to it. 
     if (onEndMouseoverCallback){
         (*onEndMouseoverCallback)();
     }else{
-        cout << "Mouseout-callback isn't configured yet!\n";
+        cout << "Button: Mouseout-callback isn't configured yet!\n";
     }
     return returnValue;
 }

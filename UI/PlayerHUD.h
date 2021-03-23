@@ -11,7 +11,7 @@ public:
     void setDeckCount(int deckCount);
     void setHandCount(int handCount);
     virtual void setPosition(sf::Vector2f newPosition) override;
-    void generatePreview(std::shared_ptr<const card> &cardToPreview);
+    void generatePreview(const card* cardToPreview);
     void removePreview();
 
 private:

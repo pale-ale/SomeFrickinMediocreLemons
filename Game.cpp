@@ -5,18 +5,17 @@ sf::Drawable(){
     string filename = "/usr/share/test/resources/Tabletop.png";
     if (texture.loadFromFile(filename)){
         mainTexture.setTexture(texture);
-        cout << "Loaded texture.\n";
+        cout << "Game: Loaded tabletop texture.\n";
     }
     else{
-        cout << "Couldn't load texture at \'" << filename << "\'.\n";
+        cout << "Game: Couldn't find tabletop texture at \'" << filename << "\'.\n";
         throw;
     }
-   
 }
 
 Player* Game::getNextTurnPlayer(){
     if (players.size() < 1){
-        cout << "No players to start game\n";
+        cout << "Game: No players to start game\n";
         return nullptr;
     }
     int advanceCount = 0;

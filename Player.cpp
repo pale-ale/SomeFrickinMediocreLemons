@@ -7,21 +7,17 @@ void Player::drawCards(int count)
 {
     if (deck.size() < count)
     {
-        cout << "Not enough cards to draw!\n";
+        cout << "Player: Not enough cards to draw!\n";
         throw;
     }
 
-    auto it = deck.rbegin();
-
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < count; ++i)
     {
-        auto &card = *it;
-        deck.pop_back();
-        playerhand->addCardToHand(card);
-        card->cardLocation = ECardLocation::hand;
-        card->setFlipState(true);
+        auto c = removeCardFromDeckTop();
+        playerhand->addCardToHand(c);
+        c->cardLocation = ECardLocation::hand;
+        c->setFlipState(true);
     }
-
     playerhand->updateHandPositions();
     playerHud->setDeckCount(deck.size());
     playerHud->setHandCount(playerhand->getHand().size());
@@ -33,9 +29,7 @@ void Player::playCard(card *cardToPlay)
     mana -= cardToPlay->cost;
     playerManaBars->updateManaBars(&mana);
     battlefield->addCard(sharedCardPtr);
-    cout << "Ref count after playing card (should be 3): " << sharedCardPtr.use_count() << endl;
-    cout << "Player "
-            << " played card " << cardToPlay->getName() << endl;
+    cout << "Player: " << name << " played card " << cardToPlay->getName() << endl;
     playerhand->updateHandPositions();
     playerHud->setHandCount(playerhand->getHand().size());
     if (game)
@@ -44,7 +38,7 @@ void Player::playCard(card *cardToPlay)
     }
     else
     {
-        cout << "I need a gameInstance!\n";
+        cout << "Player: I need a gameInstance!\n";
     }
 }
 
@@ -76,7 +70,7 @@ const list<card*> Player::getHand() const
 
 void Player::printDeck() const
 {
-    cout << "Cards in deck:" << endl;
+    cout << "Player: Cards in deck:" << deck.size() << endl;
     for (auto &c : deck)
     {
         cout << "\t" + c->getName() << endl;
@@ -86,13 +80,10 @@ void Player::printDeck() const
 void Player::printHand() const
 {
     auto hand = playerhand->getHand();
-    auto start = hand.begin();
-    auto end = hand.end();
-    cout << "Cards in hand: " << hand.size() << endl;
-    while (start != end)
+    cout << "Player: Cards in hand: " << hand.size() << endl;
+    for (auto &c : hand)
     {
-        cout << "\t" + (*start)->getName() << endl;
-        start++;
+        cout << "\t" + c->getName() << endl;
     }
 }
 
@@ -130,13 +121,17 @@ void Player::setLifePoints(int lifePoints)
 }
 
 void Player::initializeSubComponents(){
+    for (auto &child : children){
+        child->initializeSubComponents();
+    }
     battlefield->setPosition(getPosition() + battlefieldOffset);
-    battlefield->reparent(shared_from_this());
+    battlefield->reparent(this);
     addChild(battlefield);
     playerhand->setPosition(getPosition() + handOffset);
-    playerhand->reparent(shared_from_this());
+    playerhand->reparent(this);
     addChild(playerhand);
     playerHud->setPosition(getPosition());
+    cardSelector->reparent(this);
     addChild(cardSelector);
     ui->addToHUD(playerHud.get());
     ui->addToHUD(cardSelector.get());
@@ -160,6 +155,32 @@ Player::Player(UISystem *ui) : UIElement(ui),
 {
     name = "Player";
 }
+
+shared_ptr<card> Player::removeCardFromDeck(card* cardToRemove){
+    for (auto c : deck){
+        if (c.get() == cardToRemove){
+            deck.remove(c);
+            children.remove(c);
+            cardToRemove->reparent(nullptr);
+            return c;
+        }
+    }
+    cout << "Player: Tried to remove card that isn\'t in the deck\n";
+    throw;
+}
+
+shared_ptr<card> Player::removeCardFromDeckTop(){
+    if (deck.size() < 1){
+        cout << "Player: No cards in deck to draw from.\n";
+        throw;
+    }
+    auto c = *deck.rbegin();
+    deck.remove(c);
+    children.remove(c);
+    c->reparent(nullptr);
+    return c;
+}
+
 
 void Player::startSelection(CardSelectionInfo cardSelectionInfo)
 {
@@ -185,7 +206,7 @@ void Player::startSelection(CardSelectionInfo cardSelectionInfo)
     cardSelector->setSelectionTarget(eligibleCards, false, cardSelectionInfo);
 }
 
-void Player::previewCard(std::shared_ptr<const card> cardToPreview)
+void Player::previewCard(const card *cardToPreview)
 {
     if (!cardSelector->bIsCurrentlySelecting)
     {

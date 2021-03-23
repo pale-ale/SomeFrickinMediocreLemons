@@ -9,10 +9,9 @@ void Placeable::addChild(std::shared_ptr<Placeable> newChild){
         }
     }
     children.push_back(newChild);
-    newChild->parent = shared_from_this();
 }
 
-void Placeable::reparent(std::shared_ptr<Placeable> newParent){
+void Placeable::reparent(Placeable *newParent){
     if (parent){
         parent->removeChild(this);
     }

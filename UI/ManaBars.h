@@ -8,8 +8,10 @@ class ManaBars: public UIElement{
     public:
     ManaBars(UISystem* ui, const unsigned int width, const unsigned int height);
     void updateManaBars(FMana* mana);
-   
+    virtual void initializeSubComponents() override;
     private:
+    const unsigned int width;
+    const unsigned int height;
     const int maxMana = 20;
     shared_ptr<Bar> blackManaBar = std::make_shared<Bar>(ui, Settings::DarkGrayColor, Settings::BlackColor);
     shared_ptr<Bar> blueManaBar  = std::make_shared<Bar>(ui, Settings::DarkGrayColor, Settings::BlueColor);

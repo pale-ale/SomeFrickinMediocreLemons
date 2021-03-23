@@ -72,15 +72,15 @@ void Bar::draw(sf::RenderTarget &target, sf::RenderStates state) const
 
 void Bar::setFillFactor(float newfactor)
 {
-    this->factor = newfactor;
-    amount = std::min(std::max(0.0f, newfactor), 1.0f);
+    factor = newfactor;
+    amount = std::min(std::max(0.0f, factor), 1.0f);
     updateFG();
 }
 
 void Bar::setFGColor(sf::Color Color)
 {
     Foreground.setFillColor(Color);
-    this->FGColor = Color;
+    FGColor = Color;
 }
 
 sf::Color Bar::getFGColor()

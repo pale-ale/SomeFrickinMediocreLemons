@@ -12,20 +12,29 @@ void Vinesnatcher::play(){
     card::play();
 }
 
+void Vinesnatcher::onCardDeath(){
+    card::onCardDeath();
+    if (cardLocation == ECardLocation::battlefield){
+        owner->battlefield->removeCard(this);
+    }
+}
+
 void Vinesnatcher::onCardBeginMouseover(){
     card::onCardBeginMouseover();
 }
 
 void Vinesnatcher::tap(){
+    card::tap();
     owner->awaitingSelection = this;
     CardSelectionInfo csi;
-    cout << name << " requesting selection.\n";
+    cout << "Vinesnatcher: " << name << " requesting selection.\n";
     owner->startSelection(csi);
-    cout << name << " tapped.\n";
+    cout << "Vinesnatcher: " << name << " tapped.\n";
 }
 
-void Vinesnatcher::onReceiveSelection(list<shared_ptr<card>> cards){
+void Vinesnatcher::onReceiveSelection(list<card*> cards){
+    cout << "Vinesnatcher: " << name << " received selection\n";
     auto card = *cards.begin();
-    cout << "Vinesnatcher deals 2 damage to " << card->getName() << ".\n";
+    cout << "Vinesnatcher: " << name << " deals 2 damage to " << card->getName() << ".\n";
     card->takeDamage(2);
 }

@@ -40,7 +40,7 @@ void CardSelector::setSelectionTarget(const list<card*> &cardsToSelectFrom, bool
             button->setRotation(c->getRotation());
             button->setPosition(c->getPosition());
         }
-        button->onMouseDownCallback = new EventCallback<CardSelector>(this, &CardSelector::selectedCardClickCallback);
+        button->onMouseDownCallback = std::make_shared<EventCallback<CardSelector>>(this, &CardSelector::selectedCardClickCallback);
         buttons.push_back(std::move(button));
     }
 }
@@ -60,11 +60,11 @@ void CardSelector::selectedCardClickCallback()
             buttons.remove(b);
             selectedCards.push_back(*cardStart);
             if (selectedCards.size() == cardSelectionInfo.maxCompleteSelectionCount){
-                Player* p = dynamic_cast<Player*>(parent.get());
+                Player* p = static_cast<Player*>(parent);
                 if (p){
                     p->cardSelectionUpdated();
                 }else{
-                    cout << "A cardselector must have a player as a parent. Use pl.addChild(cs)\n";
+                    cout << "A cardselector must have a player as a parent.\n";
                     throw;
                 }
                 return;

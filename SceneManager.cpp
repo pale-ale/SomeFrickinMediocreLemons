@@ -3,14 +3,14 @@
 
 using std::cout;
 
-void SceneManager::loadScene(SceneBase* newScene){
+void SceneManager::loadScene(std::unique_ptr<SceneBase> newScene){
     if (currentScene){
+        cout << "SceneManager: Starting cleanup of old scene....\n";
         currentScene->cleanup();
-        delete currentScene;
-        cout << "old scene finished cleanup.\n";
+        cout << "SceneManager: Old scene finished cleanup.\n";
     }
-    cout << "loading new scene...\n";
+    cout << "SceneManager: Loading new scene...\n";
     newScene->setup();
-    currentScene = newScene;
-    cout << "done loading scene.\n";
+    currentScene = std::move(newScene);
+    cout << "SceneManager: Done loading scene.\n";
 }

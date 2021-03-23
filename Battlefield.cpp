@@ -2,12 +2,10 @@
 
 Battlefield::Battlefield(UISystem *ui)
 {
-    supportCards = vector<cardIndex>();
-    battleCards = vector<cardIndex>();
     name = "Battlefield";
 }
 
-void Battlefield::addCard(shared_ptr<card> &newCard, bool support, int slot)
+void Battlefield::addCard(shared_ptr<card> newCard, bool support, int slot)
 {
     auto row = support ? &supportCards : &battleCards;
     int max = support ? MAX_SUPPORT_CARDS : MAX_BATTLE_CARDS;
@@ -26,7 +24,7 @@ void Battlefield::addCard(shared_ptr<card> &newCard, bool support, int slot)
         throw;
     }
     row->push_back({slot, newCard});
-    newCard->reparent(shared_from_this());
+    newCard->reparent(this);
     addChild(newCard);
     newCard->cardLocation = ECardLocation::battlefield;
     newCard->setPosition(transform.getTransform().transformPoint(
@@ -37,12 +35,12 @@ void Battlefield::addCard(shared_ptr<card> &newCard, bool support, int slot)
 void Battlefield::removeCard(int slot, bool support)
 {
     auto row = support ? supportCards : battleCards;
-    int rowIndex;
-    auto card = getCardAt(slot, rowIndex, support);
+    auto card = getCardAt(slot, support);
     if (card)
     {
         removeChild(card);
-        row.erase(row.begin() + rowIndex);
+        card->reparent(nullptr);
+        row.remove_if([slot](cardIndex ci){return ci.index == slot;});
     }
     else
     {
@@ -53,53 +51,58 @@ void Battlefield::removeCard(int slot, bool support)
 
 void Battlefield::removeCard(card *cardToRemove)
 {
-    auto start = battleCards.begin();
-    auto end = battleCards.end();
-    while (start != end)
-    {
-        auto &card = (*start)._card;
-        if (card.get() == cardToRemove)
-        {
-            cout << "Removing battle card\n";
-            battleCards.erase(start);
-            removeChild(card.get());
-            return;
-        }
-        start++;
-    }
-    start = supportCards.begin();
-    end = supportCards.end();
-    while (start != end)
-    {
-        auto c = start->_card.get();
+    cout << "trying to remove card " << cardToRemove->getName() << endl;
+    for (auto cardIndex : battleCards){
+        auto c = cardIndex._card.get();
         if (c == cardToRemove)
         {
-            cout << "Removing support card\n";
-            supportCards.erase(start);
+            cout << "Removing battle card\n";
+            battleCards.remove(cardIndex);
             removeChild(c);
-            shared_ptr<card> cardToRemovePtr;
-            cardToRemovePtr.reset(cardToRemove);
+            c->reparent(nullptr);
             return;
         }
-        start++;
     }
+    
+    for (auto cardIndex : supportCards){
+        auto c = cardIndex._card.get(); 
+        if (c == cardToRemove){
+            cout << "Removing support card\n";
+            supportCards.remove(cardIndex);
+            removeChild(c);
+            c->reparent(nullptr);
+            return;
+        }
+    }
+    cout << "card is not on the battlefield.\n";
+    throw;
 }
 
-card* Battlefield::getCardAt(int slot, int &inIndex, bool support)
+card* Battlefield::getCardAt(int slot, bool support)
 {
     auto row = support ? supportCards : battleCards;
-    for (int i = 0; i < row.size(); i++)
+    for (auto &cardIndex : row)
     {
-        if (row[i].index == slot)
+        if (cardIndex.index == slot)
         {
-            inIndex = i;
-            return row[i]._card.get();
+            return cardIndex._card.get();
         }
     }
     return nullptr;
 }
 
-int Battlefield::getNextFreeSlot(vector<cardIndex> &cards, int max)
+void Battlefield::printCards(){
+    cout << "Battle cards:\n";
+    for (auto cardindex : battleCards){
+        cout << "Card: " << cardindex._card->getName() << ", index: " << cardindex.index << endl;
+    }
+    cout << "Support cards:\n";
+    for (auto cardindex : supportCards){
+        cout << "Card: " << cardindex._card->getName() << ", index: " << cardindex.index << endl;
+    }
+}
+
+int Battlefield::getNextFreeSlot(list<cardIndex> &cards, int max)
 {
     for (int check = 0; check < max; check++)
     {

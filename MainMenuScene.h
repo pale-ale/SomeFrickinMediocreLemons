@@ -13,12 +13,12 @@ class MainMenuScene: public SceneBase{
     Button playButton = Button(ui);
     MainMenuScene(UISystem* ui, SceneManager &sm):SceneBase(&sm), ui{ui}{}
     void setup() override;
-    void setGameScene(SceneBase* gameScene){this->gameScene = gameScene;}
+    void setGameScene(unique_ptr<SceneBase> scene){gameScene.swap(scene);}
 
     private:
     sf::Vector2f playPos;
     sf::Vector2f settingsPos;
-    SceneBase* gameScene = nullptr;
+    unique_ptr<SceneBase> gameScene = nullptr;
 
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override {
@@ -30,12 +30,12 @@ class MainMenuScene: public SceneBase{
     };
 
     virtual void cleanup() override{
-        cout << "Cleaning up MainMenuScene (currently does nothing)\n";
+        cout << "MainMenuScene: Running cleanup (currently does nothing)\n";
     }
 
     void loadPlaySceneButtonCallback(){
         if (gameScene){
-            sceneManager->loadScene(gameScene);
+            sceneManager->loadScene(std::move(gameScene));
         }
     }
 };

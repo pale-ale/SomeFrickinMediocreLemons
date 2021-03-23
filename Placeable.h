@@ -14,12 +14,12 @@ using std::list;
 class UIElement;
 class UISystem;
 
-class Placeable : public sf::Drawable, public std::enable_shared_from_this<Placeable>
+class Placeable : public sf::Drawable
 {
 public:
     Placeable(){}
     void addChild(std::shared_ptr<Placeable> newChild);
-    void reparent(std::shared_ptr<Placeable> newParent);
+    void reparent(Placeable *newParent);
     virtual void removeChild(Placeable *child);
     list<std::shared_ptr<Placeable>> getChildren() const { return children; }
     virtual void setPosition(sf::Vector2f);
@@ -30,7 +30,7 @@ public:
 
 protected:
     sf::Transformable transform;
-    std::shared_ptr<Placeable> parent = nullptr;
+    Placeable *parent = nullptr;
     UISystem *ui = nullptr;
     vector<sf::Vector2f> hitbox;
     string name = "Placeable";

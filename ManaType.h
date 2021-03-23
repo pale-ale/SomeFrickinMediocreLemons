@@ -11,7 +11,7 @@ enum EManaType{
 // Black, Blue, Green, Red, White
 struct FMana{
     public:
-    int Black, Blue, Green, Red, White;
+    int Black{0}, Blue{0}, Green{0}, Red{0}, White{0};
     FMana operator +(const FMana& a){
         return FMana{Black+a.Black, Blue+a.Blue, Green+a.Green, Red+a.Red, White+a.White};
     }

@@ -50,11 +50,11 @@ class card : public UIElement{
 	virtual void onCardClicked();
 	virtual void onCardBeginMouseover();
 	virtual void onCardEndMouseover();
-	virtual void onReceiveSelection(list<card*> cards){};
+	virtual void onReceiveSelection(list<card*> cards){cout << "Card: " << name << " received selection\n";};
 	virtual void play();
 	virtual void tap(){}
 	virtual void takeDamage(const int& amount);
-	virtual void onCardDeath(){cout << name << " received lethal damage.\n";}
+	virtual void onCardDeath(){cout << "Card: " << name << " received lethal damage.\n";}
 	FMana cost;
 
 	protected:
@@ -66,9 +66,9 @@ class card : public UIElement{
 	int health = 1;
 	int maxHealth = 1;
 	int defaultMaxHealth = 1;
-	bool frontFaceUp;
-	bool graveyard;
-	bool tapped;
+	bool frontFaceUp = false;
+	bool graveyard = false;
+	bool tapped = false;
 	std::shared_ptr<sf::Font> font = std::make_unique<sf::Font>();
 
 	void updateCardImage();

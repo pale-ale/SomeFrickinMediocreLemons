@@ -8,7 +8,7 @@
 class CardPreview : public UIElement
 {
 public:
-    CardPreview(UISystem* ui, std::shared_ptr<const card> &cardToPreview):
+    CardPreview(UISystem* ui, const card* cardToPreview):
     UIElement(ui)
     {
         font.loadFromFile(Settings::validFontPath);

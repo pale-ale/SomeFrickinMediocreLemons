@@ -12,15 +12,10 @@
 #include "UI/UISystem.h"
 #include <vector>
 
-using std::cout;
-using std::endl;
-
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(
-        Settings::defaultWidth, 
-        Settings::defaultHeight), 
-        "Nothing works!!",
+    sf::RenderWindow window(sf::VideoMode(Settings::defaultWidth, Settings::defaultHeight), 
+        "Card Game",
         sf::Style::Default
         );
     KeyboardDelegateManager delegateHandler;
@@ -40,17 +35,18 @@ int main()
         }
     }
     if (!Settings::validFontPath){
-        cout << "No valid fontpath found.\n";
+        cout << "No valid fontpath found. Take a look at the Settings and change the paths accordingly.\n";
         throw;
     }
     
     vector<sf::Event> events;
     sf::Clock clock;
 
-    MainMenuScene *ms = new MainMenuScene(&ui, sceneManager);
-    auto gs = new GameScene(&ui, sceneManager);
-    ms->setGameScene(gs);
-    sceneManager.loadScene(ms);
+    
+    auto ms = std::make_unique<MainMenuScene>(&ui, sceneManager);
+    auto gs = std::make_unique<GameScene>(&ui, sceneManager);
+    ms->setGameScene(std::move(gs));
+    sceneManager.loadScene(std::move(ms));
 
     while (window.isOpen())
     {

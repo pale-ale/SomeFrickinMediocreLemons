@@ -34,13 +34,13 @@ const list<card*> Hand::getHand() const
     return l;
 }
 
-bool Hand::addCardToHand(shared_ptr<card>& cardToAdd)
+bool Hand::addCardToHand(shared_ptr<card> cardToAdd)
 {
     if (hand.size() < maxHandsize)
     {
         hand.push_back(cardToAdd);
-        cardToAdd->reparent(shared_from_this());
         addChild(cardToAdd);
+        cardToAdd->reparent(this);
         return true;
     }
     return false;
@@ -48,9 +48,13 @@ bool Hand::addCardToHand(shared_ptr<card>& cardToAdd)
 
 std::shared_ptr<card> Hand::removeCard(card *cardToRemove)
 {
-    std::shared_ptr<card> removePtr;
-    removePtr.reset(cardToRemove);
-    hand.remove(removePtr);
-    removeChild(cardToRemove);
-    return removePtr;
+    for (auto cardSharedPtr : hand){
+        if (cardSharedPtr.get() == cardToRemove){
+            hand.remove(cardSharedPtr);
+            removeChild(cardToRemove);
+            return cardSharedPtr;
+        }
+    }
+    cout << "trying to remove a card that is not in this hand!\n";
+    throw;
 }

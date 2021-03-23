@@ -15,8 +15,8 @@ class Kalle : public card{
 	virtual void play() override;
 	virtual void onCardBeginMouseover() override;
 	virtual void setupButtonBinding() override {
-		cardButton.onMouseDownCallback = new EventCallback<card>(this, &card::onCardClicked);
-		cardButton.onBeginMouseoverCallback = new EventCallback<Kalle>(this, &Kalle::onCardBeginMouseover);
-		cardButton.onEndMouseoverCallback = new EventCallback<card>(this, &card::onCardEndMouseover);
+		cardButton.onMouseDownCallback = std::make_shared<EventCallback<card>>(this, &card::onCardClicked);
+		cardButton.onBeginMouseoverCallback = std::make_shared<EventCallback<Kalle>>(this, &Kalle::onCardBeginMouseover);
+		cardButton.onEndMouseoverCallback = std::make_shared<EventCallback<card>>(this, &card::onCardEndMouseover);
 	}
 };

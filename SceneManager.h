@@ -6,8 +6,8 @@ class SceneBase;
 
 class SceneManager{
     private:
-    SceneBase* currentScene = nullptr;
+    std::unique_ptr<SceneBase> currentScene = nullptr;
     public:
-    void loadScene(SceneBase* newScene);
-    SceneBase* getScene(){return currentScene;}
+    void loadScene(std::unique_ptr<SceneBase> newScene);
+    SceneBase* getScene(){return currentScene.get();}
 };

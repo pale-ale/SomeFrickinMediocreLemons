@@ -6,7 +6,7 @@
 using std::cout;
 
 void MainMenuScene::setup(){
-    cout << "setting up mainmenu...\n";
+    cout << "MainMenuScene: Setting up mainmenu...\n";
     playPos = {Settings::defaultWidth/2, Settings::defaultWidth/2 - 100};
     settingsPos = {Settings::defaultWidth/2, Settings::defaultWidth/2};
     sf::FloatRect s;
@@ -28,5 +28,5 @@ void MainMenuScene::setup(){
     s = playLabel.getLocalBounds(); 
     playButton.setSize({s.width*1.1f, s.height*1.1f});
     playButton.setPosition(playPos + sf::Vector2f{2.5,5});
-    playButton.onMouseDownCallback = new EventCallback<MainMenuScene>(this, &MainMenuScene::loadPlaySceneButtonCallback);
+    playButton.onMouseDownCallback = std::make_shared<EventCallback<MainMenuScene>>(this, &MainMenuScene::loadPlaySceneButtonCallback);
 }
