@@ -15,8 +15,6 @@ void Player::drawCards(int count)
     {
         auto c = removeCardFromDeckTop();
         playerhand->addCardToHand(c);
-        c->cardLocation = ECardLocation::hand;
-        c->setFlipState(true);
     }
     playerhand->updateHandPositions();
     playerHud->setDeckCount(deck.size());

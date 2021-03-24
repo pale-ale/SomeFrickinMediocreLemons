@@ -4,7 +4,7 @@
 void Placeable::addChild(std::shared_ptr<Placeable> newChild){
     for (auto child : children){
         if (child == newChild){
-            cout << "child already added!\n";
+            cout << "Placeable: Child already added!\n";
             throw;
         }
     }
@@ -33,9 +33,11 @@ void Placeable::removeChild(Placeable *child){
         if (c.get() == child)
             child->parent = nullptr;
             children.remove(c);
+            // debug aid for future me
+            //cout << "Placeable: Removed child at " << child << endl;
             return;
     }
-    cout << "Trying to remove child which is not a child or does not exist!\n";
+    cout << "Placeable: Trying to remove child which is not a child or does not exist!\n";
     throw;
 }
 

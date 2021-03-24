@@ -47,9 +47,7 @@ class Player: public UIElement{
     void previewCard(const card* cardToPreview);
     void stopPreviewingCard();
     void cardSelectionUpdated(){
-        cout << "carsel\n";
         if (awaitingSelection){
-            cout << "carsel\n";
             awaitingSelection->onReceiveSelection(cardSelector->getSelectedCards());
             cardSelector->resetSelection();
             awaitingSelection = nullptr;

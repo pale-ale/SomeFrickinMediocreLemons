@@ -41,6 +41,8 @@ bool Hand::addCardToHand(shared_ptr<card> cardToAdd)
         hand.push_back(cardToAdd);
         addChild(cardToAdd);
         cardToAdd->reparent(this);
+        cardToAdd->setFlipState(true);
+        cardToAdd->cardLocation = ECardLocation::hand;
         return true;
     }
     return false;
@@ -51,10 +53,10 @@ std::shared_ptr<card> Hand::removeCard(card *cardToRemove)
     for (auto cardSharedPtr : hand){
         if (cardSharedPtr.get() == cardToRemove){
             hand.remove(cardSharedPtr);
-            removeChild(cardToRemove);
+            cardToRemove->reparent(nullptr);
             return cardSharedPtr;
         }
     }
-    cout << "trying to remove a card that is not in this hand!\n";
+    cout << "Hand: Trying to remove a card that is not in this hand!\n";
     throw;
 }

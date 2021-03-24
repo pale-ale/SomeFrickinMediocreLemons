@@ -15,12 +15,12 @@ void Battlefield::addCard(shared_ptr<card> newCard, bool support, int slot)
     }
     if (slot == -1)
     {
-        cout << "No free slots to add to!" << endl;
+        cout << "Battlefield: No free slots to add to!" << endl;
         throw;
     }
     if (slot >= MAX_SUPPORT_CARDS)
     {
-        cout << "Invalid slot index." << endl;
+        cout << "Battlefield: Invalid slot index." << endl;
         throw;
     }
     row->push_back({slot, newCard});
@@ -44,19 +44,19 @@ void Battlefield::removeCard(int slot, bool support)
     }
     else
     {
-        cout << "Trying to remove card in empty slot!\n";
+        cout << "Battlefield: Trying to remove card in empty slot!\n";
         throw;
     }
 }
 
 void Battlefield::removeCard(card *cardToRemove)
 {
-    cout << "trying to remove card " << cardToRemove->getName() << endl;
+    cout << "Battlefield: Trying to remove card " << cardToRemove->getName() << endl;
     for (auto cardIndex : battleCards){
         auto c = cardIndex._card.get();
         if (c == cardToRemove)
         {
-            cout << "Removing battle card\n";
+            cout << "Battlefield: Removing battle card\n";
             battleCards.remove(cardIndex);
             removeChild(c);
             c->reparent(nullptr);
@@ -67,14 +67,14 @@ void Battlefield::removeCard(card *cardToRemove)
     for (auto cardIndex : supportCards){
         auto c = cardIndex._card.get(); 
         if (c == cardToRemove){
-            cout << "Removing support card\n";
+            cout << "Battlefield: Removing support card\n";
             supportCards.remove(cardIndex);
             removeChild(c);
             c->reparent(nullptr);
             return;
         }
     }
-    cout << "card is not on the battlefield.\n";
+    cout << "Battlefield: Card is not on the battlefield.\n";
     throw;
 }
 
@@ -92,11 +92,11 @@ card* Battlefield::getCardAt(int slot, bool support)
 }
 
 void Battlefield::printCards(){
-    cout << "Battle cards:\n";
+    cout << "Battlefield: Battle cards:\n";
     for (auto cardindex : battleCards){
         cout << "Card: " << cardindex._card->getName() << ", index: " << cardindex.index << endl;
     }
-    cout << "Support cards:\n";
+    cout << "Battlefield: Support cards:\n";
     for (auto cardindex : supportCards){
         cout << "Card: " << cardindex._card->getName() << ", index: " << cardindex.index << endl;
     }
