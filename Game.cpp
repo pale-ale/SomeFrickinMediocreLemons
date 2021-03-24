@@ -2,12 +2,14 @@
 
 Game::Game(): 
 sf::Drawable(){
-    if (texture.loadFromFile(Settings::assetTabletopPath)){
+    if (texture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetTabletopPath)){
         mainTexture.setTexture(texture);
         cout << "Game: Loaded tabletop texture.\n";
     }
     else{
-        cout << "Game: Couldn't find tabletop texture at \'" << Settings::assetTabletopPath << "\'. Exiting.\n";
+        cout << "Game: Couldn't find tabletop texture at \'" << 
+        Settings::programDir << 
+        Settings::relativeAssetTabletopPath << "\'. Exiting.\n";
         throw;
     }
 }

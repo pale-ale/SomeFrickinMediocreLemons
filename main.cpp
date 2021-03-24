@@ -12,16 +12,24 @@
 #include "ui/UISystem.h"
 #include <vector>
 
-int main()
+int main(int argc, char *argv[])
 {
+    string progRelativepath(argv[0]);
+    // cut off everything after the last "/", leaving us with the current directory
+    string dirRelativePath(progRelativepath.substr(0, progRelativepath.find_last_of("/")) + "/../");
+    Settings::programDir = dirRelativePath.c_str();
     sf::RenderWindow window(sf::VideoMode(Settings::defaultWidth, Settings::defaultHeight), 
         "Card Game",
         sf::Style::Default
         );
+
+    // IMPORTANT: These will be destroyed in reverse order (bottom to top), so you better not
+    // put the sceneManager after the UI (cleanup will crash due to buttons not being able to unlisten)!
     KeyboardDelegateManager delegateHandler;
+    UISystem ui(&window);
     Delegate spaceDelegate;
     SceneManager sceneManager;
-    UISystem ui(&window);
+
     float scale = 2;
     window.setKeyRepeatEnabled(false);
     window.setSize({(uint)(Settings::defaultWidth*scale), (uint)(Settings::defaultHeight*scale)});
@@ -46,7 +54,6 @@ int main()
     auto gs = std::make_unique<GameScene>(&ui, sceneManager);
     ms->setGameScene(std::move(gs));
     sceneManager.loadScene(std::move(ms));
-
     while (window.isOpen())
     {
         sf::Time tickDelay = clock.getElapsedTime();

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "SFML/Graphics.hpp"
+#include <iostream>
+#include <SFML/Graphics.hpp>
 #include "SceneManager.h"
 
 /*
@@ -24,7 +25,7 @@ class SceneBase : public sf::Drawable{
     public:
     SceneBase(SceneManager *sceneManager):sceneManager{sceneManager}{}
     SceneBase() = delete;
-    ~SceneBase(){}
+    ~SceneBase(){std::cout << "SceneBase: Destroying scene.\n";}
     virtual void setup(){}
     virtual void tick(float deltaTime){}
     virtual void cleanup(){}

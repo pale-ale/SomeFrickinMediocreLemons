@@ -64,11 +64,12 @@ list<UIElement *> UISystem::getListenersUnderCoords(const sf::Vector2f &coords) 
 
 void UISystem::addListener(UIElement *newListener)
 {
+    cout << "UISystem: Adding Listener at " << newListener << endl;
     for (UIElement *listener : eventListeners)
     {
         if (listener == newListener)
         {
-            cout << "listener already added!\n";
+            cout << "UISystem: Listener already added!\n";
             throw;
         }
     }
@@ -77,8 +78,16 @@ void UISystem::addListener(UIElement *newListener)
 
 void UISystem::removeListener(UIElement *listener)
 {
-    eventListeners.remove(listener);
-    mouseOveredListeners.remove(listener);
+    cout << "UISystem: Removing listener at: " << listener << endl;
+    for (auto l : eventListeners){
+        if (l == listener){
+            eventListeners.remove(listener);
+            mouseOveredListeners.remove(listener);
+            return;
+        }
+    }
+    cout << "UISystem: Tried to remove listener that isn't registered.\n";
+    throw;
 }
 
 void UISystem::addToHUD(UIElement* hudElement){

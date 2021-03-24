@@ -13,7 +13,10 @@ class Button : public UIElement{
            sf::Rect<float> rect = {0,0,50,50}, 
            sf::Color color = {255, 0, 255, Settings::bEnableButtonTint ? 100 : 0});
     ~Button(){
-        ui->removeListener(this);
+        cout << "Button: Destroying button.\n";
+        if(ui){
+            ui->removeListener(this);
+        }
     }
     shared_ptr<IEventCallback> onMouseDownCallback = nullptr;
     shared_ptr<IEventCallback> onMouseUpCallback = nullptr;

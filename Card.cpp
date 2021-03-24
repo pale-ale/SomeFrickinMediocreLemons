@@ -59,10 +59,14 @@ void card::setRotation(float newRotation)
 }
 
 card::card(UISystem *ui, const string imagePath, const string desc, FMana mana) : 
-UIElement(ui), pathToImage{Settings::assetCardPath + imagePath}, description{desc}, cost{mana}, cardButton{Button(ui, {0, 0, 50, 75})}
+UIElement(ui), 
+pathToImage{string(Settings::programDir) + Settings::relativeAssetCardPath + imagePath},
+description{desc}, 
+cost{mana},
+cardButton{Button(ui, {0, 0, 50, 75})}
 {
-	cardBackTexture.loadFromFile(string(Settings::assetCardPath) + Settings::assetCardBack);
-	cardFrontTexture.loadFromFile(string(Settings::assetCardPath) + Settings::assetCardFront);
+	cardBackTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardBack);
+	cardFrontTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardFront);
 	cardSprite.setTexture(cardBackTexture);
 	cardSprite.setPosition(getPosition());
 	cardSprite.setOrigin(cardDimensions / 2.0f);
@@ -92,7 +96,7 @@ void card::updateCardImage()
 	if (!cardImageTexture->loadFromFile(pathToImage))
 	{
 		cout << "Card: Error loading image at \'" << pathToImage << "'. Trying the default.\n";
-		pathToImage.assign(Settings::assetCardPath + std::string("/Unknown.png"));
+		pathToImage.assign(string(Settings::programDir) + Settings::relativeAssetCardPath + "/Unknown.png");
 		cardImageTexture->loadFromFile(pathToImage);
 	};
 	imageSprite.setTexture(*cardImageTexture);
@@ -169,10 +173,6 @@ void card::updateCardStatDisplay(){
 
 card::~card(){
 	cout << "Card: Destroying card " << name << "...\n";
-	if (ui){
-		ui->removeListener(&cardButton);
-		cout << "Card: Removed self from UIListeners\n";
-	}
 	if (owner){
 		owner->stopPreviewingCard();
 		cout << "Card: Stopped preview\n";
