@@ -24,7 +24,7 @@ class Vinesnatcher : public card{
 	virtual void onCardDeath() override;
 
 	virtual void setupButtonBinding() override {
-		cardButton.onMouseDownCallback = std::make_shared<EventCallback<card>>(this, &card::onCardClicked);
+		cardButton.onClickCallback = std::make_shared<EventCallback<card>>(this, &card::onCardClicked);
 		cardButton.onBeginMouseoverCallback = std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::onCardBeginMouseover);
 		cardButton.onEndMouseoverCallback = std::make_shared<EventCallback<card>>(this, &card::onCardEndMouseover);
 	}

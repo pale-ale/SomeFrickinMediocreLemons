@@ -10,7 +10,7 @@ public:
     PlayerHUD(UISystem* parent);
     void setDeckCount(int deckCount);
     void setHandCount(int handCount);
-    virtual void setPosition(sf::Vector2f newPosition) override;
+    virtual void setPosition(const sf::Vector2f &newPosition) override;
     void generatePreview(const card* cardToPreview);
     void removePreview();
 

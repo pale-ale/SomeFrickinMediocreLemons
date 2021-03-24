@@ -20,6 +20,10 @@ class Button : public UIElement{
     }
     shared_ptr<IEventCallback> onMouseDownCallback = nullptr;
     shared_ptr<IEventCallback> onMouseUpCallback = nullptr;
+    shared_ptr<IEventCallback> onClickCallback = nullptr;
+    shared_ptr<IEventCallback> onDragStartCallback = nullptr;
+    shared_ptr<IEventCallback> onDragMoveCallback = nullptr;
+    shared_ptr<IEventCallback> onDragEndCallback = nullptr;
     shared_ptr<IEventCallback> onBeginMouseoverCallback = nullptr;
     shared_ptr<IEventCallback> onEndMouseoverCallback = nullptr;
     bool handleEvent = true;
@@ -29,10 +33,14 @@ class Button : public UIElement{
     virtual bool OnMouseButtonUp() override;
     virtual bool OnBeginMouseover() override;
     virtual bool OnEndMouseover() override;
-    virtual void setPosition(sf::Vector2f newPosition) override;
+    virtual void OnClick() override;
+    virtual void OnDragStart() override;
+    virtual void OnDragMove(const sf::Vector2f &newPos) override;
+    virtual void OnDragEnd() override;
+    virtual void setPosition(const sf::Vector2f &newPosition) override;
     virtual void setSize(const sf::Vector2f &newSize) override;
 
-    virtual void setRotation(float newRotation) override;
+    virtual void setRotation(const float &newRotation) override;
 	
     void setDefaultColor(sf::Color color){
         defaultColor = color;

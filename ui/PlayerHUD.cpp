@@ -29,7 +29,7 @@ void PlayerHUD::removePreview(){
     }
 }
 
-void PlayerHUD::setPosition(sf::Vector2f newPosition)
+void PlayerHUD::setPosition(const sf::Vector2f &newPosition)
 {
     UIElement::setPosition(newPosition);
     deckCountText.setPosition(getPosition() + deckTextOffset);

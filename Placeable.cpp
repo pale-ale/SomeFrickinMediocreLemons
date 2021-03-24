@@ -58,16 +58,16 @@ void Placeable::draw(sf::RenderTarget& target, sf::RenderStates state) const{
     }
 };
 
-void Placeable::setPosition(sf::Vector2f newPosition){
+void Placeable::setPosition(const sf::Vector2f &newPosition){
     auto delta = newPosition - transform.getPosition();
     transform.setPosition(newPosition);
-    for (auto& child : children){
+    for (auto &child : children){
         auto childPos = child->getPosition();
         child->setPosition(childPos + delta);
     }
 }
 
-void Placeable::setRotation(float newRotation){
+void Placeable::setRotation(const float &newRotation){
     auto delta = newRotation - transform.getRotation();
     transform.setRotation(newRotation);
     auto deltaTransform = sf::Transform().rotate(delta);

@@ -28,7 +28,7 @@ void card::setFlipState(bool frontFaceUp)
 	}
 }
 
-void card::setPosition(sf::Vector2f newPosition)
+void card::setPosition(const sf::Vector2f &newPosition)
 {
 	UIElement::setPosition(newPosition);
 	cardSprite.setPosition(newPosition);
@@ -39,7 +39,7 @@ void card::setPosition(sf::Vector2f newPosition)
 	powerStatDisplay.setPosition(newPosition + hpStatOffset);
 }
 
-void card::setRotation(float newRotation)
+void card::setRotation(const float &newRotation)
 {
 	UIElement::setRotation(newRotation);
 	auto t = sf::Transform().rotate(newRotation).transformPoint(imageOffset);
@@ -73,6 +73,7 @@ cardButton{Button(ui, {0, 0, 50, 75})}
 	imageSprite.setOrigin(imageDimensions / 2.0f);
 	updateCardImage();
 	cardButton.setPosition(getPosition());
+	cardButton.isDragable = true;
 	font->loadFromFile(Settings::validFontPath);
 	cardDescription.setString(description);
 	cardDescription.setFont(*font);

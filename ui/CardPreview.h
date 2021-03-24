@@ -65,7 +65,7 @@ public:
     sf::Sprite cardImage;
     sf::RectangleShape background;
 
-    void setPosition(sf::Vector2f newPosition) override{
+    void setPosition(const sf::Vector2f &newPosition) override{
         UIElement::setPosition(newPosition);
         cardTitle.setPosition(titlePos);
         background.setPosition(backgroundPos);

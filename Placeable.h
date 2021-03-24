@@ -22,9 +22,9 @@ public:
     void reparent(Placeable *newParent);
     virtual void removeChild(Placeable *child);
     list<std::shared_ptr<Placeable>> getChildren() const { return children; }
-    virtual void setPosition(sf::Vector2f);
-    virtual void setRotation(float rotation);
-    virtual void setSize(const sf::Vector2f& newSize);
+    virtual void setPosition(const sf::Vector2f &newPosition);
+    virtual void setRotation(const float &rotation);
+    virtual void setSize(const sf::Vector2f &newSize);
     virtual void initializeSubComponents(){};
     void setChildren(list<std::shared_ptr<Placeable>> newChildren) { children = newChildren; };
 

@@ -20,19 +20,24 @@ protected:
 public:
     virtual bool OnMouseButtonDown() { return false; }
     virtual bool OnMouseButtonUp() { return false; }
+    virtual void OnClick() {cout << "UIElement: Got clicked\n";}
+    virtual void OnDragStart(){ gotDragged = true; cout << "UIElement: Getting dragged\n";}
+    virtual void OnDragMove(const sf::Vector2f &newMouseLocation){ cout << "UIElement: Got moved\n";}
+    virtual void OnDragEnd(){ gotDragged = false; cout << "UIElement: Drag released\n";}
     virtual bool OnBeginMouseover()
     {
-        cout << "Mouseover\n";
+        cout << "UIElement: Mouseover\n";
         return false;
     }
     virtual bool OnEndMouseover()
     {
-        cout << "Mouseout\n";
+        cout << "UIElement: Mouseout\n";
         return false;
     }
     UISystem *ui = nullptr;
-    bool isDragable;
-    bool isMouseovering;
+    bool isDragable = false;
+    bool gotDragged = false;
+    bool isMouseovering = false;
     bool isVisible = true;
 
     virtual void draw(sf::RenderTarget &target, sf::RenderStates state) const override;
@@ -48,6 +53,8 @@ public:
     void processEvents(vector<sf::Event> events);
     list<UIElement *> eventListeners = {};
     list<UIElement *> mouseOveredListeners = {};
+    UIElement *currentlyDraggedElement = nullptr;
+    UIElement *currentlyClickingElement = nullptr;
     list<UIElement *> hudElements = {};
     void addListener(UIElement *newListener);
     void addToHUD(UIElement* hudElement);
@@ -57,8 +64,9 @@ public:
         return std::find(l.begin(), l.end(), e) != l.end();
     }
 
-    template <class T>
-    UIElement *spawnNew();
+    //unused, spawning will be implemented at some point or maybe scrapped...
+    //template <class T>
+    //UIElement *spawnNew();
 
 private:
     sf::RenderWindow *window;

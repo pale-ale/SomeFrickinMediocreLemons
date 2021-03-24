@@ -18,12 +18,14 @@ UIElement(ui){
 	}
 }
 
-void Button::setPosition(sf::Vector2f newPosition){
+void Button::setPosition(const sf::Vector2f &newPosition){
+    UIElement::setPosition(newPosition);
     transform.setPosition(newPosition);
     buttonShape.setPosition(newPosition);
 }
 
-void Button::setRotation(float newRotation){
+void Button::setRotation(const float &newRotation){
+    UIElement::setRotation(newRotation - getRotation());
     buttonShape.setRotation(newRotation);
 }
 
@@ -35,6 +37,7 @@ void Button::setSize(const sf::Vector2f &newSize){
 }
 
 bool Button::OnMouseButtonDown(){
+    UIElement::OnMouseButtonDown();
     //we wouldnt want our mdown-callback to change the handlevent param before returning
     bool returnValue = handleEvent;
     isPressed = true;
@@ -47,6 +50,7 @@ bool Button::OnMouseButtonDown(){
 }
 
 bool Button::OnMouseButtonUp(){
+    UIElement::OnMouseButtonUp();
     //we wouldnt want our mup-callback to change the handlevent param before returning
     bool returnValue = handleEvent;
     isPressed = false;
@@ -59,6 +63,7 @@ bool Button::OnMouseButtonUp(){
 }
     
 bool Button::OnBeginMouseover(){
+    UIElement::OnBeginMouseover();
     bool returnValue = handleEvent;
     buttonShape.setFillColor(mouseOverColor);
     if (onBeginMouseoverCallback){
@@ -69,7 +74,42 @@ bool Button::OnBeginMouseover(){
     return returnValue;
 }
 
+void Button::OnClick(){
+    UIElement::OnClick();
+    if (onClickCallback){
+        (*onClickCallback)();
+    }else{
+        cout << "Button: Click-callback isn't configured yet!\n";
+    }
+}
+void Button::OnDragStart(){
+    UIElement::OnDragStart();
+    if (onDragStartCallback){
+        (*onDragStartCallback)();
+    }else{
+        cout << "Button: DragStart-callback isn't configured yet!\n";
+    }
+}
+void Button::OnDragMove(const sf::Vector2f &newPos){
+    UIElement::OnDragMove(newPos);
+    if (onDragMoveCallback){
+        //TODO: pass position information via argument in callback. templates needed?
+        (*onDragMoveCallback)();
+    }else{
+        cout << "Button: DragMove-callback isn't configured yet!\n";
+    }
+}
+void Button::OnDragEnd(){
+    UIElement::OnDragEnd();
+    if (onDragEndCallback){
+        (*onDragEndCallback)();
+    }else{
+        cout << "Button: DragEnd-callback isn't configured yet!\n";
+    }
+}
+
 bool Button::OnEndMouseover(){
+    UIElement::OnEndMouseover();
     bool returnValue = handleEvent;
     buttonShape.setFillColor(defaultColor);
     isPressed = false;

@@ -25,8 +25,8 @@ class Bar : public UIElement{
     void setFGColor(sf::Color);
     sf::Color getFGColor();
     void setBGColor(sf::Color);
-    virtual void setPosition(sf::Vector2f newPosition) override;
-	virtual void setRotation(float newRotation) override;
+    virtual void setPosition(const sf::Vector2f &newPosition) override;
+	virtual void setRotation(const float &newRotation) override;
     const int offset = 1;
     virtual bool OnBeginMouseover () override;
     virtual bool OnEndMouseover () override;

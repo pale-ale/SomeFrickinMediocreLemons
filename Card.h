@@ -45,8 +45,8 @@ class card : public UIElement{
 	const sf::Vector2f hpStatOffset = {-20, -40};
 	const sf::Vector2f powerStatOffset = {10, -40};
 	virtual void setupButtonBinding() = 0;
-	virtual void setPosition(sf::Vector2f newPosition) override;
-	virtual void setRotation(float newRotation) override;
+	virtual void setPosition(const sf::Vector2f &newPosition) override;
+	virtual void setRotation(const float &newRotation) override;
 	virtual void onCardClicked();
 	virtual void onCardBeginMouseover();
 	virtual void onCardEndMouseover();

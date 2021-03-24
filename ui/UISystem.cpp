@@ -109,6 +109,10 @@ void UISystem::processEvents(vector<sf::Event> events)
             {
                 if (l->isVisible && l->OnMouseButtonDown())
                 {
+                    if (l->isDragable){
+                        currentlyDraggedElement = l;
+                    }
+                    currentlyClickingElement = l;
                     break;
                 }
             }
@@ -121,6 +125,17 @@ void UISystem::processEvents(vector<sf::Event> events)
             {
                 if (l->isVisible && l->OnMouseButtonUp())
                 {
+                    //TODO: uhoh... what if currently.*Element != l?
+                    if (!l->gotDragged){
+                        currentlyClickingElement->OnClick();
+                        currentlyClickingElement = nullptr;
+                    }
+                    if (l->isDragable){
+                        if (l->gotDragged){
+                            l->OnDragEnd();
+                        }
+                        currentlyDraggedElement = nullptr;
+                    }
                     break;
                 }
             }
@@ -128,8 +143,14 @@ void UISystem::processEvents(vector<sf::Event> events)
         }
         case sf::Event::MouseMoved:
         {
-            //cout << event.mouseMove.x << " | " << event.mouseMove.y << endl;
             auto mouseCoords = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+            if (currentlyDraggedElement){
+                if (!currentlyDraggedElement->gotDragged){
+                    currentlyDraggedElement->OnDragStart();
+                }
+                currentlyDraggedElement->OnDragMove(mouseCoords);
+                return;
+            }
             auto currentMOElements = getListenersUnderCoords(mouseCoords);
             list<UIElement*> newListeners = {};
             for (auto l_it = mouseOveredListeners.begin(); l_it != mouseOveredListeners.end(); l_it++)
@@ -160,17 +181,6 @@ void UISystem::processEvents(vector<sf::Event> events)
         event_it++;
     }
 }
-
-template<class T>
-UIElement* UISystem::spawnNew()
-{
-    if (ui)
-    {
-        return ui->spawnNew<T>();
-    }
-    cout << "Dead end of parent chain?\n";
-    return nullptr;
-};
 
 void UIElement::draw(sf::RenderTarget &target, sf::RenderStates state) const
 {

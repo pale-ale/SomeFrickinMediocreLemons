@@ -94,17 +94,18 @@ void Bar::setBGColor(sf::Color Color)
     this->BGColor = Color;
 }
 
-void Bar::setPosition(sf::Vector2f newPosition)
+void Bar::setPosition(const sf::Vector2f &newPosition)
 {
     UIElement::setPosition(newPosition);
     Background.setPosition(newPosition);
     Foreground.setPosition(newPosition);
     auto t = sf::Transform().rotate(getRotation()).transformPoint(sf::Vector2f{barSize.x/2, 0} + textOffset);
-    BarInfo.setPosition(getPosition() + t);    updateBG();
+    BarInfo.setPosition(getPosition() + t);    
+    updateBG();
     updateFG();
 }
 
-void Bar::setRotation(float newRotation)
+void Bar::setRotation(const float &newRotation)
 {
     UIElement::setRotation(newRotation);
     Foreground.setRotation(newRotation);
