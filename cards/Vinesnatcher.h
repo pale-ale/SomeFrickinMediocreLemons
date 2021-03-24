@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "../card.h"
+#include "../Card.h"
 #include "../CardSelectionInfo.h"
 #include "../Player.h"
 
@@ -13,7 +13,7 @@ class Battlefield;
 
 class Vinesnatcher : public card{
 	public:
-	inline static const string pathToImage = "/usr/share/test/resources/Vinesnatcher.png";
+	inline static const string pathToImage = "Vinesnatcher.png";
     inline static const string description = "Select a card to deal 2 damage to it.";
 	static constexpr FMana cost = FMana({0,0,1,0,0});
 

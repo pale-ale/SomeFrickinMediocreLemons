@@ -2,7 +2,7 @@
 
 #include "UISystem.h"
 #include <SFML/Graphics.hpp>
-#include "../card.h"
+#include "../Card.h"
 #include "../Settings.h"
 
 class CardPreview : public UIElement

@@ -2,7 +2,7 @@
 
 #include <algorithm>
 #include <iostream>
-#include "card.h"
+#include "Card.h"
 #include "Placeable.h"
 
 class Battlefield : public Placeable{

@@ -1,4 +1,4 @@
-#include "card.h"
+#include "Card.h"
 #include <memory>
 #include "Player.h"
 
@@ -59,10 +59,10 @@ void card::setRotation(float newRotation)
 }
 
 card::card(UISystem *ui, const string imagePath, const string desc, FMana mana) : 
-UIElement(ui), pathToImage{imagePath}, description{desc}, cost{mana}, cardButton{Button(ui, {0, 0, 50, 75})}
+UIElement(ui), pathToImage{Settings::assetCardPath + imagePath}, description{desc}, cost{mana}, cardButton{Button(ui, {0, 0, 50, 75})}
 {
-	cardBackTexture.loadFromFile("/usr/share/test/resources/CardBack.png");
-	cardFrontTexture.loadFromFile("/usr/share/test/resources/CardFront.png");
+	cardBackTexture.loadFromFile(string(Settings::assetCardPath) + Settings::assetCardBack);
+	cardFrontTexture.loadFromFile(string(Settings::assetCardPath) + Settings::assetCardFront);
 	cardSprite.setTexture(cardBackTexture);
 	cardSprite.setPosition(getPosition());
 	cardSprite.setOrigin(cardDimensions / 2.0f);
@@ -91,8 +91,8 @@ void card::updateCardImage()
 	cardImageTexture = std::make_unique<sf::Texture>();
 	if (!cardImageTexture->loadFromFile(pathToImage))
 	{
-		cout << "Card: Error loading image at \'" << pathToImage << "'. Resetting to default.\n";
-		pathToImage = "/usr/share/test/resources/Unknown.png";
+		cout << "Card: Error loading image at \'" << pathToImage << "'. Trying the default.\n";
+		pathToImage.assign(Settings::assetCardPath + std::string("/Unknown.png"));
 		cardImageTexture->loadFromFile(pathToImage);
 	};
 	imageSprite.setTexture(*cardImageTexture);

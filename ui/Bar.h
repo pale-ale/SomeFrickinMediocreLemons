@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include "../Settings.h"
 #include "../ManaType.h"
-#include "../Events/EventCallback.h"
+#include "../events/EventCallback.h"
 using std::cout;
 using std::endl;
 

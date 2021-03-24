@@ -1,7 +1,7 @@
 #include "Scene.h"
-#include "UI/UISystem.h"
-#include "SFML/Graphics.hpp"
-#include "UI/Button.h"
+#include <SFML/Graphics.hpp>
+#include "ui/UISystem.h"
+#include "ui/Button.h"
 
 class MainMenuScene: public SceneBase{
     UISystem* ui;

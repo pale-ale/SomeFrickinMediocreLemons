@@ -1,4 +1,4 @@
-#include "card.h"
+#include "Card.h"
 #include "Game.h"
 #include "Hand.h"
 #include "Player.h"

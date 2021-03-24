@@ -1,5 +1,5 @@
 #include "Placeable.h"
-#include "../Settings.h"
+#include "Settings.h"
 
 void Placeable::addChild(std::shared_ptr<Placeable> newChild){
     for (auto child : children){

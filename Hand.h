@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "card.h"
+#include "Card.h"
 
 class Hand : public UIElement{
     public:

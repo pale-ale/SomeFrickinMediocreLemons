@@ -11,16 +11,16 @@ include_directories(UI PRIVATE {$YOUR_DIRECTORY})
 # Create executable programs
 
 # headers for UI
-set(HEADER_FILES UI/UISystem.h   UI/Button.h   UI/PlayerHUD.h   UI/Bar.h   UI/CardSelector.h   UI/ManaBars.h UI/CardPreview.h)
-add_library(UI   UI/UISystem.cpp UI/Button.cpp UI/PlayerHUD.cpp UI/Bar.cpp UI/CardSelector.cpp UI/ManaBars.cpp ${HEADER_FILES})
+set(HEADER_FILES ui/UISystem.h   ui/Button.h   ui/PlayerHUD.h   ui/Bar.h   ui/CardSelector.h   ui/ManaBars.h ui/CardPreview.h)
+add_library(UI   ui/UISystem.cpp ui/Button.cpp ui/PlayerHUD.cpp ui/Bar.cpp ui/CardSelector.cpp ui/ManaBars.cpp ${HEADER_FILES})
 
 # headers for Delegates
 set(HEADER_FILES KeyboardDelegate.h)
 add_library(Delegate KeyboardDelegate.cpp ${HEADER_FILES})
 
 # headers for specific cards
-set(HEADER_FILES  card.h   cards/Fireball.h   cards/Kalle.h   cards/Vinesnatcher.h)
-add_library(Cards card.cpp cards/Fireball.cpp cards/Kalle.cpp cards/Vinesnatcher.cpp ${HEADER_FILES})
+set(HEADER_FILES  Card.h   cards/Fireball.h   cards/Kalle.h   cards/Vinesnatcher.h)
+add_library(Cards Card.cpp cards/Fireball.cpp cards/Kalle.cpp cards/Vinesnatcher.cpp ${HEADER_FILES})
 
 # headers for Player, Game, CardType, ManaType, Battlefield, Scenes
 set(HEADER_FILES Player.h   Game.h    Battlefield.h   Hand.h   Placeable.h   SceneManager.h   MainMenuScene.h cardTypes.h ManaType.h Scene.h)

@@ -1,7 +1,7 @@
+#include "events/EventCallback.h"
+#include <iostream>
 #include "MainMenuScene.h"
-#include "iostream"
 #include "Settings.h"
-#include "Events/EventCallback.h"
 
 using std::cout;
 

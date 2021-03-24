@@ -1,19 +1,19 @@
 #pragma once
 
 #include <algorithm>
+#include "Battlefield.h"
 #include <cmath>
 #include "CardSelectionInfo.h"
+#include "Hand.h"
 #include <iostream>
 #include <list>
-#include <SFML/Graphics.hpp>
-#include "Battlefield.h"
-#include "Hand.h"
 #include "ManaType.h"
-#include "UI/PlayerHUD.h"
+#include <SFML/Graphics.hpp>
 #include "Settings.h"
-#include "UI/Bar.h"
-#include "UI/CardSelector.h"
-#include "UI/ManaBars.h"
+#include "ui/PlayerHUD.h"
+#include "ui/Bar.h"
+#include "ui/CardSelector.h"
+#include "ui/ManaBars.h"
 
 
 class card;

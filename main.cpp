@@ -1,4 +1,4 @@
-#include "Events/EventCallback.h"
+#include "events/EventCallback.h"
 #include "GameScene.h"
 #include <iostream>
 #include "KeyboardDelegate.h"
@@ -9,7 +9,7 @@
 #include "Settings.h"
 #include <SFML/Graphics.hpp>
 #include <string.h>
-#include "UI/UISystem.h"
+#include "ui/UISystem.h"
 #include <vector>
 
 int main()

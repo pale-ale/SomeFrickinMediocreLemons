@@ -4,7 +4,7 @@
 #include "UISystem.h"
 #include <SFML/Graphics.hpp>
 #include "../Settings.h"
-#include "../Events/EventCallback.h"
+#include "../events/EventCallback.h"
 
 
 class Button : public UIElement{

@@ -1,6 +1,6 @@
 #include "Vinesnatcher.h"
 #include "../Game.h"
-#include "CardSelector.h"
+#include "../ui/CardSelector.h"
 #include "../Battlefield.h"
 
 Vinesnatcher::Vinesnatcher(UISystem* ui) : card::card(ui, pathToImage, description, cost)

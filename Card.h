@@ -1,12 +1,12 @@
 #pragma once
+#include "cardTypes.h"
+#include "events/EventCallback.h"
+#include <iostream>
+#include "ManaType.h"
+#include <memory>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include <memory>
-#include <iostream>
-#include "cardTypes.h"
-#include "UI/Button.h"
-#include "Events/EventCallback.h"
-#include "ManaType.h"
+#include "ui/Button.h"
 
 class Player;
 
@@ -23,7 +23,7 @@ enum ECardLocation{
 class card : public UIElement{
 	public:
 	card(UISystem* ui,
-		 const string imagePath = "/usr/share/test/resources/Unknown.png", 
+		 const string imagePath = "/Unknown.png", 
 		 const string desc = "test",
 		 const FMana cost = FMana());
 	virtual ~card();

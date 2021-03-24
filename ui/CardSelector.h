@@ -1,7 +1,7 @@
 #pragma once
 
 #include "UISystem.h"
-#include "../card.h"
+#include "../Card.h"
 #include "../CardSelectionInfo.h"
 
 class CardSelector : public UIElement{

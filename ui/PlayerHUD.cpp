@@ -1,5 +1,5 @@
 #include "PlayerHUD.h"
-#include "../card.h"
+#include "../Card.h"
 
 PlayerHUD::PlayerHUD(UISystem* ui):
 UIElement(ui){

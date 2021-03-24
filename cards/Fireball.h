@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "../card.h"
+#include "../Card.h"
 #include "../Player.h"
 
 using std::cout;

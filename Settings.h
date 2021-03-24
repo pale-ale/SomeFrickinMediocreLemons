@@ -8,6 +8,10 @@ class Settings{
     inline static const char* defaultFontPaths[] = {"/usr/share/fonts/truetype/noto/NotoMono-Regular.ttf",
                                                     "/usr/share/fonts/truetype/ubuntu/UbuntuMono-R.ttf",
                                                     "/usr/share/fonts/noto/NotoSerif-Regular.ttf"};
+    inline static const char* assetCardPath = "../assets/cardTextures/";
+    inline static const char* assetCardFront = "CardFront.png";
+    inline static const char* assetCardBack = "CardBack.png";
+    inline static const char* assetTabletopPath = "../assets/Tabletop.png";
     inline static const char* validFontPath = nullptr;
     inline static const int StartLifePoints = 4000;
     static const int fontSize = 10;
