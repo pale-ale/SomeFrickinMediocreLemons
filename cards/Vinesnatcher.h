@@ -24,9 +24,11 @@ class Vinesnatcher : public card{
 	virtual void onCardDeath() override;
 
 	virtual void setupButtonBinding() override {
-		cardButton.onClickCallback = std::make_shared<EventCallback<card>>(this, &card::onCardClicked);
-		cardButton.onBeginMouseoverCallback = std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::onCardBeginMouseover);
-		cardButton.onEndMouseoverCallback = std::make_shared<EventCallback<card>>(this, &card::onCardEndMouseover);
+		cardButton->onClickCallback = std::make_shared<EventCallback<card>>(this, &card::onCardClicked);
+		cardButton->onBeginMouseoverCallback = std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::onCardBeginMouseover);
+		cardButton->onEndMouseoverCallback = std::make_shared<EventCallback<card>>(this, &card::onCardEndMouseover);
+		cardButton->onDragMoveCallback = std::make_shared<EventCallback<card, const sf::Vector2f&>>(this, &card::OnDragMove);
+		cardButton->onDragStartCallback = std::make_shared<EventCallback<card>>(this, &card::OnDragStart);
 	}
 
 	virtual void tap() override;

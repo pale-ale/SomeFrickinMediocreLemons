@@ -10,13 +10,18 @@ UIElement(ui){
     buttonShape.setOrigin(size/2.0f);
     transform.setPosition(sf::Vector2f(rect.left, rect.top));
     buttonTexture = sf::Texture();
+}
+
+void Button::initializeSubComponents(){
+    UIElement::initializeSubComponents();
     if (ui)
 	{
-		ui->addListener(this);
+		ui->addListener(static_pointer_cast<UIElement>(shared_from_this()));
 	}else{
 		cout << "Button: A UI object shouldn't be created without a valid UI reference";
 	}
 }
+
 
 void Button::setPosition(const sf::Vector2f &newPosition){
     UIElement::setPosition(newPosition);
@@ -94,7 +99,7 @@ void Button::OnDragMove(const sf::Vector2f &newPos){
     UIElement::OnDragMove(newPos);
     if (onDragMoveCallback){
         //TODO: pass position information via argument in callback. templates needed?
-        (*onDragMoveCallback)();
+        (*onDragMoveCallback)(newPos);
     }else{
         cout << "Button: DragMove-callback isn't configured yet!\n";
     }

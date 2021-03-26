@@ -30,6 +30,7 @@ class Bar : public UIElement{
     const int offset = 1;
     virtual bool OnBeginMouseover () override;
     virtual bool OnEndMouseover () override;
+    virtual void initializeSubComponents() override;
    
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override;

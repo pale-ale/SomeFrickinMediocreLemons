@@ -14,8 +14,8 @@ class Fireball : public card{
 	virtual void play() override;
 	virtual void onCardBeginMouseover() override;
 	virtual void setupButtonBinding() override {
-		cardButton.onMouseDownCallback = std::make_shared<EventCallback<card>>(this, &card::onCardClicked);
-		cardButton.onBeginMouseoverCallback = std::make_shared<EventCallback<Fireball>>(this, &Fireball::onCardBeginMouseover);
-		cardButton.onEndMouseoverCallback = std::make_shared<EventCallback<card>>(this, &card::onCardEndMouseover);
+		cardButton->onMouseDownCallback = std::make_shared<EventCallback<card>>(this, &card::onCardClicked);
+		cardButton->onBeginMouseoverCallback = std::make_shared<EventCallback<Fireball>>(this, &Fireball::onCardBeginMouseover);
+		cardButton->onEndMouseoverCallback = std::make_shared<EventCallback<card>>(this, &card::onCardEndMouseover);
 	}
 };

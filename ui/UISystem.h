@@ -51,17 +51,34 @@ public:
         window = inWindow;
     };
     void processEvents(vector<sf::Event> events);
-    list<UIElement *> eventListeners = {};
-    list<UIElement *> mouseOveredListeners = {};
-    UIElement *currentlyDraggedElement = nullptr;
-    UIElement *currentlyClickingElement = nullptr;
+    list<weak_ptr<UIElement>> eventListeners = {};
+    list<weak_ptr<UIElement>> mouseOveredListeners = {};
+    weak_ptr<UIElement> currentlyDraggedElement;
+    weak_ptr<UIElement> currentlyClickingElement;
     list<UIElement *> hudElements = {};
-    void addListener(UIElement *newListener);
+    void addListener(weak_ptr<UIElement> newListener);
     void addToHUD(UIElement* hudElement);
     void removeListener(UIElement *listener);
-    bool isElementIn(const UIElement *e, const list<UIElement *> &l)
+    bool isWeakPtrIn(const weak_ptr<UIElement> e, const list<weak_ptr<UIElement>> &l)
     {
-        return std::find(l.begin(), l.end(), e) != l.end();
+        for (auto x : l){
+            if (x.lock() == e.lock() && x.lock())
+                return true;
+        }
+        return false;
+    }
+    bool removeWeakPtr(const weak_ptr<UIElement> e, list<weak_ptr<UIElement>> &l)
+    {
+        auto start = l.begin();
+        auto end = l.end();
+        auto cmp = e.lock();
+        while (start != end){
+            if (start->lock() == cmp){
+                l.erase(start);
+                return true;
+            }
+        }
+        return false;
     }
 
     //unused, spawning will be implemented at some point or maybe scrapped...
@@ -70,10 +87,10 @@ public:
 
 private:
     sf::RenderWindow *window;
-    bool isCoordInBounds(const sf::Vector2f &coords, const UIElement &element) const;
+    bool isCoordInBounds(const sf::Vector2f &coords, const UIElement *element) const;
     sf::Vector2f getClosestPoint(const sf::Vector2f &point, const vector<sf::Vector2f> &points, int &index) const;
     float getDistance(const sf::Vector2f p1, const sf::Vector2f p2) const;
-    list<UIElement *> getListenersUnderCoords(const sf::Vector2f &coords) const;
+    list<weak_ptr<UIElement>> getListenersUnderCoords(const sf::Vector2f &coords) const;
 
 protected:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates state) const override

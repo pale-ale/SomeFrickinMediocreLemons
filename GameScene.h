@@ -22,11 +22,13 @@ class GameScene : public SceneBase{
 
         for (int i=0; i<5; i++){
             auto fb = std::make_shared<Vinesnatcher>(ui);
+            fb->initializeSubComponents();
             fb->setName("p0Card" + std::to_string(i));
             player0->addCardToDeck(fb);
         }
         for (int i=0; i<5; i++){
             auto fb = std::make_shared<Vinesnatcher>(ui);
+            fb->initializeSubComponents();
             fb->setName("p1Card" + std::to_string(i));
             player1->addCardToDeck(fb);
         }

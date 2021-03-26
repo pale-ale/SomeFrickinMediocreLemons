@@ -19,6 +19,15 @@ const string card::getName() const
 	return name;
 }
 
+void card::OnDragMove(const sf::Vector2f &newPos)
+{
+	setPosition(newPos);
+}
+
+void card::OnDragStart(){
+	setRotation(0);
+}
+
 void card::setFlipState(bool frontFaceUp)
 {
 	if (frontFaceUp != this->frontFaceUp)
@@ -33,7 +42,7 @@ void card::setPosition(const sf::Vector2f &newPosition)
 	UIElement::setPosition(newPosition);
 	cardSprite.setPosition(newPosition);
 	imageSprite.setPosition(newPosition + imageOffset);
-	cardButton.setPosition(newPosition);
+	cardButton->setPosition(newPosition);
 	cardDescription.setPosition(newPosition + descOffset);
 	hpStatDisplay.setPosition(newPosition + powerStatOffset);
 	powerStatDisplay.setPosition(newPosition + hpStatOffset);
@@ -46,7 +55,7 @@ void card::setRotation(const float &newRotation)
 	cardSprite.setRotation(newRotation);
 	imageSprite.setRotation(newRotation);
 	imageSprite.setPosition(getPosition() + t);
-	cardButton.setRotation(newRotation);
+	cardButton->setRotation(newRotation);
 	cardDescription.setRotation(newRotation);
 	t = sf::Transform().rotate(newRotation).transformPoint(descOffset);
 	cardDescription.setPosition(getPosition() + t);
@@ -63,7 +72,7 @@ UIElement(ui),
 pathToImage{string(Settings::programDir) + Settings::relativeAssetCardPath + imagePath},
 description{desc}, 
 cost{mana},
-cardButton{Button(ui, {0, 0, 50, 75})}
+cardButton{std::make_shared<Button>(ui, sf::FloatRect(0, 0, 50, 75))}
 {
 	cardBackTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardBack);
 	cardFrontTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardFront);
@@ -72,8 +81,8 @@ cardButton{Button(ui, {0, 0, 50, 75})}
 	cardSprite.setOrigin(cardDimensions / 2.0f);
 	imageSprite.setOrigin(imageDimensions / 2.0f);
 	updateCardImage();
-	cardButton.setPosition(getPosition());
-	cardButton.isDragable = true;
+	cardButton->setPosition(getPosition());
+	cardButton->isDragable = true;
 	font->loadFromFile(Settings::validFontPath);
 	cardDescription.setString(description);
 	cardDescription.setFont(*font);
@@ -145,6 +154,11 @@ void card::onCardEndMouseover()
 	}
 }
 
+void card::initializeSubComponents(){
+	UIElement::initializeSubComponents();
+	cardButton->initializeSubComponents();
+}
+
 void card::takeDamage(const int& amount){
 	health -= amount;
 	updateCardStatDisplay();
@@ -159,7 +173,7 @@ void card::play()
 	if (owner)
 	{
 		owner->playCard(this);
-		cardButton.OnEndMouseover();
+		cardButton->OnEndMouseover();
 	}
 	else
 	{

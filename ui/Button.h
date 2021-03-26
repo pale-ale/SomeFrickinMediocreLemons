@@ -18,14 +18,14 @@ class Button : public UIElement{
             ui->removeListener(this);
         }
     }
-    shared_ptr<IEventCallback> onMouseDownCallback = nullptr;
-    shared_ptr<IEventCallback> onMouseUpCallback = nullptr;
-    shared_ptr<IEventCallback> onClickCallback = nullptr;
-    shared_ptr<IEventCallback> onDragStartCallback = nullptr;
-    shared_ptr<IEventCallback> onDragMoveCallback = nullptr;
-    shared_ptr<IEventCallback> onDragEndCallback = nullptr;
-    shared_ptr<IEventCallback> onBeginMouseoverCallback = nullptr;
-    shared_ptr<IEventCallback> onEndMouseoverCallback = nullptr;
+    shared_ptr<IEventCallback<>> onMouseDownCallback = nullptr;
+    shared_ptr<IEventCallback<>> onMouseUpCallback = nullptr;
+    shared_ptr<IEventCallback<>> onClickCallback = nullptr;
+    shared_ptr<IEventCallback<>> onDragStartCallback = nullptr;
+    shared_ptr<IEventCallback<const sf::Vector2f&>> onDragMoveCallback = nullptr;
+    shared_ptr<IEventCallback<>> onDragEndCallback = nullptr;
+    shared_ptr<IEventCallback<>> onBeginMouseoverCallback = nullptr;
+    shared_ptr<IEventCallback<>> onEndMouseoverCallback = nullptr;
     bool handleEvent = true;
     bool isPressed = false;
 
@@ -39,6 +39,7 @@ class Button : public UIElement{
     virtual void OnDragEnd() override;
     virtual void setPosition(const sf::Vector2f &newPosition) override;
     virtual void setSize(const sf::Vector2f &newSize) override;
+    virtual void initializeSubComponents() override;
 
     virtual void setRotation(const float &newRotation) override;
 	

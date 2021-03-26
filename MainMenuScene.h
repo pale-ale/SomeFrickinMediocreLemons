@@ -10,7 +10,7 @@ class MainMenuScene: public SceneBase{
     sf::Text mainMenuLabel;
     sf::Text playLabel;
     sf::Text settingsLabel;
-    Button playButton = Button(ui);
+    shared_ptr<Button> playButton = make_shared<Button>(ui);
     MainMenuScene(UISystem* ui, SceneManager &sm):SceneBase(&sm), ui{ui}{}
     void setup() override;
     void setGameScene(unique_ptr<SceneBase> scene){gameScene.swap(scene);}
@@ -23,7 +23,7 @@ class MainMenuScene: public SceneBase{
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override {
         SceneBase::draw(target, state);
-        target.draw(playButton);
+        target.draw(*playButton.get());
         target.draw(playLabel);
         target.draw(settingsLabel);
         target.draw(mainMenuLabel);

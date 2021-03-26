@@ -27,7 +27,7 @@ class card : public UIElement{
 		 const string desc = "test",
 		 const FMana cost = FMana());
 	virtual ~card();
-	Button cardButton;
+	shared_ptr<Button> cardButton;
 	cardType getType();
 	void moveGraveyard();
 	bool checkGraveyard();
@@ -50,9 +50,12 @@ class card : public UIElement{
 	virtual void onCardClicked();
 	virtual void onCardBeginMouseover();
 	virtual void onCardEndMouseover();
+	virtual void OnDragMove(const sf::Vector2f &newPos) override;
+	virtual void OnDragStart() override;
 	virtual void onReceiveSelection(list<card*> cards){cout << "Card: " << name << " received selection\n";};
 	virtual void play();
 	virtual void tap(){}
+	virtual void initializeSubComponents() override;
 	virtual void takeDamage(const int& amount);
 	virtual void onCardDeath(){cout << "Card: " << name << " received lethal damage.\n";}
 	FMana cost;
@@ -90,7 +93,7 @@ class card : public UIElement{
 			target.draw(cardSprite, states);
 			if (frontFaceUp){
 				target.draw(imageSprite, states);
-				target.draw(cardButton, states);
+				target.draw(*cardButton, states);
 				target.draw(cardDescription, states);
 				target.draw(hpStatDisplay, states);
 				target.draw(powerStatDisplay, states);

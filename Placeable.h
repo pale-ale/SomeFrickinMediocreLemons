@@ -14,7 +14,7 @@ using std::list;
 class UIElement;
 class UISystem;
 
-class Placeable : public sf::Drawable
+class Placeable : public sf::Drawable, public std::enable_shared_from_this<Placeable>
 {
 public:
     Placeable(){}

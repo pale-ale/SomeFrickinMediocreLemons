@@ -25,13 +25,17 @@ Bar(ui)
 Bar::Bar(UISystem* ui):
 UIElement(ui)
 {
-    ui->addListener(this);
     size=barSize;
     Placeable::setSize(barSize - sf::Vector2f(offset, offset)*2.0f);
     font->loadFromFile(Settings::validFontPath);
     BarInfo.setFont(*font);
     BarInfo.setCharacterSize(this->fontsize);
     BarInfo.setRotation(textRotation);
+}
+
+void Bar::initializeSubComponents(){
+    UIElement::initializeSubComponents();
+    ui->addListener(static_pointer_cast<UIElement>(weak_from_this().lock()));
 }
 
 void Bar::updateBG(){
