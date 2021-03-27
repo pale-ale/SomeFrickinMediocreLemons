@@ -53,7 +53,8 @@ void Battlefield::removeCard(card *cardToRemove)
 {
     cout << "Battlefield: Trying to remove card " << cardToRemove->getName() << endl;
     for (auto cardIndex : battleCards){
-        auto c = cardIndex._card.get();
+        auto cicard = cardIndex._card;
+        auto c = cicard.get();
         if (c == cardToRemove)
         {
             cout << "Battlefield: Removing battle card\n";
@@ -65,7 +66,8 @@ void Battlefield::removeCard(card *cardToRemove)
     }
     
     for (auto cardIndex : supportCards){
-        auto c = cardIndex._card.get(); 
+        auto cicard = cardIndex._card;
+        auto c = cicard.get(); 
         if (c == cardToRemove){
             cout << "Battlefield: Removing support card\n";
             supportCards.remove(cardIndex);

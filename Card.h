@@ -32,11 +32,9 @@ class card : public UIElement{
 	void moveGraveyard();
 	bool checkGraveyard();
 	ECardLocation cardLocation = undefined;
-	const string getName() const;
 	const string getDescription() const {return description;} 
 	const std::shared_ptr<sf::Texture> getTexture() const {return cardImageTexture;}
 	Player* owner = nullptr;
-	void setName(const string newName){name=newName;}
 	void setFlipState(bool frontFaceUp);
 	const sf::Vector2f cardDimensions = {50, 75};
 	const sf::Vector2f imageDimensions = {40, 40};
@@ -62,7 +60,6 @@ class card : public UIElement{
 
 	protected:
 	cardType type;
-	string name;
 	string description;
 	string pathToImage;
 	int power = 1;

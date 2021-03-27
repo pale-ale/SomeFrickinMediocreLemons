@@ -8,6 +8,7 @@ using std::cout;
 void MainMenuScene::setup(){
     cout << "MainMenuScene: Setting up mainmenu...\n";
     playButton->initializeSubComponents();
+    playButton->setName("PlayButton");
     playPos = {Settings::defaultWidth/2, Settings::defaultWidth/2 - 100};
     settingsPos = {Settings::defaultWidth/2, Settings::defaultWidth/2};
     sf::FloatRect s;

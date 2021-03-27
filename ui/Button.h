@@ -13,7 +13,7 @@ class Button : public UIElement{
            sf::Rect<float> rect = {0,0,50,50}, 
            sf::Color color = {255, 0, 255, Settings::bEnableButtonTint ? 100 : 0});
     ~Button(){
-        cout << "Button: Destroying button.\n";
+        cout << "Button: Destroying button '" << name << "'.\n";
         if(ui){
             ui->removeListener(this);
         }

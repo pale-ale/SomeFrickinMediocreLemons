@@ -26,6 +26,7 @@ Bar::Bar(UISystem* ui):
 UIElement(ui)
 {
     size=barSize;
+    name = "Bar";
     Placeable::setSize(barSize - sf::Vector2f(offset, offset)*2.0f);
     font->loadFromFile(Settings::validFontPath);
     BarInfo.setFont(*font);

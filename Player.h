@@ -33,7 +33,6 @@ class Player: public UIElement{
     const sf::Vector2f graveyardOffset = {163,-50};
     const sf::Vector2f battlefieldOffset = {0,-125};
 	FMana mana;
-	string name;	
     Game* game = nullptr;
     int lifePoints=Settings::StartLifePoints;
 
@@ -65,7 +64,6 @@ class Player: public UIElement{
 	void addMana(const FMana& m);
     const FMana getMana() const {return mana;}
 	void clearMana();
-    string getName(){return name;}
     bool bIsMyTurn;
     void startSelection(CardSelectionInfo cardSelectionInfo);
     std::shared_ptr<Hand> playerhand;

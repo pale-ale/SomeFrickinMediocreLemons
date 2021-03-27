@@ -4,7 +4,7 @@
 
 class Hand : public UIElement{
     public:
-    Hand(UISystem* ui):UIElement(ui){}
+    Hand(UISystem* ui):UIElement(ui){name = "Hand";}
     private:
     const float handwidth = 200;
     const float leftmostRotation = -30;

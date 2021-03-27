@@ -6,6 +6,7 @@
 Vinesnatcher::Vinesnatcher(UISystem* ui) : card::card(ui, pathToImage, description, cost)
 {
     setupButtonBinding();
+    cardButton->setName("vinesnatcher-button");
 }
 
 void Vinesnatcher::play(){

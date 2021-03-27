@@ -14,17 +14,14 @@ cardType card::getType()
 {
 	return type;
 }
-const string card::getName() const
-{
-	return name;
-}
 
 void card::OnDragMove(const sf::Vector2f &newPos)
 {
 	setPosition(newPos);
 }
 
-void card::OnDragStart(){
+void card::OnDragStart()
+{
 	setRotation(0);
 }
 
@@ -67,12 +64,12 @@ void card::setRotation(const float &newRotation)
 	powerStatDisplay.setPosition(getPosition() + t);
 }
 
-card::card(UISystem *ui, const string imagePath, const string desc, FMana mana) : 
-UIElement(ui), 
-pathToImage{string(Settings::programDir) + Settings::relativeAssetCardPath + imagePath},
-description{desc}, 
-cost{mana},
-cardButton{std::make_shared<Button>(ui, sf::FloatRect(0, 0, 50, 75))}
+card::card(UISystem *ui, const string imagePath, const string desc, FMana mana) :
+UIElement(ui),
+																				  pathToImage{string(Settings::programDir) + Settings::relativeAssetCardPath + imagePath},
+																				  description{desc},
+																				  cost{mana},
+																				  cardButton{std::make_shared<Button>(ui, sf::FloatRect(0, 0, 50, 75))}
 {
 	cardBackTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardBack);
 	cardFrontTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardFront);
@@ -83,6 +80,7 @@ cardButton{std::make_shared<Button>(ui, sf::FloatRect(0, 0, 50, 75))}
 	updateCardImage();
 	cardButton->setPosition(getPosition());
 	cardButton->isDragable = true;
+	cardButton->setName(name + "Button");
 	font->loadFromFile(Settings::validFontPath);
 	cardDescription.setString(description);
 	cardDescription.setFont(*font);
@@ -154,26 +152,27 @@ void card::onCardEndMouseover()
 	}
 }
 
-void card::initializeSubComponents(){
+void card::initializeSubComponents()
+{
 	UIElement::initializeSubComponents();
 	cardButton->initializeSubComponents();
 }
 
-void card::takeDamage(const int& amount){
+void card::takeDamage(const int &amount)
+{
 	health -= amount;
 	updateCardStatDisplay();
-	if (health <= 0){
+	if (health <= 0)
+	{
 		onCardDeath();
 	}
 }
 
 void card::play()
 {
-	onCardEndMouseover();
 	if (owner)
 	{
 		owner->playCard(this);
-		cardButton->OnEndMouseover();
 	}
 	else
 	{
@@ -181,14 +180,17 @@ void card::play()
 	}
 }
 
-void card::updateCardStatDisplay(){
+void card::updateCardStatDisplay()
+{
 	hpStatDisplay.setString(to_string(health));
 	powerStatDisplay.setString(to_string(power));
 }
 
-card::~card(){
+card::~card()
+{
 	cout << "Card: Destroying card " << name << "...\n";
-	if (owner){
+	if (owner)
+	{
 		owner->stopPreviewingCard();
 		cout << "Card: Stopped preview\n";
 	}

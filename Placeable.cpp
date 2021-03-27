@@ -29,15 +29,16 @@ void Placeable::setSize(const sf::Vector2f& newSize){
 }
 
 void Placeable::removeChild(Placeable *child){
+    cout << name << ": Removing child \'" << child->name << "\' at " << child << ".\n";
     for (auto c : children){
-        if (c.get() == child)
+        if (c.get() == child){
             child->parent = nullptr;
             children.remove(c);
-            // debug aid for future me
-            //cout << "Placeable: Removed child at " << child << endl;
+            cout << name << ": Removed child \'" << child->name << "\' at " << child << ".\n";
             return;
+        }
     }
-    cout << "Placeable: Trying to remove child which is not a child or does not exist!\n";
+    cout << name << ": Trying to remove child which is not a child or does not exist!\n";
     throw;
 }
 

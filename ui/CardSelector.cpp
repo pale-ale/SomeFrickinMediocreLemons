@@ -3,6 +3,7 @@
 
 CardSelector::CardSelector(UISystem *ui) : UIElement(ui)
 {
+    name = "CardSelector";
 }
 
 void CardSelector::setSelectionTarget(const list<card*> &cardsToSelectFrom, bool reposition, CardSelectionInfo csi)
@@ -17,13 +18,13 @@ void CardSelector::setSelectionTarget(const list<card*> &cardsToSelectFrom, bool
 
     for (auto &c : cards)
     {
-        unique_ptr<Button> button;
+        shared_ptr<Button> button;
         if (reposition)
         {
             //WIP
             posX = slotNumberX * slotWidth + slotNumberX * slotPaddingX + slotPaddingX + slotWidth / 2;
             posY = slotNumberY * slotHeight + slotNumberY * slotPaddingY + slotPaddingY + slotHeight / 2;
-            button = std::make_unique<Button>(ui, sf::FloatRect{posX, posY, slotWidth, slotHeight},
+            button = std::make_shared<Button>(ui, sf::FloatRect{posX, posY, slotWidth, slotHeight},
                                          sf::Color{255, 255, 255, 255});
             slotNumberX += 1;
             if (slotNumberX >= gridWidth)
@@ -34,8 +35,10 @@ void CardSelector::setSelectionTarget(const list<card*> &cardsToSelectFrom, bool
         }
         else
         {
-            button = std::make_unique<Button>(ui, sf::FloatRect{posX, posY, slotWidth, slotHeight},
+            button = std::make_shared<Button>(ui, sf::FloatRect{posX, posY, slotWidth, slotHeight},
                                          sf::Color{0, 255, 255, 150});
+            button->initializeSubComponents();
+            button->setName("cardSelectorButton");
             cout << "added button as listener.\n";
             button->setRotation(c->getRotation());
             button->setPosition(c->getPosition());

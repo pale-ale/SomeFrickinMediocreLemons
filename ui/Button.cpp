@@ -4,6 +4,7 @@ Button::Button(UISystem* ui, sf::Rect<float> rect, sf::Color color):
 UIElement(ui){
     size = sf::Vector2f(rect.width, rect.height);
     Placeable::setSize(size);
+    setName("Button");
     this->rect = rect;
     buttonShape = sf::RectangleShape(size);
     buttonShape.setFillColor(color);
@@ -74,7 +75,7 @@ bool Button::OnBeginMouseover(){
     if (onBeginMouseoverCallback){
         (*onBeginMouseoverCallback)();
     }else{
-        cout << "Button: Mouseover-callback isn't configured yet!\n";
+        cout << name << ": Mouseover-callback isn't configured yet!\n";
     }
     return returnValue;
 }
@@ -83,34 +84,33 @@ void Button::OnClick(){
     UIElement::OnClick();
     if (onClickCallback){
         (*onClickCallback)();
-    }else{
-        cout << "Button: Click-callback isn't configured yet!\n";
+        return;
     }
+    cout << name << ": Click-callback isn't configured yet!\n";
 }
 void Button::OnDragStart(){
     UIElement::OnDragStart();
     if (onDragStartCallback){
         (*onDragStartCallback)();
-    }else{
-        cout << "Button: DragStart-callback isn't configured yet!\n";
+        return;
     }
+    cout << "Button: DragStart-callback isn't configured yet!\n";
 }
 void Button::OnDragMove(const sf::Vector2f &newPos){
     UIElement::OnDragMove(newPos);
     if (onDragMoveCallback){
-        //TODO: pass position information via argument in callback. templates needed?
         (*onDragMoveCallback)(newPos);
-    }else{
-        cout << "Button: DragMove-callback isn't configured yet!\n";
+        return;
     }
+    cout << "Button: DragMove-callback isn't configured yet!\n";
 }
 void Button::OnDragEnd(){
     UIElement::OnDragEnd();
     if (onDragEndCallback){
         (*onDragEndCallback)();
-    }else{
-        cout << "Button: DragEnd-callback isn't configured yet!\n";
+        return;
     }
+    cout << "Button: DragEnd-callback isn't configured yet!\n";
 }
 
 bool Button::OnEndMouseover(){

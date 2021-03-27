@@ -2,7 +2,7 @@
 
 ManaBars::ManaBars(UISystem* ui, const unsigned int width, const unsigned int height):
 UIElement(ui), width{width}, height{height}
-{}
+{name = "ManaBars";}
 
 void ManaBars::initializeSubComponents(){
     int o = 0;

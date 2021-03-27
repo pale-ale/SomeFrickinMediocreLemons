@@ -11,7 +11,6 @@ using std::vector;
 using std::string;
 using std::list;
 
-class UIElement;
 class UISystem;
 
 class Placeable : public sf::Drawable, public std::enable_shared_from_this<Placeable>
@@ -27,13 +26,15 @@ public:
     virtual void setSize(const sf::Vector2f &newSize);
     virtual void initializeSubComponents(){};
     void setChildren(list<std::shared_ptr<Placeable>> newChildren) { children = newChildren; };
+    virtual const string &getName() const {return name;}
+    void setName(const string &newName){name = newName;}
 
 protected:
     sf::Transformable transform;
     Placeable *parent = nullptr;
+    string name = "Placeable";
     UISystem *ui = nullptr;
     vector<sf::Vector2f> hitbox;
-    string name = "Placeable";
     sf::Vector2f size = {0, 0};
     list<std::shared_ptr<Placeable>> children;
     void updateHitbox();
