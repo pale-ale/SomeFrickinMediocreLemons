@@ -28,6 +28,7 @@ class Vinesnatcher : public card{
 		cardButton->onBeginMouseoverCallback = std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::onCardBeginMouseover);
 		cardButton->onEndMouseoverCallback = std::make_shared<EventCallback<card>>(this, &card::onCardEndMouseover);
 		cardButton->onDragMoveCallback = std::make_shared<EventCallback<card, const sf::Vector2f&>>(this, &card::OnDragMove);
+		cardButton->onDragEndCallback = std::make_shared<EventCallback<card>>(this, &card::OnDragEnd);
 		cardButton->onDragStartCallback = std::make_shared<EventCallback<card>>(this, &card::OnDragStart);
 	}
 

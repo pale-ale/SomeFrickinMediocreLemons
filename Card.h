@@ -50,6 +50,7 @@ class card : public UIElement{
 	virtual void onCardEndMouseover();
 	virtual void OnDragMove(const sf::Vector2f &newPos) override;
 	virtual void OnDragStart() override;
+	virtual void OnDragEnd() override;
 	virtual void onReceiveSelection(list<card*> cards){cout << "Card: " << name << " received selection\n";};
 	virtual void play();
 	virtual void tap(){}

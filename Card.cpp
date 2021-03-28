@@ -23,6 +23,16 @@ void card::OnDragMove(const sf::Vector2f &newPos)
 void card::OnDragStart()
 {
 	setRotation(0);
+	if (owner){
+		owner->battlefield->setDrawFreeSpaces(true);
+	}
+}
+
+void card::OnDragEnd()
+{
+	if(owner){
+		owner->battlefield->setDrawFreeSpaces(false);
+	}
 }
 
 void card::setFlipState(bool frontFaceUp)

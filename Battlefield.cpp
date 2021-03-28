@@ -1,7 +1,7 @@
 #include "Battlefield.h"
 
-Battlefield::Battlefield(UISystem *ui)
-{
+Battlefield::Battlefield(UISystem *ui){
+    this->ui = ui;
     name = "Battlefield";
 }
 
@@ -91,6 +91,22 @@ card* Battlefield::getCardAt(int slot, bool support)
         }
     }
     return nullptr;
+}
+
+void Battlefield::setDrawFreeSpaces(bool drawFreeSpaces){
+    if (drawFreeSpaces){
+        for (auto pos : supportPositionsOffset){
+            auto newButton = std::make_shared<Button>(ui, sf::FloatRect{0, 0, 50,75}, sf::Color{255,255,100, 100});
+            newButton->setPosition(pos);
+            newButton->setPosition(transform.getTransform().transformPoint((pos)));
+            newButton->setName("FreeSpaceIndicatorButton");
+            newButton->initializeSubComponents();
+            emptySpaceDisplay.push_back(newButton);
+        }
+    }
+    else{
+        emptySpaceDisplay.clear();
+    }
 }
 
 void Battlefield::printCards(){

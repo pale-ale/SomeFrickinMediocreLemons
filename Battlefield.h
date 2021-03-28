@@ -12,6 +12,7 @@ class Battlefield : public Placeable{
     void removeCard(int slot, bool support=true);
     void removeCard(card *card);
     list<card*> getCards() const;
+    void setDrawFreeSpaces(bool drawFreeSpaces);
     void printCards();
 
     private:
@@ -23,11 +24,19 @@ class Battlefield : public Placeable{
         }
     };
     const vector<sf::Vector2f> battlePositionsOffset  = {{-50,-50}, { 50,-50}};
-    const vector<sf::Vector2f> supportPositionsOffset = {{-75, 50}, {-25, 50}, {25,50}, {75,50}}; 
+    const vector<sf::Vector2f> supportPositionsOffset = {{-78, 50}, {-26, 50}, {26,50}, {78,50}}; 
     list<cardIndex> supportCards;
     list<cardIndex> battleCards;
+    list<shared_ptr<Button>> emptySpaceDisplay;
     const int MAX_SUPPORT_CARDS = 4;
     const int MAX_BATTLE_CARDS = 2;
     int getNextFreeSlot(list<cardIndex> &cards, int max);
     card *getCardAt(int slot, bool support=true);
-};
+
+    protected:
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{
+        Placeable::draw(target, state);
+        for (auto x : emptySpaceDisplay){
+            target.draw(*x.get());
+        }
+    }};

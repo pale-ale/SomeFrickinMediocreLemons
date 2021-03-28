@@ -103,11 +103,7 @@ void Player::clearMana()
     playerManaBars->updateManaBars(&mana);
 }
 
-Player::Player(UISystem *ui, std::string Name) : Player(ui)
-{
-    this->mana = FMana();
-    this->name = Name;
-}
+
 int Player::getLifePoints()
 {
     return lifePoints;
@@ -152,6 +148,11 @@ Player::Player(UISystem *ui) : UIElement(ui),
                                playerHud{std::make_shared<PlayerHUD>(ui)}
 {
     name = "Player";
+}
+
+Player::Player(UISystem *ui, std::string Name) : Player(ui)
+{
+    this->name = Name;
 }
 
 shared_ptr<card> Player::removeCardFromDeck(card* cardToRemove){

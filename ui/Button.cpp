@@ -19,7 +19,7 @@ void Button::initializeSubComponents(){
 	{
 		ui->addListener(static_pointer_cast<UIElement>(shared_from_this()));
 	}else{
-		cout << "Button: A UI object shouldn't be created without a valid UI reference";
+		cout << "Button: A UI object shouldn't be created without a valid UI pointer\n";
 	}
 }
 
