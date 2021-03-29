@@ -24,15 +24,16 @@ void card::OnDragStart()
 {
 	setRotation(0);
 	if (owner){
-		owner->battlefield->setDrawFreeSpaces(true);
+		owner->battlefield->setDrawFreeSpaces(true, true);
 	}
 }
 
 void card::OnDragEnd()
 {
 	if(owner){
-		owner->battlefield->setDrawFreeSpaces(false);
+		owner->battlefield->setDrawFreeSpaces(false, true);
 	}
+	owner->playCard(this);
 }
 
 void card::setFlipState(bool frontFaceUp)

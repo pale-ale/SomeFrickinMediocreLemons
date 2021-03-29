@@ -9,9 +9,9 @@ void Battlefield::addCard(shared_ptr<card> newCard, bool support, int slot)
 {
     auto row = support ? &supportCards : &battleCards;
     int max = support ? MAX_SUPPORT_CARDS : MAX_BATTLE_CARDS;
-    if (slot == -1)
-    {
-        slot = getNextFreeSlot(*row, max);
+    auto cardPos = newCard->getPosition();
+    if (slot == -1){
+        slot = getClosestFreeSlot(support, cardPos);
     }
     if (slot == -1)
     {
@@ -27,8 +27,7 @@ void Battlefield::addCard(shared_ptr<card> newCard, bool support, int slot)
     newCard->reparent(this);
     addChild(newCard);
     newCard->cardLocation = ECardLocation::battlefield;
-    newCard->setPosition(transform.getTransform().transformPoint(
-        (support ? supportPositionsOffset[slot] : battlePositionsOffset[slot])));
+    newCard->setPosition(toGlobal(support ? supportPositionsOffset[slot].pos : battlePositionsOffset[slot].pos));
     newCard->setRotation(0);
 }
 
@@ -93,21 +92,24 @@ card* Battlefield::getCardAt(int slot, bool support)
     return nullptr;
 }
 
-void Battlefield::setDrawFreeSpaces(bool drawFreeSpaces){
+void Battlefield::setDrawFreeSpaces(bool drawFreeSpaces, bool support){
+    auto freeIndices = getFreeIndices(support);
+    auto row = support ? supportPositionsOffset : battlePositionsOffset;
+    sf::Vector2f cardSize(50,75);
     if (drawFreeSpaces){
-        for (auto pos : supportPositionsOffset){
-            auto newButton = std::make_shared<Button>(ui, sf::FloatRect{0, 0, 50,75}, sf::Color{255,255,100, 100});
-            newButton->setPosition(pos);
-            newButton->setPosition(transform.getTransform().transformPoint((pos)));
-            newButton->setName("FreeSpaceIndicatorButton");
-            newButton->initializeSubComponents();
-            emptySpaceDisplay.push_back(newButton);
+        for (int freeIndex : freeIndices){
+            auto cardOutline = std::make_shared<sf::RectangleShape>(cardSize);
+            cardOutline->setFillColor(sf::Color{255,255,100,100});
+            cardOutline->setOrigin(cardSize * .5f);
+            cardOutline->setPosition(toGlobal(row[freeIndex].pos));
+            emptySpaceDisplay.push_back(cardOutline);
         }
     }
     else{
         emptySpaceDisplay.clear();
     }
 }
+
 
 void Battlefield::printCards(){
     cout << "Battlefield: Battle cards:\n";
@@ -138,6 +140,28 @@ int Battlefield::getNextFreeSlot(list<cardIndex> &cards, int max)
         }
     }
     return -1;
+}
+
+int Battlefield::getClosestFreeSlot(bool support, const sf::Vector2f &pos)
+{
+    int closestFreeSlot = -1;
+    auto row = support ? supportPositionsOffset : battlePositionsOffset;
+    auto freeIndices = getFreeIndices(support);
+    if (freeIndices.size() > 0){
+        auto globalp = toGlobal(row[0].pos);
+        float distance = sqrt(pow(globalp.x-pos.x, 2) + pow(globalp.y-pos.y, 2));
+        closestFreeSlot = 0;
+        for (int i : freeIndices)
+        {
+            globalp = toGlobal(row[i].pos);
+            float tmpDistance = sqrt(pow(globalp.x-pos.x, 2) + pow(globalp.y-pos.y, 2));
+            if (tmpDistance < distance){
+                distance = tmpDistance;
+                closestFreeSlot = i;
+            }
+        }
+    }
+    return closestFreeSlot;
 }
 
 list<card*> Battlefield::getCards() const
