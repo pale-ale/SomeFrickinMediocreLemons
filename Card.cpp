@@ -32,8 +32,8 @@ void card::OnDragEnd()
 {
 	if(owner){
 		owner->battlefield->setDrawFreeSpaces(false, true);
+		owner->playCard(this);
 	}
-	owner->playCard(this);
 }
 
 void card::setFlipState(bool frontFaceUp)
@@ -49,9 +49,11 @@ void card::setPosition(const sf::Vector2f &newPosition)
 {
 	UIElement::setPosition(newPosition);
 	cardSprite.setPosition(newPosition);
-	imageSprite.setPosition(newPosition + imageOffset);
+	imageSprite.setPosition(newPosition + scaleVectorSettings(imageOffset));
 	cardButton->setPosition(newPosition);
-	cardDescription.setPosition(newPosition + descOffset);
+	cardDescription.setPosition(newPosition + scaleVectorSettings(descOffset));
+	hpStatDisplay.setPosition(newPosition + scaleVectorSettings(hpStatOffset));
+	powerStatDisplay.setPosition(newPosition + scaleVectorSettings(powerStatOffset));
 	hpStatDisplay.setPosition(newPosition + powerStatOffset);
 	powerStatDisplay.setPosition(newPosition + hpStatOffset);
 }
@@ -59,20 +61,17 @@ void card::setPosition(const sf::Vector2f &newPosition)
 void card::setRotation(const float &newRotation)
 {
 	UIElement::setRotation(newRotation);
-	auto t = sf::Transform().rotate(newRotation).transformPoint(imageOffset);
+	auto t = sf::Transform().rotate(newRotation).scale(Settings::cardScale);
 	cardSprite.setRotation(newRotation);
 	imageSprite.setRotation(newRotation);
-	imageSprite.setPosition(getPosition() + t);
+	imageSprite.setPosition(getPosition() + t.transformPoint(imageOffset));
 	cardButton->setRotation(newRotation);
 	cardDescription.setRotation(newRotation);
-	t = sf::Transform().rotate(newRotation).transformPoint(descOffset);
-	cardDescription.setPosition(getPosition() + t);
-	t = sf::Transform().rotate(newRotation).transformPoint(hpStatOffset);
+	cardDescription.setPosition(getPosition() + t.transformPoint(descOffset));
 	hpStatDisplay.setRotation(newRotation);
-	hpStatDisplay.setPosition(getPosition() + t);
-	t = sf::Transform().rotate(newRotation).transformPoint(powerStatOffset);
+	hpStatDisplay.setPosition(getPosition() + t.transformPoint(hpStatOffset));
 	powerStatDisplay.setRotation(newRotation);
-	powerStatDisplay.setPosition(getPosition() + t);
+	powerStatDisplay.setPosition(getPosition() + t.transformPoint(powerStatOffset));
 }
 
 card::card(UISystem *ui, const string imagePath, const string desc, FMana mana) :
@@ -85,26 +84,24 @@ UIElement(ui),
 	cardBackTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardBack);
 	cardFrontTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardFront);
 	cardSprite.setTexture(cardBackTexture);
-	cardSprite.setPosition(getPosition());
-	cardSprite.setOrigin(cardDimensions / 2.0f);
+	cardSprite.setScale(Settings::cardScale);
+	cardSprite.setOrigin(Settings::cardSize / 2.0f);
 	imageSprite.setOrigin(imageDimensions / 2.0f);
+	imageSprite.setScale(Settings::cardScale);
 	updateCardImage();
-	cardButton->setPosition(getPosition());
 	cardButton->isDragable = true;
 	cardButton->setName(name + "Button");
+	cardButton->setSize(scaleVectorSettings(Settings::cardSize));
 	font->loadFromFile(Settings::validFontPath);
 	cardDescription.setString(description);
 	cardDescription.setFont(*font);
-	cardDescription.setPosition(getPosition() + descOffset);
-	cardDescription.setScale(0.17, 0.17);
+	cardDescription.setScale(scaleVectorSettings({0.17, 0.17}));
 	hpStatDisplay.setFont(*font);
-	hpStatDisplay.setFillColor(Settings::RedColor);
-	hpStatDisplay.setPosition(getPosition() + hpStatOffset);
-	hpStatDisplay.setScale(0.5, 0.5);
+	hpStatDisplay.setFillColor(Settings::redColor);
+	hpStatDisplay.setScale(scaleVectorSettings({0.5, 0.5}));
 	powerStatDisplay.setFont(*font);
-	powerStatDisplay.setFillColor(Settings::BlackColor);
-	powerStatDisplay.setPosition(getPosition() + powerStatOffset);
-	powerStatDisplay.setScale(0.5, 0.5);
+	powerStatDisplay.setFillColor(Settings::blackColor);
+	powerStatDisplay.setScale(scaleVectorSettings({0.5, 0.5}));
 	Placeable::name = "card";
 	updateCardStatDisplay();
 }

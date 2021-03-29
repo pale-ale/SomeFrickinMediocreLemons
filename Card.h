@@ -36,7 +36,7 @@ class card : public UIElement{
 	const std::shared_ptr<sf::Texture> getTexture() const {return cardImageTexture;}
 	Player* owner = nullptr;
 	void setFlipState(bool frontFaceUp);
-	const sf::Vector2f cardDimensions = {50, 75};
+	const sf::Vector2f cardDimensions = Settings::cardSize;
 	const sf::Vector2f imageDimensions = {40, 40};
 	const sf::Vector2f imageOffset = {0, -13};
 	const sf::Vector2f descOffset = {-20, 10};
@@ -71,6 +71,9 @@ class card : public UIElement{
 	bool graveyard = false;
 	bool tapped = false;
 	std::shared_ptr<sf::Font> font = std::make_unique<sf::Font>();
+	sf::Vector2f scaleVectorSettings(const sf::Vector2f &v){
+		return {v.x*Settings::cardScale.x, v.y*Settings::cardScale.y};
+	}
 
 	void updateCardImage();
 	void updateCardStatDisplay();
