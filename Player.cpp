@@ -61,7 +61,7 @@ void Player::addCardToGraveyard(shared_ptr<card> card)
     addChild(card);
 }
 
-const list<card*> Player::getHand() const
+const list<card *> Player::getHand() const
 {
     return playerhand->getHand();
 }
@@ -103,19 +103,21 @@ void Player::clearMana()
     playerManaBars->updateManaBars(&mana);
 }
 
-
 int Player::getLifePoints()
 {
     return lifePoints;
 }
+
 void Player::setLifePoints(int lifePoints)
 {
     this->lifePoints = lifePoints;
     playerBar->setFillFactor((float)this->lifePoints / Settings::StartLifePoints);
 }
 
-void Player::initializeSubComponents(){
-    for (auto &child : children){
+void Player::initializeSubComponents()
+{
+    for (auto &child : children)
+    {
         child->initializeSubComponents();
     }
     battlefield->setPosition(getPosition() + battlefieldOffset);
@@ -129,15 +131,16 @@ void Player::initializeSubComponents(){
     addChild(cardSelector);
     ui->addToHUD(playerHud.get());
     ui->addToHUD(cardSelector.get());
+    playerBar->initializeSubComponents();
     playerBar->setPosition(getPosition() + lifePointOffset);
     playerBar->setRotation(-90);
-    addChild(playerBar);
     playerBar->setFillFactor((float)lifePoints / Settings::StartLifePoints);
+    addChild(playerBar);
+    playerManaBars->initializeSubComponents();
     playerManaBars->setPosition(getPosition() + manaBarOffset);
     playerManaBars->setRotation(-90);
     addChild(playerManaBars);
 }
-
 
 Player::Player(UISystem *ui) : UIElement(ui),
                                playerhand{std::make_shared<Hand>(ui)},
@@ -155,9 +158,12 @@ Player::Player(UISystem *ui, std::string Name) : Player(ui)
     this->name = Name;
 }
 
-shared_ptr<card> Player::removeCardFromDeck(card* cardToRemove){
-    for (auto c : deck){
-        if (c.get() == cardToRemove){
+shared_ptr<card> Player::removeCardFromDeck(card *cardToRemove)
+{
+    for (auto c : deck)
+    {
+        if (c.get() == cardToRemove)
+        {
             deck.remove(c);
             children.remove(c);
             cardToRemove->reparent(nullptr);
@@ -168,8 +174,10 @@ shared_ptr<card> Player::removeCardFromDeck(card* cardToRemove){
     throw;
 }
 
-shared_ptr<card> Player::removeCardFromDeckTop(){
-    if (deck.size() < 1){
+shared_ptr<card> Player::removeCardFromDeckTop()
+{
+    if (deck.size() < 1)
+    {
         cout << "Player: No cards in deck to draw from.\n";
         throw;
     }
@@ -180,24 +188,27 @@ shared_ptr<card> Player::removeCardFromDeckTop(){
     return c;
 }
 
-
 void Player::startSelection(CardSelectionInfo cardSelectionInfo)
 {
     Player *enemy = game->getNextTurnPlayer();
-    list<card*> eligibleCards;
-    if (cardSelectionInfo.enemyBattlefield){
+    list<card *> eligibleCards;
+    if (cardSelectionInfo.enemyBattlefield)
+    {
         auto c = enemy->battlefield->getCards();
         eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
     }
-    if (cardSelectionInfo.selfBattlefield){
+    if (cardSelectionInfo.selfBattlefield)
+    {
         auto c = this->battlefield->getCards();
         eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
     }
-    if (cardSelectionInfo.enemyHand){
+    if (cardSelectionInfo.enemyHand)
+    {
         auto c = enemy->getHand();
         eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
     }
-    if (cardSelectionInfo.selfHand){
+    if (cardSelectionInfo.selfHand)
+    {
         auto c = this->getHand();
         eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
     }

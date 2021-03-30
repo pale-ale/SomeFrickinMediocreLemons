@@ -13,6 +13,7 @@ void ManaBars::initializeSubComponents(){
         bar->setDimensions(dims);
         bar->setPosition(sf::Vector2f(0, o * offset - o*(float)bar->offset/2));
         bar->reparent(this);
+        bar->initializeSubComponents();
         addChild(bar);
         o++;
     }
