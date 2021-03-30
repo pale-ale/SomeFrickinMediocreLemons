@@ -25,6 +25,7 @@ void card::OnDragStart()
 	setRotation(0);
 	if (owner){
 		owner->battlefield->setDrawFreeSpaces(true, true);
+		owner->battlefield->setDrawFreeSpaces(true, false);
 	}
 }
 

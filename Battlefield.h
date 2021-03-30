@@ -28,8 +28,8 @@ class Battlefield : public Placeable{
         int index;
         sf::Vector2f pos;
     };
-    const vector<positionIndex> battlePositionsOffset = {{0, {-50,-27}}, {1, {50,27}}};
-    const vector<positionIndex> supportPositionsOffset = {{0, {-78, 50}}, {1, {-26, 50}}, {2, {26,50}}, {3, {78,50}}}; 
+    const vector<positionIndex> battlePositionsOffset = {{0, {-60, 40}}, {1, {60, 40}}};
+    const vector<positionIndex> supportPositionsOffset = {{0, {-100, 65}}, {1, {-20, 65}}, {2, {20,65}}, {3, {100,65}}}; 
     list<cardIndex> supportCards;
     list<cardIndex> battleCards;
     list<shared_ptr<sf::RectangleShape>> emptySpaceDisplay;

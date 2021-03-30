@@ -95,12 +95,12 @@ card* Battlefield::getCardAt(int slot, bool support)
 void Battlefield::setDrawFreeSpaces(bool drawFreeSpaces, bool support){
     auto freeIndices = getFreeIndices(support);
     auto row = support ? supportPositionsOffset : battlePositionsOffset;
-    sf::Vector2f cardSize(50,75);
     if (drawFreeSpaces){
         for (int freeIndex : freeIndices){
-            auto cardOutline = std::make_shared<sf::RectangleShape>(cardSize);
+            auto cardOutline = std::make_shared<sf::RectangleShape>(Settings::cardSize);
+            cardOutline->setOrigin(Settings::cardSize * .5f);
+            cardOutline->setScale(Settings::cardScale);
             cardOutline->setFillColor(sf::Color{255,255,100,100});
-            cardOutline->setOrigin(cardSize * .5f);
             cardOutline->setPosition(toGlobal(row[freeIndex].pos));
             emptySpaceDisplay.push_back(cardOutline);
         }

@@ -20,8 +20,8 @@ class CardSelector : public UIElement{
     const int gridWidth = 8;
     const int slotPaddingX = 5;
     const int slotPaddingY = 10;
-    const float slotWidth = 50;
-    const float slotHeight = 75;
+    const float slotWidth = Settings::cardSize.x * Settings::cardScale.x;
+    const float slotHeight = Settings::cardSize.y * Settings::cardScale.y;
 
     private:
     list<shared_ptr<Button>> buttons;
