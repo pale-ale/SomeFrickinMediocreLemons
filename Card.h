@@ -2,10 +2,11 @@
 #include "cardTypes.h"
 #include "events/EventCallback.h"
 #include <iostream>
+#include "IDragAndDroppable.h"
 #include "ManaType.h"
 #include <memory>
-#include <string>
 #include <SFML/Graphics.hpp>
+#include <string>
 #include "ui/Button.h"
 
 class Player;
@@ -20,7 +21,7 @@ enum ECardLocation{
 	graveyard
 };
 
-class card : public UIElement{
+class card : public UIElement, public IDragAndDroppable{
 	public:
 	card(UISystem* ui,
 		 const string imagePath = "/Unknown.png", 
@@ -57,12 +58,14 @@ class card : public UIElement{
 	virtual void initializeSubComponents() override;
 	virtual void takeDamage(const int& amount);
 	virtual void onCardDeath(){cout << "Card: " << name << " received lethal damage.\n";}
+    virtual void setSnapPoints(const vector<sf::Vector2f> &points){snapPoints = points;}
 	FMana cost;
 
 	protected:
 	cardType type;
 	string description;
 	string pathToImage;
+	vector<sf::Vector2f> snapPoints;
 	int power = 1;
 	int health = 1;
 	int maxHealth = 1;

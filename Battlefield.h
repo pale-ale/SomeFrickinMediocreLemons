@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include "Card.h"
+#include "GlobalFunctions.h"
 #include <iostream>
 #include <math.h>
 #include "Placeable.h"
@@ -14,6 +15,7 @@ class Battlefield : public Placeable{
     void removeCard(card *card);
     list<card*> getCards() const;
     void setDrawFreeSpaces(bool drawFreeSpaces, bool support);
+    vector<sf::Vector2f> getFreeSnapPoints(bool support);
     void printCards();
 
     private:

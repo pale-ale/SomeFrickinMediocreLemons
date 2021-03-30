@@ -17,6 +17,14 @@ cardType card::getType()
 
 void card::OnDragMove(const sf::Vector2f &newPos)
 {
+	if (snapPoints.size() > 0){
+		auto closestSnapPoint = getClosestPoint<vector<sf::Vector2f>>(newPos, snapPoints);
+		auto distance = getDistance(newPos, closestSnapPoint);
+		if (distance < 25){
+			setPosition(closestSnapPoint);
+			return;
+		}
+	}
 	setPosition(newPos);
 }
 
@@ -26,6 +34,7 @@ void card::OnDragStart()
 	if (owner){
 		owner->battlefield->setDrawFreeSpaces(true, true);
 		owner->battlefield->setDrawFreeSpaces(true, false);
+		setSnapPoints(owner->battlefield->getFreeSnapPoints(true));
 	}
 }
 
@@ -55,8 +64,6 @@ void card::setPosition(const sf::Vector2f &newPosition)
 	cardDescription.setPosition(newPosition + scaleVectorSettings(descOffset));
 	hpStatDisplay.setPosition(newPosition + scaleVectorSettings(hpStatOffset));
 	powerStatDisplay.setPosition(newPosition + scaleVectorSettings(powerStatOffset));
-	hpStatDisplay.setPosition(newPosition + powerStatOffset);
-	powerStatDisplay.setPosition(newPosition + hpStatOffset);
 }
 
 void card::setRotation(const float &newRotation)

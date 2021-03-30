@@ -97,12 +97,12 @@ void Battlefield::setDrawFreeSpaces(bool drawFreeSpaces, bool support){
     auto row = support ? supportPositionsOffset : battlePositionsOffset;
     if (drawFreeSpaces){
         for (int freeIndex : freeIndices){
-            auto cardOutline = std::make_shared<sf::RectangleShape>(Settings::cardSize);
-            cardOutline->setOrigin(Settings::cardSize * .5f);
-            cardOutline->setScale(Settings::cardScale);
-            cardOutline->setFillColor(sf::Color{255,255,100,100});
-            cardOutline->setPosition(toGlobal(row[freeIndex].pos));
-            emptySpaceDisplay.push_back(cardOutline);
+            auto freeCardSpace = std::make_shared<sf::RectangleShape>(Settings::cardSize);
+            freeCardSpace->setOrigin(Settings::cardSize * .5f);
+            freeCardSpace->setScale(Settings::cardScale);
+            freeCardSpace->setFillColor(sf::Color{255,255,100,100});
+            freeCardSpace->setPosition(toGlobal(row[freeIndex].pos));
+            emptySpaceDisplay.push_back(freeCardSpace);
         }
     }
     else{
@@ -110,6 +110,15 @@ void Battlefield::setDrawFreeSpaces(bool drawFreeSpaces, bool support){
     }
 }
 
+vector<sf::Vector2f> Battlefield::getFreeSnapPoints(bool support){
+    vector<sf::Vector2f> snapPoints;
+    auto freeIndices = getFreeIndices(support);
+    auto row = support ? supportPositionsOffset : battlePositionsOffset;
+    for (int freeIndex : freeIndices){
+        snapPoints.push_back(toGlobal(row[freeIndex].pos));
+    }
+    return snapPoints;
+}
 
 void Battlefield::printCards(){
     cout << "Battlefield: Battle cards:\n";
@@ -149,12 +158,12 @@ int Battlefield::getClosestFreeSlot(bool support, const sf::Vector2f &pos)
     auto freeIndices = getFreeIndices(support);
     if (freeIndices.size() > 0){
         auto globalp = toGlobal(row[0].pos);
-        float distance = sqrt(pow(globalp.x-pos.x, 2) + pow(globalp.y-pos.y, 2));
+        float distance = getDistance(globalp, pos);
         closestFreeSlot = 0;
         for (int i : freeIndices)
         {
             globalp = toGlobal(row[i].pos);
-            float tmpDistance = sqrt(pow(globalp.x-pos.x, 2) + pow(globalp.y-pos.y, 2));
+            float tmpDistance = getDistance(globalp, pos);
             if (tmpDistance < distance){
                 distance = tmpDistance;
                 closestFreeSlot = i;
