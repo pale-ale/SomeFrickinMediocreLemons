@@ -1,13 +1,18 @@
 #include "Button.h"
 
-Button::Button(UISystem* ui, sf::Rect<float> rect, sf::Color color):
+Button::Button(UISystem* ui, vector<sf::Vector2f> corners, sf::Color color):
 UIElement(ui){
     size = sf::Vector2f(rect.width, rect.height);
-    Placeable::setSize(size);
     setName("Button");
     this->rect = rect;
-    buttonShape = sf::RectangleShape(size);
+    hitbox = corners;
+    buttonShape.setPointCount(corners.size());
     buttonShape.setFillColor(color);
+    auto& hb = getHitboxPolygonGlobal();
+    for (int i = 0; i < hitbox.size(); i++)
+    {
+        buttonShape.setPoint(i, hb[i]);
+    }
     buttonShape.setOrigin(size/2.0f);
     transform.setPosition(sf::Vector2f(rect.left, rect.top));
     buttonTexture = sf::Texture();
@@ -33,13 +38,6 @@ void Button::setPosition(const sf::Vector2f &newPosition){
 void Button::setRotation(const float &newRotation){
     UIElement::setRotation(newRotation - getRotation());
     buttonShape.setRotation(newRotation);
-}
-
-void Button::setSize(const sf::Vector2f &newSize){
-    Placeable::setSize(newSize);
-    buttonShape.setSize(newSize);
-    buttonShape.setOrigin(size/2.0f);
-    buttonShape.setPosition(getPosition());
 }
 
 bool Button::OnMouseButtonDown(){

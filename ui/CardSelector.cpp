@@ -6,7 +6,7 @@ CardSelector::CardSelector(UISystem *ui) : UIElement(ui)
     name = "CardSelector";
 }
 
-void CardSelector::setSelectionTarget(const list<card*> &cardsToSelectFrom, bool reposition, CardSelectionInfo csi)
+void CardSelector::setSelectionTarget(const list<card *> &cardsToSelectFrom, bool reposition, CardSelectionInfo csi)
 {
     cards = cardsToSelectFrom;
     cardSelectionInfo = csi;
@@ -15,6 +15,12 @@ void CardSelector::setSelectionTarget(const list<card*> &cardsToSelectFrom, bool
     float posX = 0;
     float posY = 0;
     buttons.erase(buttons.begin(), buttons.end());
+    vector<sf::Vector2f> corners = {
+        {-slotWidth * .5f, -slotHeight * .5f},
+        {-slotWidth * .5f, slotHeight * .5f},
+        {slotWidth * .5f, slotHeight * .5f},
+        {slotWidth * .5f, -slotHeight * .5f}
+    };
 
     for (auto &c : cards)
     {
@@ -24,8 +30,8 @@ void CardSelector::setSelectionTarget(const list<card*> &cardsToSelectFrom, bool
             //WIP
             posX = slotNumberX * slotWidth + slotNumberX * slotPaddingX + slotPaddingX + slotWidth / 2;
             posY = slotNumberY * slotHeight + slotNumberY * slotPaddingY + slotPaddingY + slotHeight / 2;
-            button = std::make_shared<Button>(ui, sf::FloatRect{posX, posY, slotWidth, slotHeight},
-                                         sf::Color{255, 255, 255, 255});
+            button = std::make_shared<Button>(ui, corners, sf::Color{255, 255, 255, 255});
+            button->setPosition({posX, posY});
             slotNumberX += 1;
             if (slotNumberX >= gridWidth)
             {
@@ -35,8 +41,8 @@ void CardSelector::setSelectionTarget(const list<card*> &cardsToSelectFrom, bool
         }
         else
         {
-            button = std::make_shared<Button>(ui, sf::FloatRect{posX, posY, slotWidth, slotHeight},
-                                         sf::Color{0, 255, 255, 150});
+            button = std::make_shared<Button>(ui, corners, sf::Color{0, 255, 255, 150});
+            button->setPosition({posX, posY});
             button->initializeSubComponents();
             button->setName("cardSelectorButton");
             cout << "added button as listener.\n";
@@ -48,7 +54,7 @@ void CardSelector::setSelectionTarget(const list<card*> &cardsToSelectFrom, bool
     }
 }
 
-list<card*> CardSelector::getSelectedCards() const
+list<card *> CardSelector::getSelectedCards() const
 {
     return selectedCards;
 }
@@ -57,16 +63,22 @@ void CardSelector::selectedCardClickCallback()
 {
     auto cardStart = cards.begin();
 
-    for (auto& b : buttons){
-        if (b->isPressed){
+    for (auto &b : buttons)
+    {
+        if (b->isPressed)
+        {
             //code is run when an eligible card is clicked
             buttons.remove(b);
             selectedCards.push_back(*cardStart);
-            if (selectedCards.size() == cardSelectionInfo.maxCompleteSelectionCount){
-                Player* p = static_cast<Player*>(parent);
-                if (p){
+            if (selectedCards.size() == cardSelectionInfo.maxCompleteSelectionCount)
+            {
+                Player *p = static_cast<Player *>(parent);
+                if (p)
+                {
                     p->cardSelectionUpdated();
-                }else{
+                }
+                else
+                {
                     cout << "A cardselector must have a player as a parent.\n";
                     throw;
                 }

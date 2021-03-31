@@ -18,16 +18,6 @@ void Placeable::reparent(Placeable *newParent){
     parent = newParent;
 }
 
-void Placeable::setSize(const sf::Vector2f& newSize){
-    auto s = newSize * 0.5f;
-    hitbox.erase(hitbox.begin(), hitbox.end());
-    hitbox.push_back(-s);
-    hitbox.push_back({-s.x, s.y});
-    hitbox.push_back(s);
-    hitbox.push_back({s.x, -s.y});
-    size = newSize;
-}
-
 void Placeable::removeChild(Placeable *child){
     cout << name << ": Removing child \'" << child->name << "\' at " << child << ".\n";
     for (auto c : children){
@@ -82,8 +72,9 @@ void Placeable::setRotation(const float &newRotation){
 
 const vector<sf::Vector2f> Placeable::getHitboxPolygonGlobal() const{
     vector<sf::Vector2f> hb;
+    auto t = transform.getTransform();
     for (auto reverse_p = hitbox.rbegin(); reverse_p != hitbox.rend(); ++reverse_p){
-        hb.push_back(transform.getTransform().transformPoint(*reverse_p));
+        hb.push_back(t.transformPoint(*reverse_p));
     }
     return hb;
 }

@@ -17,11 +17,6 @@ bool UISystem::isCoordInBounds(const sf::Vector2f &coords, const UIElement *elem
     int nxb = n.x * b.y - n.y * b.x;
 
     return axn > 0 && nxb > 0;
-
-    auto tl = element->getPosition() - element->getSize() / 2.0f;
-    auto br = element->getBottomRight();
-    return tl.x <= coords.x && tl.y <= coords.y &&
-           br.x >= coords.x && br.y >= coords.y;
 }
 
 sf::Vector2f UISystem::getClosestPoint(const sf::Vector2f &point, const vector<sf::Vector2f> &points, int &index) const

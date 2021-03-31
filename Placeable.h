@@ -23,7 +23,7 @@ public:
     list<std::shared_ptr<Placeable>> getChildren() const { return children; }
     virtual void setPosition(const sf::Vector2f &newPosition);
     virtual void setRotation(const float &rotation);
-    virtual void setSize(const sf::Vector2f &newSize);
+    virtual void setHitbox(const vector<sf::Vector2f> &newHitbox){hitbox = newHitbox;}
     virtual void initializeSubComponents(){};
     void setChildren(list<std::shared_ptr<Placeable>> newChildren) { children = newChildren; };
     virtual const string &getName() const {return name;}
@@ -37,13 +37,11 @@ protected:
     vector<sf::Vector2f> hitbox;
     sf::Vector2f size = {0, 0};
     list<std::shared_ptr<Placeable>> children;
-    void updateHitbox();
     virtual void draw(sf::RenderTarget &target, sf::RenderStates state) const override;
 
 public:
     const float getRotation() const { return transform.getRotation(); }
     const sf::Vector2f getPosition() const { return transform.getPosition(); }
-    const sf::Vector2f getSize() const { return size; }
     const sf::Vector2f getBottomRight() const { return getPosition() + size / 2.0f; }
     const vector<sf::Vector2f> getHitboxPolygonGlobal() const;
     const sf::Vector2f center() const { return getPosition() + sf::Vector2f({size.x / 2, size.y / 2}); }

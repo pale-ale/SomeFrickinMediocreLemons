@@ -28,7 +28,6 @@ void MainMenuScene::setup(){
     playButton->setDefaultColor({100,100,120,255});
     playButton->setMouseoverColor({80,80,100,255});
     s = playLabel.getLocalBounds(); 
-    playButton->setSize({s.width*1.1f, s.height*1.1f});
     playButton->setPosition(playPos + sf::Vector2f{2.5,5});
     playButton->onMouseDownCallback = std::make_shared<EventCallback<MainMenuScene>>(this, &MainMenuScene::loadPlaySceneButtonCallback);
 }

@@ -64,7 +64,7 @@ class Player: public UIElement{
 	void addMana(const FMana& m);
     const FMana getMana() const {return mana;}
 	void clearMana();
-    bool bIsMyTurn;
+    bool bIsMyTurn = false;
     void startSelection(CardSelectionInfo cardSelectionInfo);
     std::shared_ptr<Hand> playerhand;
     std::shared_ptr<Battlefield> battlefield;

@@ -10,7 +10,7 @@
 class Button : public UIElement{
     public:
     Button(UISystem* ui,
-           sf::Rect<float> rect = {0,0,50,50}, 
+           vector<sf::Vector2f> corners = {{-25, -37.5}, {-25, 37.5}, {25, 37.5}, {25, -37.5}}, 
            sf::Color color = {255, 0, 255, Settings::bEnableButtonTint ? 100 : 0});
     ~Button(){
         cout << "Button: Destroying button '" << name << "'.\n";
@@ -38,7 +38,6 @@ class Button : public UIElement{
     virtual void OnDragMove(const sf::Vector2f &newPos) override;
     virtual void OnDragEnd() override;
     virtual void setPosition(const sf::Vector2f &newPosition) override;
-    virtual void setSize(const sf::Vector2f &newSize) override;
     virtual void initializeSubComponents() override;
 
     virtual void setRotation(const float &newRotation) override;
@@ -58,7 +57,7 @@ class Button : public UIElement{
 
     private:
     sf::FloatRect rect;
-    sf::RectangleShape buttonShape;
+    sf::ConvexShape buttonShape;
     sf::Sprite buttonSprite;
     sf::Texture buttonTexture;
     sf::Color defaultColor = {255,0,255,0};

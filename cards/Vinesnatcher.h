@@ -5,6 +5,7 @@
 #include "../Card.h"
 #include "../CardSelectionInfo.h"
 #include "../Player.h"
+#include "../ui/MultiSelect.h"
 
 using std::cout;
 

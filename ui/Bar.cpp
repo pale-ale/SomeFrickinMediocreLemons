@@ -27,7 +27,7 @@ UIElement(ui)
 {
     size=barSize;
     name = "Bar";
-    Placeable::setSize(barSize - sf::Vector2f(offset, offset)*2.0f);
+    //Placeable::setSize(barSize - sf::Vector2f(offset, offset)*2.0f);
     font->loadFromFile(Settings::validFontPath);
     BarInfo.setFont(*font);
     BarInfo.setCharacterSize(this->fontsize);
@@ -62,7 +62,7 @@ void Bar::updateFG(){
 void Bar::setDimensions(sf::Vector2f dimensions)
 {
     barSize = dimensions;
-    Placeable::setSize(dimensions);
+    //Placeable::setSize(dimensions);
     updateBG();
     updateFG();
 }

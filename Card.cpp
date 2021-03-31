@@ -45,6 +45,7 @@ void card::OnDragEnd()
 	if(owner){
 		owner->battlefield->setDrawFreeSpaces(false, true);
 		if (snapPointIndex > -1){
+			cout << "Card: Requesting to be played on slot " << snapPointIndex << endl;
 			owner->playCard(this, snapPointIndex);
 		}
 		else{
@@ -91,10 +92,10 @@ void card::setRotation(const float &newRotation)
 
 card::card(UISystem *ui, const string imagePath, const string desc, FMana mana) :
 UIElement(ui),
-																				  pathToImage{string(Settings::programDir) + Settings::relativeAssetCardPath + imagePath},
-																				  description{desc},
-																				  cost{mana},
-																				  cardButton{std::make_shared<Button>(ui, sf::FloatRect(0, 0, 50, 75))}
+pathToImage{string(Settings::programDir) + Settings::relativeAssetCardPath + imagePath},
+description{desc},
+cost{mana},
+cardButton{std::make_shared<Button>(ui)}
 {
 	cardBackTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardBack);
 	cardFrontTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardFront);
@@ -106,7 +107,7 @@ UIElement(ui),
 	updateCardImage();
 	cardButton->isDragable = true;
 	cardButton->setName(name + "Button");
-	cardButton->setSize(scaleVectorSettings(Settings::cardSize));
+	// cardButton->setSize(scaleVectorSettings(Settings::cardSize));
 	font->loadFromFile(Settings::validFontPath);
 	cardDescription.setString(description);
 	cardDescription.setFont(*font);
