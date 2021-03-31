@@ -42,7 +42,7 @@ class Player: public UIElement{
     void setGame(Game* newGame){game = newGame;};
     Game* getGame(){return game;};
     void drawCards(const int count);
-    void playCard(card *card);
+    void playCard(card *card, int slot = -1);
     void previewCard(const card* cardToPreview);
     void stopPreviewingCard();
     void cardSelectionUpdated(){

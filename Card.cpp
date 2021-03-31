@@ -18,31 +18,38 @@ cardType card::getType()
 void card::OnDragMove(const sf::Vector2f &newPos)
 {
 	if (snapPoints.size() > 0){
-		auto closestSnapPoint = getClosestPoint<vector<sf::Vector2f>>(newPos, snapPoints);
+		auto closestSnapPoint = getClosestPoint<vector<sf::Vector2f>>(newPos, snapPoints, snapPointIndex);
 		auto distance = getDistance(newPos, closestSnapPoint);
 		if (distance < 25){
 			setPosition(closestSnapPoint);
 			return;
 		}
 	}
+	snapPointIndex = -1;
 	setPosition(newPos);
 }
 
 void card::OnDragStart()
 {
 	setRotation(0);
-	if (owner){
+	if (owner && owner->bIsMyTurn){
 		owner->battlefield->setDrawFreeSpaces(true, true);
 		owner->battlefield->setDrawFreeSpaces(true, false);
 		setSnapPoints(owner->battlefield->getFreeSnapPoints(true));
 	}
+	snapPointIndex = -1;
 }
 
 void card::OnDragEnd()
 {
 	if(owner){
 		owner->battlefield->setDrawFreeSpaces(false, true);
-		owner->playCard(this);
+		if (snapPointIndex > -1){
+			owner->playCard(this, snapPointIndex);
+		}
+		else{
+			owner->playerhand->updateHandPositions();
+		}
 	}
 }
 

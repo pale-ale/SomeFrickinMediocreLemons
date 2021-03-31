@@ -37,8 +37,7 @@ class Battlefield : public Placeable{
     list<shared_ptr<sf::RectangleShape>> emptySpaceDisplay;
     const int MAX_SUPPORT_CARDS = 4;
     const int MAX_BATTLE_CARDS = 2;
-    int getNextFreeSlot(list<cardIndex> &cards, int max);
-    int getClosestFreeSlot(bool support, const sf::Vector2f &pos);
+    int getNextFreeSlot(bool support);
     card *getCardAt(int slot, bool support=true);
 
     protected:

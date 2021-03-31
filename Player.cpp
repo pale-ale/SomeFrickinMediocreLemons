@@ -21,12 +21,12 @@ void Player::drawCards(int count)
     playerHud->setHandCount(playerhand->getHand().size());
 }
 
-void Player::playCard(card *cardToPlay)
+void Player::playCard(card *cardToPlay, int slot)
 {
     auto sharedCardPtr = playerhand->removeCard(cardToPlay);
     mana -= cardToPlay->cost;
     playerManaBars->updateManaBars(&mana);
-    battlefield->addCard(sharedCardPtr);
+    battlefield->addCard(sharedCardPtr, true, slot);
     cout << "Player: " << name << " played card " << cardToPlay->getName() << endl;
     playerhand->updateHandPositions();
     playerHud->setHandCount(playerhand->getHand().size());

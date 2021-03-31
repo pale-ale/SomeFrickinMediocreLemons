@@ -11,7 +11,7 @@ void Battlefield::addCard(shared_ptr<card> newCard, bool support, int slot)
     int max = support ? MAX_SUPPORT_CARDS : MAX_BATTLE_CARDS;
     auto cardPos = newCard->getPosition();
     if (slot == -1){
-        slot = getClosestFreeSlot(support, cardPos);
+        slot = getNextFreeSlot(support);
     }
     if (slot == -1)
     {
@@ -20,7 +20,7 @@ void Battlefield::addCard(shared_ptr<card> newCard, bool support, int slot)
     }
     if (slot >= MAX_SUPPORT_CARDS)
     {
-        cout << "Battlefield: Invalid slot index." << endl;
+        cout << "Battlefield: Invalid slot index: \'" << slot << "\'\n";
         throw;
     }
     row->push_back({slot, newCard});
@@ -131,12 +131,14 @@ void Battlefield::printCards(){
     }
 }
 
-int Battlefield::getNextFreeSlot(list<cardIndex> &cards, int max)
+int Battlefield::getNextFreeSlot(bool support)
 {
+    auto row = support ? supportCards : battleCards;
+    int max = support ? MAX_SUPPORT_CARDS : MAX_BATTLE_CARDS;
     for (int check = 0; check < max; check++)
     {
         bool freeSlotFound = true;
-        for (cardIndex &ci : cards)
+        for (cardIndex &ci : row)
         {
             if (freeSlotFound && ci.index == check)
             {
@@ -149,28 +151,6 @@ int Battlefield::getNextFreeSlot(list<cardIndex> &cards, int max)
         }
     }
     return -1;
-}
-
-int Battlefield::getClosestFreeSlot(bool support, const sf::Vector2f &pos)
-{
-    int closestFreeSlot = -1;
-    auto row = support ? supportPositionsOffset : battlePositionsOffset;
-    auto freeIndices = getFreeIndices(support);
-    if (freeIndices.size() > 0){
-        auto globalp = toGlobal(row[0].pos);
-        float distance = getDistance(globalp, pos);
-        closestFreeSlot = 0;
-        for (int i : freeIndices)
-        {
-            globalp = toGlobal(row[i].pos);
-            float tmpDistance = getDistance(globalp, pos);
-            if (tmpDistance < distance){
-                distance = tmpDistance;
-                closestFreeSlot = i;
-            }
-        }
-    }
-    return closestFreeSlot;
 }
 
 list<card*> Battlefield::getCards() const

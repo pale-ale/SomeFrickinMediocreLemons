@@ -6,18 +6,18 @@ inline static float getDistance(const sf::Vector2f &a, const sf::Vector2f &b){
 }
 
 template <typename T>
-inline static sf::Vector2f getClosestPoint(const sf::Vector2f &a, const T &b){
+inline static sf::Vector2f getClosestPoint(const sf::Vector2f &a, const T &b, int &inIndex = -1){
     if(b.size() < 1){
         throw;
     }
-    float d = getDistance(a, b[0]);
-    sf::Vector2f closest = b[0];
-    for (const sf::Vector2f &point : b){
-        float newDist = getDistance(a, point);
-        if(newDist < d){
-            d = newDist;
-            closest = point;
+    inIndex = 0;
+    float smallestDistance = getDistance(a, b[inIndex]);
+    for (int i=0; i<b.size(); ++i){
+        float tmpDistance = getDistance(a, b[i]);
+        if (tmpDistance < smallestDistance){
+            inIndex = i;
+            smallestDistance = tmpDistance;
         }
     }
-    return closest;
+    return b[inIndex];
 }

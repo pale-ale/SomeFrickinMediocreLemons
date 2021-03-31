@@ -70,6 +70,7 @@ class card : public UIElement, public IDragAndDroppable{
 	int health = 1;
 	int maxHealth = 1;
 	int defaultMaxHealth = 1;
+	int snapPointIndex = -1;
 	bool frontFaceUp = false;
 	bool graveyard = false;
 	bool tapped = false;
