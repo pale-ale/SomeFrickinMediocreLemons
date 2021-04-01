@@ -153,7 +153,7 @@ void card::onCardClicked()
 		}
 		return;
 	}
-	if (cardLocation == battlefield)
+	if (cardLocation == battlefieldBattle || cardLocation == battlefieldBattort || cardLocation == battlefieldSupport)
 	{
 		tap();
 		return;

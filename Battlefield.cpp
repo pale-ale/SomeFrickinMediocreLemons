@@ -5,6 +5,13 @@ Battlefield::Battlefield(UISystem *ui){
     name = "Battlefield";
 }
 
+ECardLocation Battlefield::positionToCardLocation(int index, bool support){
+    if (support){
+        return index == 0 || index == 3 ? ECardLocation::battlefieldSupport : ECardLocation::battlefieldBattort;
+    }
+    return ECardLocation::battlefieldBattle;
+}
+
 void Battlefield::addCard(shared_ptr<card> newCard, bool support, int slot)
 {
     auto row = support ? &supportCards : &battleCards;
@@ -26,7 +33,7 @@ void Battlefield::addCard(shared_ptr<card> newCard, bool support, int slot)
     row->push_back({slot, newCard});
     newCard->reparent(this);
     addChild(newCard);
-    newCard->cardLocation = ECardLocation::battlefield;
+    newCard->cardLocation = positionToCardLocation(slot, support);
     newCard->setPosition(toGlobal(support ? supportPositionsOffset[slot].pos : battlePositionsOffset[slot].pos));
     newCard->setRotation(0);
 }

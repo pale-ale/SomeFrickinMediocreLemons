@@ -16,6 +16,7 @@ class MultiSelect : public UIElement{
     // text: the text to be displayed; 
     // positionPriority: lets you determine the order of elements. 10,11 will look the same as 0,1.
     void addOption(Option option);
+    void clear();
     private:
     sf::Font labelFont;
     vector<sf::Vector2f> buttonHitboxEven = {{-9, -7}, {0, 7}, {9, -7}};

@@ -7,6 +7,7 @@ Vinesnatcher::Vinesnatcher(UISystem* ui) : card::card(ui, pathToImage, descripti
 {
     setupButtonBinding();
     cardButton->setName("vinesnatcher-button");
+    multiSelector = std::make_shared<MultiSelect>(ui);
 }
 
 void Vinesnatcher::play(){
@@ -15,7 +16,9 @@ void Vinesnatcher::play(){
 
 void Vinesnatcher::onCardDeath(){
     card::onCardDeath();
-    if (cardLocation == ECardLocation::battlefield){
+    if (cardLocation == ECardLocation::battlefieldBattle || 
+        cardLocation == ECardLocation::battlefieldBattort || 
+        cardLocation == ECardLocation::battlefieldSupport){
         owner->battlefield->removeCard(this);
     }
 }
@@ -26,12 +29,15 @@ void Vinesnatcher::onCardBeginMouseover(){
 
 void Vinesnatcher::tap(){
     card::tap();
-    multiSelector = std::make_shared<MultiSelect>(ui);
     multiSelector->setPosition(getPosition() + sf::Vector2f{-40, 0});
+    if (cardLocation == battlefieldBattle){
+        multiSelector->addOption(
+            {"Attack", std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::attackOptionCallback)});
+        return;
+    }
+    if (cardLocation == battlefieldBattort || cardLocation == battlefieldSupport)
     multiSelector->addOption(
         {"Tap", std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::tapOptionCallback)});
-    multiSelector->addOption(
-        {"Attack", std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::attackOptionCallback)});
 }
 
 void Vinesnatcher::onReceiveSelection(list<card*> cards){

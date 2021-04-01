@@ -18,7 +18,9 @@ enum ECardLocation{
 	undefined,
 	deck,
 	hand,
-	battlefield,
+	battlefieldSupport,
+	battlefieldBattle,
+	battlefieldBattort,
 	graveyard
 };
 

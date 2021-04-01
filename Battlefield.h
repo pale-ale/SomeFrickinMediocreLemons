@@ -39,6 +39,7 @@ class Battlefield : public Placeable{
     const int MAX_BATTLE_CARDS = 2;
     int getNextFreeSlot(bool support);
     card *getCardAt(int slot, bool support=true);
+    ECardLocation positionToCardLocation(int index, bool support);
 
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{

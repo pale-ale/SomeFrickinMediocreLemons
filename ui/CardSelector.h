@@ -12,6 +12,7 @@ class CardSelector : public UIElement{
     void resetSelection(){
         cards.clear();
         selectedCards.clear();
+        buttons.clear();
         cout << "Cardselector cleared seleciton.\n";
     }
     bool bIsCurrentlySelecting = false;

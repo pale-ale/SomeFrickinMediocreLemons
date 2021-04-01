@@ -25,3 +25,9 @@ void MultiSelect::addOption(Option option){
     optionLabels.push_back(newLabel);
     optionButtons.push_back(newButton);
 }
+
+void MultiSelect::clear(){
+    children.clear();
+    optionLabels.clear();
+    optionButtons.clear();
+}
