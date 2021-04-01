@@ -26,11 +26,13 @@ void Vinesnatcher::onCardBeginMouseover(){
 
 void Vinesnatcher::tap(){
     card::tap();
-    auto msptr = std::make_shared<MultiSelect>(ui);
-    msptr->setPosition(getPosition() + sf::Vector2f{-40, 0});
-    msptr->addOption({"test"});
-    msptr->addOption({"test2"});
-    addChild(msptr);
+    multiSelector = std::make_shared<MultiSelect>(ui);
+    multiSelector->setPosition(getPosition() + sf::Vector2f{-40, 0});
+    multiSelector->addOption(
+        {"Tap", std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::tapOptionCallback)});
+    multiSelector->addOption(
+        {"Attack", std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::attackOptionCallback)});
+    addChild(multiSelector);
     return;
     owner->awaitingSelection = this;
     CardSelectionInfo csi;
