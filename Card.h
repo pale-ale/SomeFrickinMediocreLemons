@@ -95,6 +95,7 @@ class card : public UIElement, public IDragAndDroppable{
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
     {
 		if (isVisible){
+			UIElement::draw(target, states);
 			target.draw(cardSprite, states);
 			if (frontFaceUp){
 				target.draw(imageSprite, states);

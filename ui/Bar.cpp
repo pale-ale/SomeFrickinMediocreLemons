@@ -62,6 +62,7 @@ void Bar::updateFG(){
 void Bar::setDimensions(sf::Vector2f dimensions)
 {
     barSize = dimensions;
+    
     //Placeable::setSize(dimensions);
     updateBG();
     updateFG();

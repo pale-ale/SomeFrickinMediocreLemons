@@ -38,9 +38,12 @@ class Button : public UIElement{
     virtual void OnDragMove(const sf::Vector2f &newPos) override;
     virtual void OnDragEnd() override;
     virtual void setPosition(const sf::Vector2f &newPosition) override;
-    virtual void initializeSubComponents() override;
-
     virtual void setRotation(const float &newRotation) override;
+    virtual void setScale(float xScale, float yScale) override;
+    using UIElement::setScale;
+    virtual void setHitbox(const vector<sf::Vector2f> &newHitbox) override;
+
+    virtual void initializeSubComponents() override;
 	
     void setDefaultColor(sf::Color color){
         defaultColor = color;
@@ -56,6 +59,7 @@ class Button : public UIElement{
     }
 
     private:
+    void updateShape();
     sf::FloatRect rect;
     sf::ConvexShape buttonShape;
     sf::Sprite buttonSprite;

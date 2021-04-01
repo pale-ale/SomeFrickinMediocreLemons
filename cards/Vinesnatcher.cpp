@@ -29,6 +29,7 @@ void Vinesnatcher::tap(){
     auto msptr = std::make_shared<MultiSelect>(ui);
     msptr->setPosition(getPosition() + sf::Vector2f{-40, 0});
     msptr->addOption({"test"});
+    msptr->addOption({"test2"});
     addChild(msptr);
     return;
     owner->awaitingSelection = this;

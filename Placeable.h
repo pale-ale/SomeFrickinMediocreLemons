@@ -23,6 +23,8 @@ public:
     list<std::shared_ptr<Placeable>> getChildren() const { return children; }
     virtual void setPosition(const sf::Vector2f &newPosition);
     virtual void setRotation(const float &rotation);
+    virtual void setScale(float xScale, float yScale);
+    virtual void setScale(int scale){setScale(scale, scale);}
     virtual void setHitbox(const vector<sf::Vector2f> &newHitbox){hitbox = newHitbox;}
     virtual void initializeSubComponents(){};
     void setChildren(list<std::shared_ptr<Placeable>> newChildren) { children = newChildren; };

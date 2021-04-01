@@ -2,20 +2,25 @@
 
 Button::Button(UISystem* ui, vector<sf::Vector2f> corners, sf::Color color):
 UIElement(ui){
-    size = sf::Vector2f(rect.width, rect.height);
     setName("Button");
-    this->rect = rect;
     hitbox = corners;
-    buttonShape.setPointCount(corners.size());
-    buttonShape.setFillColor(color);
+    buttonTexture = sf::Texture();
+    updateShape();
+}
+
+void Button::updateShape(){
+    buttonShape.setPointCount(hitbox.size());
+    buttonShape.setFillColor(defaultColor);
     auto& hb = getHitboxPolygonGlobal();
     for (int i = 0; i < hitbox.size(); i++)
     {
         buttonShape.setPoint(i, hb[i]);
     }
-    buttonShape.setOrigin(size/2.0f);
-    transform.setPosition(sf::Vector2f(rect.left, rect.top));
-    buttonTexture = sf::Texture();
+}
+
+void Button::setHitbox(const vector<sf::Vector2f> &newHitbox){
+    UIElement::setHitbox(newHitbox);
+    updateShape();
 }
 
 void Button::initializeSubComponents(){
@@ -28,7 +33,6 @@ void Button::initializeSubComponents(){
 	}
 }
 
-
 void Button::setPosition(const sf::Vector2f &newPosition){
     UIElement::setPosition(newPosition);
     transform.setPosition(newPosition);
@@ -38,6 +42,11 @@ void Button::setPosition(const sf::Vector2f &newPosition){
 void Button::setRotation(const float &newRotation){
     UIElement::setRotation(newRotation - getRotation());
     buttonShape.setRotation(newRotation);
+}
+
+void Button::setScale(float xScale, float yScale){
+    UIElement::setScale(xScale, yScale);
+    buttonShape.setScale({xScale, yScale});
 }
 
 bool Button::OnMouseButtonDown(){

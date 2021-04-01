@@ -10,7 +10,12 @@ class MainMenuScene: public SceneBase{
     sf::Text mainMenuLabel;
     sf::Text playLabel;
     sf::Text settingsLabel;
-    shared_ptr<Button> playButton = make_shared<Button>(ui);
+    shared_ptr<Button> playButton = make_shared<Button>(ui, vector<sf::Vector2f>{
+        {-40, -20},
+        {-40, 20},
+        {40, 20},
+        {40, -20}
+        });
     MainMenuScene(UISystem* ui, SceneManager &sm):SceneBase(&sm), ui{ui}{}
     void setup() override;
     void setGameScene(unique_ptr<SceneBase> scene){gameScene.swap(scene);}

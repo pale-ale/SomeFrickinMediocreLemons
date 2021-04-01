@@ -58,6 +58,10 @@ void Placeable::setPosition(const sf::Vector2f &newPosition){
     }
 }
 
+void Placeable::setScale(float xScale, float yScale){
+    transform.setScale({xScale, yScale});
+}
+
 void Placeable::setRotation(const float &newRotation){
     auto delta = newRotation - transform.getRotation();
     transform.setRotation(newRotation);

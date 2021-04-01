@@ -107,7 +107,7 @@ cardButton{std::make_shared<Button>(ui)}
 	updateCardImage();
 	cardButton->isDragable = true;
 	cardButton->setName(name + "Button");
-	// cardButton->setSize(scaleVectorSettings(Settings::cardSize));
+	cardButton->setScale(Settings::cardScale.x, Settings::cardScale.y);
 	font->loadFromFile(Settings::validFontPath);
 	cardDescription.setString(description);
 	cardDescription.setFont(*font);

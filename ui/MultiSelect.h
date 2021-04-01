@@ -15,8 +15,9 @@ class MultiSelect : public UIElement{
     // positionPriority: lets you determine the order of elements. 10,11 will look the same as 0,1.
     void addOption(Option option);
     private:
-    vector<sf::Vector2f> buttonHitboxEven = {{-10, -5}, {0, 5}, {10, -5}};
-    vector<sf::Vector2f> buttonHitboxOdd = {{-10, 5}, {0, -5}, {10, 5}};
+    vector<sf::Vector2f> buttonHitboxEven = {{-9, -7}, {0, 7}, {9, -7}};
+    vector<sf::Vector2f> buttonHitboxOdd = {{-9, 7}, {9, 7}, {0, -7}};
+    sf::Vector2f offset = {20, 0};
     vector<Option> options;
     vector<shared_ptr<Button>> optionButtons;
 };
