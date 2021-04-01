@@ -8,6 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "ui/Button.h"
+#include "ui/MultiSelect.h"
 
 class Player;
 
@@ -88,12 +89,16 @@ class card : public UIElement, public IDragAndDroppable{
 	sf::Text hpStatDisplay;
 	sf::Text powerStatDisplay;
 	std::shared_ptr<sf::Texture> cardImageTexture;
+	shared_ptr<MultiSelect> multiSelector;
 
 	sf::Sprite cardSprite;
 	sf::Sprite imageSprite;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
     {
+		if (multiSelector){
+			target.draw(*multiSelector.get());
+		}
 		if (isVisible){
 			UIElement::draw(target, states);
 			target.draw(cardSprite, states);

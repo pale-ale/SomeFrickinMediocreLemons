@@ -10,8 +10,10 @@
 class Button : public UIElement{
     public:
     Button(UISystem* ui,
-           vector<sf::Vector2f> corners = {{-25, -37.5}, {-25, 37.5}, {25, 37.5}, {25, -37.5}}, 
-           sf::Color color = {255, 0, 255, Settings::bEnableButtonTint ? 100 : 0});
+           sf::Color defaultColor = {150,150,150,100}, 
+           sf::Color mouseOverColor = {200,200,200,100},
+           vector<sf::Vector2f> corners = {{-25, -37.5}, {-25, 37.5}, {25, 37.5}, {25, -37.5}}
+           );
     ~Button(){
         cout << "Button: Destroying button '" << name << "'.\n";
         if(ui){
@@ -64,6 +66,6 @@ class Button : public UIElement{
     sf::ConvexShape buttonShape;
     sf::Sprite buttonSprite;
     sf::Texture buttonTexture;
-    sf::Color defaultColor = {255,0,255,0};
-    sf::Color mouseOverColor = {255,0,255,100};
+    sf::Color defaultColor;
+    sf::Color mouseOverColor;
 };

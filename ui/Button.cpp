@@ -1,7 +1,7 @@
 #include "Button.h"
 
-Button::Button(UISystem* ui, vector<sf::Vector2f> corners, sf::Color color):
-UIElement(ui){
+Button::Button(UISystem* ui, sf::Color defaultColor, sf::Color mouseOverColor, vector<sf::Vector2f> corners):
+UIElement(ui), defaultColor{defaultColor}, mouseOverColor{mouseOverColor}{
     setName("Button");
     hitbox = corners;
     buttonTexture = sf::Texture();

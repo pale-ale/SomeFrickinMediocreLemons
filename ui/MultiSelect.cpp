@@ -1,7 +1,7 @@
 #include "MultiSelect.h"
 
 void MultiSelect::addOption(Option option){
-    auto newButton = std::make_shared<Button>(ui, vector<sf::Vector2f>{}, sf::Color{255,100,0,255});
+    auto newButton = std::make_shared<Button>(ui, sf::Color{255,100,0,255}, sf::Color{200,75,0,255}, vector<sf::Vector2f>{});
     auto newLabel = std::make_shared<sf::Text>();
     auto labelPos = getPosition() + sf::Vector2f{-20, 0} + offset*(float)options.size();
     newLabel->setFont(labelFont);

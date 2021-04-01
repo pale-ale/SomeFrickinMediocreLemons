@@ -95,7 +95,7 @@ UIElement(ui),
 pathToImage{string(Settings::programDir) + Settings::relativeAssetCardPath + imagePath},
 description{desc},
 cost{mana},
-cardButton{std::make_shared<Button>(ui)}
+cardButton{std::make_shared<Button>(ui, sf::Color{0,0,0,0}, sf::Color{0,0,0,0})}
 {
 	cardBackTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardBack);
 	cardFrontTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardFront);

@@ -24,13 +24,12 @@ void CardSelector::setSelectionTarget(const list<card *> &cardsToSelectFrom, boo
 
     for (auto &c : cards)
     {
-        shared_ptr<Button> button;
+        auto button = std::make_shared<Button>(ui, sf::Color{50, 50, 255, 100}, sf::Color{50, 50, 200, 100}, corners);
         if (reposition)
         {
             //WIP
             posX = slotNumberX * slotWidth + slotNumberX * slotPaddingX + slotPaddingX + slotWidth / 2;
             posY = slotNumberY * slotHeight + slotNumberY * slotPaddingY + slotPaddingY + slotHeight / 2;
-            button = std::make_shared<Button>(ui, corners, sf::Color{255, 255, 255, 255});
             button->setPosition({posX, posY});
             slotNumberX += 1;
             if (slotNumberX >= gridWidth)
@@ -41,7 +40,6 @@ void CardSelector::setSelectionTarget(const list<card *> &cardsToSelectFrom, boo
         }
         else
         {
-            button = std::make_shared<Button>(ui, corners, sf::Color{0, 255, 255, 150});
             button->setPosition({posX, posY});
             button->initializeSubComponents();
             button->setName("cardSelectorButton");

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "UIElement.h"
 #include "Button.h"
 #include "../events/EventCallback.h"

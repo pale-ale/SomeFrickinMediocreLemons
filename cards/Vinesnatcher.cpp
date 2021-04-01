@@ -32,13 +32,6 @@ void Vinesnatcher::tap(){
         {"Tap", std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::tapOptionCallback)});
     multiSelector->addOption(
         {"Attack", std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::attackOptionCallback)});
-    addChild(multiSelector);
-    return;
-    owner->awaitingSelection = this;
-    CardSelectionInfo csi;
-    cout << "Vinesnatcher: " << name << " requesting selection.\n";
-    owner->startSelection(csi);
-    cout << "Vinesnatcher: " << name << " tapped.\n";
 }
 
 void Vinesnatcher::onReceiveSelection(list<card*> cards){
@@ -46,4 +39,17 @@ void Vinesnatcher::onReceiveSelection(list<card*> cards){
     auto card = *cards.begin();
     cout << "Vinesnatcher: " << name << " deals 2 damage to " << card->getName() << ".\n";
     card->takeDamage(2);
+}
+
+void Vinesnatcher::tapOptionCallback(){
+    owner->awaitingSelection = this;
+    CardSelectionInfo csi;
+    cout << "Vinesnatcher: " << name << " requesting selection.\n";
+    owner->startSelection(csi);
+    multiSelector.reset();
+    cout << "Vinesnatcher: " << name << " tapped.\n";
+}
+
+void Vinesnatcher::attackOptionCallback(){
+    cout << "Vinesnatcher attacks!\n";
 }

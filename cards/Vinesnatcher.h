@@ -32,9 +32,7 @@ class Vinesnatcher : public card{
 		cardButton->onDragEndCallback = std::make_shared<EventCallback<card>>(this, &card::OnDragEnd);
 		cardButton->onDragStartCallback = std::make_shared<EventCallback<card>>(this, &card::OnDragStart);
 	}
-	void tapOptionCallback(){cout << "tap?\n";}
-	void attackOptionCallback(){cout << "attack!\n";}
+	void tapOptionCallback();
+	void attackOptionCallback();
 	virtual void tap() override;
-	shared_ptr<MultiSelect> multiSelector;
-
 };
