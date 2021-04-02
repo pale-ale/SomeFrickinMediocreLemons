@@ -19,6 +19,7 @@ void MultiSelect::addOption(Option option){
     newButton->setScale(2);
     newButton->initializeSubComponents();
     newButton->onClickCallback = option.callback;
+    newButton->setName(option.text + "-option-button");
     addChild(newButton);
     newButton->setPosition(getPosition() + offset*(float)options.size());
     options.push_back(option);
@@ -30,4 +31,5 @@ void MultiSelect::clear(){
     children.clear();
     optionLabels.clear();
     optionButtons.clear();
+    options.clear();
 }

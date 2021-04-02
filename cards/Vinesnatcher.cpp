@@ -8,6 +8,9 @@ Vinesnatcher::Vinesnatcher(UISystem* ui) : card::card(ui, pathToImage, descripti
     setupButtonBinding();
     cardButton->setName("vinesnatcher-button");
     multiSelector = std::make_shared<MultiSelect>(ui);
+    multiSelector->reparent(this);
+    multiSelector->setPosition(getPosition() + sf::Vector2f{-40, 0});
+    addChild(multiSelector);
 }
 
 void Vinesnatcher::play(){
@@ -29,7 +32,7 @@ void Vinesnatcher::onCardBeginMouseover(){
 
 void Vinesnatcher::tap(){
     card::tap();
-    multiSelector->setPosition(getPosition() + sf::Vector2f{-40, 0});
+    multiSelector->clear();
     if (cardLocation == battlefieldBattle){
         multiSelector->addOption(
             {"Attack", std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::attackOptionCallback)});

@@ -20,14 +20,18 @@ private:
     sf::Vector2f deckTextOffset = {-170, -50};
     sf::Vector2f handTextOffset = {-10, -35};
     sf::Vector2f cardPreviewOffset = {0, -100};
+    sf::Vector2f cardActionShapeOffset = {280, 105};
+    sf::Vector2f cardActionShapeDimensions = {100, 30};
     std::unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
     std::shared_ptr<CardPreview> cardPreview;
+    sf::RectangleShape cardActionShape;
 
 protected:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates state) const override
     {
-        UIElement::draw(target, state);
+        target.draw(cardActionShape);
         target.draw(deckCountText);
         target.draw(handCountText);
+        UIElement::draw(target, state);
     }
 };

@@ -5,6 +5,9 @@ PlayerHUD::PlayerHUD(UISystem* ui):
 UIElement(ui){
     deckCountText.setPosition(getPosition() );
     handCountText.setPosition(getPosition() + handTextOffset);
+    cardActionShape.setPosition(getPosition() + cardActionShapeOffset);
+    cardActionShape.setSize(cardActionShapeDimensions);
+    cardActionShape.setFillColor({100,100,100,255});
     font->loadFromFile(Settings::validFontPath);
     deckCountText.setFont(*font);
     deckCountText.setString("0");
