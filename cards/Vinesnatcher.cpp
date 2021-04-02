@@ -52,7 +52,7 @@ void Vinesnatcher::tapOptionCallback(){
     CardSelectionInfo csi;
     cout << "Vinesnatcher: " << name << " requesting selection.\n";
     owner->startSelection(csi);
-    multiSelector.reset();
+    multiSelector->clear();
     cout << "Vinesnatcher: " << name << " tapped.\n";
 }
 
