@@ -119,6 +119,7 @@ cardButton{std::make_shared<Button>(ui, sf::Color{0,0,0,0}, sf::Color{0,0,0,0})}
 	powerStatDisplay.setFillColor(Settings::blackColor);
 	powerStatDisplay.setScale(scaleVectorSettings({0.5, 0.5}));
 	Placeable::name = "card";
+	setupActions();
 	updateCardStatDisplay();
 }
 

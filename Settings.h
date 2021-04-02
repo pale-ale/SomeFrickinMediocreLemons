@@ -10,6 +10,7 @@ class Settings{
                                                     "/usr/share/fonts/truetype/ubuntu/UbuntuMono-R.ttf",
                                                     "/usr/share/fonts/noto/NotoSerif-Regular.ttf"};
     inline static const char* relativeAssetCardPath = "assets/cardTextures/";
+    inline static const char* relativeAssetActionPath = "assets/actionTextures/";
     inline static const char* relativeAssetCardFront = "CardFront.png";
     inline static const char* relativeAssetCardBack = "CardBack.png";
     inline static const char* relativeAssetTabletopPath = "assets/Tabletop.png";

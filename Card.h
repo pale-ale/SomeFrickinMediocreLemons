@@ -9,6 +9,7 @@
 #include <string>
 #include "ui/Button.h"
 #include "ui/MultiSelect.h"
+#include "actions/DefaultAttack.h"
 
 class Player;
 
@@ -62,6 +63,7 @@ class card : public UIElement, public IDragAndDroppable{
 	virtual void takeDamage(const int& amount);
 	virtual void onCardDeath(){cout << "Card: " << name << " received lethal damage.\n";}
     virtual void setSnapPoints(const vector<sf::Vector2f> &points){snapPoints = points;}
+	const vector<shared_ptr<IAction>> getActions() const {return actions;}
 	FMana cost;
 
 	protected:
@@ -84,6 +86,9 @@ class card : public UIElement, public IDragAndDroppable{
 
 	void updateCardImage();
 	void updateCardStatDisplay();
+	virtual void setupActions(){
+		actions.push_back(std::make_shared<DefaultAttack>());
+	};
 	
 	sf::Texture cardBackTexture;
 	sf::Texture cardFrontTexture;
@@ -95,6 +100,7 @@ class card : public UIElement, public IDragAndDroppable{
 
 	sf::Sprite cardSprite;
 	sf::Sprite imageSprite;
+	vector<shared_ptr<IAction>> actions;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
     {

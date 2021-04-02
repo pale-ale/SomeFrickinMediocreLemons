@@ -13,6 +13,10 @@ UIElement(ui){
     deckCountText.setString("0");
     handCountText.setFont(*font);
     handCountText.setString("0");
+    multiSelect = std::make_shared<MultiSelect>(ui);
+    multiSelect->reparent(this);
+    multiSelect->setPosition({280, 105});
+    addChild(multiSelect);
 }
 
 void PlayerHUD::generatePreview(const card* cardToPreview){
@@ -23,6 +27,9 @@ void PlayerHUD::generatePreview(const card* cardToPreview){
     cardPreview = std::make_unique<CardPreview>(ui, cardToPreview);
     cardPreview->setPosition(getPosition() + cardPreviewOffset);
     addChild(cardPreview);
+    for (auto action : cardToPreview->getActions()){
+        multiSelect->addOption({action->getActionString()});
+    }
 }
 
 void PlayerHUD::removePreview(){
@@ -30,6 +37,7 @@ void PlayerHUD::removePreview(){
         removeChild(cardPreview.get());
         cardPreview = nullptr;
     }
+    multiSelect->clear();
 }
 
 void PlayerHUD::setPosition(const sf::Vector2f &newPosition)

@@ -1,6 +1,7 @@
 #include "../Settings.h"
 #include "UISystem.h"
 #include "CardPreview.h"
+#include "MultiSelect.h"
 
 class card;
 
@@ -24,6 +25,7 @@ private:
     sf::Vector2f cardActionShapeDimensions = {100, 30};
     std::unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
     std::shared_ptr<CardPreview> cardPreview;
+    std::shared_ptr<MultiSelect> multiSelect;
     sf::RectangleShape cardActionShape;
 
 protected:
