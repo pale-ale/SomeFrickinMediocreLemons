@@ -9,6 +9,7 @@
 #include <string>
 #include "ui/Button.h"
 #include "ui/MultiSelect.h"
+#include "ui/QuickTextBox.h"
 #include "actions/DefaultAttack.h"
 
 class Player;
@@ -92,7 +93,7 @@ class card : public UIElement, public IDragAndDroppable{
 	
 	sf::Texture cardBackTexture;
 	sf::Texture cardFrontTexture;
-	sf::Text cardDescription;
+	QuickTextBox cardDescription;
 	sf::Text hpStatDisplay;
 	sf::Text powerStatDisplay;
 	std::shared_ptr<sf::Texture> cardImageTexture;

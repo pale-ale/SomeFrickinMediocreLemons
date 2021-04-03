@@ -95,7 +95,8 @@ UIElement(ui),
 pathToImage{string(Settings::programDir) + Settings::relativeAssetCardPath + imagePath},
 description{desc},
 cost{mana},
-cardButton{std::make_shared<Button>(ui, sf::Color{0,0,0,0}, sf::Color{0,0,0,0})}
+cardButton{std::make_shared<Button>(ui, sf::Color{0,0,0,0}, sf::Color{0,0,0,0})},
+cardDescription{QuickTextBox(ui)}
 {
 	cardBackTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardBack);
 	cardFrontTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardFront);
@@ -109,9 +110,9 @@ cardButton{std::make_shared<Button>(ui, sf::Color{0,0,0,0}, sf::Color{0,0,0,0})}
 	cardButton->setName(name + "Button");
 	cardButton->setScale(Settings::cardScale.x, Settings::cardScale.y);
 	font->loadFromFile(Settings::validFontPath);
-	cardDescription.setString(description);
-	cardDescription.setFont(*font);
-	cardDescription.setScale(scaleVectorSettings({0.17, 0.17}));
+	cardDescription.maxCharacterCountPerLine = 18;
+	cardDescription.setText(description);
+	cardDescription.setScale(Settings::cardScale.x*0.17, Settings::cardScale.y*0.17);
 	hpStatDisplay.setFont(*font);
 	hpStatDisplay.setFillColor(Settings::redColor);
 	hpStatDisplay.setScale(scaleVectorSettings({0.5, 0.5}));

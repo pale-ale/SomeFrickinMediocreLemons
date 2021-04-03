@@ -49,7 +49,6 @@ int main(int argc, char *argv[])
     
     vector<sf::Event> events;
     sf::Clock clock;
-    
     auto ms = std::make_unique<MainMenuScene>(&ui, sceneManager);
     auto gs = std::make_unique<GameScene>(&ui, sceneManager);
     ms->setGameScene(std::move(gs));
