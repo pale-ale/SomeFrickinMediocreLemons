@@ -1,22 +1,10 @@
 #include "TextBox.h"
 //wip will modify on Saturday please do not touch until then
-TextBox::TextBox(UISystem* ui):UIElement(ui){
-
-}
-TextBox::TextBox(UISystem* ui, string content):UIElement(ui){
-    this->content=content;
+TextBox::TextBox(UISystem* ui, sf::Vector2f size, string content="", bool autoresize = true):UIElement(ui){
+    this->autoresize = autoresize;
+    this->size = size;
+    this->content = content;
     UpdateContent();
-}
-TextBox::TextBox(UISystem* ui, unsigned int width, unsigned int height):UIElement(ui){
-this->width = width;
-this->height = height;
-UpdateContent();
-}
-TextBox::TextBox(UISystem* ui, unsigned int width, unsigned int height, string content):UIElement(ui){
-this->width = width;
-this->height = height;
-this->content = content;
-UpdateContent();
 }
 
 bool TextBox::UpdateContent(){
@@ -31,22 +19,25 @@ bool TextBox::UpdateContent(){
     //clear current Text in ui
     uicontent.setString("");
     //foreach element in wordlist check if width is to large
+    //needs check for autoresize later on to apply different character size
+    //if the autoresize is off show hovering text instead
     while(iterator != wordlist.end()){
         uicontentboundaries.setString(this->uicontent.getString());
         uicontentboundaries.setString(uicontentboundaries.getString()+*iterator);
-        if(uicontentboundaries.getGlobalBounds().width > this->width){
+        if(uicontentboundaries.getGlobalBounds().width > this->size.x){
             this->uicontent.setString(this->uicontent.getString() + "\n" + *iterator);
         }
         else{
             uicontentboundaries.setString(this->uicontent.getString() + *iterator);
         }
-        if(this->uicontent.getGlobalBounds().height > this->height || this->uicontent.getGlobalBounds().width > this->width){
+        if(this->uicontent.getGlobalBounds().height > this->size.y || this->uicontent.getGlobalBounds().width > this->size.x){
             return false;
         }
     }
     return true;
 }
 
+//this is for hovering text later if it does not fit to textbox
 void TextBox::initializeSubComponents(){
     UIElement::initializeSubComponents();
     ui->addListener(static_pointer_cast<UIElement>(weak_from_this().lock()));
@@ -62,7 +53,7 @@ bool TextBox::ChangeContent(char* content){
     }
 }
 
-bool TextBox::ChangeSize(unsigned int size){
+bool TextBox::ChangeCharacterSize(unsigned int size){
     this->uicontent.setCharacterSize(size);
     if(this->UpdateContent()){
         return true;

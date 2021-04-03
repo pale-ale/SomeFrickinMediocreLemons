@@ -11,15 +11,12 @@ using std::endl;
 
 class TextBox : public UIElement{
     public:
-    TextBox(UISystem* ui);
-    TextBox(UISystem* ui, unsigned int width, unsigned int height);
-    TextBox(UISystem* ui, string content);
-    TextBox(UISystem* ui, unsigned int width, unsigned int heith, string content);
+    TextBox(UISystem* ui, sf::Vector2f size, string content, bool autoresize);
     sf::Text BarInfo;
     unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
     //return false, if text does not fit even with new line after each word
     bool ChangeContent(char * content);
-    bool ChangeSize(unsigned int size);
+    bool ChangeCharacterSize(unsigned int size);
     virtual void setPosition(const sf::Vector2f &newPosition) override;
 	virtual void setRotation(const float &newRotation) override;
 
@@ -29,9 +26,9 @@ class TextBox : public UIElement{
     virtual void initializeSubComponents() override;
     virtual bool OnBeginMouseover () override;
     virtual bool OnEndMouseover () override;
+    bool autoresize;
+
     unsigned int fontsize = 10;
-    unsigned int width;
-    unsigned int height; 
     sf::Text uicontent;
     string content;
     bool UpdateContent();
