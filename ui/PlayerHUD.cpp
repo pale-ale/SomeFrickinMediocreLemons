@@ -5,7 +5,7 @@ PlayerHUD::PlayerHUD(UISystem* ui):
 UIElement(ui){
     deckCountText.setPosition(getPosition() );
     handCountText.setPosition(getPosition() + handTextOffset);
-    cardActionShape.setPosition(getPosition() + cardActionShapeOffset);
+    cardActionShape.setPosition(cardActionShapePosition);
     cardActionShape.setSize(cardActionShapeDimensions);
     cardActionShape.setFillColor({100,100,100,255});
     font->loadFromFile(Settings::validFontPath);
@@ -13,10 +13,10 @@ UIElement(ui){
     deckCountText.setString("0");
     handCountText.setFont(*font);
     handCountText.setString("0");
-    multiSelect = std::make_shared<MultiSelect>(ui);
-    multiSelect->reparent(this);
-    multiSelect->setPosition({280, 105});
-    addChild(multiSelect);
+    actionSelector = std::make_shared<ActionSelector>(ui);
+    actionSelector->reparent(this);
+    actionSelector->setPosition({280, 105});
+    addChild(actionSelector);
 }
 
 void PlayerHUD::generatePreview(const card* cardToPreview){
@@ -28,7 +28,7 @@ void PlayerHUD::generatePreview(const card* cardToPreview){
     cardPreview->setPosition(getPosition() + cardPreviewOffset);
     addChild(cardPreview);
     for (auto action : cardToPreview->getActions()){
-        multiSelect->addOption({action->getActionString()});
+        actionSelector->addAction(*action.get());
     }
 }
 
@@ -37,7 +37,9 @@ void PlayerHUD::removePreview(){
         removeChild(cardPreview.get());
         cardPreview = nullptr;
     }
-    multiSelect->clear();
+    if (actionSelector){
+        actionSelector->clear();
+    }
 }
 
 void PlayerHUD::setPosition(const sf::Vector2f &newPosition)

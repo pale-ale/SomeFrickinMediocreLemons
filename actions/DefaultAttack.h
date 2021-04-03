@@ -7,7 +7,9 @@ using std::string;
 class DefaultAttack : public IAction{
     public:
     DefaultAttack(){
-        image.loadFromFile(Settings::programDir + string(Settings::relativeAssetActionPath) + "DefaultAttackAction.png");
+        if (!image.loadFromFile(Settings::programDir + string(Settings::relativeAssetActionPath) + "DefaultAttackAction.png"))
+            cout << "DefaultAttackAction: Error loading image '" << 
+            Settings::programDir + string(Settings::relativeAssetActionPath) + "DefaultAttackAction.png" << "'.";
     }
     private:
     sf::Texture image;
@@ -15,13 +17,13 @@ class DefaultAttack : public IAction{
     bool bIsEnabled = true;
 
     public:
-    sf::Texture getActionImage() override{
+    sf::Texture const &getActionImage() const override{
         return image;
     }
-    std::string getActionString() override{
+    std::string getActionString() const override{
         return text;
     }
-    bool getActionEnabled() override{
+    bool getActionEnabled() const override{
         return bIsEnabled;
     }
     void triggerAction() override{

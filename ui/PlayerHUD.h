@@ -2,6 +2,7 @@
 #include "UISystem.h"
 #include "CardPreview.h"
 #include "MultiSelect.h"
+#include "ActionSelector.h"
 
 class card;
 
@@ -21,11 +22,11 @@ private:
     sf::Vector2f deckTextOffset = {-170, -50};
     sf::Vector2f handTextOffset = {-10, -35};
     sf::Vector2f cardPreviewOffset = {0, -100};
-    sf::Vector2f cardActionShapeOffset = {280, 105};
+    sf::Vector2f cardActionShapePosition = {280, 105};
     sf::Vector2f cardActionShapeDimensions = {100, 30};
     std::unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
     std::shared_ptr<CardPreview> cardPreview;
-    std::shared_ptr<MultiSelect> multiSelect;
+    std::shared_ptr<ActionSelector> actionSelector;
     sf::RectangleShape cardActionShape;
 
 protected:
