@@ -12,7 +12,6 @@ using std::endl;
 class TextBox : public UIElement{
     public:
     TextBox(UISystem* ui, sf::Vector2f size, string content, bool autoresize);
-    sf::Text BarInfo;
     unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
     //return false, if text does not fit even with new line after each word
     bool ChangeContent(char * content);
