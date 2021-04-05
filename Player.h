@@ -16,7 +16,7 @@
 #include "ui/ManaBars.h"
 
 
-class card;
+class Card;
 class Game;
 
 using std::shared_ptr;
@@ -24,8 +24,8 @@ using namespace std;
 
 class Player: public UIElement{
     private:
-    list<shared_ptr<card>> deck = {};
-    list<shared_ptr<card>> graveyard = {};
+    list<shared_ptr<Card>> deck = {};
+    list<shared_ptr<Card>> graveyard = {};
     const sf::Vector2f deckOffset = {-163,-50};
     const sf::Vector2f handOffset = {0,50};
     const sf::Vector2f lifePointOffset = {125,-30};
@@ -42,9 +42,9 @@ class Player: public UIElement{
     void setGame(Game* newGame){game = newGame;};
     Game* getGame(){return game;};
     void drawCards(const int count);
-    void playCard(card *card, int slot = -1);
-    void previewCard(const card* cardToPreview);
-    void selectCard(const card* cardToSelect);
+    void playCard(Card *card, int slot = -1);
+    void previewCard(const Card* cardToPreview);
+    void selectCard(const Card* cardToSelect);
     void stopPreviewingCard();
     void cardSelectionUpdated(){
         if (awaitingSelection){
@@ -53,12 +53,12 @@ class Player: public UIElement{
             awaitingSelection = nullptr;
         }
     };
-    card* awaitingSelection = nullptr;
-    void addCardToDeck(shared_ptr<card> card);
-    shared_ptr<card> removeCardFromDeck(card* card);
-    shared_ptr<card> removeCardFromDeckTop();
-    void addCardToGraveyard(shared_ptr<card> card);
-    const list<card*> getHand() const;
+    Card* awaitingSelection = nullptr;
+    void addCardToDeck(shared_ptr<Card> card);
+    shared_ptr<Card> removeCardFromDeck(Card* card);
+    shared_ptr<Card> removeCardFromDeckTop();
+    void addCardToGraveyard(shared_ptr<Card> card);
+    const list<Card*> getHand() const;
     void printDeck() const;
     void printHand() const;
 	void addMana(int amount, EManaType color);

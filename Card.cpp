@@ -2,20 +2,20 @@
 #include <memory>
 #include "Player.h"
 
-void card::moveGraveyard()
+void Card::moveGraveyard()
 {
 	graveyard = true;
 }
-bool card::checkGraveyard()
+bool Card::checkGraveyard()
 {
 	return graveyard;
 }
-cardType card::getType()
+cardType Card::getType()
 {
 	return type;
 }
 
-void card::OnDragMove(const sf::Vector2f &newPos)
+void Card::OnDragMove(const sf::Vector2f &newPos)
 {
 	if (snapPoints.size() > 0){
 		auto closestSnapPoint = getClosestPoint<vector<sf::Vector2f>>(newPos, snapPoints, snapPointIndex);
@@ -29,7 +29,7 @@ void card::OnDragMove(const sf::Vector2f &newPos)
 	setPosition(newPos);
 }
 
-void card::OnDragStart()
+void Card::OnDragStart()
 {
 	setRotation(0);
 	if (owner && owner->bIsMyTurn){
@@ -40,7 +40,7 @@ void card::OnDragStart()
 	snapPointIndex = -1;
 }
 
-void card::OnDragEnd()
+void Card::OnDragEnd()
 {
 	if(owner){
 		owner->battlefield->setDrawFreeSpaces(false, true);
@@ -54,7 +54,7 @@ void card::OnDragEnd()
 	}
 }
 
-void card::setFlipState(bool frontFaceUp)
+void Card::setFlipState(bool frontFaceUp)
 {
 	if (frontFaceUp != this->frontFaceUp)
 	{
@@ -63,7 +63,7 @@ void card::setFlipState(bool frontFaceUp)
 	}
 }
 
-void card::setPosition(const sf::Vector2f &newPosition)
+void Card::setPosition(const sf::Vector2f &newPosition)
 {
 	UIElement::setPosition(newPosition);
 	cardSprite.setPosition(newPosition);
@@ -74,7 +74,7 @@ void card::setPosition(const sf::Vector2f &newPosition)
 	powerStatDisplay.setPosition(newPosition + scaleVectorSettings(powerStatOffset));
 }
 
-void card::setRotation(const float &newRotation)
+void Card::setRotation(const float &newRotation)
 {
 	UIElement::setRotation(newRotation);
 	auto t = sf::Transform().rotate(newRotation).scale(Settings::cardScale);
@@ -90,7 +90,7 @@ void card::setRotation(const float &newRotation)
 	powerStatDisplay.setPosition(getPosition() + t.transformPoint(powerStatOffset));
 }
 
-card::card(UISystem *ui, const string imagePath, const string desc, FMana mana) :
+Card::Card(UISystem *ui, const string imagePath, const string desc, FMana mana) :
 UIElement(ui),
 pathToImage{string(Settings::programDir) + Settings::relativeAssetCardPath + imagePath},
 description{desc},
@@ -124,7 +124,7 @@ cardDescription{QuickTextBox(ui)}
 	updateCardStatDisplay();
 }
 
-void card::updateCardImage()
+void Card::updateCardImage()
 {
 	cardImageTexture = std::make_unique<sf::Texture>();
 	if (!cardImageTexture->loadFromFile(pathToImage))
@@ -136,7 +136,7 @@ void card::updateCardImage()
 	imageSprite.setTexture(*cardImageTexture);
 }
 
-void card::onCardClicked()
+void Card::onCardClicked()
 {
 	if (!owner->bIsMyTurn)
 	{
@@ -162,7 +162,7 @@ void card::onCardClicked()
 	}
 }
 
-void card::onCardBeginMouseover()
+void Card::onCardBeginMouseover()
 {
 	if (owner && owner->bIsMyTurn && !owner->cardSelector->bIsCurrentlySelecting)
 	{
@@ -170,7 +170,7 @@ void card::onCardBeginMouseover()
 	}
 }
 
-void card::onCardEndMouseover()
+void Card::onCardEndMouseover()
 {
 	if (owner)
 	{
@@ -178,13 +178,13 @@ void card::onCardEndMouseover()
 	}
 }
 
-void card::initializeSubComponents()
+void Card::initializeSubComponents()
 {
 	UIElement::initializeSubComponents();
 	cardButton->initializeSubComponents();
 }
 
-void card::takeDamage(const int &amount)
+void Card::takeDamage(const int &amount)
 {
 	health -= amount;
 	updateCardStatDisplay();
@@ -194,7 +194,7 @@ void card::takeDamage(const int &amount)
 	}
 }
 
-void card::play()
+void Card::play()
 {
 	if (owner)
 	{
@@ -206,13 +206,13 @@ void card::play()
 	}
 }
 
-void card::updateCardStatDisplay()
+void Card::updateCardStatDisplay()
 {
 	hpStatDisplay.setString(to_string(health));
 	powerStatDisplay.setString(to_string(power));
 }
 
-card::~card()
+Card::~Card()
 {
 	cout << "Card: Destroying card " << name << "...\n";
 	if (owner)

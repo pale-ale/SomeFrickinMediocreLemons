@@ -21,7 +21,7 @@ void Player::drawCards(int count)
     playerHud->setHandCount(playerhand->getHand().size());
 }
 
-void Player::playCard(card *cardToPlay, int slot)
+void Player::playCard(Card *cardToPlay, int slot)
 {
     auto sharedCardPtr = playerhand->removeCard(cardToPlay);
     mana -= cardToPlay->cost;
@@ -40,28 +40,28 @@ void Player::playCard(card *cardToPlay, int slot)
     }
 }
 
-void Player::addCardToDeck(shared_ptr<card> card)
+void Player::addCardToDeck(shared_ptr<Card> card)
 {
     card->setPosition(transform.getTransform().transformPoint(deckOffset));
     card->setRotation(this->getRotation());
     card->setFlipState(false);
-    card->owner = this;
+    card->setOwner(this);
     card->cardLocation = ECardLocation::deck;
     deck.push_back(card);
     playerHud->setDeckCount(deck.size());
     addChild(card);
 }
 
-void Player::addCardToGraveyard(shared_ptr<card> card)
+void Player::addCardToGraveyard(shared_ptr<Card> card)
 {
     card->setPosition(this->getPosition() + graveyardOffset);
     card->setFlipState(false);
-    card->owner = this;
+    card->setOwner(this);
     graveyard.push_back(card);
     addChild(card);
 }
 
-const list<card *> Player::getHand() const
+const list<Card *> Player::getHand() const
 {
     return playerhand->getHand();
 }
@@ -158,7 +158,7 @@ Player::Player(UISystem *ui, std::string Name) : Player(ui)
     this->name = Name;
 }
 
-shared_ptr<card> Player::removeCardFromDeck(card *cardToRemove)
+shared_ptr<Card> Player::removeCardFromDeck(Card *cardToRemove)
 {
     for (auto c : deck)
     {
@@ -174,7 +174,7 @@ shared_ptr<card> Player::removeCardFromDeck(card *cardToRemove)
     throw;
 }
 
-shared_ptr<card> Player::removeCardFromDeckTop()
+shared_ptr<Card> Player::removeCardFromDeckTop()
 {
     if (deck.size() < 1)
     {
@@ -191,7 +191,7 @@ shared_ptr<card> Player::removeCardFromDeckTop()
 void Player::startSelection(CardSelectionInfo cardSelectionInfo)
 {
     Player *enemy = game->getNextTurnPlayer();
-    list<card *> eligibleCards;
+    list<Card *> eligibleCards;
     if (cardSelectionInfo.enemyBattlefield)
     {
         auto c = enemy->battlefield->getCards();
@@ -216,7 +216,7 @@ void Player::startSelection(CardSelectionInfo cardSelectionInfo)
     cardSelector->setSelectionTarget(eligibleCards, false, cardSelectionInfo);
 }
 
-void Player::previewCard(const card *cardToPreview)
+void Player::previewCard(const Card *cardToPreview)
 {
     if (!cardSelector->bIsCurrentlySelecting)
     {
@@ -225,7 +225,7 @@ void Player::previewCard(const card *cardToPreview)
 
 }
 
-void Player::selectCard(const card *cardToSelect)
+void Player::selectCard(const Card *cardToSelect)
 {
     if (!cardSelector->bIsCurrentlySelecting)
     {

@@ -6,7 +6,7 @@ CardSelector::CardSelector(UISystem *ui) : UIElement(ui)
     name = "CardSelector";
 }
 
-void CardSelector::setSelectionTarget(const list<card *> &cardsToSelectFrom, bool reposition, CardSelectionInfo csi)
+void CardSelector::setSelectionTarget(const list<Card *> &cardsToSelectFrom, bool reposition, CardSelectionInfo csi)
 {
     cards = cardsToSelectFrom;
     cardSelectionInfo = csi;
@@ -52,7 +52,7 @@ void CardSelector::setSelectionTarget(const list<card *> &cardsToSelectFrom, boo
     }
 }
 
-list<card *> CardSelector::getSelectedCards() const
+list<Card *> CardSelector::getSelectedCards() const
 {
     return selectedCards;
 }

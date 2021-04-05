@@ -3,7 +3,7 @@
 #include "../ui/CardSelector.h"
 #include "../Battlefield.h"
 
-Vinesnatcher::Vinesnatcher(UISystem* ui) : card::card(ui, pathToImage, description, cost)
+Vinesnatcher::Vinesnatcher(UISystem* ui) : Card::Card(ui, pathToImage, description, cost)
 {
     setupButtonBinding();
     cardButton->setName("vinesnatcher-button");
@@ -11,14 +11,11 @@ Vinesnatcher::Vinesnatcher(UISystem* ui) : card::card(ui, pathToImage, descripti
     multiSelector->reparent(this);
     multiSelector->setPosition(getPosition() + sf::Vector2f{-40, 0});
     addChild(multiSelector);
-}
-
-void Vinesnatcher::play(){
-    card::play();
+    setupActions();
 }
 
 void Vinesnatcher::onCardDeath(){
-    card::onCardDeath();
+    Card::onCardDeath();
     if (cardLocation == ECardLocation::battlefieldBattle || 
         cardLocation == ECardLocation::battlefieldBattort || 
         cardLocation == ECardLocation::battlefieldSupport){
@@ -26,39 +23,9 @@ void Vinesnatcher::onCardDeath(){
     }
 }
 
-void Vinesnatcher::onCardBeginMouseover(){
-    card::onCardBeginMouseover();
-}
-
-void Vinesnatcher::tap(){
-    card::tap();
-    multiSelector->clear();
-    if (cardLocation == battlefieldBattle){
-        multiSelector->addOption(
-            {"Attack", std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::attackOptionCallback)});
-        return;
-    }
-    if (cardLocation == battlefieldBattort || cardLocation == battlefieldSupport)
-    multiSelector->addOption(
-        {"Tap", std::make_shared<EventCallback<Vinesnatcher>>(this, &Vinesnatcher::tapOptionCallback)});
-}
-
-void Vinesnatcher::onReceiveSelection(list<card*> cards){
+void Vinesnatcher::onReceiveSelection(list<Card*> cards){
     cout << "Vinesnatcher: " << name << " received selection\n";
     auto card = *cards.begin();
     cout << "Vinesnatcher: " << name << " deals 2 damage to " << card->getName() << ".\n";
     card->takeDamage(2);
-}
-
-void Vinesnatcher::tapOptionCallback(){
-    owner->awaitingSelection = this;
-    CardSelectionInfo csi;
-    cout << "Vinesnatcher: " << name << " requesting selection.\n";
-    owner->startSelection(csi);
-    multiSelector->clear();
-    cout << "Vinesnatcher: " << name << " tapped.\n";
-}
-
-void Vinesnatcher::attackOptionCallback(){
-    cout << "Vinesnatcher attacks!\n";
 }

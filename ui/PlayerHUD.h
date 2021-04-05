@@ -4,7 +4,7 @@
 #include "MultiSelect.h"
 #include "ActionSelector.h"
 
-class card;
+class Card;
 
 class PlayerHUD : public UIElement
 {
@@ -13,8 +13,8 @@ public:
     void setDeckCount(int deckCount);
     void setHandCount(int handCount);
     virtual void setPosition(const sf::Vector2f &newPosition) override;
-    void previewCard(const card* cardToPreview);
-    void selectCard(const card* cardToPreview);
+    void previewCard(const Card* cardToPreview);
+    void selectCard(const Card* cardToPreview);
 
 private:
     sf::Text deckCountText;

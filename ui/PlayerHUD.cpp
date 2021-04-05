@@ -19,7 +19,7 @@ UIElement(ui){
     addChild(actionSelector);
 }
 
-void PlayerHUD::previewCard(const card* cardToPreview){
+void PlayerHUD::previewCard(const Card* cardToPreview){
     if (cardPreview){
         removeChild(cardPreview.get());
         cardPreview = nullptr;
@@ -31,7 +31,7 @@ void PlayerHUD::previewCard(const card* cardToPreview){
     }
 }
 
-void PlayerHUD::selectCard(const card* cardToPreview){
+void PlayerHUD::selectCard(const Card* cardToPreview){
     if (actionSelector){
         actionSelector->clear();
         for (auto action : cardToPreview->getActions()){

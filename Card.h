@@ -26,13 +26,13 @@ enum ECardLocation{
 	graveyard
 };
 
-class card : public UIElement, public IDragAndDroppable{
+class Card : public UIElement, public IDragAndDroppable{
 	public:
-	card(UISystem* ui,
+	Card(UISystem* ui,
 		 const string imagePath = "/Unknown.png", 
 		 const string desc = "test",
 		 const FMana cost = FMana());
-	virtual ~card();
+	virtual ~Card();
 	shared_ptr<Button> cardButton;
 	cardType getType();
 	void moveGraveyard();
@@ -40,7 +40,6 @@ class card : public UIElement, public IDragAndDroppable{
 	ECardLocation cardLocation = undefined;
 	const string getDescription() const {return description;} 
 	const std::shared_ptr<sf::Texture> getTexture() const {return cardImageTexture;}
-	Player* owner = nullptr;
 	void setFlipState(bool frontFaceUp);
 	const sf::Vector2f cardDimensions = Settings::cardSize;
 	const sf::Vector2f imageDimensions = {40, 40};
@@ -57,13 +56,14 @@ class card : public UIElement, public IDragAndDroppable{
 	virtual void OnDragMove(const sf::Vector2f &newPos) override;
 	virtual void OnDragStart() override;
 	virtual void OnDragEnd() override;
-	virtual void onReceiveSelection(list<card*> cards){cout << "Card: " << name << " received selection\n";};
+	virtual void onReceiveSelection(list<Card*> cards){cout << "Card: " << name << " received selection\n";};
 	virtual void play();
 	virtual void tap(){}
 	virtual void initializeSubComponents() override;
 	virtual void takeDamage(const int& amount);
 	virtual void onCardDeath(){cout << "Card: " << name << " received lethal damage.\n";}
     virtual void setSnapPoints(const vector<sf::Vector2f> &points){snapPoints = points;}
+	virtual void setOwner(Player *newOwner){owner = newOwner;}
 	const vector<shared_ptr<IAction>> getActions() const {return actions;}
 	FMana cost;
 
@@ -80,6 +80,7 @@ class card : public UIElement, public IDragAndDroppable{
 	bool frontFaceUp = false;
 	bool graveyard = false;
 	bool tapped = false;
+	Player* owner = nullptr;
 	std::shared_ptr<sf::Font> font = std::make_unique<sf::Font>();
 	sf::Vector2f scaleVectorSettings(const sf::Vector2f &v){
 		return {v.x*Settings::cardScale.x, v.y*Settings::cardScale.y};

@@ -12,7 +12,7 @@ ECardLocation Battlefield::positionToCardLocation(int index, bool support){
     return ECardLocation::battlefieldBattle;
 }
 
-void Battlefield::addCard(shared_ptr<card> newCard, bool support, int slot)
+void Battlefield::addCard(shared_ptr<Card> newCard, bool support, int slot)
 {
     auto row = support ? &supportCards : &battleCards;
     int max = support ? MAX_SUPPORT_CARDS : MAX_BATTLE_CARDS;
@@ -55,7 +55,7 @@ void Battlefield::removeCard(int slot, bool support)
     }
 }
 
-void Battlefield::removeCard(card *cardToRemove)
+void Battlefield::removeCard(Card *cardToRemove)
 {
     cout << "Battlefield: Trying to remove card " << cardToRemove->getName() << endl;
     for (auto cardIndex : battleCards){
@@ -86,7 +86,7 @@ void Battlefield::removeCard(card *cardToRemove)
     throw;
 }
 
-card* Battlefield::getCardAt(int slot, bool support)
+Card* Battlefield::getCardAt(int slot, bool support)
 {
     auto row = support ? supportCards : battleCards;
     for (auto &cardIndex : row)
@@ -160,12 +160,12 @@ int Battlefield::getNextFreeSlot(bool support)
     return -1;
 }
 
-list<card*> Battlefield::getCards() const
+list<Card*> Battlefield::getCards() const
 {
     list<cardIndex> cis;
     cis.insert(cis.end(), supportCards.begin(), supportCards.end());
     cis.insert(cis.end(), battleCards.begin(), battleCards.end());
-    list<card*> cards;
+    list<Card*> cards;
     for (auto ci : cis)
     {
         cards.push_back(ci._card.get());

@@ -5,7 +5,7 @@
 
 using std::cout;
 
-class Kalle : public card{
+class Kalle : public Card{
 	public:
 	inline static const string pathToImage = "/usr/share/test/resources/Kalle.png";
     inline static const string description = "Doppelklang!";
@@ -15,8 +15,8 @@ class Kalle : public card{
 	virtual void play() override;
 	virtual void onCardBeginMouseover() override;
 	virtual void setupButtonBinding() override {
-		cardButton->onMouseDownCallback = std::make_shared<EventCallback<card>>(this, &card::onCardClicked);
+		cardButton->onMouseDownCallback = std::make_shared<EventCallback<Card>>(this, &Card::onCardClicked);
 		cardButton->onBeginMouseoverCallback = std::make_shared<EventCallback<Kalle>>(this, &Kalle::onCardBeginMouseover);
-		cardButton->onEndMouseoverCallback = std::make_shared<EventCallback<card>>(this, &card::onCardEndMouseover);
+		cardButton->onEndMouseoverCallback = std::make_shared<EventCallback<Card>>(this, &Card::onCardEndMouseover);
 	}
 };

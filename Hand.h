@@ -9,7 +9,7 @@ class Hand : public UIElement{
     const float handwidth = 200;
     const float leftmostRotation = -30;
     const int maxHandsize = 10;
-    list<shared_ptr<card>> hand = {};
+    list<shared_ptr<Card>> hand = {};
     const sf::Vector2f handOffset = {0,-50};
     
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
@@ -21,8 +21,8 @@ class Hand : public UIElement{
 
     public:
     void updateHandPositions();
-    const list<card*> getHand() const;
-    bool addCardToHand(shared_ptr<card> cardtoadd);
-    std::shared_ptr<card> removeCard(card *cardToRemove);
+    const list<Card*> getHand() const;
+    bool addCardToHand(shared_ptr<Card> cardtoadd);
+    std::shared_ptr<Card> removeCard(Card *cardToRemove);
     void setPosition(const sf::Vector2f &newPos) override {UIElement::setPosition(newPos); updateHandPositions();};
 };

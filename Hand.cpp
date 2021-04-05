@@ -25,16 +25,16 @@ void Hand::updateHandPositions()
         currentSlotNumber++;
     }
 }
-const list<card*> Hand::getHand() const
+const list<Card*> Hand::getHand() const
 {
-    list<card*> l;
+    list<Card*> l;
     for (auto c : hand){
         l.push_back(c.get());
     }
     return l;
 }
 
-bool Hand::addCardToHand(shared_ptr<card> cardToAdd)
+bool Hand::addCardToHand(shared_ptr<Card> cardToAdd)
 {
     if (hand.size() < maxHandsize)
     {
@@ -48,7 +48,7 @@ bool Hand::addCardToHand(shared_ptr<card> cardToAdd)
     return false;
 }
 
-std::shared_ptr<card> Hand::removeCard(card *cardToRemove)
+std::shared_ptr<Card> Hand::removeCard(Card *cardToRemove)
 {
     for (auto cardSharedPtr : hand){
         if (cardSharedPtr.get() == cardToRemove){

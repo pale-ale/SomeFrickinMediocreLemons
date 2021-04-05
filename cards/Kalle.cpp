@@ -1,12 +1,12 @@
 #include "Kalle.h"
 
-Kalle::Kalle(UISystem* ui) : card::card(ui, pathToImage, description, cost)
+Kalle::Kalle(UISystem* ui) : Card::Card(ui, pathToImage, description, cost)
 {
     setupButtonBinding();
 }
 
 void Kalle::play(){
-    card::play();
+    Card::play();
     owner->setLifePoints(owner->getLifePoints()+2000);
     cout << owner->getName() << " has " << owner->getLifePoints() << " HP.\n";
 }
