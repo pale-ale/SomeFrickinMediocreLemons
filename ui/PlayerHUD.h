@@ -13,8 +13,8 @@ public:
     void setDeckCount(int deckCount);
     void setHandCount(int handCount);
     virtual void setPosition(const sf::Vector2f &newPosition) override;
-    void generatePreview(const card* cardToPreview);
-    void removePreview();
+    void previewCard(const card* cardToPreview);
+    void selectCard(const card* cardToPreview);
 
 private:
     sf::Text deckCountText;

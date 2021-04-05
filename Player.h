@@ -44,6 +44,7 @@ class Player: public UIElement{
     void drawCards(const int count);
     void playCard(card *card, int slot = -1);
     void previewCard(const card* cardToPreview);
+    void selectCard(const card* cardToSelect);
     void stopPreviewingCard();
     void cardSelectionUpdated(){
         if (awaitingSelection){

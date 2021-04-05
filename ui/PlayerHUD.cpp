@@ -19,26 +19,24 @@ UIElement(ui){
     addChild(actionSelector);
 }
 
-void PlayerHUD::generatePreview(const card* cardToPreview){
+void PlayerHUD::previewCard(const card* cardToPreview){
     if (cardPreview){
         removeChild(cardPreview.get());
         cardPreview = nullptr;
     }
-    cardPreview = std::make_unique<CardPreview>(ui, cardToPreview);
-    cardPreview->setPosition(getPosition() + cardPreviewOffset);
-    addChild(cardPreview);
-    for (auto action : cardToPreview->getActions()){
-        actionSelector->addAction(*action.get());
+    if (cardToPreview){
+        cardPreview = std::make_unique<CardPreview>(ui, cardToPreview);
+        cardPreview->setPosition(getPosition() + cardPreviewOffset);
+        addChild(cardPreview);
     }
 }
 
-void PlayerHUD::removePreview(){
-    if (cardPreview){
-        removeChild(cardPreview.get());
-        cardPreview = nullptr;
-    }
+void PlayerHUD::selectCard(const card* cardToPreview){
     if (actionSelector){
         actionSelector->clear();
+        for (auto action : cardToPreview->getActions()){
+            actionSelector->addAction(*action.get());
+        }
     }
 }
 

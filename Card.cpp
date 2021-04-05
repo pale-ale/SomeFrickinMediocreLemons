@@ -157,7 +157,7 @@ void card::onCardClicked()
 	}
 	if (cardLocation == battlefieldBattle || cardLocation == battlefieldBattort || cardLocation == battlefieldSupport)
 	{
-		tap();
+		owner->selectCard(this);
 		return;
 	}
 }

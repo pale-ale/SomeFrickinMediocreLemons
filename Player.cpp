@@ -220,11 +220,20 @@ void Player::previewCard(const card *cardToPreview)
 {
     if (!cardSelector->bIsCurrentlySelecting)
     {
-        playerHud->generatePreview(cardToPreview);
+        playerHud->previewCard(cardToPreview);
+    }
+
+}
+
+void Player::selectCard(const card *cardToSelect)
+{
+    if (!cardSelector->bIsCurrentlySelecting)
+    {
+        playerHud->selectCard(cardToSelect);
     }
 }
 
 void Player::stopPreviewingCard()
 {
-    playerHud->removePreview();
+    playerHud->previewCard(nullptr);
 }
