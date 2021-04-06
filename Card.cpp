@@ -103,8 +103,8 @@ cardDescription{QuickTextBox(ui)}
 	cardSprite.setTexture(cardBackTexture);
 	cardSprite.setScale(Settings::cardScale);
 	cardSprite.setOrigin(Settings::cardSize / 2.0f);
+	imageSprite.setScale(Settings::cardScale * 0.0335f);
 	imageSprite.setOrigin(imageDimensions / 2.0f);
-	imageSprite.setScale(Settings::cardScale);
 	updateCardImage();
 	cardButton->isDragable = true;
 	cardButton->setName(name + "Button");

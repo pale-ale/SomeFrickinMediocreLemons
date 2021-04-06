@@ -39,10 +39,10 @@ public:
             cout << "VinesnatcherAction: " << owningCard->getName() << " requesting selection.\n";
             owningPlayer->startSelection(csi);
             cout << "VinesnatcherAction: " << owningCard->getName() << " tapped.\n";
+            return;
         }
-        else{
-            cout << owningCard << ", " << owningPlayer << endl;
-        }
+        cout << "VinesnatcherAction: OwningCard and OwningPlayer are required.\n";
+        throw;
     };
     Player *owningPlayer;
     Card *owningCard;

@@ -24,7 +24,7 @@ public:
         background.setSize(size);
         background.setOrigin(size/2.0f);
         cardImage.setTexture(*(cardToPreview->getTexture().get()), true);
-        cardImage.setScale(2.5,2.5);
+        cardImage.setScale(sf::Vector2f{0.0335f, 0.0335f}*2.5f);
         cardImage.setOrigin({cardImage.getLocalBounds().width/2, cardImage.getLocalBounds().height/2});
         FMana cardCost = cardToPreview->cost;
         costDisplayRed.setFillColor(Settings::redColor);

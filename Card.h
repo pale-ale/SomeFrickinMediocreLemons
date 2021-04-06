@@ -42,7 +42,7 @@ class Card : public UIElement, public IDragAndDroppable{
 	const std::shared_ptr<sf::Texture> getTexture() const {return cardImageTexture;}
 	void setFlipState(bool frontFaceUp);
 	const sf::Vector2f cardDimensions = Settings::cardSize;
-	const sf::Vector2f imageDimensions = {40, 40};
+	const sf::Vector2f imageDimensions = {1200, 900};
 	const sf::Vector2f imageOffset = {0, -13};
 	const sf::Vector2f descOffset = {-20, 10};
 	const sf::Vector2f hpStatOffset = {-20, -40};
