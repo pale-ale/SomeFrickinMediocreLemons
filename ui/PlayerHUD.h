@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../Settings.h"
 #include "UISystem.h"
 #include "CardPreview.h"
@@ -5,6 +7,7 @@
 #include "ActionSelector.h"
 
 class Card;
+class CardPreview;
 
 class PlayerHUD : public UIElement
 {

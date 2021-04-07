@@ -1,5 +1,7 @@
 #pragma once
+#include "actions/DefaultAttack.h"
 #include "cardTypes.h"
+#include "ECardLocation.h"
 #include "events/EventCallback.h"
 #include <iostream>
 #include "IDragAndDroppable.h"
@@ -10,21 +12,8 @@
 #include "ui/Button.h"
 #include "ui/MultiSelect.h"
 #include "ui/QuickTextBox.h"
-#include "actions/DefaultAttack.h"
-
-class Player;
 
 using std::cout;
-
-enum ECardLocation{
-	undefined,
-	deck,
-	hand,
-	battlefieldSupport,
-	battlefieldBattle,
-	battlefieldBattort,
-	graveyard
-};
 
 class Card : public UIElement, public IDragAndDroppable{
 	public:
@@ -35,6 +24,7 @@ class Card : public UIElement, public IDragAndDroppable{
 	virtual ~Card();
 	shared_ptr<Button> cardButton;
 	cardType getType();
+	int getPower() const{return power;}
 	void moveGraveyard();
 	bool checkGraveyard();
 	ECardLocation cardLocation = undefined;
@@ -56,7 +46,6 @@ class Card : public UIElement, public IDragAndDroppable{
 	virtual void OnDragMove(const sf::Vector2f &newPos) override;
 	virtual void OnDragStart() override;
 	virtual void OnDragEnd() override;
-	virtual void onReceiveSelection(list<Card*> cards){cout << "Card: " << name << " received selection\n";};
 	virtual void play();
 	virtual void tap(){}
 	virtual void initializeSubComponents() override;
@@ -88,9 +77,7 @@ class Card : public UIElement, public IDragAndDroppable{
 
 	void updateCardImage();
 	void updateCardStatDisplay();
-	virtual void setupActions(){
-		actions.push_back(std::make_shared<DefaultAttack>());
-	};
+	virtual void setupActions() = 0;
 	
 	sf::Texture cardBackTexture;
 	sf::Texture cardFrontTexture;

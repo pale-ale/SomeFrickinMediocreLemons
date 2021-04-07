@@ -3,6 +3,7 @@
 #include "UISystem.h"
 #include "../Card.h"
 #include "../CardSelectionInfo.h"
+#include "Button.h"
 
 class CardSelector : public UIElement{
     public:

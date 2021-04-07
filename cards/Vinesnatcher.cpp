@@ -23,9 +23,6 @@ void Vinesnatcher::onCardDeath(){
     }
 }
 
-void Vinesnatcher::onReceiveSelection(list<Card*> cards){
-    cout << "Vinesnatcher: " << name << " received selection\n";
-    auto card = *cards.begin();
-    cout << "Vinesnatcher: " << name << " deals 2 damage to " << card->getName() << ".\n";
-    card->takeDamage(2);
-}
+/*void Vinesnatcher::onReceiveSelection(list<Card*> cards){
+    
+}*/

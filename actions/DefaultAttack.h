@@ -1,31 +1,52 @@
+#pragma once
+
 #include "../IAction.h"
 #include <string>
 #include <iostream>
+#include "../Card.h"
+#include "../Player.h"
 
 using std::string;
 
-class DefaultAttack : public IAction{
-    public:
-    DefaultAttack(){
-        if (!image.loadFromFile(Settings::programDir + string(Settings::relativeAssetActionPath) + "DefaultAttackAction.png")){
-            cout << "DefaultAttackAction: Error loading image '" << 
-            Settings::programDir + string(Settings::relativeAssetActionPath) + "DefaultAttackAction.png" << "'.";
-        }
-    }
-    sf::Texture const &getActionImage() const override{
+class DefaultAttack : public IAction
+{
+public:
+    DefaultAttack(Player *player, Card *card);
+    sf::Texture const &getActionImage() const override
+    {
         return image;
     }
-    std::string getActionString() const override{
+    std::string getActionString() const override
+    {
         return text;
     }
-    bool getActionEnabled() const override{
+    bool getActionEnabled() const override
+    {
         return bIsEnabled;
     }
-    void triggerAction() override{
+    bool getNeedsTargeting() const override
+    {
+        return true;
+    }
+    CardSelectionInfo getTargetingInfo() const override
+    {
+        return {};
+    }
+    void triggerAction() override
+    {
         std::cout << "Attacking!\n";
     };
+    void onReceiveSelection(std::list<Card*> cards) override;
+    void setOwningPlayer(Player* newPlayer) override
+    {
+        owningPlayer = newPlayer;
+    } 
 
-    private:
+    Player *owningPlayer;
+    Card *owningCard;
+
+
+private:
     sf::Texture image;
     std::string text = "Attack";
     bool bIsEnabled = true;

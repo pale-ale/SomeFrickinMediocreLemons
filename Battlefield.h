@@ -2,10 +2,13 @@
 
 #include <algorithm>
 #include "Card.h"
+#include "ECardLocation.h"
 #include "GlobalFunctions.h"
 #include <iostream>
 #include <math.h>
 #include "Placeable.h"
+
+using std::shared_ptr;
 
 class Battlefield : public Placeable{
     public:

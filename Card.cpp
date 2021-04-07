@@ -120,7 +120,6 @@ cardDescription{QuickTextBox(ui)}
 	powerStatDisplay.setFillColor(Settings::blackColor);
 	powerStatDisplay.setScale(scaleVectorSettings({0.5, 0.5}));
 	Placeable::name = "card";
-	setupActions();
 	updateCardStatDisplay();
 }
 

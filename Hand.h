@@ -1,6 +1,11 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
-#include "Card.h"
+#include "ui/UIElement.h"
+
+class Card;
+
+using std::shared_ptr;
 
 class Hand : public UIElement{
     public:
@@ -9,16 +14,11 @@ class Hand : public UIElement{
     const float handwidth = 200;
     const float leftmostRotation = -30;
     const int maxHandsize = 10;
-    list<shared_ptr<Card>> hand = {};
+    list<shared_ptr<Card>> handCards = {};
     const sf::Vector2f handOffset = {0,-50};
     
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
-    {
-        for (auto& card : hand){
-            target.draw(*card);
-        }
-    }
-
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+   
     public:
     void updateHandPositions();
     const list<Card*> getHand() const;

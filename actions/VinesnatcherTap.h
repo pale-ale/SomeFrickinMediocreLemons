@@ -1,9 +1,9 @@
+#pragma once
+
 #include "../IAction.h"
 #include <string>
-#include "../Settings.h"
 #include <iostream>
 
-using std::cout;
 using std::string;
 
 class VinesnatcherTap : public IAction
@@ -13,7 +13,7 @@ public:
     {
         if (!image.loadFromFile(Settings::programDir + string(Settings::relativeAssetActionPath) + "VinesnatcherTapTexture.png"))
         {
-            cout << "DefaultAttackAction: Error loading image '" 
+            cout << "VinesnatcherTap: Error loading image '" 
                  << Settings::programDir + string(Settings::relativeAssetActionPath) + "DefaultAttackAction.png'.\n";
         }
     }
@@ -29,12 +29,20 @@ public:
     {
         return bIsEnabled;
     }
+    bool getNeedsTargeting() const override
+    {
+        return true;
+    }
+    CardSelectionInfo getTargetingInfo() const override
+    {
+        return {};
+    }
     void triggerAction() override
     {
         cout << "VinesnatcherAction: Clicked\n";
         if (owningPlayer && owningCard)
         {
-            owningPlayer->awaitingSelection = owningCard;
+            owningPlayer->awaitingSelection = this;
             CardSelectionInfo csi;
             cout << "VinesnatcherAction: " << owningCard->getName() << " requesting selection.\n";
             owningPlayer->startSelection(csi);
@@ -43,7 +51,17 @@ public:
         }
         cout << "VinesnatcherAction: OwningCard and OwningPlayer are required.\n";
         throw;
-    };
+    }
+    void onReceiveSelection(list<Card*> cards) override
+    {
+        auto card = *cards.begin();
+        cout << "VinesnatcherAction: " << owningCard->getName() << " deals 2 damage to " << card->getName() << ".\n";
+        card->takeDamage(2);
+    }
+    void setOwningPlayer(Player* newPlayer)
+    {
+        owningPlayer = newPlayer;
+    }
     Player *owningPlayer;
     Card *owningCard;
 

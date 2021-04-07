@@ -15,9 +15,11 @@
 #include "ui/CardSelector.h"
 #include "ui/ManaBars.h"
 
-
+class Battlefield;
 class Card;
+class CardSelector;
 class Game;
+class PlayerHUD;
 
 using std::shared_ptr;
 using namespace std;
@@ -46,14 +48,8 @@ class Player: public UIElement{
     void previewCard(const Card* cardToPreview);
     void selectCard(const Card* cardToSelect);
     void stopPreviewingCard();
-    void cardSelectionUpdated(){
-        if (awaitingSelection){
-            awaitingSelection->onReceiveSelection(cardSelector->getSelectedCards());
-            cardSelector->resetSelection();
-            awaitingSelection = nullptr;
-        }
-    };
-    Card* awaitingSelection = nullptr;
+    void cardSelectionUpdated();
+    IAction* awaitingSelection = nullptr;
     void addCardToDeck(shared_ptr<Card> card);
     shared_ptr<Card> removeCardFromDeck(Card* card);
     shared_ptr<Card> removeCardFromDeckTop();

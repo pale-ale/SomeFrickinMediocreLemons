@@ -20,17 +20,15 @@ class Vinesnatcher : public Card{
 	static constexpr FMana cost = FMana({0,0,1,0,0});
 
 	Vinesnatcher(UISystem* ui);
-	virtual void onReceiveSelection(list<Card*> cards) override;
 	virtual void onCardDeath() override;
 	virtual void setupActions() override{
-		vst = make_shared<VinesnatcherTap>(owner, this);
-		actions.push_back(vst);
-		cout << "setupac\n";
+		actions.push_back(make_shared<DefaultAttack>(owner, this));
+		actions.push_back(make_shared<VinesnatcherTap>(owner, this));
 	}
 	virtual void setOwner(Player *newOwner){
 		Card::setOwner(newOwner);
-		if (vst){
-			vst->owningPlayer = newOwner;
+		for (auto &action : actions){
+			action->setOwningPlayer(newOwner);
 		}
 	}
 
@@ -42,7 +40,4 @@ class Vinesnatcher : public Card{
 		cardButton->onDragEndCallback = std::make_shared<EventCallback<Card>>(this, &Card::OnDragEnd);
 		cardButton->onDragStartCallback = std::make_shared<EventCallback<Card>>(this, &Card::OnDragStart);
 	}
-
-	private:
-	shared_ptr<VinesnatcherTap> vst;
 };

@@ -26,7 +26,7 @@ struct FMana{
         return Black>a.Black && Blue>a.Blue && Green>a.Green && Red>a.Red && White>a.White;
     }
     void add(EManaType color, int amount){
-        get(color) = max(get(color) + amount, 0);
+        get(color) = std::max(get(color) + amount, 0);
     }
     bool canAfford(const FMana& a) const{
         bool canAffordBlack = a.Black > 0 ? Black >= a.Black : true;

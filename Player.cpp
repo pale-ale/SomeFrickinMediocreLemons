@@ -237,3 +237,13 @@ void Player::stopPreviewingCard()
 {
     playerHud->previewCard(nullptr);
 }
+
+void Player::cardSelectionUpdated()
+{
+    if (awaitingSelection)
+    {
+        awaitingSelection->onReceiveSelection(cardSelector->getSelectedCards());
+        cardSelector->resetSelection();
+        awaitingSelection = nullptr;
+    }
+};
