@@ -3,7 +3,7 @@
 #include "../ui/CardSelector.h"
 #include "../Battlefield.h"
 
-Vinesnatcher::Vinesnatcher(UISystem* ui) : Card::Card(ui, pathToImage, description, cost)
+Vinesnatcher::Vinesnatcher(UISystem* ui) : Card::Card(ui, pathToImage, description, "Vinesnatcher", cost)
 {
     setupButtonBinding();
     cardButton->setName("vinesnatcher-button");
@@ -22,7 +22,3 @@ void Vinesnatcher::onCardDeath(){
         owner->battlefield->removeCard(this);
     }
 }
-
-/*void Vinesnatcher::onReceiveSelection(list<Card*> cards){
-    
-}*/

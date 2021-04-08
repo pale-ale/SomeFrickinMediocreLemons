@@ -20,6 +20,7 @@ class Card : public UIElement, public IDragAndDroppable{
 	Card(UISystem* ui,
 		 const string imagePath = "/Unknown.png", 
 		 const string desc = "test",
+		 const string title = "title",
 		 const FMana cost = FMana());
 	virtual ~Card();
 	shared_ptr<Button> cardButton;
@@ -35,6 +36,7 @@ class Card : public UIElement, public IDragAndDroppable{
 	const sf::Vector2f imageDimensions = {1200, 900};
 	const sf::Vector2f imageOffset = {0, -13};
 	const sf::Vector2f descOffset = {-20, 10};
+	const sf::Vector2f labelCenterOffset = {0, -35};
 	const sf::Vector2f hpStatOffset = {-20, -40};
 	const sf::Vector2f powerStatOffset = {10, -40};
 	virtual void setupButtonBinding() = 0;
@@ -58,7 +60,8 @@ class Card : public UIElement, public IDragAndDroppable{
 
 	protected:
 	cardType type;
-	string description;
+	string description = "DefaultDescription";
+	string label = "DefaultLabel";
 	string pathToImage;
 	vector<sf::Vector2f> snapPoints;
 	int power = 1;
@@ -84,6 +87,7 @@ class Card : public UIElement, public IDragAndDroppable{
 	QuickTextBox cardDescription;
 	sf::Text hpStatDisplay;
 	sf::Text powerStatDisplay;
+	sf::Text cardLabel;
 	std::shared_ptr<sf::Texture> cardImageTexture;
 	shared_ptr<MultiSelect> multiSelector;
 
@@ -105,6 +109,7 @@ class Card : public UIElement, public IDragAndDroppable{
 				target.draw(cardDescription, states);
 				target.draw(hpStatDisplay, states);
 				target.draw(powerStatDisplay, states);
+				target.draw(cardLabel, states);
 			}
 		}
     }

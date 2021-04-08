@@ -1,7 +1,7 @@
 #include "Fireball.h"
 #include "../Game.h"
 
-Fireball::Fireball(UISystem* ui) : Card::Card(ui, pathToImage, description, cost)
+Fireball::Fireball(UISystem* ui) : Card::Card(ui, pathToImage, description, "Fireball", cost)
 {
     setupButtonBinding();
 }

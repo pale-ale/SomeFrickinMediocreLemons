@@ -72,6 +72,7 @@ void Card::setPosition(const sf::Vector2f &newPosition)
 	cardDescription.setPosition(newPosition + scaleVectorSettings(descOffset));
 	hpStatDisplay.setPosition(newPosition + scaleVectorSettings(hpStatOffset));
 	powerStatDisplay.setPosition(newPosition + scaleVectorSettings(powerStatOffset));
+	cardLabel.setPosition(newPosition + scaleVectorSettings(labelCenterOffset));
 }
 
 void Card::setRotation(const float &newRotation)
@@ -88,12 +89,15 @@ void Card::setRotation(const float &newRotation)
 	hpStatDisplay.setPosition(getPosition() + t.transformPoint(hpStatOffset));
 	powerStatDisplay.setRotation(newRotation);
 	powerStatDisplay.setPosition(getPosition() + t.transformPoint(powerStatOffset));
+	cardLabel.setRotation(newRotation);
+	cardLabel.setPosition(getPosition() + t.transformPoint(labelCenterOffset));
 }
 
-Card::Card(UISystem *ui, const string imagePath, const string desc, FMana mana) :
+Card::Card(UISystem *ui, const string imagePath, const string desc, const string title, FMana mana) :
 UIElement(ui),
 pathToImage{string(Settings::programDir) + Settings::relativeAssetCardPath + imagePath},
 description{desc},
+label{title},
 cost{mana},
 cardButton{std::make_shared<Button>(ui, sf::Color{0,0,0,0}, sf::Color{0,0,0,0})},
 cardDescription{QuickTextBox(ui)}
@@ -119,7 +123,12 @@ cardDescription{QuickTextBox(ui)}
 	powerStatDisplay.setFont(*font);
 	powerStatDisplay.setFillColor(Settings::blackColor);
 	powerStatDisplay.setScale(scaleVectorSettings({0.5, 0.5}));
+	cardLabel.setFont(*font);
+	cardLabel.setFillColor(Settings::blackColor);
+	cardLabel.setScale(scaleVectorSettings({0.3, 0.3}));
 	Placeable::name = "card";
+	cardLabel.setString(label);
+	cardLabel.setOrigin(sf::Vector2f{cardLabel.getLocalBounds().width, cardLabel.getLocalBounds().height}*.5f);
 	updateCardStatDisplay();
 }
 
