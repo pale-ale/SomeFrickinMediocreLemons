@@ -10,8 +10,8 @@ void ManaBars::initializeSubComponents(){
     sf::Vector2f dims = {(float)width, (float)height/5};
     for (auto bar : ManaBarList)
     {
-        bar->setDimensions(dims);
-        bar->setPosition(sf::Vector2f(0, o * offset - o*(float)bar->offset/2));
+        bar->setDimensions(dims - bar->offset);
+        bar->setPosition(sf::Vector2f(0, o * offset - o*(float)bar->offset.x/2));
         bar->reparent(this);
         bar->initializeSubComponents();
         addChild(bar);

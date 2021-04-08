@@ -27,11 +27,12 @@ UIElement(ui)
 {
     size=barSize;
     name = "Bar";
-    //Placeable::setSize(barSize - sf::Vector2f(offset, offset)*2.0f);
+    setDimensions(barSize-offset);
     font->loadFromFile(Settings::validFontPath);
     BarInfo.setFont(*font);
     BarInfo.setCharacterSize(this->fontsize);
     BarInfo.setRotation(textRotation);
+    BarInfo.setScale(.35f,.35f);
 }
 
 void Bar::initializeSubComponents(){
@@ -48,10 +49,10 @@ void Bar::updateBG(){
 }
 
 void Bar::updateFG(){
-    float fgHeight = barSize.y - 2*offset;
-    float fgWidth = (barSize.x - 2*offset) * amount;
-    float fgOrigY = barSize.y / 2.0f - offset;
-    float fgOrigX = barSize.x / 2.0f - offset;
+    float fgHeight = barSize.y - 2*offset.y;
+    float fgWidth = (barSize.x - 2*offset.y) * amount;
+    float fgOrigY = barSize.y / 2.0f - offset.y;
+    float fgOrigX = barSize.x / 2.0f - offset.x;
     Foreground.setSize({fgWidth, fgHeight});
     Foreground.setOrigin({fgOrigX, fgOrigY});
     Foreground.setPosition(getPosition());
@@ -62,8 +63,8 @@ void Bar::updateFG(){
 void Bar::setDimensions(sf::Vector2f dimensions)
 {
     barSize = dimensions;
-    
-    //Placeable::setSize(dimensions);
+    setHitbox({dimensions*-.5f, {dimensions.x*-.5f, dimensions.y*.5f}, dimensions*.5f,
+               {dimensions.x*.5f, dimensions.y*-.5f}});
     updateBG();
     updateFG();
 }

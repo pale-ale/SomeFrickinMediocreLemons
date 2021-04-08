@@ -27,7 +27,7 @@ class Bar : public UIElement{
     void setBGColor(sf::Color);
     virtual void setPosition(const sf::Vector2f &newPosition) override;
 	virtual void setRotation(const float &newRotation) override;
-    const int offset = 1;
+    const sf::Vector2f offset = {1,1};
     virtual bool OnBeginMouseover () override;
     virtual bool OnEndMouseover () override;
     virtual void initializeSubComponents() override;
@@ -49,7 +49,7 @@ class Bar : public UIElement{
     //BarInfo
     sf::Text BarInfo;
     unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
-    unsigned const int fontsize = 10;
+    unsigned const int fontsize = 24;
     //update when changing dimensions
     void updateBG();
     void updateFG();
