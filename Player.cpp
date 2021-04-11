@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Hand.h"
 #include "Player.h"
+#include "cards/PlayerCard.h"
 
 void Player::drawCards(int count)
 {
@@ -140,6 +141,9 @@ void Player::initializeSubComponents()
     playerManaBars->setPosition(getPosition() + manaBarOffset);
     playerManaBars->setRotation(-90);
     addChild(playerManaBars);
+    playerCard->setPosition(getPosition());
+    playerCard->isVisible = false;
+    addChild(playerCard);
 }
 
 Player::Player(UISystem *ui) : UIElement(ui),
@@ -148,7 +152,8 @@ Player::Player(UISystem *ui) : UIElement(ui),
                                playerBar{std::make_shared<Bar>(ui)},
                                cardSelector{std::make_shared<CardSelector>(ui)},
                                playerManaBars{std::make_shared<ManaBars>(ui, 50, 25)},
-                               playerHud{std::make_shared<PlayerHUD>(ui)}
+                               playerHud{std::make_shared<PlayerHUD>(ui)},
+                               playerCard{std::make_shared<PlayerCard>(ui)}
 {
     name = "Player";
 }
@@ -196,6 +201,9 @@ void Player::startSelection(CardSelectionInfo cardSelectionInfo)
     {
         auto c = enemy->battlefield->getCards();
         eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
+        if (c.size() == 0 && cardSelectionInfo.canAttackHero){
+            eligibleCards.push_back(enemy->playerCard.get());
+        }
     }
     if (cardSelectionInfo.selfBattlefield)
     {

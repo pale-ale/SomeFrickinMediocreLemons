@@ -5,6 +5,7 @@ struct CardSelectionInfo{
     bool enemyBattlefield = true;
     bool selfHand = false;
     bool enemyHand = false;
+    bool canAttackHero = true;
     int maxCompleteSelectionCount = 1;
     int minCompleteSelecitonCount = 1;
     int minRequiredTargetCount = 1;

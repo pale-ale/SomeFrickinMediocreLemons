@@ -20,6 +20,7 @@ class Card;
 class CardSelector;
 class Game;
 class PlayerHUD;
+class PlayerCard;
 
 using std::shared_ptr;
 using namespace std;
@@ -28,6 +29,7 @@ class Player: public UIElement{
     private:
     list<shared_ptr<Card>> deck = {};
     list<shared_ptr<Card>> graveyard = {};
+    shared_ptr<PlayerCard> playerCard;
     const sf::Vector2f deckOffset = {-163,-50};
     const sf::Vector2f handOffset = {0,50};
     const sf::Vector2f lifePointOffset = {125,-30};
