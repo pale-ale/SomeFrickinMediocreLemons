@@ -1,8 +1,14 @@
 #pragma once
 
-#include "Button.h"
 #include <SFML/Graphics.hpp>
 #include "../IAction.h"
+#include "../ui/UIElement.h"
+
+using std::shared_ptr;
+
+class Button;
+template <typename ...T>
+class IEventCallback;
 
 class ActionSelector : public UIElement{
     public: 
@@ -21,7 +27,7 @@ class ActionSelector : public UIElement{
     virtual void draw(sf::RenderTarget &target, sf::RenderStates state) const override{
         UIElement::draw(target, state);
         for (auto sprite : actionSprites){
-            target.draw(*sprite.get());
+            target.draw(*sprite);
         }
     }
 };

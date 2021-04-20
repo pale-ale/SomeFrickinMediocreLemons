@@ -2,7 +2,7 @@
 
 using namespace std;
 
-enum cardType{
+enum CardType{
 	MagicCard,
 	MonsterCard,
 	};

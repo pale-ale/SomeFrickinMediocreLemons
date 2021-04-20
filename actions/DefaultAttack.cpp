@@ -1,5 +1,8 @@
 #include "DefaultAttack.h"
 
+#include "../Card.h"
+#include "../Player.h"
+
 DefaultAttack::DefaultAttack(Player *player, Card *card): owningPlayer{player}, owningCard{card}{
   if (!image.loadFromFile(Settings::programDir + string(Settings::relativeAssetActionPath) + "DefaultAttackAction.png"))
         {

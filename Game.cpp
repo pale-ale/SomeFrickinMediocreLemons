@@ -1,29 +1,35 @@
 #include "Game.h"
+#include "Player.h"
 
-Game::Game(): 
-sf::Drawable(){
-    if (texture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetTabletopPath)){
+Game::Game() : sf::Drawable()
+{
+    if (texture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetTabletopPath))
+    {
         mainTexture.setTexture(texture);
         cout << "Game: Loaded tabletop texture.\n";
     }
-    else{
-        cout << "Game: Couldn't find tabletop texture at \'" << 
-        Settings::programDir << 
-        Settings::relativeAssetTabletopPath << "\'. Exiting.\n";
+    else
+    {
+        cout << "Game: Couldn't find tabletop texture at \'" << Settings::programDir << Settings::relativeAssetTabletopPath << "\'. Exiting.\n";
         throw;
     }
 }
 
-Player* Game::getNextTurnPlayer(){
-    if (players.size() < 1){
+Player *Game::getNextTurnPlayer()
+{
+    if (players.size() < 1)
+    {
         cout << "Game: No players to start game\n";
         return nullptr;
     }
     int advanceCount = 0;
     auto player_it = players.begin();
-    if (currentTurnPlayer){
-        while (player_it != players.end()){
-            if(*player_it == currentTurnPlayer){
+    if (currentTurnPlayer)
+    {
+        while (player_it != players.end())
+        {
+            if (*player_it == currentTurnPlayer)
+            {
                 advanceCount++;
                 break;
             }
@@ -31,7 +37,9 @@ Player* Game::getNextTurnPlayer(){
             advanceCount++;
         }
         advanceCount %= players.size();
-    }else{
+    }
+    else
+    {
         advanceCount = rand() % players.size();
     }
     player_it = players.begin();
@@ -39,30 +47,51 @@ Player* Game::getNextTurnPlayer(){
     return *player_it;
 }
 
-void Game::addPlayer(Player* player){
-    if (players.size() == 1){
-        player->setPosition({Settings::defaultWidth/2, 0});
+void Game::addPlayer(Player *player)
+{
+    if (players.size() == 1)
+    {
+        player->setPosition({Settings::defaultWidth / 2, 0});
         player->setRotation(180);
-    }else{
-        player->setPosition({Settings::defaultWidth/2, Settings::defaultHeight});
+    }
+    else
+    {
+        player->setPosition({Settings::defaultWidth / 2, Settings::defaultHeight});
     }
     player->setGame(this);
     players.push_back(player);
-    if (players.size() == 2){
-        for (auto p : players){
-            p->addMana({20,20,15,7,10});
+    if (players.size() == 2)
+    {
+        for (auto p : players)
+        {
+            p->addMana({20, 20, 15, 7, 10});
         }
     }
 }
 
-void Game::startTurnOfPlayer(Player* player){
-    if (currentTurnPlayer){
+void Game::startTurnOfPlayer(Player *player)
+{
+    if (currentTurnPlayer)
+    {
         currentTurnPlayer->bIsMyTurn = false;
     }
     currentTurnPlayer = player;
     currentTurnPlayer->bIsMyTurn = true;
 }
 
-void Game::startTurnOfNextPlayer(){
+void Game::startTurnOfNextPlayer()
+{
     startTurnOfPlayer(getNextTurnPlayer());
+}
+
+void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    target.draw(mainTexture, states);
+    auto playerIterator = players.begin();
+
+    while (playerIterator != players.end())
+    {
+        target.draw(**playerIterator);
+        playerIterator++;
+    }
 }

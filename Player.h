@@ -1,26 +1,27 @@
 #pragma once
 
 #include <algorithm>
-#include "Battlefield.h"
 #include <cmath>
-#include "CardSelectionInfo.h"
-#include "Hand.h"
 #include <iostream>
 #include <list>
-#include "ManaType.h"
 #include <SFML/Graphics.hpp>
+
+#include "ManaType.h"
 #include "Settings.h"
-#include "ui/PlayerHUD.h"
+
 #include "ui/Bar.h"
-#include "ui/CardSelector.h"
 #include "ui/ManaBars.h"
+#include "ui/PlayerHUD.h"
 
 class Battlefield;
 class Card;
+class CardSelectionInfo;
 class CardSelector;
 class Game;
-class PlayerHUD;
+class Hand;
+class IAction;
 class PlayerCard;
+class PlayerHUD;
 
 using std::shared_ptr;
 using namespace std;
@@ -51,7 +52,6 @@ class Player: public UIElement{
     void selectCard(const Card* cardToSelect);
     void stopPreviewingCard();
     void cardSelectionUpdated();
-    IAction* awaitingSelection = nullptr;
     void addCardToDeck(shared_ptr<Card> card);
     shared_ptr<Card> removeCardFromDeck(Card* card);
     shared_ptr<Card> removeCardFromDeckTop();
@@ -63,17 +63,19 @@ class Player: public UIElement{
 	void addMana(const FMana& m);
     const FMana getMana() const {return mana;}
 	void clearMana();
-    bool bIsMyTurn = false;
     void startSelection(CardSelectionInfo cardSelectionInfo);
+    int getLifePoints();
+    void setLifePoints(int);
+    virtual void initializeSubComponents() override;
+
+    IAction* awaitingSelection = nullptr;
+    bool bIsMyTurn = false;
     std::shared_ptr<Hand> playerhand;
     std::shared_ptr<Battlefield> battlefield;
     std::shared_ptr<PlayerHUD> playerHud;
     std::shared_ptr<Bar> playerBar;
     std::shared_ptr<ManaBars> playerManaBars;
     std::shared_ptr<CardSelector> cardSelector;
-    int getLifePoints();
-    void setLifePoints(int);
-    virtual void initializeSubComponents() override;
     
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{

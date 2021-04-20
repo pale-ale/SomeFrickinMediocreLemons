@@ -1,8 +1,13 @@
+#include "Battlefield.h"
 #include "Card.h"
 #include "Game.h"
 #include "Hand.h"
+#include "IAction.h"
 #include "Player.h"
+
 #include "cards/PlayerCard.h"
+
+#include "ui/CardSelector.h"
 
 void Player::drawCards(int count)
 {
@@ -130,8 +135,8 @@ void Player::initializeSubComponents()
     playerHud->setPosition(getPosition());
     cardSelector->reparent(this);
     addChild(cardSelector);
-    ui->addToHUD(playerHud.get());
-    ui->addToHUD(cardSelector.get());
+    ui->addToHUDLayer(playerHud);
+    ui->addToHUDLayer(cardSelector);
     playerBar->initializeSubComponents();
     playerBar->setPosition(getPosition() + lifePointOffset);
     playerBar->setRotation(-90);
@@ -224,26 +229,12 @@ void Player::startSelection(CardSelectionInfo cardSelectionInfo)
     cardSelector->setSelectionTarget(eligibleCards, false, cardSelectionInfo);
 }
 
-void Player::previewCard(const Card *cardToPreview)
-{
-    if (!cardSelector->bIsCurrentlySelecting)
-    {
-        playerHud->previewCard(cardToPreview);
-    }
-
-}
-
 void Player::selectCard(const Card *cardToSelect)
 {
     if (!cardSelector->bIsCurrentlySelecting)
     {
         playerHud->selectCard(cardToSelect);
     }
-}
-
-void Player::stopPreviewingCard()
-{
-    playerHud->previewCard(nullptr);
 }
 
 void Player::cardSelectionUpdated()

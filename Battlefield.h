@@ -48,7 +48,7 @@ class Battlefield : public Placeable{
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{
         Placeable::draw(target, state);
         for (auto x : emptySpaceDisplay){
-            target.draw(*x.get());
+            target.draw(*x);
         }
     }
     sf::Vector2f toGlobal(const sf::Vector2f &inPos){

@@ -1,16 +1,21 @@
 #pragma once
 
-#include <iostream>
-#include "UISystem.h"
 #include <cmath>
+#include <iostream>
 #include <SFML/Graphics.hpp>
-#include "../Settings.h"
+
+#include "UIElement.h"
+
 #include "../ManaType.h"
-#include "../events/EventCallback.h"
+#include "../Settings.h"
+
 using std::cout;
 using std::endl;
 
+template <typename ...T>
+class IEventCallback;
 class Player;
+class UISystem;
 
 class Bar : public UIElement{
     public:
@@ -48,7 +53,7 @@ class Bar : public UIElement{
     sf::RectangleShape Background;
     //BarInfo
     sf::Text BarInfo;
-    unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
+    std::unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
     unsigned const int fontsize = 24;
     //update when changing dimensions
     void updateBG();

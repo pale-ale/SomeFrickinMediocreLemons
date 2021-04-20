@@ -106,9 +106,20 @@ void UISystem::removeListener(UIElement *listener)
     throw;
 }
 
-void UISystem::addToHUD(UIElement *hudElement)
+void UISystem::addToHUDLayer(weak_ptr<UIElement> hudElement)
 {
     hudElements.push_back(hudElement);
+}
+
+void UISystem::removeFromHUDLayer(weak_ptr<UIElement> hudElement)
+{
+    if (isWeakPtrIn(hudElement, hudElements)){
+        removeWeakPtr(hudElement, hudElements);
+    }
+    else{
+        cout << "UISystem: Trying to remove a hudElement which is not on the HUD.\n";
+        throw;
+    }
 }
 
 void UISystem::handleMouseDownEvent(const sf::Event &mouseDownEvent)

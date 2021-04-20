@@ -1,12 +1,14 @@
 #pragma once
 
-#include "../IAction.h"
-#include <string>
 #include <iostream>
-#include "../Card.h"
-#include "../Player.h"
+#include <string>
+
+#include "../IAction.h"
 
 using std::string;
+
+class Card;
+class Player;
 
 class DefaultAttack : public IAction
 {

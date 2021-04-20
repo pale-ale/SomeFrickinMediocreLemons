@@ -1,11 +1,16 @@
 #pragma once
 
 #include <iostream>
-#include "UISystem.h"
+#include <memory.h>
 #include <SFML/Graphics.hpp>
-#include "../Settings.h"
-#include "../events/EventCallback.h"
 
+#include "UIElement.h"
+
+#include "../Settings.h"
+
+template<typename ...T>
+class IEventCallback;
+class UISystem;
 
 class Button : public UIElement{
     public:
@@ -14,20 +19,16 @@ class Button : public UIElement{
            sf::Color mouseOverColor = {200,200,200,100},
            vector<sf::Vector2f> corners = {{-25, -37.5}, {-25, 37.5}, {25, 37.5}, {25, -37.5}}
            );
-    ~Button(){
-        cout << "Button: Destroying button '" << name << "'.\n";
-        if(ui){
-            ui->removeListener(this);
-        }
-    }
-    shared_ptr<IEventCallback<>> onMouseDownCallback = nullptr;
-    shared_ptr<IEventCallback<>> onMouseUpCallback = nullptr;
-    shared_ptr<IEventCallback<>> onClickCallback = nullptr;
-    shared_ptr<IEventCallback<>> onDragStartCallback = nullptr;
-    shared_ptr<IEventCallback<const sf::Vector2f&>> onDragMoveCallback = nullptr;
-    shared_ptr<IEventCallback<>> onDragEndCallback = nullptr;
-    shared_ptr<IEventCallback<>> onBeginMouseoverCallback = nullptr;
-    shared_ptr<IEventCallback<>> onEndMouseoverCallback = nullptr;
+    ~Button();
+
+    std::shared_ptr<IEventCallback<>> onMouseDownCallback = nullptr;
+    std::shared_ptr<IEventCallback<>> onMouseUpCallback = nullptr;
+    std::shared_ptr<IEventCallback<>> onClickCallback = nullptr;
+    std::shared_ptr<IEventCallback<>> onDragStartCallback = nullptr;
+    std::shared_ptr<IEventCallback<const sf::Vector2f&>> onDragMoveCallback = nullptr;
+    std::shared_ptr<IEventCallback<>> onDragEndCallback = nullptr;
+    std::shared_ptr<IEventCallback<>> onBeginMouseoverCallback = nullptr;
+    std::shared_ptr<IEventCallback<>> onEndMouseoverCallback = nullptr;
     bool handleEvent = true;
     bool isPressed = false;
 

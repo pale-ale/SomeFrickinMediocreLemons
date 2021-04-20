@@ -2,6 +2,8 @@
 #include <iostream>
 #include "../Card.h"
 #include "../Player.h"
+#include "../events/EventCallback.h"
+#include "../ui/Button.h"
 
 using std::cout;
 

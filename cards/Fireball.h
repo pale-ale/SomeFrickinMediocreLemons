@@ -1,7 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+
 #include "../Card.h"
-#include "../Player.h"
+
+template <typename ...T>
+class IEventCallback;
+class Player;
 
 using std::cout;
 
@@ -13,9 +17,5 @@ class Fireball : public Card{
 	static constexpr FMana cost = FMana({0,0,0,1,0});
 	virtual void play() override;
 	virtual void onCardBeginMouseover() override;
-	virtual void setupButtonBinding() override {
-		cardButton->onMouseDownCallback = std::make_shared<EventCallback<Card>>(this, &Card::onCardClicked);
-		cardButton->onBeginMouseoverCallback = std::make_shared<EventCallback<Fireball>>(this, &Fireball::onCardBeginMouseover);
-		cardButton->onEndMouseoverCallback = std::make_shared<EventCallback<Card>>(this, &Card::onCardEndMouseover);
-	}
+	virtual void setupButtonBinding() override;
 };

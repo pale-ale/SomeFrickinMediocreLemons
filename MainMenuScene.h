@@ -1,7 +1,9 @@
-#include "Scene.h"
 #include <SFML/Graphics.hpp>
-#include "ui/UISystem.h"
+
+#include "Scene.h"
+
 #include "ui/Button.h"
+#include "ui/UISystem.h"
 
 class MainMenuScene: public SceneBase{
     UISystem* ui;
@@ -32,7 +34,7 @@ class MainMenuScene: public SceneBase{
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override {
         SceneBase::draw(target, state);
-        target.draw(*playButton.get());
+        target.draw(*playButton);
         target.draw(playLabel);
         target.draw(settingsLabel);
         target.draw(mainMenuLabel);

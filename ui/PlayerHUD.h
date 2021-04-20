@@ -1,11 +1,8 @@
 #pragma once
 
-#include "../Settings.h"
 #include "UISystem.h"
-#include "CardPreview.h"
-#include "MultiSelect.h"
-#include "ActionSelector.h"
 
+class ActionSelector;
 class Card;
 class CardPreview;
 
@@ -16,7 +13,6 @@ public:
     void setDeckCount(int deckCount);
     void setHandCount(int handCount);
     virtual void setPosition(const sf::Vector2f &newPosition) override;
-    void previewCard(const Card* cardToPreview);
     void selectCard(const Card* cardToPreview);
 
 private:

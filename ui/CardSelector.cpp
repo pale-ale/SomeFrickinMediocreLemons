@@ -1,5 +1,6 @@
 #include "CardSelector.h"
 #include "../Player.h"
+#include "../events/EventCallback.h"
 
 CardSelector::CardSelector(UISystem *ui) : UIElement(ui)
 {

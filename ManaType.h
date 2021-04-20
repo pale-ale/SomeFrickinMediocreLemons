@@ -52,7 +52,7 @@ struct FMana{
         case EManaType::White:
             return White;
         default:
-            cout << "Bad mana type!\n";
+            std::cout << "Bad mana type!\n";
             throw;
         }
     }

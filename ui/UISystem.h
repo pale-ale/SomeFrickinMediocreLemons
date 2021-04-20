@@ -22,9 +22,10 @@ public:
     list<weak_ptr<UIElement>> mouseOveredListeners = {};
     weak_ptr<UIElement> currentlyInteractingElement;
     bool bWasInteractingElementDragged = false;
-    list<UIElement *> hudElements = {};
+    list<weak_ptr<UIElement>> hudElements = {};
     void addListener(weak_ptr<UIElement> newListener);
-    void addToHUD(UIElement* hudElement);
+    void addToHUDLayer(weak_ptr<UIElement> hudElement);
+    void removeFromHUDLayer(weak_ptr<UIElement> hudElement);
     void removeListener(UIElement *listener);
     void handleMouseDownEvent(const sf::Event &mouseDownEvent);
     void handleMouseUpEvent(const sf::Event &mouseUpEvent);
@@ -68,7 +69,7 @@ protected:
     {
         UIElement::draw(target, state);
         for (auto &e : hudElements){
-            target.draw(*e);
+            target.draw(*e.lock());
         }
     }
 };

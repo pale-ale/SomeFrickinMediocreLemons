@@ -1,4 +1,6 @@
 #include "Button.h"
+#include "../events/EventCallback.h"
+#include "UISystem.h"
 
 Button::Button(UISystem* ui, sf::Color defaultColor, sf::Color mouseOverColor, vector<sf::Vector2f> corners):
 UIElement(ui), defaultColor{defaultColor}, mouseOverColor{mouseOverColor}{
@@ -6,6 +8,13 @@ UIElement(ui), defaultColor{defaultColor}, mouseOverColor{mouseOverColor}{
     hitbox = corners;
     buttonTexture = sf::Texture();
     updateShape();
+}
+
+Button::~Button(){
+    cout << "Button: Destroying button '" << name << "'.\n";
+    if(ui){
+        ui->removeListener(this);
+    }
 }
 
 void Button::updateShape(){

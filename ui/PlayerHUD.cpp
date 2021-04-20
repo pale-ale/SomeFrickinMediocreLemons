@@ -1,5 +1,8 @@
 #include "PlayerHUD.h"
 #include "../Card.h"
+#include "CardPreview.h"
+#include "../Settings.h"
+#include "ActionSelector.h"
 
 PlayerHUD::PlayerHUD(UISystem* ui):
 UIElement(ui){
@@ -19,23 +22,11 @@ UIElement(ui){
     addChild(actionSelector);
 }
 
-void PlayerHUD::previewCard(const Card* cardToPreview){
-    if (cardPreview){
-        removeChild(cardPreview.get());
-        cardPreview = nullptr;
-    }
-    if (cardToPreview){
-        cardPreview = std::make_unique<CardPreview>(ui, cardToPreview);
-        cardPreview->setPosition(getPosition() + cardPreviewOffset);
-        addChild(cardPreview);
-    }
-}
-
 void PlayerHUD::selectCard(const Card* cardToPreview){
     if (actionSelector){
         actionSelector->clear();
         for (auto action : cardToPreview->getActions()){
-            actionSelector->addAction(*action.get());
+            actionSelector->addAction(*action);
         }
     }
 }

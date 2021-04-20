@@ -1,19 +1,23 @@
 #pragma once
-#include "actions/DefaultAttack.h"
-#include "cardTypes.h"
-#include "ECardLocation.h"
-#include "events/EventCallback.h"
 #include <iostream>
+#include <SFML/Graphics.hpp>
+
+#include "CardTypes.h"
+#include "ECardLocation.h"
 #include "IDragAndDroppable.h"
 #include "ManaType.h"
-#include <memory>
-#include <SFML/Graphics.hpp>
-#include <string>
-#include "ui/Button.h"
-#include "ui/MultiSelect.h"
-#include "ui/QuickTextBox.h"
+#include "Settings.h"
+
+#include "ui/UIElement.h"
 
 using std::cout;
+
+class Button;
+class Battlefield;
+class CardPreview;
+class QuickTextBox;
+class IAction;
+class Player;
 
 class Card : public UIElement, public IDragAndDroppable{
 	public:
@@ -24,7 +28,7 @@ class Card : public UIElement, public IDragAndDroppable{
 		 const FMana cost = FMana());
 	virtual ~Card();
 	shared_ptr<Button> cardButton;
-	cardType getType();
+	CardType getType();
 	int getPower() const{return power;}
 	void moveGraveyard();
 	bool checkGraveyard();
@@ -54,12 +58,12 @@ class Card : public UIElement, public IDragAndDroppable{
 	virtual void takeDamage(const int& amount);
 	virtual void onCardDeath(){cout << "Card: " << name << " received lethal damage.\n";}
     virtual void setSnapPoints(const vector<sf::Vector2f> &points){snapPoints = points;}
-	virtual void setOwner(Player *newOwner){owner = newOwner;}
+	virtual void setOwner(Player *newOwner);
 	const vector<shared_ptr<IAction>> getActions() const {return actions;}
 	FMana cost;
 
 	protected:
-	cardType type;
+	CardType type;
 	string description = "DefaultDescription";
 	string label = "DefaultLabel";
 	string pathToImage;
@@ -74,6 +78,7 @@ class Card : public UIElement, public IDragAndDroppable{
 	bool tapped = false;
 	Player* owner = nullptr;
 	std::shared_ptr<sf::Font> font = std::make_unique<sf::Font>();
+	std::shared_ptr<CardPreview> preview = nullptr;
 	sf::Vector2f scaleVectorSettings(const sf::Vector2f &v){
 		return {v.x*Settings::cardScale.x, v.y*Settings::cardScale.y};
 	}
@@ -84,33 +89,15 @@ class Card : public UIElement, public IDragAndDroppable{
 	
 	sf::Texture cardBackTexture;
 	sf::Texture cardFrontTexture;
-	QuickTextBox cardDescription;
+	std::shared_ptr<QuickTextBox> cardDescription;
 	sf::Text hpStatDisplay;
 	sf::Text powerStatDisplay;
 	sf::Text cardLabel;
 	std::shared_ptr<sf::Texture> cardImageTexture;
-	shared_ptr<MultiSelect> multiSelector;
 
 	sf::Sprite cardSprite;
 	sf::Sprite imageSprite;
 	vector<shared_ptr<IAction>> actions;
 
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override
-    {
-		if (multiSelector){
-			target.draw(*multiSelector.get());
-		}
-		if (isVisible){
-			UIElement::draw(target, states);
-			target.draw(cardSprite, states);
-			if (frontFaceUp){
-				target.draw(imageSprite, states);
-				target.draw(*cardButton, states);
-				target.draw(cardDescription, states);
-				target.draw(hpStatDisplay, states);
-				target.draw(powerStatDisplay, states);
-				target.draw(cardLabel, states);
-			}
-		}
-    }
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

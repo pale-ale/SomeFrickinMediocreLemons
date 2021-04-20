@@ -5,6 +5,9 @@
 #include "../CardSelectionInfo.h"
 #include "Button.h"
 
+template <typename ...T>
+class IEventCallback;
+
 class CardSelector : public UIElement{
     public:
     CardSelector(UISystem* ui);
@@ -33,7 +36,7 @@ class CardSelector : public UIElement{
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{
         for (auto& b : buttons){
-            target.draw(*(b.get()));
+            target.draw(*b);
         }
     }
     void selectedCardClickCallback();
