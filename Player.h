@@ -38,6 +38,7 @@ class Player: public UIElement{
     const sf::Vector2f graveyardOffset = {163,-50};
     const sf::Vector2f battlefieldOffset = {0,-125};
 	FMana mana;
+    const Card *selectedCard;
     Game* game = nullptr;
     int lifePoints=Settings::StartLifePoints;
 
@@ -50,6 +51,7 @@ class Player: public UIElement{
     void playCard(Card *card, int slot = -1);
     void previewCard(const Card* cardToPreview);
     void selectCard(const Card* cardToSelect);
+    const Card *getSelectedCard() const {return selectedCard;}
     void stopPreviewingCard();
     void cardSelectionUpdated();
     void addCardToDeck(shared_ptr<Card> card);

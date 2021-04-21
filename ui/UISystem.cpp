@@ -60,7 +60,7 @@ list<weak_ptr<UIElement>> UISystem::getListenersUnderCoords(const sf::Vector2f &
     return listeners;
 }
 
-void UISystem::addListener(weak_ptr<UIElement> newListener)
+void UISystem::addEventListener(weak_ptr<UIElement> newListener)
 {
     auto listenerSharedptr = static_pointer_cast<UIElement>(newListener.lock());
     if (!listenerSharedptr)
@@ -80,7 +80,7 @@ void UISystem::addListener(weak_ptr<UIElement> newListener)
     eventListeners.push_back(listenerSharedptr);
 }
 
-void UISystem::removeListener(UIElement *listener)
+void UISystem::removeEventListener(UIElement *listener)
 {
     cout << "UISystem: Removing listener at: " << listener << (listener ? (" named '" + listener->getName() + "'\n") : "\n");
     auto start = eventListeners.begin();
@@ -96,7 +96,7 @@ void UISystem::removeListener(UIElement *listener)
         auto l = start->lock().get();
         if (l == listener || !l)
         {
-            removeWeakPtr(*start, mouseOveredListeners);
+            removePtr(*start, mouseOveredListeners);
             eventListeners.erase(start);
             return;
         }
@@ -106,20 +106,14 @@ void UISystem::removeListener(UIElement *listener)
     throw;
 }
 
-void UISystem::addToHUDLayer(weak_ptr<UIElement> hudElement)
+void UISystem::addToHUDLayer(shared_ptr<UIElement> hudElement)
 {
     hudElements.push_back(hudElement);
 }
 
-void UISystem::removeFromHUDLayer(weak_ptr<UIElement> hudElement)
+void UISystem::removeFromHUDLayer(UIElement *hudElement)
 {
-    if (isWeakPtrIn(hudElement, hudElements)){
-        removeWeakPtr(hudElement, hudElements);
-    }
-    else{
-        cout << "UISystem: Trying to remove a hudElement which is not on the HUD.\n";
-        throw;
-    }
+    removePtr(hudElement, hudElements);
 }
 
 void UISystem::handleMouseDownEvent(const sf::Event &mouseDownEvent)
@@ -129,17 +123,10 @@ void UISystem::handleMouseDownEvent(const sf::Event &mouseDownEvent)
     for (auto l : listeners)
     {
         auto lPtr = l.lock();
-        if (!lPtr)
-        {
-            // not yet sure if this is actually an error one sohuld care about if a button is destroyed 
-            // when considered for an event...
-            //cout << "UISystem: Got invalid UIElement under Cursor.\n";
-            //throw;
-            return;
-        }
-        if (lPtr->isVisible && lPtr->OnMouseButtonDown())
+        if (lPtr && lPtr->isVisible && lPtr->OnMouseButtonDown(mouseCoords))
         {
             currentlyInteractingElement = l;
+            return;
         }
     }
 }
@@ -163,7 +150,7 @@ void UISystem::handleMouseUpEvent(const sf::Event &mouseUpEvent)
     }
     for (auto l : getListenersUnderCoords(mouseCoords))
     {
-        if (l.lock()->isVisible && l.lock()->OnMouseButtonUp())
+        if (l.lock()->isVisible && l.lock()->OnMouseButtonUp(mouseCoords))
         {
             return;
         }
@@ -191,7 +178,7 @@ void UISystem::handleMouseMoveEvent(const sf::Event &event)
     for (auto l_it = mouseOveredListeners.begin(); l_it != mouseOveredListeners.end(); l_it++)
     {
         //is the listener part of the currently mouseovered ones?
-        if (!isWeakPtrIn(*l_it, currentMOElements))
+        if (!isPtrIn(*l_it, currentMOElements))
         {
             auto lPtr = l_it->lock();
             //if not, the listener is not being mouseovered anymore
@@ -202,11 +189,11 @@ void UISystem::handleMouseMoveEvent(const sf::Event &event)
             mouseOveredListeners.erase(l_it--);
         }
         //remove the listener from the input queue aswell for performance (maybe?)
-        removeWeakPtr(*l_it, currentMOElements);
+        removePtr(*l_it, currentMOElements);
     }
     for (auto listener : currentMOElements)
     {
-        if (!isWeakPtrIn(listener, mouseOveredListeners))
+        if (!isPtrIn(listener, mouseOveredListeners))
         {
             //if the listener is new
             mouseOveredListeners.push_back(listener);

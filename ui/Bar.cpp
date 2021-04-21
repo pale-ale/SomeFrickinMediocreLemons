@@ -37,7 +37,7 @@ UIElement(ui)
 
 void Bar::initializeSubComponents(){
     UIElement::initializeSubComponents();
-    ui->addListener(static_pointer_cast<UIElement>(weak_from_this().lock()));
+    ui->addEventListener(static_pointer_cast<UIElement>(weak_from_this().lock()));
 }
 
 void Bar::updateBG(){

@@ -22,15 +22,15 @@ public:
     list<weak_ptr<UIElement>> mouseOveredListeners = {};
     weak_ptr<UIElement> currentlyInteractingElement;
     bool bWasInteractingElementDragged = false;
-    list<weak_ptr<UIElement>> hudElements = {};
-    void addListener(weak_ptr<UIElement> newListener);
-    void addToHUDLayer(weak_ptr<UIElement> hudElement);
-    void removeFromHUDLayer(weak_ptr<UIElement> hudElement);
-    void removeListener(UIElement *listener);
+    list<shared_ptr<UIElement>> hudElements = {};
+    void addEventListener(weak_ptr<UIElement> newListener);
+    void addToHUDLayer(shared_ptr<UIElement> hudElement);
+    void removeFromHUDLayer(UIElement *hudElement);
+    void removeEventListener(UIElement *listener);
     void handleMouseDownEvent(const sf::Event &mouseDownEvent);
     void handleMouseUpEvent(const sf::Event &mouseUpEvent);
     void handleMouseMoveEvent(const sf::Event &mouseMoveEvent);
-    bool isWeakPtrIn(const weak_ptr<UIElement> e, const list<weak_ptr<UIElement>> &l)
+    bool isPtrIn(const weak_ptr<UIElement> e, const list<weak_ptr<UIElement>> &l)
     {
         for (auto x : l){
             if (x.lock() == e.lock() && x.lock())
@@ -38,7 +38,7 @@ public:
         }
         return false;
     }
-    bool removeWeakPtr(const weak_ptr<UIElement> e, list<weak_ptr<UIElement>> &l)
+    bool removePtr(const weak_ptr<UIElement> e, list<weak_ptr<UIElement>> &l)
     {
         auto start = l.begin();
         auto end = l.end();
@@ -52,10 +52,18 @@ public:
         }
         return false;
     }
-
-    //unused, spawning will be implemented at some point or maybe scrapped...
-    //template <class T>
-    //UIElement *spawnNew();
+    bool removePtr(const UIElement *e, list<shared_ptr<UIElement>> &l){
+        auto start = l.begin();
+        auto end = l.end();
+        while (start != end){
+            if (start->get() == e){
+                l.erase(start);
+                return true;
+            }
+            ++start;
+        }
+        return false;
+    }
 
 private:
     sf::RenderWindow *window;
@@ -69,7 +77,7 @@ protected:
     {
         UIElement::draw(target, state);
         for (auto &e : hudElements){
-            target.draw(*e.lock());
+            target.draw(*e);
         }
     }
 };

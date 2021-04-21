@@ -32,8 +32,8 @@ class Button : public UIElement{
     bool handleEvent = true;
     bool isPressed = false;
 
-    virtual bool OnMouseButtonDown() override;
-    virtual bool OnMouseButtonUp() override;
+    virtual bool OnMouseButtonDown(const sf::Vector2f &mouseLocation) override;
+    virtual bool OnMouseButtonUp(const sf::Vector2f &mouseLocation) override;
     virtual bool OnBeginMouseover() override;
     virtual bool OnEndMouseover() override;
     virtual void OnClick() override;

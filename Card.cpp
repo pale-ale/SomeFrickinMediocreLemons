@@ -180,8 +180,11 @@ void Card::onCardClicked()
 	}
 	if (cardLocation == battlefieldBattle || cardLocation == battlefieldBattort || cardLocation == battlefieldSupport)
 	{
+		if (owner->getSelectedCard() == this){
+			owner->selectCard(nullptr);
+			return;
+		}
 		owner->selectCard(this);
-		return;
 	}
 }
 
@@ -194,7 +197,7 @@ void Card::onCardBeginMouseover()
 
 void Card::onCardEndMouseover()
 {
-	ui->removeFromHUDLayer(preview);
+	ui->removeFromHUDLayer(preview.get());
 	preview.reset();
 }
 
@@ -235,6 +238,7 @@ void Card::updateCardStatDisplay()
 Card::~Card()
 {
 	cout << "Card: Destroying card " << name << "...\n";
+	ui->removeFromHUDLayer(preview.get());
 }
 
 void Card::draw(sf::RenderTarget &target, sf::RenderStates states) const

@@ -40,7 +40,7 @@ bool TextBox::UpdateContent(){
 //this is for hovering text later if it does not fit to textbox
 void TextBox::initializeSubComponents(){
     UIElement::initializeSubComponents();
-    ui->addListener(static_pointer_cast<UIElement>(weak_from_this().lock()));
+    ui->addEventListener(static_pointer_cast<UIElement>(weak_from_this().lock()));
 }
 
 bool TextBox::ChangeContent(char* content){

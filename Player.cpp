@@ -231,6 +231,7 @@ void Player::startSelection(CardSelectionInfo cardSelectionInfo)
 
 void Player::selectCard(const Card *cardToSelect)
 {
+    selectedCard = cardToSelect;
     if (!cardSelector->bIsCurrentlySelecting)
     {
         playerHud->selectCard(cardToSelect);

@@ -10,8 +10,8 @@ protected:
     UIElement(UISystem *ui) : ui{ui} {};
 
 public:
-    virtual bool OnMouseButtonDown() { return false; }
-    virtual bool OnMouseButtonUp() { return false; }
+    virtual bool OnMouseButtonDown(const sf::Vector2f &mouseLocation) { return false; }
+    virtual bool OnMouseButtonUp(const sf::Vector2f &mouesLocation) { return false; }
     virtual void OnClick() {cout << "UIElement: Got clicked\n";}
     virtual void OnDragStart(){ cout << "UIElement: Getting dragged\n";}
     virtual void OnDragMove(const sf::Vector2f &newMouseLocation){}

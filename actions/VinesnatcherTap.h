@@ -1,11 +1,12 @@
 #pragma once
 
+#include <iostream>
+#include <string>
+
 #include "../Card.h"
 #include "../IAction.h"
-#include <iostream>
 #include "../Player.h"
 #include "../Settings.h"
-#include <string>
 
 using std::string;
 using std::cout;

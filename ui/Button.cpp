@@ -13,7 +13,7 @@ UIElement(ui), defaultColor{defaultColor}, mouseOverColor{mouseOverColor}{
 Button::~Button(){
     cout << "Button: Destroying button '" << name << "'.\n";
     if(ui){
-        ui->removeListener(this);
+        ui->removeEventListener(this);
     }
 }
 
@@ -36,7 +36,7 @@ void Button::initializeSubComponents(){
     UIElement::initializeSubComponents();
     if (ui)
 	{
-		ui->addListener(static_pointer_cast<UIElement>(shared_from_this()));
+		ui->addEventListener(static_pointer_cast<UIElement>(shared_from_this()));
 	}else{
 		cout << "Button: A UI object shouldn't be created without a valid UI pointer\n";
 	}
@@ -58,8 +58,8 @@ void Button::setScale(float xScale, float yScale){
     buttonShape.setScale({xScale, yScale});
 }
 
-bool Button::OnMouseButtonDown(){
-    UIElement::OnMouseButtonDown();
+bool Button::OnMouseButtonDown(const sf::Vector2f &mouseLocation){
+    UIElement::OnMouseButtonDown(mouseLocation);
     //we wouldnt want our mdown-callback to change the handlevent param before returning
     bool returnValue = handleEvent;
     isPressed = true;
@@ -71,8 +71,8 @@ bool Button::OnMouseButtonDown(){
     return returnValue;
 }
 
-bool Button::OnMouseButtonUp(){
-    UIElement::OnMouseButtonUp();
+bool Button::OnMouseButtonUp(const sf::Vector2f &mouseLocation){
+    UIElement::OnMouseButtonUp(mouseLocation);
     //we wouldnt want our mup-callback to change the handlevent param before returning
     bool returnValue = handleEvent;
     isPressed = false;
