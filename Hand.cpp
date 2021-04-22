@@ -12,7 +12,7 @@ void Hand::updateHandPositions()
     int xPos = transform.getPosition().x;
     int yPos = transform.getPosition().y;
     int leftHandBoundary = xPos + handOffset.x - handwidth / 2;
-    float rotationStep = abs(leftmostRotation) / handCards.size();
+    float rotationStep = handCards.size() ? abs(leftmostRotation) / handCards.size() : 0;
     while (start != end)
     {
         float x = slotWidth*currentSlotNumber + 0.5*slotWidth - slotWidth*(handCards.size() / 2.0f);

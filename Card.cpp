@@ -20,7 +20,7 @@ bool Card::checkGraveyard()
 {
 	return graveyard;
 }
-CardType Card::getType()
+CardTypes::CardType Card::getType()
 {
 	return type;
 }

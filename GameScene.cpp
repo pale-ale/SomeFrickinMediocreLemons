@@ -1,7 +1,8 @@
 #include "GameScene.h"
 #include "Player.h"
+#include "Card.h"
 
-#include "cards/Vinesnatcher.h"
+#include "CardManagement.h"
 
 GameScene::GameScene(UISystem* ui, SceneManager &sm):
         SceneBase(&sm),
@@ -16,14 +17,14 @@ void GameScene::setup()
 
     for (int i = 0; i < 5; i++)
     {
-        auto fb = std::make_shared<Vinesnatcher>(ui);
+        auto fb = CardSpawner::SpawnCardRandom(ui);
         fb->initializeSubComponents();
         fb->setName("p0Card" + std::to_string(i));
         player0->addCardToDeck(fb);
     }
     for (int i = 0; i < 5; i++)
     {
-        auto fb = std::make_shared<Vinesnatcher>(ui);
+        auto fb = CardSpawner::SpawnCardRandom(ui);
         fb->initializeSubComponents();
         fb->setName("p1Card" + std::to_string(i));
         player1->addCardToDeck(fb);

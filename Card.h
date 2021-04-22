@@ -2,7 +2,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
-#include "CardTypes.h"
+#include "CardManagement.h"
 #include "ECardLocation.h"
 #include "IDragAndDroppable.h"
 #include "ManaType.h"
@@ -27,8 +27,8 @@ class Card : public UIElement, public IDragAndDroppable{
 		 const string title = "title",
 		 const FMana cost = FMana());
 	virtual ~Card();
-	shared_ptr<Button> cardButton;
-	CardType getType();
+	std::shared_ptr<Button> cardButton;
+	CardTypes::CardType getType();
 	int getPower() const{return power;}
 	void moveGraveyard();
 	bool checkGraveyard();
@@ -59,11 +59,11 @@ class Card : public UIElement, public IDragAndDroppable{
 	virtual void onCardDeath(){cout << "Card: " << name << " received lethal damage.\n";}
     virtual void setSnapPoints(const vector<sf::Vector2f> &points){snapPoints = points;}
 	virtual void setOwner(Player *newOwner);
-	const vector<shared_ptr<IAction>> getActions() const {return actions;}
+	const vector<std::shared_ptr<IAction>> getActions() const {return actions;}
 	FMana cost;
 
 	protected:
-	CardType type;
+	CardTypes::CardType type;
 	string description = "DefaultDescription";
 	string label = "DefaultLabel";
 	string pathToImage;
@@ -97,7 +97,7 @@ class Card : public UIElement, public IDragAndDroppable{
 
 	sf::Sprite cardSprite;
 	sf::Sprite imageSprite;
-	vector<shared_ptr<IAction>> actions;
+	vector<std::shared_ptr<IAction>> actions;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
