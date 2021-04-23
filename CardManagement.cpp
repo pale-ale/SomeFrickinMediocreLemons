@@ -1,6 +1,7 @@
 #include "CardManagement.h"
 
 #include "cards/Fireball.h"
+#include "cards/Flamestrike.h"
 #include "cards/Kalle.h"
 #include "cards/Vinesnatcher.h"
 
@@ -11,9 +12,9 @@ std::shared_ptr<Card> CardSpawner::SpawnCard(UISystem *ui, CardTypes::Cards card
     {
     case CardTypes::Cards::Fireball:
         return std::make_shared<Fireball>(ui);
-    /*case CardTypes::Cards::Kalle:
-        return std::make_shared<Kalle>(ui);
-    */case CardTypes::Cards::Vinesnatcher:
+    case CardTypes::Cards::Flamestrike:
+        return std::make_shared<Flamestrike>(ui);
+    case CardTypes::Cards::Vinesnatcher:
         return std::make_shared<Vinesnatcher>(ui);
     
     default:

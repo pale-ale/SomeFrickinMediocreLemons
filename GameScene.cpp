@@ -15,14 +15,14 @@ void GameScene::setup()
     player0->initializeSubComponents();
     player1->initializeSubComponents();
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 10; i++)
     {
         auto fb = CardSpawner::SpawnCardRandom(ui);
         fb->initializeSubComponents();
         fb->setName("p0Card" + std::to_string(i));
         player0->addCardToDeck(fb);
     }
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 10; i++)
     {
         auto fb = CardSpawner::SpawnCardRandom(ui);
         fb->initializeSubComponents();
@@ -33,9 +33,9 @@ void GameScene::setup()
     mainGame.addPlayer(player0.get());
     mainGame.addPlayer(player1.get());
 
-    player0->drawCards(3);
+    player0->drawCards(7);
     player0->printHand();
-    player1->drawCards(3);
+    player1->drawCards(7);
     player1->printHand();
 
     mainGame.startTurnOfNextPlayer();

@@ -7,6 +7,7 @@ class Card;
 class UISystem;
 
 class Fireball;
+class Flamestrike;
 class Kalle;
 class Vinesnatcher;
 
@@ -18,7 +19,7 @@ namespace CardTypes{
 
 	enum Cards{
 		Fireball,
-		//Kalle,
+		Flamestrike,
 		Vinesnatcher,
 		MAX
 	};

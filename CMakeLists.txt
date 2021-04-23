@@ -26,12 +26,16 @@ set(HEADER_FILES KeyboardDelegate.h)
 add_library(Delegate KeyboardDelegate.cpp ${HEADER_FILES})
 
 # headers for specific cards
-set(HEADER_FILES  Card.h   cards/Fireball.h   cards/Kalle.h   cards/Vinesnatcher.h   cards/PlayerCard.h)
-add_library(Cards Card.cpp cards/Fireball.cpp cards/Kalle.cpp cards/Vinesnatcher.cpp cards/PlayerCard.cpp ${HEADER_FILES})
+set(HEADER_FILES  Card.h   cards/Fireball.h   cards/Flamestrike.h   cards/Kalle.h   cards/Vinesnatcher.h   
+cards/PlayerCard.h)
+add_library(Cards Card.cpp cards/Fireball.cpp cards/Flamestrike.cpp cards/Kalle.cpp cards/Vinesnatcher.cpp 
+cards/PlayerCard.cpp ${HEADER_FILES})
 
 # headers for actions
-set(HEADER_FILES  IAction.h actions/DefaultAttack.h   actions/VinesnatcherTap.h   actions/FireballTap.h)
-add_library(Actions         actions/DefaultAttack.cpp actions/VinesnatcherTap.cpp actions/FireballTap.cpp ${HEADER_FILES})
+set(HEADER_FILES  IAction.h actions/DefaultAttack.h   actions/VinesnatcherTap.h   actions/FireballPlay.h
+actions/FlamestrikePlay.h)
+add_library(Actions         actions/DefaultAttack.cpp actions/VinesnatcherTap.cpp actions/FireballPlay.cpp 
+actions/FlamestrikePlay.cpp ${HEADER_FILES})
 
 # headers for Player, Game, CardType, ManaType, Battlefield, Scenes
 set(HEADER_FILES Player.h          Game.h    Battlefield.h   Hand.h   Placeable.h   SceneManager.h   

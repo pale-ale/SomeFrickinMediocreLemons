@@ -11,10 +11,10 @@
 using std::string;
 using std::cout;
 
-class FireballTap : public IAction
+class FireballPlay : public IAction
 {
 public:
-    FireballTap(Player *player, Card *card);
+    FireballPlay(Player *player, Card *card);
     void triggerAction() override;
     void onReceiveSelection(std::list<Card*> cards) override;
     

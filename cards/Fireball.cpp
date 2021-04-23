@@ -1,6 +1,6 @@
 #include "Fireball.h"
 
-#include "../actions/FireballTap.h"
+#include "../actions/FireballPlay.h"
 
 Fireball::Fireball(UISystem* ui) : Card::Card(ui, pathToImage, description, "Fireball", cost)
 {
@@ -8,7 +8,7 @@ Fireball::Fireball(UISystem* ui) : Card::Card(ui, pathToImage, description, "Fir
 }
 
 void Fireball::setupActions(){
-    actions.push_back(std::make_shared<FireballTap>(owner, this));
+    actions.push_back(std::make_shared<FireballPlay>(owner, this));
 }
 
 void Fireball::play(){
