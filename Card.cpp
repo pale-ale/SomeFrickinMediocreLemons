@@ -128,6 +128,12 @@ Card::Card(UISystem *ui, const string imagePath, const string desc, const string
 	cardButton->isDragable = true;
 	cardButton->setName(name + "Button");
 	cardButton->setScale(Settings::cardScale.x, Settings::cardScale.y);
+  	cardButton->onClickCallback = std::make_shared<EventCallback<Card>>(this, &Card::onCardClicked);
+    cardButton->onBeginMouseoverCallback = std::make_shared<EventCallback<Card>>(this, &Card::onCardBeginMouseover);
+    cardButton->onEndMouseoverCallback = std::make_shared<EventCallback<Card>>(this, &Card::onCardEndMouseover);
+    cardButton->onDragMoveCallback = std::make_shared<EventCallback<Card, const sf::Vector2f&>>(this, &Card::OnDragMove);
+    cardButton->onDragEndCallback = std::make_shared<EventCallback<Card>>(this, &Card::OnDragEnd);
+    cardButton->onDragStartCallback = std::make_shared<EventCallback<Card>>(this, &Card::OnDragStart);	
 	font->loadFromFile(Settings::validFontPath);
 	cardDescription->maxCharacterCountPerLine = 18;
 	cardDescription->setText(description);

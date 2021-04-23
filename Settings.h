@@ -15,7 +15,7 @@ class Settings{
     inline static const char* relativeAssetCardBack = "CardBack.png";
     inline static const char* relativeAssetTabletopPath = "assets/Tabletop.png";
     inline static const char* validFontPath = nullptr;
-    inline static const int StartLifePoints = 4000;
+    inline static const int StartLifePoints = 10;
     static const int fontSize = 10;
     static const bool bEnableButtonTint = false;
     static const bool bDrawDebugHitbox = false;

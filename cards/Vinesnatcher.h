@@ -1,15 +1,10 @@
 #pragma once
 
-#include <iostream>
 #include <SFML/Graphics.hpp>
 
 #include "../Card.h"
 
-using std::cout;
-
 class Battlefield;
-class CardSelector;
-class CardSelectionInfo;
 
 class Vinesnatcher : public Card{
 	public:
@@ -20,7 +15,4 @@ class Vinesnatcher : public Card{
 	Vinesnatcher(UISystem* ui);
 	virtual void onCardDeath() override;
 	virtual void setupActions() override;
-	
-
-	virtual void setupButtonBinding() override;
 };

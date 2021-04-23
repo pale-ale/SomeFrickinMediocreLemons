@@ -148,6 +148,9 @@ void Player::initializeSubComponents()
     addChild(playerManaBars);
     playerCard->setPosition(getPosition());
     playerCard->isVisible = false;
+    playerCard->setMaxHealth(lifePoints);
+    playerCard->setHealth(lifePoints);
+    playerCard->setOwner(this);
     addChild(playerCard);
 }
 
@@ -202,12 +205,19 @@ void Player::startSelection(CardSelectionInfo cardSelectionInfo)
 {
     Player *enemy = game->getNextTurnPlayer();
     list<Card *> eligibleCards;
-    if (cardSelectionInfo.enemyBattlefield)
+    if (cardSelectionInfo.enemyBattlefield || cardSelectionInfo.canAttackHeroDirectly)
     {
-        auto c = enemy->battlefield->getCards();
-        eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
-        if (c.size() == 0 && cardSelectionInfo.canAttackHero){
-            eligibleCards.push_back(enemy->playerCard.get());
+        bool heroAdded = false;
+        if (cardSelectionInfo.enemyBattlefield){
+            auto c = enemy->battlefield->getCards();
+            eligibleCards.insert(eligibleCards.end(), c.begin(), c.end());
+            if (c.size() == 0 && cardSelectionInfo.canAttackHero){
+                eligibleCards.push_back(enemy->playerCard.get());
+                heroAdded = true;
+            }
+        }
+        if (cardSelectionInfo.canAttackHeroDirectly && !heroAdded){
+            eligibleCards.push_back(enemy->playerCard.get());            
         }
     }
     if (cardSelectionInfo.selfBattlefield)

@@ -43,7 +43,6 @@ class Card : public UIElement, public IDragAndDroppable{
 	const sf::Vector2f labelCenterOffset = {0, -35};
 	const sf::Vector2f hpStatOffset = {-20, -40};
 	const sf::Vector2f powerStatOffset = {10, -40};
-	virtual void setupButtonBinding() = 0;
 	virtual void setPosition(const sf::Vector2f &newPosition) override;
 	virtual void setRotation(const float &newRotation) override;
 	virtual void onCardClicked();
@@ -59,6 +58,13 @@ class Card : public UIElement, public IDragAndDroppable{
 	virtual void onCardDeath(){cout << "Card: " << name << " received lethal damage.\n";}
     virtual void setSnapPoints(const vector<sf::Vector2f> &points){snapPoints = points;}
 	virtual void setOwner(Player *newOwner);
+	void setHealth(int newHealth){
+		health = newHealth;
+	}
+	void setMaxHealth(int newMaxHealth){
+		maxHealth = newMaxHealth;
+	}
+	int getHealth() const {return health;}
 	const vector<std::shared_ptr<IAction>> getActions() const {return actions;}
 	FMana cost;
 

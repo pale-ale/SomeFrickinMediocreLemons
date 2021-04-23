@@ -1,9 +1,7 @@
 #include "Kalle.h"
 
 Kalle::Kalle(UISystem* ui) : Card::Card(ui, pathToImage, description, "Kalle", cost)
-{
-    setupButtonBinding();
-}
+{}
 
 void Kalle::play(){
     Card::play();

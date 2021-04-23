@@ -16,6 +16,7 @@ void FireballTap::triggerAction()
     {
         owningPlayer->awaitingSelection = this;
         CardSelectionInfo csi;
+        csi.canAttackHeroDirectly = true;
         cout << "FireballTap: " << owningCard->getName() << " requesting selection.\n";
         owningPlayer->startSelection(csi);
         cout << "FireballTap: " << owningCard->getName() << " tapped.\n";
@@ -27,6 +28,7 @@ void FireballTap::triggerAction()
 
 void FireballTap::onReceiveSelection(std::list<Card*> cards)
 {
+    
     auto card = *cards.begin();
     cout << "FireballTap: " << owningCard->getName() << " deals 3 damage to " << card->getName() << ".\n";
     card->takeDamage(2);
