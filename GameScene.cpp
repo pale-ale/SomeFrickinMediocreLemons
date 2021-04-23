@@ -1,3 +1,5 @@
+#include <ctime>
+
 #include "GameScene.h"
 #include "Player.h"
 #include "Card.h"
@@ -14,7 +16,7 @@ void GameScene::setup()
 {
     player0->initializeSubComponents();
     player1->initializeSubComponents();
-
+    srand (time (0));
     for (int i = 0; i < 10; i++)
     {
         auto fb = CardSpawner::SpawnCardRandom(ui);
