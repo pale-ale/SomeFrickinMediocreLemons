@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "UISystem.h"
+#include "sstream"
 #include <SFML/Graphics.hpp>
 #include "../Settings.h"
 #include "../events/EventCallback.h"
@@ -14,7 +15,7 @@ class TextBox : public UIElement{
     TextBox(UISystem* ui, sf::Vector2f size, string content, bool autoresize);
     unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
     //return false, if text does not fit even with new line after each word
-    bool ChangeContent(char * content);
+    bool ChangeContent(string content);
     bool ChangeCharacterSize(unsigned int size);
     virtual void setPosition(const sf::Vector2f &newPosition) override;
 	virtual void setRotation(const float &newRotation) override;

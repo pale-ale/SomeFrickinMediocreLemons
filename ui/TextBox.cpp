@@ -8,18 +8,18 @@ TextBox::TextBox(UISystem* ui, sf::Vector2f size, string content="", bool autore
 }
 
 bool TextBox::UpdateContent(){
-    unsigned int character = 0;
     list<string> wordlist;
     auto iterator = wordlist.begin();
-       //fill the wordlist with content
-    while(character < this->content.length()){
-
+    //fill the wordlist with content
+    istringstream iss(content);
+    string token;
+    while(getline(iss, token, ' ')){
+        wordlist.push_back(token);
     }
     sf::Text uicontentboundaries = sf::Text();
     //clear current Text in ui
     uicontent.setString("");
     //foreach element in wordlist check if width is to large
-    //needs check for autoresize later on to apply different character size
     //if the autoresize is off show hovering text instead
     while(iterator != wordlist.end()){
         uicontentboundaries.setString(this->uicontent.getString());
@@ -30,8 +30,18 @@ bool TextBox::UpdateContent(){
         else{
             uicontentboundaries.setString(this->uicontent.getString() + *iterator);
         }
+        iterator++;
+        //if the uicontent does not fit to y size the need to resize the character size and restart the procedure
         if(this->uicontent.getGlobalBounds().height > this->size.y || this->uicontent.getGlobalBounds().width > this->size.x){
-            return false;
+            if(this->uicontent.getCharacterSize()!=0){
+            this->uicontent.setCharacterSize(this->uicontent.getCharacterSize()-1);
+            //begin the procedure again, because character size has changed
+            iterator = wordlist.begin();
+            uicontent.setString("");
+            }
+            else{
+                return false;
+            }
         }
     }
     return true;
@@ -43,7 +53,7 @@ void TextBox::initializeSubComponents(){
     ui->addEventListener(static_pointer_cast<UIElement>(weak_from_this().lock()));
 }
 
-bool TextBox::ChangeContent(char* content){
+bool TextBox::ChangeContent(string content){
     this->content=content;
     if(this->UpdateContent()){
         return true;
