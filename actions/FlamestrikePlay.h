@@ -30,6 +30,6 @@ public:
 
 private:
     sf::Texture image;
-    std::string text = "Tap";
+    std::string text = "Select a target enemy creature in a battle zone to deal 3 damage to it.";
     bool bIsEnabled = true;
 };

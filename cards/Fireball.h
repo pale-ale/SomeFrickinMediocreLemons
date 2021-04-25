@@ -13,7 +13,7 @@ class Fireball : public Card{
 	public:
 	Fireball(UISystem* ui);
 	inline static const string pathToImage = "Fireball.png";
-    inline static const string description = "Deals 3 damage to any card.";
+    inline static const string description = "Your average, ubiquitous fireball.";
 	static constexpr FMana cost = FMana({0,0,0,2,0});
 	virtual void play() override;
 	virtual void setupActions() override;

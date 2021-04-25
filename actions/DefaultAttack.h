@@ -29,6 +29,6 @@ public:
 
 private:
     sf::Texture image;
-    std::string text = "Attack";
+    std::string text = "Atk: Deal damage equal to [Pow] to target enemy creature in battle zone.";
     bool bIsEnabled = true;
 };

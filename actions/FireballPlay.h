@@ -30,6 +30,6 @@ public:
 
 private:
     sf::Texture image;
-    std::string text = "Pew!";
+    std::string text = "Select any creature on the field to deal 3 Damage to it.";
     bool bIsEnabled = true;
 };

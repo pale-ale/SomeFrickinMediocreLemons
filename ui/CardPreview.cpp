@@ -1,17 +1,22 @@
 #include "CardPreview.h"
+#include "../IAction.h"
 
-CardPreview::CardPreview(UISystem* ui, const Card* cardToPreview): UIElement(ui)
+CardPreview::CardPreview(UISystem* ui, const Card* cardToPreview): UIElement(ui),
+description{std::make_shared<QuickTextBox>(ui)}
 {
     font.loadFromFile(Settings::validFontPath);
     cardTitle.setFont(font);
-    description.setFont(font);
     cardTitle.setString(cardToPreview->getName());
-    description.setString(cardToPreview->getDescription());
-    //description.setCharacterSize(10);
-    description.setScale(.2,.2);
     cardTitle.setOrigin({cardTitle.getLocalBounds().width/2, cardTitle.getLocalBounds().height/2});
-    description.setOrigin({description.getLocalBounds().width/2, description.getLocalBounds().height/2});
-    background.setFillColor({50,50,50,100});
+    string cardDescription = cardToPreview->getDescription() + "\n";
+    for (auto action : cardToPreview->getActions()){
+        cardDescription.append(action->getActionString() + "\n");
+    }
+    addChild(description);
+    description->setCharCountPerLine(56);
+    description->setText(cardDescription);
+    description->setScale(.25f,.25f);
+    background.setFillColor({30,0,0,200});
     background.setSize(size);
     background.setOrigin(size/2.0f);
     cardImage.setTexture(*(cardToPreview->getTexture()), true);

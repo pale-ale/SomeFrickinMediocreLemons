@@ -13,51 +13,48 @@ QuickTextBox::QuickTextBox(UISystem *ui, string text, bool autoWrap) : UIElement
 void QuickTextBox::updateContent()
 {
     string tmp = originalText; //copy
-    auto start = tmp.begin();
-    auto end = tmp.end();
-    while (start != end)
-    {
-        if (*start == '\n')
-        {
-            tmp.erase(start);
-        }
-        ++start;
-    }
     size_t lastWordBegin;
     size_t lastWordEnd;
     bool currentlyInsideWord = false;
-    if (autoWrap)
+    int xPos = 0;
+    for (size_t i = 0; i < tmp.length(); i++)
     {
-        for (size_t i = 1; i < tmp.length() + 1; i++)
+        char character = tmp[i];
+        if (character == '\n'){
+            xPos = 0;
+            currentlyInsideWord = false;
+        }
+        else{
+            ++xPos;
+        }
+        if (!currentlyInsideWord && character != ' ')
         {
-            char character = tmp[i];
-            if (!currentlyInsideWord && character != ' ')
+            lastWordBegin = i;
+            currentlyInsideWord = true;
+        }
+        if (currentlyInsideWord && character == ' ')
+        {
+            lastWordEnd = i;
+            currentlyInsideWord = false;
+        }
+        if ((xPos+1) % maxCharacterCountPerLine == 0)
+        {
+            //when reaching the end of the line, we want to wrap
+            if (autoWrap && currentlyInsideWord)
             {
-                lastWordBegin = i;
-                currentlyInsideWord = true;
+                // we would now be splitting a word
+                tmp.insert(lastWordBegin, "\n");
+                xPos = 0;
             }
-            if (currentlyInsideWord && character == ' ')
+            else
             {
-                lastWordEnd = i;
-                currentlyInsideWord = false;
-            }
-            if ((i + 1) % maxCharacterCountPerLine == 0)
-            {
-                //when reaching the end of the line, we want to wrap
-                if (currentlyInsideWord)
+                //get rid of pesky spaces after a newline
+                if (tmp[i] == ' ')
                 {
-                    // we would now be splitting a word
-                    tmp.insert(lastWordBegin, "\n");
+                    tmp.erase(i, 1);
                 }
-                else
-                {
-                    //get rid of pesky spaces after a newline
-                    if (tmp[i] == ' ')
-                    {
-                        tmp.erase(i, 1);
-                    }
-                    tmp.insert(i++, "\n");
-                }
+                tmp.insert(i++, "\n");
+                xPos = 0;
             }
         }
     }

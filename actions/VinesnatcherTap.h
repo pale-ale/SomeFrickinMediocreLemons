@@ -18,6 +18,8 @@ public:
     void triggerAction() override;
     void onReceiveSelection(std::list<Card*> cards) override;
     
+    //TODO: Actions sohuld get a description, not the card itself 
+
     sf::Texture const &getActionImage() const override{return image;}
     std::string getActionString() const override{return text;}
     bool getActionEnabled() const override{return bIsEnabled;}
@@ -30,6 +32,6 @@ public:
 
 private:
     sf::Texture image;
-    std::string text = "Tap";
+    std::string text = "G, T: Deal 2 damage to target enemy creature in battle zone.";
     bool bIsEnabled = true;
 };

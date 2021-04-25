@@ -1,7 +1,10 @@
 #pragma once
 
-#include "UISystem.h"
 #include <SFML/Graphics.hpp>
+
+#include "QuickTextBox.h"
+#include "UISystem.h"
+
 #include "../Card.h"
 #include "../Settings.h"
 
@@ -13,7 +16,7 @@ public:
     const sf::Vector2f costPos = {Settings::defaultWidth/2 + 70, (int)Settings::defaultHeight/2 - 38};
     const sf::Vector2f backgroundPos = {Settings::defaultWidth/2, Settings::defaultHeight/2};
     const sf::Vector2f imagePos = {Settings::defaultWidth/2, Settings::defaultHeight/2-30};
-    const sf::Vector2f descriptionPos = {Settings::defaultWidth/2, Settings::defaultHeight/2 + 25};
+    const sf::Vector2f descriptionPos = {Settings::defaultWidth/2-97, Settings::defaultHeight/2 + 25};
     const sf::Vector2f size = {200, 350};
     sf::Font font;
     sf::Text cardTitle;
@@ -22,7 +25,7 @@ public:
     sf::Text costDisplayBlue;
     sf::Text costDisplayBlack;
     sf::Text costDisplayWhite;
-    sf::Text description;
+    std::shared_ptr<QuickTextBox> description;
     sf::Sprite cardImage;
     sf::RectangleShape background;
 
@@ -31,7 +34,7 @@ public:
         cardTitle.setPosition(titlePos);
         background.setPosition(backgroundPos);
         cardImage.setPosition(imagePos);
-        description.setPosition(descriptionPos);
+        description->setPosition(descriptionPos);
         costDisplayRed.setPosition(costPos + sf::Vector2f{0, -30});
         costDisplayGreen.setPosition(costPos + sf::Vector2f{0, -15});
         costDisplayBlue.setPosition(costPos + sf::Vector2f{0, 0});
@@ -42,10 +45,9 @@ public:
 protected:
     virtual void draw(sf::RenderTarget &target, sf::RenderStates state) const override
     {
-        UIElement::draw(target, state);
         target.draw(background);
+        UIElement::draw(target, state);
         target.draw(cardImage);
-        target.draw(description);
         target.draw(cardTitle);
         target.draw(costDisplayRed);
         target.draw(costDisplayGreen);

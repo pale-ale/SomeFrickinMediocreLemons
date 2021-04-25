@@ -29,6 +29,9 @@ class QuickTextBox : public UIElement{
         UIElement::setScale(xScale, yScale);
         textDisplay.setScale(xScale, yScale);
     }
+    void setCharCountPerLine(uint newCharCount){
+        maxCharacterCountPerLine = newCharCount;
+    }
     int maxCharacterCountPerLine = 20;
 
     private:
