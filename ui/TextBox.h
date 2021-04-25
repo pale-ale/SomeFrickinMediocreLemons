@@ -19,6 +19,8 @@ class TextBox : public UIElement{
     bool changeContent(string content);
     bool changeCharacterSize(unsigned int size);
     bool changeSize(sf::Vector2f size);
+    //leave public can't harm
+    bool autoresize;
     virtual void setPosition(const sf::Vector2f &newPosition) override;
 	virtual void setRotation(const float &newRotation) override;
     virtual void setScale(float xScale, float yScale) override;
@@ -33,7 +35,6 @@ class TextBox : public UIElement{
         UIElement::draw(target, state);
         target.draw(uicontent);
     }
-    bool autoresize;
     sf::Vector2f size;
 
     unsigned int fontsize = 10;

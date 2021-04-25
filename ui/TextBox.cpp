@@ -16,11 +16,9 @@ bool TextBox::UpdateContent(){
     string token;
     while(getline(iss, token, ' ')){
         wordlist.push_back(token);
-        cout<< "token is " + token<< endl;
     }
     iss.clear();
     auto iterator = wordlist.begin();
-    cout << "wordlist is " << wordlist.size() << endl;;
     sf::Text uicontentboundaries = sf::Text();
     uicontentboundaries.setFont(*font);
     uicontentboundaries.setScale(uicontent.getScale());
