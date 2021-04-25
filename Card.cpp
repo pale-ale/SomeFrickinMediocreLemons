@@ -9,7 +9,7 @@
 
 #include "ui/Button.h"
 #include "ui/CardPreview.h"
-#include "ui/QuickTextBox.h"
+//#include "ui/QuickTextBox.h"
 
 
 void Card::moveGraveyard()
@@ -115,7 +115,7 @@ Card::Card(UISystem *ui, const string imagePath, const string desc, const string
 																									  label{title},
 																									  cost{mana},
 																									  cardButton{make_shared<Button>(ui, sf::Color{0, 0, 0, 0}, sf::Color{0, 0, 0, 0})},
-																									  cardDescription{make_shared<QuickTextBox>(ui)}
+																									  cardDescription{make_shared<TextBox>(ui)}
 {
 	cardBackTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardBack);
 	cardFrontTexture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetCardPath + Settings::relativeAssetCardFront);
@@ -135,9 +135,10 @@ Card::Card(UISystem *ui, const string imagePath, const string desc, const string
     cardButton->onDragEndCallback = std::make_shared<EventCallback<Card>>(this, &Card::OnDragEnd);
     cardButton->onDragStartCallback = std::make_shared<EventCallback<Card>>(this, &Card::OnDragStart);	
 	font->loadFromFile(Settings::validFontPath);
-	cardDescription->maxCharacterCountPerLine = 18;
-	cardDescription->setText(description);
+	//cardDescription->maxCharacterCountPerLine = 18;
+	cardDescription->changeContent(description);
 	cardDescription->setScale(Settings::cardScale.x * 0.17, Settings::cardScale.y * 0.17);
+	cardDescription->changeSize(Settings::cardSize + descOffset);
 	hpStatDisplay.setFont(*font);
 	hpStatDisplay.setFillColor(Settings::redColor);
 	hpStatDisplay.setScale(scaleVectorSettings({0.5, 0.5}));

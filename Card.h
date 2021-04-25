@@ -8,14 +8,17 @@
 #include "ManaType.h"
 #include "Settings.h"
 
+#include "ui/TextBox.h"
 #include "ui/UIElement.h"
+
 
 using std::cout;
 
 class Button;
 class Battlefield;
 class CardPreview;
-class QuickTextBox;
+//class QuickTextBox;
+//class TextBox;
 class IAction;
 class Player;
 
@@ -88,14 +91,13 @@ class Card : public UIElement, public IDragAndDroppable{
 	sf::Vector2f scaleVectorSettings(const sf::Vector2f &v){
 		return {v.x*Settings::cardScale.x, v.y*Settings::cardScale.y};
 	}
-
 	void updateCardImage();
 	void updateCardStatDisplay();
 	virtual void setupActions() = 0;
 	
 	sf::Texture cardBackTexture;
 	sf::Texture cardFrontTexture;
-	std::shared_ptr<QuickTextBox> cardDescription;
+	std::shared_ptr<TextBox> cardDescription;
 	sf::Text hpStatDisplay;
 	sf::Text powerStatDisplay;
 	sf::Text cardLabel;
