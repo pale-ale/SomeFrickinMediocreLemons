@@ -37,12 +37,16 @@ actions/FlamestrikePlay.h)
 add_library(Actions         actions/DefaultAttack.cpp actions/VinesnatcherTap.cpp actions/FireballPlay.cpp 
 actions/FlamestrikePlay.cpp ${HEADER_FILES})
 
+# headers for Networking
+set(HEADER_FILES net/Connector.h)
+add_library(Net  net/Connector.cpp ${HEADER_FILES})
+
 # headers for Player, Game, CardType, ManaType, Battlefield, Scenes
 set(HEADER_FILES Player.h          Game.h    Battlefield.h   Hand.h   Placeable.h   SceneManager.h   
                  MainMenuScene.h   GameScene.h   CardManagement.h ManaType.h Scene.h)
 add_library(Base Player.cpp        Game.cpp  Battlefield.cpp Hand.cpp Placeable.cpp SceneManager.cpp 
                  MainMenuScene.cpp GameScene.cpp CardManagement.cpp ${HEADER_FILES})
-target_link_libraries(Base UI Cards)
+target_link_libraries(Base UI Cards Net)
 
 add_executable(main main.cpp)
 target_link_libraries(main UI Delegate Base Cards Actions sfml-graphics sfml-window sfml-system)

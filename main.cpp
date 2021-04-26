@@ -1,16 +1,20 @@
-#include "events/EventCallback.h"
-#include "GameScene.h"
 #include <iostream>
+#include <string.h>
+#include <vector>
+
+#include <SFML/Graphics.hpp>
+
+#include "GameScene.h"
 #include "KeyboardDelegate.h"
-#include "MainMenuScene.h"
 #include "math.h"
+#include "MainMenuScene.h"
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Settings.h"
-#include <SFML/Graphics.hpp>
-#include <string.h>
+
+#include "events/EventCallback.h"
+#include "net/Connector.h"
 #include "ui/UISystem.h"
-#include <vector>
 
 int main(int argc, char *argv[])
 {
@@ -29,6 +33,8 @@ int main(int argc, char *argv[])
     UISystem ui(&window);
     Delegate spaceDelegate;
     SceneManager sceneManager;
+    Connector connector;
+
 
     float scale = 2;
     window.setKeyRepeatEnabled(false);
@@ -49,7 +55,7 @@ int main(int argc, char *argv[])
     
     vector<sf::Event> events;
     sf::Clock clock;
-    auto ms = std::make_unique<MainMenuScene>(&ui, sceneManager);
+    auto ms = std::make_unique<MainMenuScene>(&ui, sceneManager, &connector);
     auto gs = std::make_unique<GameScene>(&ui, sceneManager);
     ms->setGameScene(std::move(gs));
     sceneManager.loadScene(std::move(ms));
