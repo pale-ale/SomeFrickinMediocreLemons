@@ -2,7 +2,7 @@
 #include "../IAction.h"
 
 CardPreview::CardPreview(UISystem* ui, const Card* cardToPreview): UIElement(ui),
-description{std::make_shared<QuickTextBox>(ui)}
+description{std::make_shared<TextBox>(ui)}
 {
     font.loadFromFile(Settings::validFontPath);
     cardTitle.setFont(font);
@@ -13,9 +13,10 @@ description{std::make_shared<QuickTextBox>(ui)}
         cardDescription.append(action->getActionString() + "\n");
     }
     addChild(description);
-    description->setCharCountPerLine(56);
-    description->setText(cardDescription);
+    description->changeContent(cardDescription);
+    description->setPosition(this->getPosition());
     description->setScale(.25f,.25f);
+    description->changeSize(this->size);
     background.setFillColor({30,0,0,200});
     background.setSize(size);
     background.setOrigin(size/2.0f);

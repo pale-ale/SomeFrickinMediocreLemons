@@ -1,15 +1,17 @@
 #include "TextBox.h"
-TextBox::TextBox(UISystem* ui, sf::Vector2f size, unsigned int fontsize, string content, bool autoresize):UIElement(ui), 
-fontsize{fontsize}, size{size}, content{content}, autoresize{autoresize} {
+TextBox::TextBox(UISystem* ui, sf::Vector2f size, unsigned int fontsize, string content, bool autoresize, bool texthover):UIElement(ui), 
+fontsize{fontsize}, size{size}, content{content}, autoresize{autoresize}, texthover{texthover} {
     this->font->loadFromFile(Settings::validFontPath);
     this->uicontent.setFont(*font);
     this->autoresize = autoresize;
     this->size = size;
     this->content = content;
-    UpdateContent();
+    updatetextboxShape();
+    updateContent();
 }
 
-bool TextBox::UpdateContent(){
+
+bool TextBox::updateContent(){
     list<string> wordlist;
     //fill the wordlist with content
     istringstream iss(content);
@@ -52,6 +54,15 @@ bool TextBox::UpdateContent(){
     return true;
 }
 
+void TextBox::updatetextboxShape(){
+    textboxShape.setPointCount(hitbox.size());
+    textboxShape.setFillColor(defaultColor);
+    auto& hb = getHitboxPolygonGlobal();
+    for (int i = 0; i < hitbox.size(); i++)
+    {
+        textboxShape.setPoint(i, hb[i]);
+    }
+}
 //this is for hovering text later if it does not fit to textbox
 void TextBox::initializeSubComponents(){
     UIElement::initializeSubComponents();
@@ -60,7 +71,7 @@ void TextBox::initializeSubComponents(){
 
 bool TextBox::changeContent(string content){
     this->content=content;
-    if(this->UpdateContent()){
+    if(this->updateContent()){
         return true;
     }
     else{
@@ -70,7 +81,7 @@ bool TextBox::changeContent(string content){
 
 bool TextBox::changeCharacterSize(unsigned int fontsize){
     this->uicontent.setCharacterSize(fontsize);
-    if(this->UpdateContent()){
+    if(this->updateContent()){
         return true;
     }
     else{
@@ -80,7 +91,7 @@ bool TextBox::changeCharacterSize(unsigned int fontsize){
 
 bool TextBox::changeSize(sf::Vector2f size){
     this->size = size;
-    if(this->UpdateContent()){
+    if(this->updateContent()){
         return true;
     }
     else{
@@ -91,16 +102,19 @@ bool TextBox::changeSize(sf::Vector2f size){
 void TextBox::setPosition(const sf::Vector2f &newPosition){
     UIElement::setPosition(newPosition);
     uicontent.setPosition(newPosition);
+    textboxShape.setPosition(newPosition);
 }
 
 void TextBox::setRotation(const float &newRotation){
     UIElement::setRotation(newRotation);
     uicontent.setRotation(newRotation);
+    textboxShape.setRotation(newRotation);
 }
 
 void TextBox::setScale(float xScale, float yScale){
     UIElement::setScale(xScale, yScale);
     uicontent.setScale(xScale, yScale);
+    textboxShape.setPosition(xScale, yScale);
 }
 
 //will be implemented later

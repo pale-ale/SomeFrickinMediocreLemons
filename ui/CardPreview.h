@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "QuickTextBox.h"
+#include "TextBox.h"
 #include "UISystem.h"
 
 #include "../Card.h"
@@ -25,7 +25,7 @@ public:
     sf::Text costDisplayBlue;
     sf::Text costDisplayBlack;
     sf::Text costDisplayWhite;
-    std::shared_ptr<QuickTextBox> description;
+    std::shared_ptr<TextBox> description;
     sf::Sprite cardImage;
     sf::RectangleShape background;
 
