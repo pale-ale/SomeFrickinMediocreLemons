@@ -61,10 +61,10 @@ class MainMenuScene: public SceneBase{
     }
 
     void loadPlaySceneButtonCallback(){
-        /*if (gameScene){
-            sceneManager->loadScene(std::move(gameScene));
-        }*/
         connector->hostGame();
+        if (gameScene){
+            sceneManager->loadScene(std::move(gameScene));
+        }
     }
 
     void playMultiPlayerButtonCallback(){
