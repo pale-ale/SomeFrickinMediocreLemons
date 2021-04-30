@@ -16,6 +16,8 @@ description{std::make_shared<TextBox>(ui)}
     description->changeContent(cardDescription);
     description->setPosition(this->getPosition());
     description->setScale(.25f,.25f);
+    description->autoresize = true;
+    description->changeCharacterSize(32);
     description->changeSize(this->size);
     background.setFillColor({30,0,0,200});
     background.setSize(size);

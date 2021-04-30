@@ -27,6 +27,10 @@ bool TextBox::updateContent(){
     uicontent.setString("");
     //foreach element in wordlist check if width is to large
     //if the autoresize is off show hovering text instead
+    if(!autoresize){
+        uicontent.setCharacterSize(fontsize);
+    }
+    uicontentboundaries.setCharacterSize(this->fontsize);
     while(iterator != wordlist.end()){
         uicontentboundaries.setString(this->uicontent.getString());
         uicontentboundaries.setString(uicontentboundaries.getString()+*iterator + " ");
@@ -41,6 +45,7 @@ bool TextBox::updateContent(){
         if(this->uicontent.getGlobalBounds().height > this->size.y || this->uicontent.getGlobalBounds().width > this->size.x){
             if(this->uicontent.getCharacterSize()!=0 && autoresize){
             this->uicontent.setCharacterSize(this->uicontent.getCharacterSize()-1);
+            uicontentboundaries.setCharacterSize(this->uicontent.getCharacterSize());
             //begin the procedure again, because character size has changed
             iterator = wordlist.begin();
             uicontent.setString("");
@@ -71,32 +76,18 @@ void TextBox::initializeSubComponents(){
 
 bool TextBox::changeContent(string content){
     this->content=content;
-    if(this->updateContent()){
-        return true;
-    }
-    else{
-        return false;
-    }
+    return updateContent();
 }
 
 bool TextBox::changeCharacterSize(unsigned int fontsize){
+    this->fontsize = fontsize;
     this->uicontent.setCharacterSize(fontsize);
-    if(this->updateContent()){
-        return true;
-    }
-    else{
-        return false;
-    }
+    return updateContent();
 }
 
 bool TextBox::changeSize(sf::Vector2f size){
     this->size = size;
-    if(this->updateContent()){
-        return true;
-    }
-    else{
-        return false;
-    }
+    return updateContent();
 }
 
 void TextBox::setPosition(const sf::Vector2f &newPosition){
