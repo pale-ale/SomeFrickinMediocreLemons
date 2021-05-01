@@ -32,7 +32,7 @@ class TextBox : public UIElement{
     sf::Vector2f sizetextbox;
     sf::Text uicontent;
     sf::ConvexShape textboxShape;
-    sf::Color backgroundColor = {40,40,40,255};
+    sf::Color backgroundColor = {40,40,40,0};
     string content;
     bool updateContent();
     //update when changing dimensions
@@ -44,8 +44,8 @@ class TextBox : public UIElement{
     virtual bool OnEndMouseover () override;
     virtual void draw(sf::RenderTarget &target, sf::RenderStates state) const override{
         UIElement::draw(target, state);
-        target.draw(uicontent);
         target.draw(textboxShape);
+        target.draw(uicontent); 
     }
     virtual void setHitbox(const std::vector<sf::Vector2f> & hitbox) override;
     void updatetextboxShape();
