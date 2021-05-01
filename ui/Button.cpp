@@ -6,7 +6,6 @@ Button::Button(UISystem* ui, sf::Color defaultColor, sf::Color mouseOverColor, v
 UIElement(ui), defaultColor{defaultColor}, mouseOverColor{mouseOverColor}{
     setName("Button");
     hitbox = corners;
-    buttonTexture = sf::Texture();
     updateShape();
 }
 

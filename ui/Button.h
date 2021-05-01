@@ -63,10 +63,7 @@ class Button : public UIElement{
 
     private:
     void updateShape();
-    sf::FloatRect rect;
     sf::ConvexShape buttonShape;
-    sf::Sprite buttonSprite;
-    sf::Texture buttonTexture;
     sf::Color defaultColor;
     sf::Color mouseOverColor;
 };
