@@ -47,5 +47,6 @@ class TextBox : public UIElement{
         target.draw(uicontent);
         target.draw(textboxShape);
     }
+    virtual void setHitbox(const std::vector<sf::Vector2f> & hitbox) override;
     void updatetextboxShape();
 };
