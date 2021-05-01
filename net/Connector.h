@@ -9,11 +9,17 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
-#include "../Settings.h"
 #include "../server/ServerSettings.h"
 
 class Connector{
     public:
-    void hostGame(int port=ServerSettings::serverPort);
-    int connectToGame(char* address=(char*)"127.0.0.1", int port=ServerSettings::serverPort);
+    bool hostGame(int port=ServerSettings::serverPort);
+    bool connectToGame(char* address=(char*)"127.0.0.1", int port=ServerSettings::serverPort);
+    bool joinGame();
+    bool getAuthority(){return authority;}
+
+    private:
+    bool authority = false;
+    int gameConnectionFd;
+    int serverFd;
 };

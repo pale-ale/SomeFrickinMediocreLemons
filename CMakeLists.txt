@@ -49,5 +49,7 @@ add_library(Base Player.cpp        Game.cpp  Battlefield.cpp Hand.cpp Placeable.
 target_link_libraries(Base UI Cards Net)
 
 add_executable(client main.cpp)
-add_executable(server server/main.cpp)
 target_link_libraries(client UI Delegate Base Cards Actions sfml-graphics sfml-window sfml-system)
+
+add_executable(server server/main.cpp)
+target_link_libraries(server Net)
