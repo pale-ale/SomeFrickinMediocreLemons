@@ -13,12 +13,11 @@ description{std::make_shared<TextBox>(ui)}
         cardDescription.append(action->getActionString() + "\n");
     }
     addChild(description);
-    description->changeContent(cardDescription);
+    description->setContent(cardDescription);
     description->setPosition(this->getPosition());
     description->setScale(.25f,.25f);
-    description->autoresize = true;
-    description->changeCharacterSize(32);
-    description->changeSize(this->size);
+    description->setCharacterSize(32);
+    description->setSize(this->size);
     background.setFillColor({30,0,0,200});
     background.setSize(size);
     background.setOrigin(size/2.0f);

@@ -1,6 +1,6 @@
 #include "TextBox.h"
 TextBox::TextBox(UISystem* ui, sf::Vector2f size, unsigned int fontsize, string content, bool autoresize, bool texthover):UIElement(ui), 
-fontsize{fontsize}, size{size}, content{content}, autoresize{autoresize}, texthover{texthover} {
+fontsize{fontsize}, sizetextbox{size}, content{content}, autoresize{autoresize}, texthover{texthover} {
     this->font->loadFromFile(Settings::validFontPath);
     this->uicontent.setFont(*font);
     this->autoresize = autoresize;
@@ -10,10 +10,10 @@ fontsize{fontsize}, size{size}, content{content}, autoresize{autoresize}, textho
     updateContent();
 }
 
-
 bool TextBox::updateContent(){
     list<string> wordlist;
-    //fill the wordlist with content
+    //fill the wordlist with content 
+	
     istringstream iss(content);
     string token;
     while(getline(iss, token, ' ')){
@@ -61,7 +61,7 @@ bool TextBox::updateContent(){
 
 void TextBox::updatetextboxShape(){
     textboxShape.setPointCount(hitbox.size());
-    textboxShape.setFillColor(defaultColor);
+    textboxShape.setFillColor(this->backgroundColor);
     auto& hb = getHitboxPolygonGlobal();
     for (int i = 0; i < hitbox.size(); i++)
     {
@@ -74,20 +74,25 @@ void TextBox::initializeSubComponents(){
     ui->addEventListener(static_pointer_cast<UIElement>(weak_from_this().lock()));
 }
 
-bool TextBox::changeContent(string content){
+bool TextBox::setContent(string content){
     this->content=content;
     return updateContent();
 }
 
-bool TextBox::changeCharacterSize(unsigned int fontsize){
+bool TextBox::setCharacterSize(unsigned int fontsize){
     this->fontsize = fontsize;
     this->uicontent.setCharacterSize(fontsize);
     return updateContent();
 }
 
-bool TextBox::changeSize(sf::Vector2f size){
+bool TextBox::setSize(sf::Vector2f size){
     this->size = size;
+    updatetextboxShape();
     return updateContent();
+}
+
+void TextBox::setColor(sf::Color color){
+    this->backgroundColor = color;
 }
 
 void TextBox::setPosition(const sf::Vector2f &newPosition){
@@ -105,7 +110,7 @@ void TextBox::setRotation(const float &newRotation){
 void TextBox::setScale(float xScale, float yScale){
     UIElement::setScale(xScale, yScale);
     uicontent.setScale(xScale, yScale);
-    textboxShape.setPosition(xScale, yScale);
+    textboxShape.setScale(xScale, yScale);
 }
 
 //will be implemented later

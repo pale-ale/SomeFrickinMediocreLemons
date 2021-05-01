@@ -20,9 +20,9 @@ cardButton{make_shared<Button>(ui, sf::Color{0, 0, 0, 0}, sf::Color{0, 0, 0, 0})
 	cardLabel.setScale(scaleVectorSettings({0.3, 0.3}));
     cardLabel.setString(owningCard->label);
 	cardLabel.setOrigin(sf::Vector2f{cardLabel.getLocalBounds().width, cardLabel.getLocalBounds().height} * .5f);
-	cardDescription->changeContent(owningCard->description);
+	cardDescription->setContent(owningCard->description);
 	cardDescription->setScale(Settings::cardScale.x * 0.17, Settings::cardScale.y * 0.17);
-	cardDescription->changeSize(Settings::cardSize + descOffset);
+	cardDescription->setSize(Settings::cardSize + descOffset);
     hpStatDisplay.setFont(*font);
 	hpStatDisplay.setFillColor(Settings::redColor);
 	hpStatDisplay.setScale(scaleVectorSettings({0.5, 0.5}));

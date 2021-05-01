@@ -11,13 +11,14 @@ using std::endl;
 
 class TextBox : public UIElement{
     public:
-    TextBox(UISystem* ui, sf::Vector2f size={Settings::defaultWidth,Settings::defaultHeight},unsigned int fontsize = Settings::fontSize, string content="", bool autoresize=true, bool texthover = false);
+    TextBox(UISystem* ui, sf::Vector2f sizetextbox={Settings::defaultWidth,Settings::defaultHeight},unsigned int fontsize = Settings::fontSize, string content="", bool autoresize=true, bool texthover = false);
     //TextBox(UISystem* ui);
     unique_ptr<sf::Font> font = std::make_unique<sf::Font>();
     //return false, if text does not fit even with new line after each word and autoresize false
-    bool changeContent(string content);
-    bool changeCharacterSize(unsigned int size);
-    bool changeSize(sf::Vector2f size);
+    bool setContent(string content);
+    bool setCharacterSize(unsigned int size);
+    bool setSize(sf::Vector2f size);
+    void setColor(sf::Color);
     //leave public can't harm
     bool autoresize;
     bool texthover;
@@ -26,11 +27,12 @@ class TextBox : public UIElement{
     virtual void setScale(float xScale, float yScale) override;
 
     private:
-    sf::Vector2f size;
     unsigned int fontsize = 10;
+    //workaround for default constructor
+    sf::Vector2f sizetextbox;
     sf::Text uicontent;
     sf::ConvexShape textboxShape;
-    sf::Color defaultColor = {40,40,40,255};
+    sf::Color backgroundColor = {40,40,40,255};
     string content;
     bool updateContent();
     //update when changing dimensions
@@ -42,8 +44,8 @@ class TextBox : public UIElement{
     virtual bool OnEndMouseover () override;
     virtual void draw(sf::RenderTarget &target, sf::RenderStates state) const override{
         UIElement::draw(target, state);
-        target.draw(textboxShape);
         target.draw(uicontent);
+        target.draw(textboxShape);
     }
     void updatetextboxShape();
 };
