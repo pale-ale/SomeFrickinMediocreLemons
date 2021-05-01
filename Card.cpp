@@ -9,8 +9,6 @@
 
 #include "ui/Button.h"
 #include "ui/CardPreview.h"
-//#include "ui/QuickTextBox.h"
-
 
 void Card::moveGraveyard()
 {

@@ -61,7 +61,6 @@ class MainMenuScene: public SceneBase{
     }
 
     void loadPlaySceneButtonCallback(){
-        connector->hostGame();
         if (gameScene){
             sceneManager->loadScene(std::move(gameScene));
         }
