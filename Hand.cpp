@@ -26,10 +26,10 @@ void Hand::updateHandPositions()
         currentSlotNumber++;
     }
 }
-const list<Card*> Hand::getHand() const
+const list<Card*> Hand::getHandData() const
 {
     list<Card*> l;
-    for (auto c : handCards){
+    for (auto c : handCardData){
         l.push_back(c.get());
     }
     return l;
@@ -37,11 +37,14 @@ const list<Card*> Hand::getHand() const
 
 bool Hand::addCardToHand(shared_ptr<Card> cardToAdd)
 {
-    if (handCards.size() < maxHandsize)
+    if (handCardData.size() < maxHandsize)
     {
-        handCards.push_back(cardToAdd);
+        handCardData.push_back(cardToAdd);
+        auto newCardUI = std::make_shared<CardUI>(ui, cardToAdd.get());
+        newCardUI->initializeSubComponents();
+        handCards.push_back(newCardUI);
         addChild(cardToAdd);
-        cardToAdd->reparent(this);
+        cardToAdd->reparent(nullptr);
         cardToAdd->setFlipState(true);
         cardToAdd->cardLocation = ECardLocation::hand;
         return true;
@@ -51,9 +54,9 @@ bool Hand::addCardToHand(shared_ptr<Card> cardToAdd)
 
 std::shared_ptr<Card> Hand::removeCard(Card *cardToRemove)
 {
-    for (auto cardSharedPtr : handCards){
+    for (auto cardSharedPtr : handCardData){
         if (cardSharedPtr.get() == cardToRemove){
-            handCards.remove(cardSharedPtr);
+            handCardData.remove(cardSharedPtr);
             cardToRemove->reparent(nullptr);
             return cardSharedPtr;
         }

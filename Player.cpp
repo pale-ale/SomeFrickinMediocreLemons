@@ -24,7 +24,7 @@ void Player::drawCards(int count)
     }
     playerhand->updateHandPositions();
     playerHud->setDeckCount(deck.size());
-    playerHud->setHandCount(playerhand->getHand().size());
+    playerHud->setHandCount(playerhand->getHandData().size());
 }
 
 void Player::playCard(Card *cardToPlay, int slot)
@@ -35,7 +35,7 @@ void Player::playCard(Card *cardToPlay, int slot)
     battlefield->addCard(sharedCardPtr, true, slot);
     cout << "Player: " << name << " played card " << cardToPlay->getName() << endl;
     playerhand->updateHandPositions();
-    playerHud->setHandCount(playerhand->getHand().size());
+    playerHud->setHandCount(playerhand->getHandData().size());
     if (game)
     {
         game->startTurnOfNextPlayer();
@@ -69,7 +69,7 @@ void Player::addCardToGraveyard(shared_ptr<Card> card)
 
 const list<Card *> Player::getHand() const
 {
-    return playerhand->getHand();
+    return playerhand->getHandData();
 }
 
 void Player::printDeck() const
@@ -83,7 +83,7 @@ void Player::printDeck() const
 
 void Player::printHand() const
 {
-    auto hand = playerhand->getHand();
+    auto hand = playerhand->getHandData();
     cout << "Player: Cards in hand: " << hand.size() << endl;
     for (auto &c : hand)
     {

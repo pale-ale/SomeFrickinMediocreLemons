@@ -10,7 +10,7 @@
 
 Vinesnatcher::Vinesnatcher(UISystem* ui) : Card::Card(ui, pathToImage, description, "Vinesnatcher", cost)
 {
-    cardButton->setName("vinesnatcher-button");
+    //cardButton->setName("vinesnatcher-button");
     setupActions();
 }
 
