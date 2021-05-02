@@ -6,16 +6,15 @@ using namespace std;
 
 class Logger{
 public: 
-    static void log(const string &origin, const string &message, const string &filelocation = std::string(Settings::programDir) + std::string(Settings::logfilename)){
-		cout << filelocation << endl;
-        ofstream filestream(filelocation, std::ios_base::app);
-        if(filestream.good()){
-            filestream << "origin: " << origin << " " <<  message << "\n";
-            cout << "origin: " << origin << " " <<  message << "\n";
-            filestream.close();
+    static void log(const string &origin, const string &message, const string &fileLocation = std::string(Settings::programDir) + std::string(Settings::logFileName)){
+        ofstream fileStream(fileLocation, std::ios_base::app);
+        if(fileStream.good()){
+            fileStream << origin << ": " <<  message << "\n";
+            cout << origin << ": " <<  message << "\n";
+            fileStream.close();
         }
         else{
-			cout << "Could not log to file" << filelocation << "\n"; 
+			cout << "Could not log to file " << fileLocation << "\n"; 
         }
     }
 };
