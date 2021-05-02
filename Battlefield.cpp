@@ -1,4 +1,5 @@
 #include "Battlefield.h"
+#include "ui/CardUI.h"
 
 Battlefield::Battlefield(UISystem *ui){
     this->ui = ui;
@@ -16,7 +17,6 @@ void Battlefield::addCard(shared_ptr<Card> newCard, bool support, int slot)
 {
     auto row = support ? &supportCards : &battleCards;
     int max = support ? MAX_SUPPORT_CARDS : MAX_BATTLE_CARDS;
-    auto cardPos = newCard->getPosition();
     if (slot == -1){
         slot = getNextFreeSlot(support);
     }
@@ -30,12 +30,13 @@ void Battlefield::addCard(shared_ptr<Card> newCard, bool support, int slot)
         cout << "Battlefield: Invalid slot index: \'" << slot << "\'\n";
         throw;
     }
+    auto newCardUI = newCard->getCardUI();
     row->push_back({slot, newCard});
-    newCard->reparent(this);
-    addChild(newCard);
+    newCardUI->reparent(this);
+    addChild(newCardUI);
     newCard->cardLocation = positionToCardLocation(slot, support);
-    newCard->setPosition(toGlobal(support ? supportPositionsOffset[slot].pos : battlePositionsOffset[slot].pos));
-    newCard->setRotation(0);
+    newCardUI->setPosition(toGlobal(support ? supportPositionsOffset[slot].pos : battlePositionsOffset[slot].pos));
+    newCardUI->setRotation(0);
 }
 
 void Battlefield::removeCard(int slot, bool support)
@@ -44,8 +45,9 @@ void Battlefield::removeCard(int slot, bool support)
     auto card = getCardAt(slot, support);
     if (card)
     {
-        removeChild(card);
-        card->reparent(nullptr);
+        auto cardUI = card->getCardUI();
+        removeChild(cardUI.get());
+        cardUI->reparent(nullptr);
         row.remove_if([slot](cardIndex ci){return ci.index == slot;});
     }
     else
@@ -57,16 +59,17 @@ void Battlefield::removeCard(int slot, bool support)
 
 void Battlefield::removeCard(Card *cardToRemove)
 {
-    cout << "Battlefield: Trying to remove card " << cardToRemove->getName() << endl;
+    cout << "Battlefield: Trying to remove card " << cardToRemove->label << endl;
     for (auto cardIndex : battleCards){
         auto cicard = cardIndex._card;
         auto c = cicard.get();
+        auto cUI = c->getCardUI();
         if (c == cardToRemove)
         {
             cout << "Battlefield: Removing battle card\n";
             battleCards.remove(cardIndex);
-            removeChild(c);
-            c->reparent(nullptr);
+            removeChild(cUI.get());
+            cUI->reparent(nullptr);
             return;
         }
     }
@@ -74,11 +77,12 @@ void Battlefield::removeCard(Card *cardToRemove)
     for (auto cardIndex : supportCards){
         auto cicard = cardIndex._card;
         auto c = cicard.get(); 
+        auto cUI = c->getCardUI();
         if (c == cardToRemove){
             cout << "Battlefield: Removing support card\n";
             supportCards.remove(cardIndex);
-            removeChild(c);
-            c->reparent(nullptr);
+            removeChild(cUI.get());
+            cUI->reparent(nullptr);
             return;
         }
     }
@@ -130,11 +134,11 @@ vector<sf::Vector2f> Battlefield::getFreeSnapPoints(bool support){
 void Battlefield::printCards(){
     cout << "Battlefield: Battle cards:\n";
     for (auto cardindex : battleCards){
-        cout << "Card: " << cardindex._card->getName() << ", index: " << cardindex.index << endl;
+        cout << "Card: " << cardindex._card->label << ", index: " << cardindex.index << endl;
     }
     cout << "Battlefield: Support cards:\n";
     for (auto cardindex : supportCards){
-        cout << "Card: " << cardindex._card->getName() << ", index: " << cardindex.index << endl;
+        cout << "Card: " << cardindex._card->label << ", index: " << cardindex.index << endl;
     }
 }
 

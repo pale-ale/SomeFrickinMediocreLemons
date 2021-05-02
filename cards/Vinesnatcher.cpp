@@ -8,7 +8,7 @@
 #include "../actions/DefaultAttack.h"
 #include "../actions/VinesnatcherTap.h"
 
-Vinesnatcher::Vinesnatcher(UISystem* ui) : Card::Card(ui, pathToImage, description, "Vinesnatcher", cost)
+Vinesnatcher::Vinesnatcher(UISystem *ui) : Card::Card(ui, pathToImage, description, "Vinesnatcher", cost)
 {
     //cardButton->setName("vinesnatcher-button");
     setupActions();

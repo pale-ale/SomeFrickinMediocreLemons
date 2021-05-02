@@ -20,15 +20,15 @@ void GameScene::setup()
     for (int i = 0; i < 10; i++)
     {
         auto fb = CardSpawner::SpawnCardRandom(ui);
-        fb->initializeSubComponents();
-        fb->setName("p0Card" + std::to_string(i));
+        //fb->initializeSubComponents();
+        fb->label = "p0Card" + std::to_string(i);
         player0->addCardToDeck(fb);
     }
     for (int i = 0; i < 10; i++)
     {
         auto fb = CardSpawner::SpawnCardRandom(ui);
-        fb->initializeSubComponents();
-        fb->setName("p1Card" + std::to_string(i));
+        //fb->initializeSubComponents();
+        fb->label = "p1Card" + std::to_string(i);
         player1->addCardToDeck(fb);
     }
 

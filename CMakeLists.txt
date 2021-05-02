@@ -26,9 +26,9 @@ set(HEADER_FILES KeyboardDelegate.h)
 add_library(Delegate KeyboardDelegate.cpp ${HEADER_FILES})
 
 # headers for specific cards
-set(HEADER_FILES  Card.h   cards/Fireball.h   cards/Flamestrike.h   cards/Kalle.h   cards/Vinesnatcher.h   
+set(HEADER_FILES  Card.h   cards/Fireball.h   cards/Flamestrike.h   cards/Vinesnatcher.h   
 cards/PlayerCard.h)
-add_library(Cards Card.cpp cards/Fireball.cpp cards/Flamestrike.cpp cards/Kalle.cpp cards/Vinesnatcher.cpp 
+add_library(Cards Card.cpp cards/Fireball.cpp cards/Flamestrike.cpp cards/Vinesnatcher.cpp 
 cards/PlayerCard.cpp ${HEADER_FILES})
 
 # headers for actions

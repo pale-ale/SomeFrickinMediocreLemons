@@ -1,13 +1,14 @@
 #include "CardSelector.h"
 #include "../Player.h"
 #include "../events/EventCallback.h"
+#include "CardUI.h"
 
 CardSelector::CardSelector(UISystem *ui) : UIElement(ui)
 {
     name = "CardSelector";
 }
 
-void CardSelector::setSelectionTarget(const list<Card *> &cardsToSelectFrom, bool reposition, CardSelectionInfo csi)
+void CardSelector::setSelectionTarget(const list<Card*> &cardsToSelectFrom, bool reposition, CardSelectionInfo csi)
 {
     cards = cardsToSelectFrom;
     cardSelectionInfo = csi;
@@ -25,6 +26,7 @@ void CardSelector::setSelectionTarget(const list<Card *> &cardsToSelectFrom, boo
 
     for (auto &c : cards)
     {
+        auto cUI = c->getCardUI();
         auto button = std::make_shared<Button>(ui, sf::Color{50, 50, 255, 100}, sf::Color{50, 50, 200, 100}, corners);
         if (reposition)
         {
@@ -45,8 +47,8 @@ void CardSelector::setSelectionTarget(const list<Card *> &cardsToSelectFrom, boo
             button->initializeSubComponents();
             button->setName("cardSelectorButton");
             cout << "added button as listener.\n";
-            button->setRotation(c->getRotation());
-            button->setPosition(c->getPosition());
+            button->setRotation(cUI->getRotation());
+            button->setPosition(cUI->getPosition());
         }
         button->onMouseDownCallback = std::make_shared<EventCallback<CardSelector>>(this, &CardSelector::selectedCardClickCallback);
         buttons.push_back(std::move(button));

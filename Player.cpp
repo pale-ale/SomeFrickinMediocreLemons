@@ -33,7 +33,7 @@ void Player::playCard(Card *cardToPlay, int slot)
     mana -= cardToPlay->cost;
     playerManaBars->updateManaBars(&mana);
     battlefield->addCard(sharedCardPtr, true, slot);
-    cout << "Player: " << name << " played card " << cardToPlay->getName() << endl;
+    cout << "Player: " << name << " played card " << cardToPlay->label << endl;
     playerhand->updateHandPositions();
     playerHud->setHandCount(playerhand->getHandData().size());
     if (game)
@@ -48,23 +48,25 @@ void Player::playCard(Card *cardToPlay, int slot)
 
 void Player::addCardToDeck(shared_ptr<Card> card)
 {
-    card->setPosition(transform.getTransform().transformPoint(deckOffset));
-    card->setRotation(this->getRotation());
+    auto cardUI = card->getCardUI();
+    cardUI->setPosition(transform.getTransform().transformPoint(deckOffset));
+    cardUI->setRotation(this->getRotation());
     card->setFlipState(false);
     card->setOwner(this);
     card->cardLocation = ECardLocation::deck;
     deck.push_back(card);
     playerHud->setDeckCount(deck.size());
-    addChild(card);
+    //addChild(card);
 }
 
 void Player::addCardToGraveyard(shared_ptr<Card> card)
 {
-    card->setPosition(this->getPosition() + graveyardOffset);
+
+    card->getCardUI()->setPosition(this->getPosition() + graveyardOffset);
     card->setFlipState(false);
     card->setOwner(this);
     graveyard.push_back(card);
-    addChild(card);
+    //addChild(card);
 }
 
 const list<Card *> Player::getHand() const
@@ -77,7 +79,7 @@ void Player::printDeck() const
     cout << "Player: Cards in deck:" << deck.size() << endl;
     for (auto &c : deck)
     {
-        cout << "\t" + c->getName() << endl;
+        cout << "\t" + c->label << endl;
     }
 }
 
@@ -87,7 +89,7 @@ void Player::printHand() const
     cout << "Player: Cards in hand: " << hand.size() << endl;
     for (auto &c : hand)
     {
-        cout << "\t" + c->getName() << endl;
+        cout << "\t" + c->label << endl;
     }
 }
 
@@ -146,12 +148,13 @@ void Player::initializeSubComponents()
     playerManaBars->setPosition(getPosition() + manaBarOffset);
     playerManaBars->setRotation(-90);
     addChild(playerManaBars);
-    playerCard->setPosition(getPosition());
-    playerCard->isVisible = false;
     playerCard->setMaxHealth(lifePoints);
     playerCard->setHealth(lifePoints);
     playerCard->setOwner(this);
-    addChild(playerCard);
+    auto playerCardUI = playerCard->getCardUI();
+    //playerCardUI->setPosition(getPosition());
+    //playerCardUI->isVisible = false;
+    //addChild(playerCard);
 }
 
 Player::Player(UISystem *ui) : UIElement(ui),
@@ -161,7 +164,7 @@ Player::Player(UISystem *ui) : UIElement(ui),
                                cardSelector{std::make_shared<CardSelector>(ui)},
                                playerManaBars{std::make_shared<ManaBars>(ui, 50, 25)},
                                playerHud{std::make_shared<PlayerHUD>(ui)},
-                               playerCard{std::make_shared<PlayerCard>(ui)}
+                               playerCard{std::make_shared<PlayerCard>()}
 {
     name = "Player";
 }
@@ -178,8 +181,8 @@ shared_ptr<Card> Player::removeCardFromDeck(Card *cardToRemove)
         if (c.get() == cardToRemove)
         {
             deck.remove(c);
-            children.remove(c);
-            cardToRemove->reparent(nullptr);
+            //children.remove(c);
+            cardToRemove->getCardUI()->reparent(nullptr);
             return c;
         }
     }
@@ -196,8 +199,8 @@ shared_ptr<Card> Player::removeCardFromDeckTop()
     }
     auto c = *deck.rbegin();
     deck.remove(c);
-    children.remove(c);
-    c->reparent(nullptr);
+    //children.remove(c);
+    c->getCardUI()->reparent(nullptr);
     return c;
 }
 

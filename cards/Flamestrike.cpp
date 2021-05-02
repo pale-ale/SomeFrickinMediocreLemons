@@ -2,7 +2,7 @@
 
 #include "../actions/FlamestrikePlay.h"
 
-Flamestrike::Flamestrike(UISystem* ui) : Card::Card(ui, pathToImage, description, "Flamestrike", cost)
+Flamestrike::Flamestrike(UISystem *ui) : Card::Card(ui, pathToImage, description, "Flamestrike", cost)
 {
     setupActions();
 }

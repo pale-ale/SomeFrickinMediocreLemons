@@ -5,6 +5,8 @@
 #include "../CardSelectionInfo.h"
 #include "Button.h"
 
+class CardUI;
+
 template <typename ...T>
 class IEventCallback;
 

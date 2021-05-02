@@ -1,8 +1,9 @@
 #include "CardUI.h"
 #include "TextBox.h"
+#include "../Player.h"
+#include "../Battlefield.h"
 
-
-CardUI::CardUI(UISystem *ui, Card *owningCard) : UIElement(ui), owningCard{owningCard},
+CardUI::CardUI(UISystem *ui, Card *owningCard) : UIElement(ui), owningCard{owningCard}, 
 cardDescription{make_shared<TextBox>(ui)},
 cardButton{make_shared<Button>(ui, sf::Color{0, 0, 0, 0}, sf::Color{0, 0, 0, 0})}
 {
@@ -33,12 +34,12 @@ cardButton{make_shared<Button>(ui, sf::Color{0, 0, 0, 0}, sf::Color{0, 0, 0, 0})
     cardButton->isDragable = true;
 	cardButton->setName(name + "Button");
 	cardButton->setScale(Settings::cardScale.x, Settings::cardScale.y);
-  	cardButton->onClickCallback = std::make_shared<EventCallback<Card>>(owningCard, &Card::onCardClicked);
-    cardButton->onBeginMouseoverCallback = std::make_shared<EventCallback<Card>>(owningCard, &Card::onCardBeginMouseover);
-    cardButton->onEndMouseoverCallback = std::make_shared<EventCallback<Card>>(owningCard, &Card::onCardEndMouseover);
-    cardButton->onDragMoveCallback = std::make_shared<EventCallback<Card, const sf::Vector2f&>>(owningCard, &Card::OnDragMove);
-    cardButton->onDragEndCallback = std::make_shared<EventCallback<Card>>(owningCard, &Card::OnDragEnd);
-    cardButton->onDragStartCallback = std::make_shared<EventCallback<Card>>(owningCard, &Card::OnDragStart);
+  	cardButton->onClickCallback = std::make_shared<EventCallback<CardUI>>(this, &CardUI::onCardClicked);
+    cardButton->onBeginMouseoverCallback = std::make_shared<EventCallback<CardUI>>(this, &CardUI::onCardBeginMouseover);
+    cardButton->onEndMouseoverCallback = std::make_shared<EventCallback<CardUI>>(this, &CardUI::onCardEndMouseover);
+    cardButton->onDragMoveCallback = std::make_shared<EventCallback<CardUI, const sf::Vector2f&>>(this, &CardUI::OnDragMove);
+    cardButton->onDragEndCallback = std::make_shared<EventCallback<CardUI>>(this, &CardUI::OnDragEnd);
+    cardButton->onDragStartCallback = std::make_shared<EventCallback<CardUI>>(this, &CardUI::OnDragStart);
 }
 
 void CardUI::setPosition(const sf::Vector2f &newPosition){
@@ -95,7 +96,7 @@ void CardUI::initializeSubComponents()
 
 void CardUI::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(borderSprite, states);
-    if (owningCard->getFlipState()){
+    if (owningCard->bGetFlipState()){
         target.draw(imageSprite, states);
         target.draw(cardLabel, states);
         target.draw(*cardDescription, states);
@@ -103,4 +104,88 @@ void CardUI::draw(sf::RenderTarget& target, sf::RenderStates states) const{
         target.draw(powerStatDisplay, states);
         target.draw(*cardButton, states);
     }
+}
+
+void CardUI::OnDragMove(const sf::Vector2f &newPos)
+{
+	if (snapPoints.size() > 0)
+	{
+		auto closestSnapPoint = getClosestPoint<vector<sf::Vector2f>>(newPos, snapPoints, snapPointIndex);
+		auto distance = getDistance(newPos, closestSnapPoint);
+		if (distance < 25)
+		{
+			setPosition(closestSnapPoint);
+			return;
+		}
+	}
+	snapPointIndex = -1;
+	setPosition(newPos);
+}
+
+void CardUI::OnDragStart()
+{
+	auto owningPlayer = owningCard->getOwner();
+	setRotation(0);
+	if (owningPlayer && owningPlayer->bIsMyTurn)
+	{
+		owningPlayer->battlefield->setDrawFreeSpaces(true, true);
+		owningPlayer->battlefield->setDrawFreeSpaces(true, false);
+		setSnapPoints(owningPlayer->battlefield->getFreeSnapPoints(true));
+	}
+	snapPointIndex = -1;
+}
+
+void CardUI::OnDragEnd()
+{
+	owningCard->playToIndex(snapPointIndex);
+}
+
+
+void CardUI::onCardClicked()
+{
+	if (! (owningCard && owningCard->getOwner())){
+		cout << "CardUI: I need a card and a player!\n";
+		throw;
+	}
+	auto owningPlayer = owningCard->getOwner();
+	if (!owningPlayer->bIsMyTurn)
+	{
+		cout << "CardUI: Not my turn yet.\n";
+		return;
+	}
+	if (owningCard->cardLocation == hand)
+	{
+		if (owningCard->canAfford())
+		{
+			owningCard->play();
+		}
+	}
+	if (owningCard->cardLocation == battlefieldBattle || 
+        owningCard->cardLocation == battlefieldBattort || 
+        owningCard->cardLocation == battlefieldSupport)
+	{
+		if (owningPlayer->getSelectedCard() == owningCard)
+		{
+			owningPlayer->selectCard(nullptr);
+			return;
+		}
+		owningPlayer->selectCard(owningCard);
+	}
+}
+
+void CardUI::onCardBeginMouseover()
+{
+	preview = std::make_shared<CardPreview>(ui, owningCard);
+	preview->setPosition({Settings::defaultWidth / 2, Settings::defaultHeight / 2});
+	ui->addToHUDLayer(preview);
+}
+
+void CardUI::onCardEndMouseover()
+{
+	ui->removeFromHUDLayer(preview.get());
+	preview.reset();
+}
+
+CardUI::~CardUI(){
+    ui->removeFromHUDLayer(preview.get());
 }

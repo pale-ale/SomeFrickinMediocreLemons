@@ -40,11 +40,9 @@ bool Hand::addCardToHand(shared_ptr<Card> cardToAdd)
     if (handCardData.size() < maxHandsize)
     {
         handCardData.push_back(cardToAdd);
-        auto newCardUI = std::make_shared<CardUI>(ui, cardToAdd.get());
+        auto newCardUI = cardToAdd->getCardUI();
         newCardUI->initializeSubComponents();
         handCards.push_back(newCardUI);
-        addChild(cardToAdd);
-        cardToAdd->reparent(nullptr);
         cardToAdd->setFlipState(true);
         cardToAdd->cardLocation = ECardLocation::hand;
         return true;
@@ -57,7 +55,8 @@ std::shared_ptr<Card> Hand::removeCard(Card *cardToRemove)
     for (auto cardSharedPtr : handCardData){
         if (cardSharedPtr.get() == cardToRemove){
             handCardData.remove(cardSharedPtr);
-            cardToRemove->reparent(nullptr);
+            handCards.remove(cardSharedPtr->getCardUI());
+            cardToRemove->getCardUI()->reparent(nullptr);
             return cardSharedPtr;
         }
     }

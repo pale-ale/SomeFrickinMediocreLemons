@@ -2,7 +2,7 @@
 
 #include "../actions/FireballPlay.h"
 
-Fireball::Fireball(UISystem* ui) : Card::Card(ui, pathToImage, description, "Fireball", cost)
+Fireball::Fireball(UISystem *ui) : Card::Card(ui, pathToImage, description, "Fireball", cost)
 {
     setupActions();
 }

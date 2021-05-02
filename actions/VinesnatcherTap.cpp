@@ -16,9 +16,9 @@ void VinesnatcherTap::triggerAction()
     {
         owningPlayer->awaitingSelection = this;
         CardSelectionInfo csi;
-        cout << "VinesnatcherAction: " << owningCard->getName() << " requesting selection.\n";
+        cout << "VinesnatcherAction: " << owningCard->label << " requesting selection.\n";
         owningPlayer->startSelection(csi);
-        cout << "VinesnatcherAction: " << owningCard->getName() << " tapped.\n";
+        cout << "VinesnatcherAction: " << owningCard->label << " tapped.\n";
         return;
     }
     cout << "VinesnatcherAction: OwningCard and OwningPlayer are required.\n";
@@ -28,6 +28,6 @@ void VinesnatcherTap::triggerAction()
 void VinesnatcherTap::onReceiveSelection(std::list<Card*> cards)
 {
     auto card = *cards.begin();
-    cout << "VinesnatcherAction: " << owningCard->getName() << " deals 2 damage to " << card->getName() << ".\n";
+    cout << "VinesnatcherAction: " << owningCard->label << " deals 2 damage to " << card->label << ".\n";
     card->takeDamage(2);
 }

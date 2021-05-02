@@ -7,7 +7,7 @@ class Player;
 class PlayerCard : public Card
 {
 public:
-    PlayerCard(UISystem *ui);
+    PlayerCard(UISystem *ui = nullptr);
     virtual void onCardDeath() override;
     virtual void takeDamage(const int& amount) override;
     virtual void setupActions() override {}

@@ -17,9 +17,9 @@ void FireballPlay::triggerAction()
         owningPlayer->awaitingSelection = this;
         CardSelectionInfo csi;
         csi.canAttackHeroDirectly = true;
-        cout << "FireballPlay: " << owningCard->getName() << " requesting selection.\n";
+        cout << "FireballPlay: " << owningCard->label << " requesting selection.\n";
         owningPlayer->startSelection(csi);
-        cout << "FireballPlay: " << owningCard->getName() << " tapped.\n";
+        cout << "FireballPlay: " << owningCard->label << " tapped.\n";
         return;
     }
     cout << "FireballPlay: OwningCard and OwningPlayer are required.\n";
@@ -30,6 +30,6 @@ void FireballPlay::onReceiveSelection(std::list<Card*> cards)
 {
     
     auto card = *cards.begin();
-    cout << "FireballPlay: " << owningCard->getName() << " deals 3 damage to " << card->getName() << ".\n";
+    cout << "FireballPlay: " << owningCard->label << " deals 3 damage to " << card->label << ".\n";
     card->takeDamage(2);
 }

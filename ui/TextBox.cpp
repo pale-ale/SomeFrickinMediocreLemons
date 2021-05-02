@@ -7,7 +7,7 @@ fontsize{fontsize}, sizetextbox{size}, content{content}, autoresize{autoresize},
     this->size = size;
     this->content = content;
     updatetextboxShape();
-    cout << "Position:" << hitbox.size() << endl;
+    //cout << "Position:" << hitbox.size() << endl;
     updateContent();
 }
 

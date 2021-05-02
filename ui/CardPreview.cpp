@@ -6,7 +6,7 @@ description{std::make_shared<TextBox>(ui)}
 {
     font.loadFromFile(Settings::validFontPath);
     cardTitle.setFont(font);
-    cardTitle.setString(cardToPreview->getName());
+    cardTitle.setString(cardToPreview->label);
     cardTitle.setOrigin({cardTitle.getLocalBounds().width/2, cardTitle.getLocalBounds().height/2});
     string cardDescription = cardToPreview->getDescription() + "\n";
     for (auto action : cardToPreview->getActions()){

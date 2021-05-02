@@ -2,7 +2,6 @@
 
 #include "cards/Fireball.h"
 #include "cards/Flamestrike.h"
-#include "cards/Kalle.h"
 #include "cards/Vinesnatcher.h"
 
 
