@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Settings.h"
+#include "Debugging.h"
 
 #include "events/EventCallback.h"
 #include "net/Connector.h"
@@ -34,7 +35,7 @@ int main(int argc, char *argv[])
     Delegate spaceDelegate;
     SceneManager sceneManager;
     Connector connector;
-
+    Logger::logtofile("starting game", "/home/nico/logfile") ? cout << "logged successfully"<<endl : cout << "logging failed" <<endl;  
 
     float scale = 2;
     window.setKeyRepeatEnabled(false);
