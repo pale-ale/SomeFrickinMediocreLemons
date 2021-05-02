@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     Delegate spaceDelegate;
     SceneManager sceneManager;
     Connector connector;
-    Logger::log("starting game") ? cout << "logged successfully"<<endl : cout << "logging failed" <<endl;  
+    Logger::log("main.cpp", "starting game"); 
 
     float scale = 2;
     window.setKeyRepeatEnabled(false);
