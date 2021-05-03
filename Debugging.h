@@ -4,8 +4,7 @@
 #include <fstream>
 using namespace std;
 
-class Logger{
-public: 
+namespace Debugging{
     static void log(const string &origin, const string &message, const string &fileLocation = std::string(Settings::programDir) + std::string(Settings::logFileName)){
         ofstream fileStream(fileLocation, std::ios_base::app);
         if(fileStream.good()){

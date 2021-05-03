@@ -17,6 +17,8 @@
 #include "net/Connector.h"
 #include "ui/UISystem.h"
 
+using namespace Debugging;
+
 int main(int argc, char *argv[])
 {
     string progRelativepath(argv[0]);
@@ -35,7 +37,7 @@ int main(int argc, char *argv[])
     Delegate spaceDelegate;
     SceneManager sceneManager;
     Connector connector;
-    Logger::log("main.cpp", "starting game"); 
+    log("main.cpp", "starting game"); 
 
     float scale = 2;
     window.setKeyRepeatEnabled(false);

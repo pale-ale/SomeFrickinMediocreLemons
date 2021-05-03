@@ -37,11 +37,11 @@ void MainMenuScene::setup(){
     playOnlineButton->setMouseoverColor({80,80,100,255});
     s = playOnlineLabel.getLocalBounds(); 
     playOnlineButton->setPosition(playOnlinePos + sf::Vector2f{2.5,5});
-    playOnlineButton->onMouseDownCallback = std::make_shared<EventCallback<MainMenuScene>>(this, &MainMenuScene::loadPlaySceneButtonCallback);
+    playOnlineButton->onMouseDownCallback = std::make_shared<EventCallback<MainMenuScene>>(this, &MainMenuScene::playMultiPlayerButtonCallback);
    
     playOfflineButton->setDefaultColor({100,100,120,255});
     playOfflineButton->setMouseoverColor({80,80,100,255});
     s = playOfflineLabel.getLocalBounds(); 
     playOfflineButton->setPosition(playOfflinePos + sf::Vector2f{2.5,5});
-    playOfflineButton->onMouseDownCallback = std::make_shared<EventCallback<MainMenuScene>>(this, &MainMenuScene::playMultiPlayerButtonCallback);
+    playOfflineButton->onMouseDownCallback = std::make_shared<EventCallback<MainMenuScene>>(this, &MainMenuScene::loadPlaySceneButtonCallback);
 }

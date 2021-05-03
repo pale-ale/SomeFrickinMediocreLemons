@@ -1,5 +1,4 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 
 class Settings{
     public:
@@ -20,12 +19,8 @@ class Settings{
     static const int fontSize = 10;
     static const bool bEnableButtonTint = false;
     static const bool bDrawDebugHitbox = false;
-    inline static const sf::Vector2f cardScale = {0.75, 0.75};    
-    inline static const sf::Vector2f cardSize = {50, 75};
-    inline static const sf::Color darkGrayColor = {50,50,50,255};
-    inline static const sf::Color blackColor = {0,0,0,255};
-    inline static const sf::Color blueColor = {32,192,255,255};
-    inline static const sf::Color greenColor = {128,255,0,255};
-    inline static const sf::Color redColor = {255,0,0,255};
-    inline static const sf::Color whiteColor = {255,255,248,255};
+    inline static const float cardScaleX = 0.75;    
+    inline static const float cardScaleY = 0.75;    
+    inline static const float cardSizeX = 50;
+    inline static const float cardSizeY = 75;
 };

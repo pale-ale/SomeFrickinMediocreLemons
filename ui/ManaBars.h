@@ -13,11 +13,11 @@ class ManaBars: public UIElement{
     const unsigned int width;
     const unsigned int height;
     const int maxMana = 20;
-    std::shared_ptr<Bar> blackManaBar = std::make_shared<Bar>(ui, Settings::darkGrayColor, Settings::blackColor);
-    std::shared_ptr<Bar> blueManaBar  = std::make_shared<Bar>(ui, Settings::darkGrayColor, Settings::blueColor);
-    std::shared_ptr<Bar> greenManaBar = std::make_shared<Bar>(ui, Settings::darkGrayColor, Settings::greenColor);
-    std::shared_ptr<Bar> redManaBar   = std::make_shared<Bar>(ui, Settings::darkGrayColor, Settings::redColor);
-    std::shared_ptr<Bar> whiteManaBar = std::make_shared<Bar>(ui, Settings::darkGrayColor, Settings::whiteColor);
+    std::shared_ptr<Bar> blackManaBar = std::make_shared<Bar>(ui, sf::Color{50,50,50,255}, sf::Color{  0,  0,  0,255});
+    std::shared_ptr<Bar> blueManaBar  = std::make_shared<Bar>(ui, sf::Color{50,50,50,255}, sf::Color{  0,  0,255,255});
+    std::shared_ptr<Bar> greenManaBar = std::make_shared<Bar>(ui, sf::Color{50,50,50,255}, sf::Color{  0,255,  0,255});
+    std::shared_ptr<Bar> redManaBar   = std::make_shared<Bar>(ui, sf::Color{50,50,50,255}, sf::Color{255,  0,  0,255});
+    std::shared_ptr<Bar> whiteManaBar = std::make_shared<Bar>(ui, sf::Color{50,50,50,255}, sf::Color{255,255,255,255});
     list<std::shared_ptr<Bar>> ManaBarList = {
         blackManaBar,
         blueManaBar,

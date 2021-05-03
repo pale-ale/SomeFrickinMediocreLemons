@@ -44,7 +44,7 @@ private:
     Card *owningCard = nullptr;
     std::shared_ptr<CardPreview> preview = nullptr;
 
-    const sf::Vector2f cardDimensions = Settings::cardSize;
+    const sf::Vector2f cardDimensions = {Settings::cardSizeX, Settings::cardSizeY};
     const sf::Vector2f imageDimensions = {1200, 900};
 	const sf::Vector2f imageOffset = {0, -13};
     const sf::Vector2f labelCenterOffset = {0, -35};
@@ -61,17 +61,17 @@ private:
 	sf::Text powerStatDisplay;
     std::shared_ptr<TextBox> cardDescription;
 
-    const std::shared_ptr<sf::Texture> getTexture() const {return imageTexture;}
-    
-	sf::Vector2f scaleVectorSettings(const sf::Vector2f &v){
-		return {v.x*Settings::cardScale.x, v.y*Settings::cardScale.y};
-	}
-
 	std::shared_ptr<sf::Texture> imageTexture = std::make_shared<sf::Texture>();
     std::shared_ptr<sf::Texture> borderBackTexture = std::make_shared<sf::Texture>();
 	std::shared_ptr<sf::Texture> borderFrontTexture = std::make_shared<sf::Texture>();
 
     std::shared_ptr<sf::Font> font = std::make_unique<sf::Font>();
+    const std::shared_ptr<sf::Texture> getTexture() const {return imageTexture;}
+    
+	sf::Vector2f scaleVectorSettings(const sf::Vector2f &v){
+		return {v.x*Settings::cardScaleX, v.y*Settings::cardScaleY};
+	}
+
 
 protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

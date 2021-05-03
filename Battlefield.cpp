@@ -108,9 +108,9 @@ void Battlefield::setDrawFreeSpaces(bool drawFreeSpaces, bool support){
     auto row = support ? supportPositionsOffset : battlePositionsOffset;
     if (drawFreeSpaces){
         for (int freeIndex : freeIndices){
-            auto freeCardSpace = std::make_shared<sf::RectangleShape>(Settings::cardSize);
-            freeCardSpace->setOrigin(Settings::cardSize * .5f);
-            freeCardSpace->setScale(Settings::cardScale);
+            auto freeCardSpace = std::make_shared<sf::RectangleShape>(sf::Vector2f{Settings::cardSizeX, Settings::cardSizeY});
+            freeCardSpace->setOrigin(Settings::cardSizeX * .5f, Settings::cardSizeY * .5f);
+            freeCardSpace->setScale(Settings::cardScaleX, Settings::cardScaleY);
             freeCardSpace->setFillColor(sf::Color{255,255,100,100});
             freeCardSpace->setPosition(toGlobal(row[freeIndex].pos));
             emptySpaceDisplay.push_back(freeCardSpace);
