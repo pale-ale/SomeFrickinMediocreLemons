@@ -3,7 +3,7 @@
 
 using Debugging::log;
 
-bool Connector::hostGame(int port){
+bool Connector::awaitConnection(int port){
     struct sockaddr_in address;
     int addrlen = sizeof(address);
     int new_socket, valread;
@@ -42,7 +42,17 @@ bool Connector::hostGame(int port){
         log("Connector", "Could not accept connection or timeout.");
         return false;
     }
-    log("Server", "Found one!");
+    log("Server", "A client connected.");
+    clientFds.push_back(new_socket);
+    return true;
+}
+
+bool Connector::hostGame(int port, int playerNumber){
+    log("Server", "Hosting a game for " + to_string(playerNumber) + " players.");
+    while (clientFds.size() < playerNumber){
+        awaitConnection(port);
+    }
+    log("Server", "All players connected. Starting game...");
     return true;
 }
 

@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     Delegate spaceDelegate;
     SceneManager sceneManager;
     Connector connector;
-    log("main.cpp", "starting game"); 
+    log("main.cpp", "Starting game..."); 
 
     float scale = 2;
     window.setKeyRepeatEnabled(false);

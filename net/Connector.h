@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <list>
 
 #include <arpa/inet.h>
 #include <netinet/in.h>
@@ -13,7 +14,9 @@
 
 class Connector{
     public:
-    bool hostGame(int port=ServerSettings::serverPort);
+    bool hostGame(int port=ServerSettings::serverPort, int playerNumber = 2);
+    bool awaitConnection(int port);
+
     bool connectToGame(char* address=(char*)"127.0.0.1", int port=ServerSettings::serverPort);
     bool joinGame();
     bool getAuthority(){return authority;}
@@ -25,4 +28,5 @@ class Connector{
     bool authority = false;
     int clientToServerFd;
     int serverToClientFd;
+    std::list<int> clientFds;
 };

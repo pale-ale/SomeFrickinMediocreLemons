@@ -2,6 +2,7 @@
 #include <memory>
 
 #include "Game.h"
+#include "ui/GameUI.h"
 #include "Scene.h"
 
 using std::cout;
@@ -13,6 +14,7 @@ class GameScene : public SceneBase{
     public:
     GameScene(UISystem* ui, SceneManager &sm);
     Game mainGame = Game();
+    GameUI mainGameUI = GameUI(&mainGame);
     UISystem* ui;
     std::shared_ptr<Player> player0 = nullptr;
     std::shared_ptr<Player> player1 = nullptr;
@@ -20,6 +22,6 @@ class GameScene : public SceneBase{
 
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override{
-        target.draw(mainGame);
+        target.draw(mainGameUI);
     }
 };

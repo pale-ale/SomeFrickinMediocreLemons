@@ -1,25 +1,14 @@
+#include "Debugging.h"
 #include "Game.h"
 #include "Player.h"
 
-Game::Game() : sf::Drawable()
-{
-    if (texture.loadFromFile(string(Settings::programDir) + Settings::relativeAssetTabletopPath))
-    {
-        mainTexture.setTexture(texture);
-        cout << "Game: Loaded tabletop texture.\n";
-    }
-    else
-    {
-        cout << "Game: Couldn't find tabletop texture at \'" << Settings::programDir << Settings::relativeAssetTabletopPath << "\'. Exiting.\n";
-        throw;
-    }
-}
+using Debugging::log;
 
 Player *Game::getNextTurnPlayer()
 {
     if (players.size() < 1)
     {
-        cout << "Game: No players to start game\n";
+        log("Game", "getNextTurnPlayer(): No players to get from.)");
         return nullptr;
     }
     int advanceCount = 0;
@@ -82,16 +71,4 @@ void Game::startTurnOfPlayer(Player *player)
 void Game::startTurnOfNextPlayer()
 {
     startTurnOfPlayer(getNextTurnPlayer());
-}
-
-void Game::draw(sf::RenderTarget &target, sf::RenderStates states) const
-{
-    target.draw(mainTexture, states);
-    auto playerIterator = players.begin();
-
-    while (playerIterator != players.end())
-    {
-        target.draw(**playerIterator);
-        playerIterator++;
-    }
 }
