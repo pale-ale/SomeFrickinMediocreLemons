@@ -2,6 +2,7 @@
 #include <iostream>
 #include "MainMenuScene.h"
 #include "Settings.h"
+#include "SceneManager.h"
 
 using std::cout;
 
@@ -44,4 +45,14 @@ void MainMenuScene::setup(){
     s = playOfflineLabel.getLocalBounds(); 
     playOfflineButton->setPosition(playOfflinePos + sf::Vector2f{2.5,5});
     playOfflineButton->onMouseDownCallback = std::make_shared<EventCallback<MainMenuScene>>(this, &MainMenuScene::loadPlaySceneButtonCallback);
+}
+
+void MainMenuScene::loadPlaySceneButtonCallback(){
+    sceneManager->loadScene<GameScene>();
+}
+
+void MainMenuScene::playMultiPlayerButtonCallback(){
+    connector->connectToGame();
+    connector->sendJoinRequest();
+    sceneManager->loadScene<QueueScene>();
 }

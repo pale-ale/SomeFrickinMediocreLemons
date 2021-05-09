@@ -31,7 +31,7 @@ class Connector{
     bool getAuthority(){return authority;}
     EConnectionState getConnectionState();
     bool sndMsg(const char datagram[35]) const;
-    std::string rcvMsg();
+    const char* rcvMsg();
 
     void process();
     void getDatagramType();

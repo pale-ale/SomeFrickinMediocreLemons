@@ -1,6 +1,6 @@
+#pragma once
 #include "../GlobalFunctions.h"
-
-enum EDatagramType{
+enum class EDatagramType{
     UNUSED,
     Management,
     Gamerule,
@@ -9,28 +9,56 @@ enum EDatagramType{
     MAX
 };
 
+enum class EPlayerEventType{
+    UNUSED,
+    Join,
+    Leave,
+    MAX
+};
+
 struct FGeneralDatagram{
-    FGeneralDatagram(EDatagramType dgType, const char dg[35]){
+    FGeneralDatagram(const char dg[35]=""){
         memcpy(content, dg, sizeof(char)*35);
     }
-    EDatagramType dgType;
     char content[35] = "";
 };
+
 struct FManagementDatagram{
-    FManagementDatagram(FGeneralDatagram dg){
-        eventType = dg.content[0];
-        memcpy(&playerID, &dg.content[1], 2);
+    FManagementDatagram(EPlayerEventType t, unsigned short playerID){
+        data[0]=(char)EDatagramType::Management;
+        data[1]=(char)t;
+        memcpy(&data[2], &playerID, 2);
     }
-    uint8_t eventType;
-    unsigned short playerID;
+    FManagementDatagram(const char* dg){
+        memcpy(&data, &dg, 35);
+    }
+    EPlayerEventType getEventType() { return (EPlayerEventType)data[1]; }
+    unsigned short getPlayerID() { unsigned short id; memcpy(&id, &data[2], 2); return id;}
+    char data[35];
 };
 
 class ProtocolBuilder{
     public:
-    static FGeneralDatagram assembleJoinRequest(const unsigned short playerID){
-        char dgContents[35];
-        dgContents[0] = (char)EDatagramType::Management;
-        memcpy(&dgContents[1], &playerID, sizeof(char)*2);
-        return FGeneralDatagram(EDatagramType::Management, dgContents);
+    static FManagementDatagram assembleJoinRequest(const unsigned short playerID){
+        return FManagementDatagram(EPlayerEventType::Join, playerID);
+    }
+
+    static bool parseStringToDatagram(const char *data, FGeneralDatagram &outDatagram){
+        EDatagramType dgType = (EDatagramType)data[0];
+        if (dgType > EDatagramType::UNUSED && dgType < EDatagramType::MAX){
+            //check if the type is valid/which type it is
+            switch (dgType)
+            {
+            case EDatagramType::Management:
+                outDatagram = FGeneralDatagram(data);
+                return true;
+                break;
+            
+            default:
+                break;
+            }
+
+        }
+        return false;
     }
 };

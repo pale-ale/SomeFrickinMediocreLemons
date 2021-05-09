@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <memory>
 
@@ -9,13 +11,13 @@ using std::cout;
 
 class Player;
 class UISystem;
+class Connector;
 
 class GameScene : public SceneBase{
     public:
-    GameScene(UISystem* ui, SceneManager &sm);
+    GameScene(UISystem *ui, SceneManager *sm, Connector *connector);
     Game mainGame = Game();
     GameUI mainGameUI = GameUI(&mainGame);
-    UISystem* ui;
     std::shared_ptr<Player> player0 = nullptr;
     std::shared_ptr<Player> player1 = nullptr;
     void setup() override;

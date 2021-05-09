@@ -6,11 +6,11 @@
 
 #include "CardManagement.h"
 
-GameScene::GameScene(UISystem* ui, SceneManager &sm):
-        SceneBase(&sm),
+GameScene::GameScene(UISystem* ui, SceneManager *sm, Connector *connector):
+        SceneBase(ui, sm, connector),
         player0{std::make_shared<Player>(ui, "Player0")}, 
-        player1{std::make_shared<Player>(ui, "Player1")},
-        ui{ui}{}
+        player1{std::make_shared<Player>(ui, "Player1")}
+{}
 
 void GameScene::setup()
 {

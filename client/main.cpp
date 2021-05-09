@@ -7,6 +7,7 @@
 #include "../GameScene.h"
 #include "../KeyboardDelegate.h"
 #include "../MainMenuScene.h"
+#include "../QueueScene.h"
 #include "../Scene.h"
 #include "../SceneManager.h"
 #include "../Settings.h"
@@ -34,8 +35,8 @@ int main(int argc, char *argv[])
     KeyboardDelegateManager delegateHandler;
     UISystem ui(&window);
     Delegate spaceDelegate;
-    SceneManager sceneManager;
     Connector connector;
+    SceneManager sceneManager(&ui, &connector);
     log("main.cpp", "Starting game...");
 
     float scale = 2;
@@ -57,10 +58,14 @@ int main(int argc, char *argv[])
     
     vector<sf::Event> events;
     sf::Clock clock;
-    auto ms = std::make_unique<MainMenuScene>(&ui, sceneManager, &connector);
-    auto gs = std::make_unique<GameScene>(&ui, sceneManager);
-    ms->setGameScene(std::move(gs));
-    sceneManager.loadScene(std::move(ms));
+    /*
+    auto ms = std::make_shared<MainMenuScene>(&ui, sceneManager, &connector);
+    auto gs = std::make_shared<GameScene>(&ui, sceneManager);
+    auto qs = std::make_shared<QueueScene>(&ui, sceneManager, &connector);
+    ms->setGameScene(gs);
+    ms->setQueueScene(qs);
+    */
+    sceneManager.loadScene<MainMenuScene>();
     while (window.isOpen())
     {
         sf::Time tickDelay = clock.getElapsedTime();

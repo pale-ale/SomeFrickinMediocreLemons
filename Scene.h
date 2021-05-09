@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include "SceneManager.h"
 
 /*
 Scenes are going to be the containers of... well... the scene?
@@ -18,12 +17,15 @@ but can rather make them be owned by our scene and destroy it or make it invisib
 This'll bring the added benefit of preloading some scenes or assets or easy loading screens.
 */
 class SceneManager;
+class UISystem;
+class Connector;
+
 class SceneBase : public sf::Drawable{
     protected:
 
     SceneManager* sceneManager;
     public:
-    SceneBase(SceneManager *sceneManager):sceneManager{sceneManager}{}
+    SceneBase(UISystem *ui, SceneManager *sceneManager, Connector *connector):ui{ui},sceneManager{sceneManager},connector{connector}{}
     SceneBase() = delete;
     ~SceneBase(){std::cout << "SceneBase: Destroying scene.\n";}
     virtual void setup(){}
@@ -31,5 +33,8 @@ class SceneBase : public sf::Drawable{
     virtual void cleanup(){}
 
     protected:
+    UISystem *ui;
+    SceneManager *sm;
+    Connector *connector;
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override {};
 };

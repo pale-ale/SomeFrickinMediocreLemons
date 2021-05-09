@@ -44,8 +44,6 @@ bool Connector::awaitConnection(int port){
     }
     log("Connector", "A client connected.");
     clientFds.push_back(new_socket);
-    FManagementDatagram joinRequest = FGeneralDatagram(EDatagramType::Management, rcvMsg().c_str());
-    log("Connector", "The client tries to join with PlayerID: '" + to_string(joinRequest.playerID) + "' .");
     return true;
 }
 
@@ -103,8 +101,8 @@ void Connector::sendJoinRequest(){
         return;
     }
     auto msg = ProtocolBuilder::assembleJoinRequest(123);
-    sndMsg(msg.content);
-    log("Connector", "Trying to join with PlayerID " + to_string((int)msg.content[1]));
+    sndMsg(msg.data);
+    log("Connector", "Trying to join with PlayerID " + to_string(msg.getPlayerID()));
     connectionstate = EConnectionState::Joining;
 }
 
@@ -117,12 +115,12 @@ bool Connector::sndMsg(const char datagram[35]) const{
     return false;
 }
 
-string Connector::rcvMsg(){
+const char* Connector::rcvMsg(){
     int ret = read(authority ? *clientFds.rbegin() : clientToServerFd, buffer, sizeof(char)*35);
     if (ret < 0){
         log("Connector", "rcvMsg() received error code " + to_string(ret));
     } 
-    return string(buffer);
+    return buffer;
 }
 
 void Connector::process(){

@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "../Debugging.h"
+#include "../net/Protocol.h"
 
 class Connector;
 class Game;
@@ -13,6 +14,8 @@ class Server{
     public:
     Server();
     void openLobby();
+    void tick();
+    void OnPlayerRequestJoin(const FGeneralDatagram &dg);
     
     private:
     std::shared_ptr<Connector> connector = nullptr;

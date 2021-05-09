@@ -1,3 +1,5 @@
+#pragma once
+
 #include <SFML/Graphics.hpp>
 
 #include "Scene.h"
@@ -6,11 +8,12 @@
 #include "ui/Button.h"
 #include "ui/UISystem.h"
 
+class GameScene;
+class QueueScene;
+
 class MainMenuScene: public SceneBase{
-    UISystem* ui;
-    Connector *connector;
     public:
-    MainMenuScene(UISystem* ui, SceneManager &sm, Connector *connector):SceneBase(&sm), ui{ui}, connector{connector}{}
+    MainMenuScene(UISystem* ui, SceneManager *sm, Connector *connector):SceneBase(ui, sm, connector){}
     sf::Font font;
     sf::Text mainMenuLabel;
     sf::Text playOnlineLabel;
@@ -37,13 +40,11 @@ class MainMenuScene: public SceneBase{
             {50, -20}
         });
     void setup() override;
-    void setGameScene(unique_ptr<SceneBase> scene){gameScene.swap(scene);}
 
     private:
     sf::Vector2f playOnlinePos;
     sf::Vector2f playOfflinePos;
     sf::Vector2f settingsPos;
-    unique_ptr<SceneBase> gameScene = nullptr;
 
     protected:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates state) const override {
@@ -60,14 +61,6 @@ class MainMenuScene: public SceneBase{
         cout << "MainMenuScene: Running cleanup (currently does nothing)\n";
     }
 
-    void loadPlaySceneButtonCallback(){
-        if (gameScene){
-            sceneManager->loadScene(std::move(gameScene));
-        }
-    }
-
-    void playMultiPlayerButtonCallback(){
-        connector->connectToGame();
-        connector->sendJoinRequest();
-    }
+    void loadPlaySceneButtonCallback();
+    void playMultiPlayerButtonCallback();
 };
