@@ -10,7 +10,16 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 
+#include "Protocol.h"
+
 #include "../server/ServerSettings.h"
+
+enum EConnectionState{
+    Joining,
+    Connected,
+    Disconnecting,
+    Disconnected
+};
 
 class Connector{
     public:
@@ -18,13 +27,18 @@ class Connector{
     bool awaitConnection(int port);
 
     bool connectToGame(char* address=(char*)"127.0.0.1", int port=ServerSettings::serverPort);
-    bool joinGame();
+    void sendJoinRequest();
     bool getAuthority(){return authority;}
-    bool sndMsg(const char *datagram[34]) const;
+    EConnectionState getConnectionState();
+    bool sndMsg(const char datagram[35]) const;
     std::string rcvMsg();
 
+    void process();
+    void getDatagramType();
+
     private:
-    char buffer[34];
+    EConnectionState connectionstate = EConnectionState::Disconnected;
+    char buffer[35];
     bool authority = false;
     int clientToServerFd;
     int serverToClientFd;

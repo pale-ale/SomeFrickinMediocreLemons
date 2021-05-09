@@ -4,18 +4,17 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "GameScene.h"
-#include "KeyboardDelegate.h"
-#include "math.h"
-#include "MainMenuScene.h"
-#include "Scene.h"
-#include "SceneManager.h"
-#include "Settings.h"
-#include "Debugging.h"
+#include "../GameScene.h"
+#include "../KeyboardDelegate.h"
+#include "../MainMenuScene.h"
+#include "../Scene.h"
+#include "../SceneManager.h"
+#include "../Settings.h"
+#include "../Debugging.h"
 
-#include "events/EventCallback.h"
-#include "net/Connector.h"
-#include "ui/UISystem.h"
+#include "../events/EventCallback.h"
+#include "../net/Connector.h"
+#include "../ui/UISystem.h"
 
 using namespace Debugging;
 
@@ -37,7 +36,7 @@ int main(int argc, char *argv[])
     Delegate spaceDelegate;
     SceneManager sceneManager;
     Connector connector;
-    log("main.cpp", "Starting game..."); 
+    log("main.cpp", "Starting game...");
 
     float scale = 2;
     window.setKeyRepeatEnabled(false);

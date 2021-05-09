@@ -48,8 +48,12 @@ add_library(Base Player.cpp        Game.cpp  Battlefield.cpp Hand.cpp Placeable.
                  MainMenuScene.cpp GameScene.cpp CardManagement.cpp ${HEADER_FILES})
 target_link_libraries(Base UI Cards Net)
 
-add_executable(client main.cpp)
+# headers for Server
+set(HEADER_FILES   server/Server.h   server/ServerSettings.h)
+add_library(ServerBase server/Server.cpp ${HEADER_FILES})
+
+add_executable(client client/main.cpp)
 target_link_libraries(client UI Delegate Base Cards Actions sfml-graphics sfml-window sfml-system)
 
 add_executable(server server/main.cpp)
-target_link_libraries(server Net)
+target_link_libraries(server ServerBase Net)

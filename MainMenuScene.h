@@ -68,5 +68,6 @@ class MainMenuScene: public SceneBase{
 
     void playMultiPlayerButtonCallback(){
         connector->connectToGame();
+        connector->sendJoinRequest();
     }
 };
