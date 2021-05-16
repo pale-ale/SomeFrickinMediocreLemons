@@ -1,10 +1,18 @@
 #include "Server.h"
 #include "../net/Connector.h"
 #include "../Game.h"
+#include "Warehouse.h"
+
 
 Server::Server(){
     log("Server", "Starting server...");
-    connector = move(std::make_shared<Connector>());
+    connector = std::make_shared<Connector>();
+    warehouse = std::make_shared<Warehouse>();
+    if (!warehouse->setDataSource("/home/alba/projects/SomeFrickinMediocreLemons/playerData/PlayerData.json")){
+        log("Server", "Error setting datapath");
+        throw;
+    }
+    warehouse->readData();
 }
 
 void Server::openLobby(){
@@ -23,9 +31,18 @@ void Server::tick(){
         cout << "Error in parsing datagram\n";
         throw;
     }
-    cout << (int)dg.content[0] << " " << dg.content << endl;
+    if (dg.content[0] == 1){
+        OnPlayerRequestJoin(FManagementDatagram(&dg));
+    }
 }
 
-void Server::OnPlayerRequestJoin(const FGeneralDatagram &dg){
-
+void Server::OnPlayerRequestJoin(const FManagementDatagram &dg){
+    auto playerID = dg.getPlayerID();
+    log("Server", "Player with ID \'" + to_string(playerID) + "\' is trying to join.");
+    auto playerInfo = warehouse->getPlayerInfo(playerID);
+    if (playerInfo.playerName != ""){
+        log("Server", "This player is already known as \'" + string(playerInfo.playerName) + "\'.");
+    }else{
+        log("Server", "Player not already known.");
+    }
 }

@@ -29,11 +29,15 @@ struct FManagementDatagram{
         data[1]=(char)t;
         memcpy(&data[2], &playerID, 2);
     }
+    FManagementDatagram(const FGeneralDatagram *dg){
+        memcpy(&data, dg->content, 35);
+    }
+
     FManagementDatagram(const char* dg){
         memcpy(&data, &dg, 35);
     }
-    EPlayerEventType getEventType() { return (EPlayerEventType)data[1]; }
-    unsigned short getPlayerID() { unsigned short id; memcpy(&id, &data[2], 2); return id;}
+    EPlayerEventType getEventType() const { return (EPlayerEventType)data[1]; }
+    unsigned short getPlayerID() const { unsigned short id; memcpy(&id, &data[2], 2); return id;}
     char data[35];
 };
 

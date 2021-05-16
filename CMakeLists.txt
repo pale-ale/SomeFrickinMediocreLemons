@@ -49,8 +49,8 @@ add_library(Base Player.cpp        Game.cpp  Battlefield.cpp Hand.cpp Placeable.
 target_link_libraries(Base UI Cards Net)
 
 # headers for Server
-set(HEADER_FILES   server/Server.h   server/ServerSettings.h)
-add_library(ServerBase server/Server.cpp ${HEADER_FILES})
+set(HEADER_FILES       server/Server.h   server/Warehouse.h   server/ServerSettings.h)
+add_library(ServerBase server/Server.cpp server/Warehouse.cpp ${HEADER_FILES})
 
 add_executable(client client/main.cpp)
 target_link_libraries(client UI Delegate Base Cards Actions sfml-graphics sfml-window sfml-system)

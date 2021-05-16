@@ -1,0 +1,15 @@
+{
+    "$schema": "./Schema.json",
+    "playerData":[
+        {
+            "id": 123,
+            "name": "NullSpieler",
+            "deck": [1,1,2,2,3,3]
+        },
+        {
+            "id": 124,
+            "name": "EinsSpieler",
+            "deck": [1,1,1,1,1,1]
+        }
+    ]
+}

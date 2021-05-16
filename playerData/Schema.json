@@ -1,0 +1,33 @@
+{
+    "description":"First attempt in making a schema to hold player infromation. Will probably get migrated to DB or sth.",
+    "definitions":{
+        "cardSchema":{
+            "type": "object",
+            "properties": {
+                "id":   { "type": "integer" }
+            },
+            "required": ["id"]
+        },
+        "deckSchema":{
+            "type": "array",
+            "items": "integer"
+        },
+        "playerSchema":{
+            "type": "object",
+            "properties": {
+                "id":   { "type": "integer" },
+                "name": { "type": "string" },
+                "deck": { "$ref": "#/definitions/deckSchema" }
+            },
+            "required": ["id", "name", "deck"]
+        },
+        "playerArraySchema":{
+            "type": "array",
+            "items": { "$ref": "#/definitions/playerSchema" }
+        }
+    },
+    "type": "object",
+    "properties": {
+        "playerData": {"$ref": "#/definitions/playerArraySchema"}
+    }
+}
