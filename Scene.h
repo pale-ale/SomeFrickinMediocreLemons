@@ -25,11 +25,23 @@ class SceneBase : public sf::Drawable{
 
     SceneManager* sceneManager;
     public:
+    /*
+    Scenes primarily manage UIElements within them, thus allowing easy creation/destruction/switching of environments.
+    */
     SceneBase(UISystem *ui, SceneManager *sceneManager, Connector *connector):ui{ui},sceneManager{sceneManager},connector{connector}{}
     SceneBase() = delete;
     ~SceneBase(){std::cout << "SceneBase: Destroying scene.\n";}
+    /*
+    Spawns the scene's objects.
+    */
     virtual void setup(){}
+    /*
+    Call children's tick methods.
+    */
     virtual void tick(float deltaTime){}
+    /*
+    Call destructors and perform other cleanup tasks.
+    */
     virtual void cleanup(){}
 
     protected:

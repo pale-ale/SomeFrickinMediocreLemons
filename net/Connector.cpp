@@ -2,8 +2,11 @@
 #include "../Debugging.h"
 
 using Debugging::log;
-
-bool Connector::awaitConnection(int port){
+/*
+Opens a listen port and tries to accept a connection there.
+This is a non-blocking operation.
+*/
+bool Connector::getConnection(int port, int &inFd){
     struct sockaddr_in address;
     int addrlen = sizeof(address);
     int new_socket, valread;
@@ -14,7 +17,7 @@ bool Connector::awaitConnection(int port){
         log("Connector", "Couldn't create socket.");
         return false;
     }
-    if (setsockopt(serverToClientFd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
+    if (setsockopt(serverToClientFd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT | SOCK_NONBLOCK,
                                                   &opt, sizeof(opt)))
     {
         log("Connector", "Couldn't setsockopt.");
@@ -43,20 +46,26 @@ bool Connector::awaitConnection(int port){
         return false;
     }
     log("Connector", "A client connected.");
-    clientFds.push_back(new_socket);
+    inFd = new_socket;
     return true;
 }
 
+/*
+Opens a new game session for a number of players.
+*/
 bool Connector::hostGame(int port, int playerNumber){
     authority = true;
-    log("Connector", "Hosting a game for " + to_string(playerNumber) + " players.");
     while (clientFds.size() < playerNumber){
-        awaitConnection(port);
+        getConnection(port);
     }
     log("Connector", "All players connected. Starting game...");
     return true;
 }
 
+/*
+Tries to establish a connection to a remote server. 
+Only call from client
+*/
 bool Connector::connectToGame(char* address, int serverPort){
     if (clientToServerFd > 0){
         log("Connector", "Already connected to a game.");
@@ -115,8 +124,25 @@ bool Connector::sndMsg(const char datagram[35]) const{
     return false;
 }
 
-const char* Connector::rcvMsg(){
-    int ret = read(authority ? *clientFds.rbegin() : clientToServerFd, buffer, sizeof(char)*35);
+/*
+Receive bytes from clientFd.
+Non-blocking.
+Server only.
+*/ 
+const char* Connector::rcvMsgServer(int clientFd){
+    int ret = read(clientFd, buffer, sizeof(char)*35);
+    if (ret < 0){
+        log("Connector", "rcvMsg() received error code " + to_string(ret));
+    } 
+    return buffer;
+}
+/*
+Receive bytes from serverFd.
+Non-blocking.
+Client only.
+*/
+const char* Connector::rcvMsgClient(){
+    int ret = read(clientToServerFd, buffer, sizeof(char)*35);
     if (ret < 0){
         log("Connector", "rcvMsg() received error code " + to_string(ret));
     } 

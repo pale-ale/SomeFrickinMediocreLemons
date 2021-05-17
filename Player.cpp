@@ -9,6 +9,10 @@
 
 #include "ui/CardSelector.h"
 
+/*
+Lets the player draw count cards from his deck.
+Throws an error if not enough cards are present.
+*/
 void Player::drawCards(int count)
 {
     if (deck.size() < count)
@@ -27,6 +31,10 @@ void Player::drawCards(int count)
     playerHud->setHandCount(playerhand->getHandData().size());
 }
 
+/*
+Makes player play the card cardToPlay to the slot slot on the battlefield.
+Ends the player's turn.
+*/
 void Player::playCard(Card *cardToPlay, int slot)
 {
     auto sharedCardPtr = playerhand->removeCard(cardToPlay);
@@ -46,6 +54,7 @@ void Player::playCard(Card *cardToPlay, int slot)
     }
 }
 
+/*Adds a card to the end of the player's deck.*/
 void Player::addCardToDeck(shared_ptr<Card> card)
 {
     auto cardUI = card->getCardUI();
@@ -59,6 +68,7 @@ void Player::addCardToDeck(shared_ptr<Card> card)
     //addChild(card);
 }
 
+/*Adds a card to the player's graveyard's back.*/
 void Player::addCardToGraveyard(shared_ptr<Card> card)
 {
 
@@ -157,6 +167,11 @@ void Player::initializeSubComponents()
     //addChild(playerCard);
 }
 
+/*
+The player represents a physical player at the table.
+He has a hand, deck, graveyard, the ability to play cards and whatnot.
+He cannot flip the table, though (yet?).
+*/
 Player::Player(UISystem *ui) : UIElement(ui),
                                playerhand{std::make_shared<Hand>(ui)},
                                battlefield{std::make_shared<Battlefield>(ui)},
@@ -174,6 +189,10 @@ Player::Player(UISystem *ui, std::string Name) : Player(ui)
     this->name = Name;
 }
 
+/*
+Tries to remove the card cardToRemove from the player's deck.
+Throws an error if nothing was removed.
+*/
 shared_ptr<Card> Player::removeCardFromDeck(Card *cardToRemove)
 {
     for (auto c : deck)
@@ -190,6 +209,10 @@ shared_ptr<Card> Player::removeCardFromDeck(Card *cardToRemove)
     throw;
 }
 
+/*
+Removes the topmost card from the deck, e.g. when the player draws a card.
+Throws an error if deck is empty.
+*/
 shared_ptr<Card> Player::removeCardFromDeckTop()
 {
     if (deck.size() < 1)
@@ -204,6 +227,10 @@ shared_ptr<Card> Player::removeCardFromDeckTop()
     return c;
 }
 
+/*
+When confronted with the choice on what cards to target, the player can choose by clicking highlighted cards.
+Type/Amount/etc. of cards to select from can be ocnfigures via cardSelectionInfo.
+*/
 void Player::startSelection(CardSelectionInfo cardSelectionInfo)
 {
     Player *enemy = game->getNextTurnPlayer();
@@ -242,6 +269,9 @@ void Player::startSelection(CardSelectionInfo cardSelectionInfo)
     cardSelector->setSelectionTarget(eligibleCards, false, cardSelectionInfo);
 }
 
+/*
+When it's the players turn, he can select a card to tap it, move it, etc.
+*/
 void Player::selectCard(const Card *cardToSelect)
 {
     selectedCard = cardToSelect;
