@@ -23,24 +23,32 @@ enum EConnectionState{
 
 class Connector{
     public:
-    bool hostGame(int port=ServerSettings::serverPort, int playerNumber = 2);
+    // +++ Server-only functions +++
+
+    int openNewSocket(int port);
     bool getConnection(int port, int &inFd);
+    void sendJoinAccept(int fd);
+    void sendJoinDeny(int fd);
+    const char* rcvMsgServer(int clientFd);
+
+    /* Client-only functions */
 
     bool connectToGame(char* address=(char*)"127.0.0.1", int port=ServerSettings::serverPort);
     void sendJoinRequest();
-    bool getAuthority(){return authority;}
-    EConnectionState getConnectionState();
-    bool sndMsg(const char datagram[35]) const;
-    const char* rcvMsgServer(int clientFd);
+    void sndMsgClient(const char datagram[35]) const;
     const char* rcvMsgClient();
 
+    /* Server/Client functions */
+
+    EConnectionState getConnectionState();
+    bool getAuthority(){return authority;}
     void process();
     void getDatagramType();
 
     private:
+
     EConnectionState connectionstate = EConnectionState::Disconnected;
     char buffer[35];
     bool authority = false;
     int clientToServerFd;
-    int serverToClientFd;
 };

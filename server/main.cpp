@@ -11,8 +11,7 @@ int main(int argc, char *argv[])
 {
     Settings::programDir = getDirFromArg(argv[0]).c_str();
     Server server;
-    server.openLobby();
-    //while (true){
+    for (int i=0;i<20;++i){
         server.tick();
-    //}
+    }
 }

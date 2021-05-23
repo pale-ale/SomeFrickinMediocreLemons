@@ -2,63 +2,80 @@
 #include "../Debugging.h"
 
 using Debugging::log;
-/*
-Opens a listen port and tries to accept a connection there.
-This is a non-blocking operation.
-*/
-bool Connector::getConnection(int port, int &inFd){
+
+/* Open a new port, bind to it and listen there. Returns -1 on error.*/
+int Connector::openNewSocket(int port){
+    int new_socket;
+    int opt = 1;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
-    int new_socket, valread;
-    int opt = 1;
-       
-    if ((serverToClientFd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
-    {
-        log("Connector", "Couldn't create socket.");
-        return false;
-    }
-    if (setsockopt(serverToClientFd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT | SOCK_NONBLOCK,
-                                                  &opt, sizeof(opt)))
-    {
-        log("Connector", "Couldn't setsockopt.");
-        return false;
-    }
+    
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(port);
-       
-    if (bind(serverToClientFd, (struct sockaddr *)&address, 
-                                 sizeof(address))<0)
+
+    new_socket = socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK, 0);
+    
+    if (new_socket == -1)
+    {
+        log("Connector", "Couldn't create socket.");
+        return -1;
+    }
+    
+    if (setsockopt(new_socket, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)))
+    {
+        log("Connector", "Couldn't setsockopt.");
+        perror("socket");
+        return -1;
+    }
+    
+    if (bind(new_socket, (struct sockaddr *)&address, sizeof(address)) == -1)
     {
         log("Connector", "Couldn't bind to socket");
-        return false;
+        perror("socket");
+        return -1;
     }
-    if (listen(serverToClientFd, 3) < 0)
+    log("Connector", "Bound to port " + to_string(port));
+
+    if (listen(new_socket, 3) < 0)
     {
+        perror("conn");
         log("Connector", "Couldn't listen.");
         return false;
     }
     log("Connector", "Listening for incoming connections on port '" + to_string(port) + "'...");
-    if ((new_socket = accept(serverToClientFd, (struct sockaddr *)&address, 
-                       (socklen_t*)&addrlen))<0)
-    {
-        log("Connector", "Could not accept connection or timeout.");
-        return false;
-    }
-    log("Connector", "A client connected.");
-    inFd = new_socket;
-    return true;
+    
+    return new_socket;
 }
 
 /*
-Opens a new game session for a number of players.
+    Tries to accept a connection at a port.
+    This is a non-blocking operation.
 */
-bool Connector::hostGame(int port, int playerNumber){
-    authority = true;
-    while (clientFds.size() < playerNumber){
-        getConnection(port);
+bool Connector::getConnection(int port, int &inFd){    
+    struct sockaddr_in address;
+    int addrlen = sizeof(address);
+    
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port = htons(port);
+
+    
+    //new_socket = accept4(new_socket, (struct sockaddr *)&address, (socklen_t*)&addrlen, SOCK_NONBLOCK);
+    cout << "test: infd = " << inFd << endl;
+    inFd = accept(inFd, (struct sockaddr *)&address, (socklen_t*)&addrlen);
+    cout << "test: infd2 = " << inFd << endl;
+    if (inFd < 0){
+        if (errno == EWOULDBLOCK)
+        {
+            //log("Connector", "Could not accept connection or timeout. Code " + error to_string(new_socket));
+            cout << "No connection to accept\n";
+            return false;
+        }
+        perror("Server:Socket");
+        return false;
     }
-    log("Connector", "All players connected. Starting game...");
+    log("Connector", "A client connected.");
     return true;
 }
 
@@ -100,6 +117,7 @@ bool Connector::connectToGame(char* address, int serverPort){
     return true;
 }
 
+/* When the TCP-level connection with a server is established, ask whether the player can join the game*/ 
 void Connector::sendJoinRequest(){
     if (connectionstate == EConnectionState::Joining){
         log("Connector", "joinGame(): Join already in progress.");
@@ -110,18 +128,13 @@ void Connector::sendJoinRequest(){
         return;
     }
     auto msg = ProtocolBuilder::assembleJoinRequest(123);
-    sndMsg(msg.data);
+    sndMsgClient(msg.data);
     log("Connector", "Trying to join with PlayerID " + to_string(msg.getPlayerID()));
     connectionstate = EConnectionState::Joining;
 }
 
-bool Connector::sndMsg(const char datagram[35]) const{
-    if (authority){
-        send(serverToClientFd, datagram, sizeof(char)*35, 1);
-    }else{
-        send(clientToServerFd, datagram, sizeof(char)*35, 1);
-    }
-    return false;
+void Connector::sndMsgClient(const char datagram[35]) const{
+    send(clientToServerFd, datagram, sizeof(char)*35, 1);
 }
 
 /*
