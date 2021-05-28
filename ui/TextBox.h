@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include "UISystem.h"
-#include "sstream"
 #include <SFML/Graphics.hpp>
 #include "../Settings.h"
 #include "../events/EventCallback.h"
