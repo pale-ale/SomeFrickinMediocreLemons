@@ -1,4 +1,5 @@
 #include "TextBox.h"
+#include "sstream"
 TextBox::TextBox(UISystem *ui, sf::Vector2f size, unsigned int fontsize, string content, bool autoresize, bool texthover) : UIElement(ui),
                                                                                                                             fontsize{fontsize}, sizetextbox{size}, content{content}, autoresize{autoresize}, texthover{texthover}
 {
