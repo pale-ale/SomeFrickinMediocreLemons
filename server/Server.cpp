@@ -19,73 +19,76 @@ GameSession Server::createSession(){
     return GameSession();
 }
 
-void Server::createSessions(int count){
-    assert(count > 0);
-    log("Server", "Creating " + to_string(count) + " sessions");
-    for (int i=0; i<count; ++i){
+void Server::distributeSessions(){
+    int maxSessions = ServerSettings::maxConcurrentSessions - sessions.size();
+    if (maxSessions <= 0)
+        return;
+    log("Server", "Trying to create at most " + to_string(maxSessions) + " session(s)");
+    while (queue.size() > ServerSettings::playersPerSession){
         auto newSession = createSession();
+        for (int i=0; i<ServerSettings::playersPerSession; ++i){
+            newSession.clientFds.push_back(queue.begin()->fd);
+            queue.pop_front();
+        }
         sessions.push_back(newSession);
     }
 }
 
-void Server::tryConnectSession(GameSession &inSession){
-    for (int i = 0; i<inSession.tempClientFds.size(); ++i){
-        if(inSession.clientFds[i] == -1){
-            int tmpFd = inSession.tempClientFds[i];
-            if(connector->getConnection(ServerSettings::serverPort, tmpFd)){
-                cout << "Accepted a connection.\n";
-                inSession.clientFds[i] = tmpFd;
+void Server::updateSession(GameSession& session){
+    for (int fd : session.clientFds){
+        auto t = connector->rcvMsgServer(fd);
+        cout << t << endl;
+    }
+}
+
+void Server::updateQueue(){
+    if (queue.size() == 0){
+        queue.push_back(QueueEntry());
+    }
+    auto queueEntry = queue.begin();
+    while (queueEntry != queue.end()){
+        if (queueEntry->fd == -1){
+            //initialize the socket for this queueentry
+            queueEntry->fd = connector->openNewSocket(ServerSettings::serverPort);
+        }
+        if (!queueEntry->connected){
+            //at this point, a socket has a port, but is probably not connect to an endpoint
+            int tmpfd = queueEntry->fd;
+            if(connector->getConnection(ServerSettings::serverPort, tmpfd)){
+                queueEntry->fd = tmpfd;
+                queueEntry->connected = true;
+                queue.push_back(QueueEntry());
             }
         }
-    }
-}
-
-void Server::tryConnectSessions(){
-    for (auto &session : sessions){
-        tryConnectSession(session);
-    }
-}
-
-void Server::tryBindSession(GameSession &inSession){
-    if (!inSession.bound){            
-        for (int i=0; i < inSession.maxPlayers; ++i){
-            int newFd = connector->openNewSocket(ServerSettings::serverPort);
-            if (newFd == -1){
-                log("Server", "Error binding to socket in this session");
+        int currentTime = std::time(NULL);
+        if (queueEntry->connected){
+            if (currentTime - queueEntry->timeSinceLastAlive > ServerSettings::kickTimeout){
+                /* TODO: we probably want a proper disconnect on inactive connections. */
+                queue.erase(queueEntry);
             }else{
-                inSession.tempClientFds.push_back(newFd);
-                inSession.clientFds.push_back(-1);
+                auto tcpStringInput = connector->rcvMsgServer(queueEntry->fd);
+                if (tcpStringInput != ""){
+                    FGeneralDatagram dg;
+                    if (!ProtocolBuilder::parseStringToDatagram(tcpStringInput, dg)){
+                        cout << "Error in parsing datagram\n";
+                        throw;
+                    }
+                    if (dg.content[0] == 1){
+                        OnPlayerRequestJoin(FManagementDatagram(&dg));
+                    }
+                }
             }
-            inSession.bound = true;
         }
-    }
-}
-
-void Server::tryBindSessions(){
-    for (auto &session : sessions){
-        tryBindSession(session);
+        queueEntry++;
     }
 }
 
 void Server::tick(){
     sleep(1);
-    int sessionsToCreate = ServerSettings::maxConcurrentSessions - sessions.size();
-    if (sessionsToCreate > 0){
-        createSessions(sessionsToCreate);
-    }
-    tryBindSessions();
-    tryConnectSessions();
+    updateQueue();
+    distributeSessions();
     for (auto &s : sessions){
-        std::cout << "Awaiting message...\n";
-        /*auto tcpStringInput = connector->rcvMsgServer();
-        FGeneralDatagram dg;
-        if (!ProtocolBuilder::parseStringToDatagram(tcpStringInput, dg)){
-            cout << "Error in parsing datagram\n";
-            throw;
-        }
-        if (dg.content[0] == 1){
-            OnPlayerRequestJoin(FManagementDatagram(&dg));
-        }*/
+        updateSession(s);
     }
 }
 
@@ -98,9 +101,4 @@ void Server::OnPlayerRequestJoin(const FManagementDatagram &dg){
     }else{
         log("Server", "Player not already known.");
     }
-}
-
-bool Server::bHasIncomingConnection(){
-    int test = 0;
-    cout << "Incoming: " << connector->getConnection(13579, test) << endl;
 }

@@ -29,20 +29,19 @@ class Connector{
     bool getConnection(int port, int &inFd);
     void sendJoinAccept(int fd);
     void sendJoinDeny(int fd);
-    const char* rcvMsgServer(int clientFd);
+    char* rcvMsgServer(int clientFd);
 
     /* Client-only functions */
 
     bool connectToGame(char* address=(char*)"127.0.0.1", int port=ServerSettings::serverPort);
-    void sendJoinRequest();
+    void sendJoinQueueRequest();
     void sndMsgClient(const char datagram[35]) const;
-    const char* rcvMsgClient();
+    char* rcvMsgClient();
 
     /* Server/Client functions */
 
     EConnectionState getConnectionState();
     bool getAuthority(){return authority;}
-    void process();
     void getDatagramType();
 
     private:

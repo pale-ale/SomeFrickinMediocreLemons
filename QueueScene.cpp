@@ -33,5 +33,5 @@ void QueueScene::loadPlaySceneButtonCallback(){
 
 void QueueScene::playMultiPlayerButtonCallback(){
     connector->connectToGame();
-    connector->sendJoinRequest();
+    connector->sendJoinQueueRequest();
 }

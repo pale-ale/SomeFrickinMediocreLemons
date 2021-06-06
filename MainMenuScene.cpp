@@ -53,6 +53,6 @@ void MainMenuScene::loadPlaySceneButtonCallback(){
 
 void MainMenuScene::playMultiPlayerButtonCallback(){
     connector->connectToGame();
-    connector->sendJoinRequest();
+    connector->sendJoinQueueRequest();
     sceneManager->loadScene<QueueScene>();
 }

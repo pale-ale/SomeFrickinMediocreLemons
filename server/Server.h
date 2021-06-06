@@ -1,6 +1,8 @@
 #pragma once
 
 #include <memory>
+#include <ctime>
+#include <list>
 
 #include "../Debugging.h"
 #include "../net/Protocol.h"
@@ -19,24 +21,32 @@ struct GameSession{
     int maxPlayers = 1;
 };
 
+struct QueueEntry{
+    QueueEntry(){
+        timeSinceLastAlive = std::time(NULL);
+    }
+    int fd = -1;
+    bool verified = false;
+    bool connected = false;
+    int timeSinceLastAlive = 0;
+};
+
 class Server{
     public:
     Server();
-    void createSessions(int count);
-    void tryBindSessions();
-    void tryConnectSessions();
+    void distributeSessions();
     void tick();
     void acceptPlayerConnection();
     void OnPlayerRequestJoin(const FManagementDatagram &dg);
-    bool bHasIncomingConnection();
     
     private:
     GameSession createSession();
-    void tryBindSession(GameSession &inSession);
-    void tryConnectSession(GameSession &inSession);
+    void updateQueue();
+    void updateSession(GameSession &session);
 
     std::shared_ptr<Warehouse> warehouse = nullptr;
     std::shared_ptr<Connector> connector = nullptr;
     std::shared_ptr<Game> game = nullptr;
     std::vector<GameSession> sessions = {};
+    std::list<QueueEntry> queue = {};
 };
